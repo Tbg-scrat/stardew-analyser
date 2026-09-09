@@ -1,0 +1,2 @@
+kettle Overview including a hay calculator how much is needed for the winter and a warning if there isn't enough hay In silos
+redesign/ double check the function for latest-tag. currently one farm is tagged latest, despite being the older save. probably a problem with copying files messing up the modified date.

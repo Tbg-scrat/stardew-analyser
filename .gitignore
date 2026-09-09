@@ -1,0 +1,24 @@
+
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local save files & test/development saves
+Saves/
+*.xml
+SaveGameInfo
+
+# Local generated output web dashboard
+web/
+*.html
+
+# Object ID & sprite cache downloaded/generated at runtime
+data/objects_cache.json
+data/
+
+# Environment variables & editor configs
+.env
+.aider*
+.DS_Store
+
