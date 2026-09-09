@@ -1,0 +1,2048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stardew Valley Save Analyzer</title>
+    <style>
+        :root {
+            --bg-primary: #0b0f19;
+            --bg-card: #151e32;
+            --bg-card-hover: #1c2742;
+            --bg-surface: #1e293b;
+            --bg-subtle: #0f172a;
+            --border-color: #273553;
+            --border-subtle: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            
+            --color-gold: #f59e0b;
+            --color-gold-bg: rgba(245, 158, 11, 0.12);
+            --color-gold-border: rgba(245, 158, 11, 0.3);
+            
+            --badge-done-bg: rgba(16, 185, 129, 0.16);
+            --badge-done-text: #34d399;
+            --badge-done-border: rgba(52, 211, 153, 0.4);
+            
+            --badge-need-bg: rgba(239, 68, 68, 0.15);
+            --badge-need-text: #f87171;
+            --badge-need-border: rgba(248, 113, 113, 0.4);
+
+            --badge-warn-bg: rgba(245, 158, 11, 0.15);
+            --badge-warn-text: #fbbf24;
+            --badge-warn-border: rgba(251, 191, 36, 0.4);
+
+            --season-spring: #4ade80;
+            --season-summer: #facc15;
+            --season-fall: #fb923c;
+            --season-winter: #38bdf8;
+            
+            --accent-blue: #38bdf8;
+            --accent-blue-bg: rgba(56, 189, 248, 0.12);
+            --accent-blue-border: rgba(56, 189, 248, 0.4);
+            --accent-purple: #c084fc;
+            --accent-purple-bg: rgba(192, 132, 252, 0.12);
+
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            min-height: 100vh;
+            padding: 1.75rem 1.25rem 4rem;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1180px;
+            margin: 0 auto;
+        }
+
+        /* Top Header */
+        header {
+            margin-bottom: 1.75rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.25rem;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+
+        .logo-icon {
+            font-size: 2.2rem;
+            line-height: 1;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+        }
+
+        .header-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .sync-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            background: var(--bg-surface);
+            padding: 0.35rem 0.85rem;
+            border-radius: 9999px;
+            font-size: 0.775rem;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .sync-pulse {
+            width: 8px;
+            height: 8px;
+            background-color: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #10b981;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* Farm Switcher Tabs Bar */
+        .farm-switcher-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .farm-switcher-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.65rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .farm-tabs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 0.85rem;
+        }
+
+        .farm-tab-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem 1.15rem;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .farm-tab-card:hover {
+            background: var(--bg-card-hover);
+            border-color: #3b507a;
+            transform: translateY(-2px);
+        }
+
+        .farm-tab-card.active {
+            background: #19233c;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 1px var(--accent-blue), 0 8px 24px rgba(56, 189, 248, 0.15);
+        }
+
+        .tab-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tab-farm-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .tab-latest-badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            background: var(--accent-blue-bg);
+            color: var(--accent-blue);
+            border: 1px solid var(--accent-blue-border);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .tab-farmer-name {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .tab-details-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.2rem;
+            padding-top: 0.4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .tab-money {
+            color: var(--color-gold);
+            font-weight: 600;
+        }
+
+        /* Farm Content Area */
+        .farm-pane {
+            display: none;
+            animation: fadeIn 0.25s ease-in-out;
+        }
+
+        .farm-pane.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Summary Card */
+        .summary-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.25rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .summary-stat {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .stat-value.gold {
+            color: var(--color-gold);
+        }
+
+        /* Sub-Module Navigation */
+        .module-nav-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            background: var(--bg-surface);
+            padding: 0.4rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .module-nav-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 0.55rem 1rem;
+            border-radius: 7px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .module-nav-btn:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .module-nav-btn.active {
+            background: #2563eb;
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
+        }
+
+        .module-badge {
+            font-size: 0.725rem;
+            padding: 0.1rem 0.4rem;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.15);
+            font-weight: 700;
+        }
+
+        /* Module Content Panes */
+        .module-pane {
+            display: none;
+            animation: fadeIn 0.2s ease-in-out;
+        }
+
+        .module-pane.active {
+            display: block;
+        }
+
+        /* Daily Intel Widgets */
+        .intel-top-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .intel-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem 1.4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .intel-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .intel-card-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .weather-hero {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .weather-icon-large {
+            font-size: 3rem;
+            line-height: 1;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
+        }
+
+        .weather-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .weather-name {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .weather-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .island-weather-badge {
+            margin-top: 0.4rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.775rem;
+            background: var(--accent-blue-bg);
+            color: var(--accent-blue);
+            border: 1px solid var(--accent-blue-border);
+            padding: 0.25rem 0.65rem;
+            border-radius: 6px;
+            font-weight: 600;
+            width: fit-content;
+        }
+
+        /* Luck Card */
+        .luck-hero {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .luck-icon-large {
+            font-size: 2.8rem;
+            line-height: 1;
+        }
+
+        .luck-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .luck-tier-badge {
+            font-size: 0.95rem;
+            font-weight: 700;
+            padding: 0.2rem 0.7rem;
+            border-radius: 6px;
+            width: fit-content;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .luck-quote {
+            font-size: 0.825rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        .luck-val-pill {
+            font-size: 0.725rem;
+            color: var(--text-muted);
+            font-family: monospace;
+        }
+
+        /* Birthday Alert Banner */
+        .bday-alert-card {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(20, 30, 50, 0.9) 100%);
+            border: 1px solid var(--color-gold-border);
+            border-radius: 12px;
+            padding: 1.25rem 1.4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .bday-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.85rem;
+        }
+
+        .bday-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--color-gold);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .bday-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 0.85rem;
+        }
+
+        .bday-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 9px;
+            padding: 0.85rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+        }
+
+        .bday-item.today {
+            border-color: var(--color-gold);
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.25);
+            background: #1e263d;
+        }
+
+        .bday-item-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .bday-villager-name {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .bday-pill {
+            font-size: 0.725rem;
+            font-weight: 700;
+            padding: 0.2rem 0.55rem;
+            border-radius: 9999px;
+            background: var(--color-gold-bg);
+            color: var(--color-gold);
+            border: 1px solid var(--color-gold-border);
+        }
+
+        .bday-pill.today {
+            background: #f59e0b;
+            color: #0b0f19;
+            animation: pulse 1.5s infinite;
+        }
+
+        .loved-gifts-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            align-items: center;
+            margin-top: 0.25rem;
+        }
+
+        .loved-gifts-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-right: 0.25rem;
+        }
+
+        .gift-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 0.2rem 0.45rem;
+            font-size: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .gift-chip-img {
+            width: 16px;
+            height: 16px;
+            image-rendering: pixelated;
+        }
+
+        /* Town Social Radar */
+        .radar-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem 1.4rem;
+        }
+
+        .radar-controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.85rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .radar-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .filter-btn {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.35rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.775rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .filter-btn:hover {
+            color: #ffffff;
+            border-color: #475569;
+        }
+
+        .filter-btn.active {
+            background: var(--accent-blue-bg);
+            color: var(--accent-blue);
+            border-color: var(--accent-blue);
+        }
+
+        .search-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: #ffffff;
+            padding: 0.4rem 0.85rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            width: 220px;
+            outline: none;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-blue);
+        }
+
+        .villager-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 0.85rem;
+        }
+
+        .villager-card {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-color);
+            border-radius: 9px;
+            padding: 0.95rem 1.1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            transition: border-color 0.15s ease;
+        }
+
+        .villager-card:hover {
+            border-color: #3b507a;
+        }
+
+        .v-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .v-name {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .v-badge-datable {
+            font-size: 0.675rem;
+            padding: 0.1rem 0.45rem;
+            border-radius: 4px;
+            background: var(--accent-purple-bg);
+            color: var(--accent-purple);
+            border: 1px solid rgba(192, 132, 252, 0.3);
+            font-weight: 600;
+        }
+
+        .v-hearts-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .v-hearts-icons {
+            display: flex;
+            gap: 2px;
+            font-size: 0.95rem;
+            line-height: 1;
+        }
+
+        .v-pts-label {
+            font-size: 0.725rem;
+            color: var(--text-muted);
+            margin-left: auto;
+        }
+
+        .v-status-row {
+            display: flex;
+            gap: 0.4rem;
+            align-items: center;
+            font-size: 0.725rem;
+        }
+
+        .v-chip {
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .v-chip.green {
+            background: var(--badge-done-bg);
+            color: var(--badge-done-text);
+            border: 1px solid var(--badge-done-border);
+        }
+
+        .v-chip.yellow {
+            background: var(--badge-warn-bg);
+            color: var(--badge-warn-text);
+            border: 1px solid var(--badge-warn-border);
+        }
+
+        .v-chip.muted {
+            background: var(--bg-surface);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+        }
+
+        /* Collections & Checklist Grids */
+        .collection-summary {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem 1.4rem;
+            margin-bottom: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .progress-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .progress-ratio {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+
+        .progress-track {
+            height: 10px;
+            background: var(--bg-surface);
+            border-radius: 9999px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #10b981);
+            border-radius: 9999px;
+            transition: width 0.4s ease;
+        }
+
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 0.85rem;
+        }
+
+        .item-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 0.9rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            transition: border-color 0.15s ease;
+        }
+
+        .item-card:hover {
+            border-color: #3b507a;
+        }
+
+        .item-card.completed {
+            border-color: rgba(52, 211, 153, 0.35);
+        }
+
+        .item-card.missing {
+            border-color: rgba(248, 113, 113, 0.35);
+            background: rgba(239, 68, 68, 0.03);
+        }
+
+        .item-sprite-box {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item-sprite {
+            width: 32px;
+            height: 32px;
+            image-rendering: pixelated;
+        }
+
+        .item-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .item-name {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #ffffff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .item-meta {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+        }
+
+        .item-badge {
+            font-size: 0.725rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 700;
+            width: fit-content;
+            margin-top: 0.2rem;
+        }
+
+        .item-badge.done {
+            background: var(--badge-done-bg);
+            color: var(--badge-done-text);
+            border: 1px solid var(--badge-done-border);
+        }
+
+        .item-badge.need {
+            background: var(--badge-need-bg);
+            color: var(--badge-need-text);
+            border: 1px solid var(--badge-need-border);
+        }
+
+        /* Polyculture progress mini bar */
+        .crop-progress-bar {
+            height: 4px;
+            background: var(--bg-surface);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 0.25rem;
+        }
+
+        .crop-progress-fill {
+            height: 100%;
+            background: #10b981;
+            border-radius: 2px;
+        }
+
+        .crop-progress-fill.incomplete {
+            background: #f59e0b;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 3rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* ============================================================
+           SKILLS & MASTERY MODULE
+           ============================================================ */
+        .skills-section-header {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        /* Mastery Status Banner */
+        .mastery-status-banner {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.85rem 1.2rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+        }
+        .mastery-status-banner.locked {
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            color: #f87171;
+        }
+        .mastery-status-banner.unlocked {
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            color: #fbbf24;
+        }
+        .mastery-status-icon { font-size: 1.4rem; }
+
+        /* Mastery XP Card */
+        .mastery-xp-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.1rem 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+        .mastery-xp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.6rem;
+        }
+        .mastery-xp-label { font-size: 0.85rem; color: var(--text-secondary); font-weight: 600; }
+        .mastery-xp-value { font-size: 0.9rem; font-weight: 700; color: #fbbf24; }
+
+        .mastery-bar-outer {
+            height: 12px;
+            background: var(--bg-surface);
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 0.75rem;
+        }
+        .mastery-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f59e0b, #fbbf24, #fde68a);
+            border-radius: 6px;
+            transition: width 0.5s ease;
+        }
+
+        .mastery-points-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .mastery-point-pip {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            background: var(--bg-surface);
+            border: 2px solid var(--border-color);
+            color: var(--text-muted);
+        }
+        .mastery-point-pip.earned {
+            background: rgba(251,191,36,0.15);
+            border-color: #fbbf24;
+            color: #fbbf24;
+        }
+        .mastery-point-pip.earned.spent {
+            background: rgba(16,185,129,0.12);
+            border-color: #10b981;
+            color: #10b981;
+        }
+        .mastery-points-label {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-left: 0.25rem;
+        }
+
+        /* Mastery Shrines Grid */
+        .mastery-shrines-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+        .shrine-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        .shrine-card.claimed { border-color: #10b981; opacity: 1; }
+        .shrine-card.available { border-color: #fbbf24; opacity: 1; background: rgba(251,191,36,0.05); }
+        .shrine-card.locked { opacity: 0.5; }
+
+        .shrine-top-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .shrine-icon { font-size: 1.4rem; }
+        .shrine-name { font-weight: 700; font-size: 0.9rem; flex: 1; }
+        .shrine-badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.2rem 0.55rem;
+            border-radius: 9999px;
+        }
+        .shrine-badge.claimed { background: rgba(16,185,129,0.15); color: #10b981; border: 1px solid #10b981; }
+        .shrine-badge.available { background: rgba(251,191,36,0.15); color: #fbbf24; border: 1px solid #fbbf24; }
+        .shrine-badge.locked { background: rgba(239,68,68,0.1); color: #f87171; border: 1px solid #f87171; }
+        .shrine-badge.pending { background: rgba(148,163,184,0.1); color: var(--text-muted); border: 1px solid var(--border-color); }
+
+        .shrine-desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.4; }
+        .shrine-rewards-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.04em; }
+        .shrine-rewards-list {
+            margin: 0;
+            padding-left: 1.1rem;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+        .skill-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.1rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+        .skill-card.maxed { border-color: rgba(251,191,36,0.4); background: rgba(251,191,36,0.03); }
+
+        .skill-header-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        .skill-icon-large { font-size: 2rem; line-height: 1; flex-shrink: 0; }
+        .skill-title-area { flex: 1; display: flex; flex-direction: column; gap: 0.2rem; }
+        .skill-name { font-size: 1rem; font-weight: 700; color: #fff; }
+        .skill-level-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.15rem 0.55rem;
+            border-radius: 9999px;
+            width: fit-content;
+            background: rgba(148,163,184,0.12);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+        .skill-level-badge.max {
+            background: rgba(251,191,36,0.15);
+            color: #fbbf24;
+            border-color: rgba(251,191,36,0.4);
+        }
+        .skill-xp-summary {
+            text-align: right;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+        .skill-xp-total { font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); }
+        .skill-xp-need { font-size: 0.72rem; color: var(--text-muted); }
+
+        /* Skill XP Bar */
+        .skill-bar-outer {
+            height: 8px;
+            background: var(--bg-surface);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .skill-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+            border-radius: 4px;
+            transition: width 0.4s ease;
+        }
+        .skill-bar-fill.maxed {
+            background: linear-gradient(90deg, #d97706, #fbbf24);
+        }
+        .skill-bar-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Professions */
+        .skill-profs-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+        .skill-prof-chip {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid var(--border-color);
+            background: var(--bg-surface);
+            cursor: default;
+        }
+        .skill-prof-chip.tier5 { border-color: rgba(99,102,241,0.4); background: rgba(99,102,241,0.1); }
+        .skill-prof-chip.tier10 { border-color: rgba(251,191,36,0.4); background: rgba(251,191,36,0.08); }
+        .prof-tier-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            opacity: 0.7;
+        }
+        .prof-name { color: #e2e8f0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Header -->
+        <header>
+            <div class="header-title">
+                <span class="logo-icon">🌾</span>
+                <div>
+                    <h1>Stardew Valley Save Analyzer</h1>
+                    <div class="header-subtitle">Multi-Farm Save Monitoring, Daily Intel & Collections Tracker</div>
+                </div>
+            </div>
+            <button class="sync-badge" onclick="location.reload()" style="cursor: pointer; border: 1px solid var(--border-color); background: var(--bg-surface); color: var(--text-secondary);" title="Click to reload latest save data">
+                <div class="sync-pulse"></div>
+                <span>🔄 Reload Saves</span>
+            </button>
+        </header>
+
+        {% if farms %}
+        <!-- Multi-Farm Switcher Tabs -->
+        <section class="farm-switcher-section">
+            <div class="farm-switcher-label">
+                <span>Select Active Farm</span>
+                <span>{{ farms|length }} Farm{{ 's' if farms|length > 1 else '' }} Detected</span>
+            </div>
+            <div class="farm-tabs-grid">
+                {% for farm in farms %}
+                <button class="farm-tab-card {% if loop.first %}active{% endif %}"
+                        data-farm-id="{{ farm.farm_id }}"
+                        id="tab-btn-{{ farm.farm_id }}"
+                        onclick="switchFarm('{{ farm.farm_id }}')">
+                    <div class="tab-top-row">
+                        <span class="tab-farm-name">{{ farm.farm_name }} Farm</span>
+                        {% if farm.is_newest %}
+                        <span class="tab-latest-badge">★ Latest</span>
+                        {% endif %}
+                    </div>
+                    <div class="tab-farmer-name">Farmer: {{ farm.farmer_name }}</div>
+                    <div class="tab-details-row">
+                        <span>{{ farm.date_str }}</span>
+                        <span class="tab-money">{{ farm.total_money_formatted }}</span>
+                    </div>
+                </button>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Farm Panes -->
+        {% for farm in farms %}
+        <div class="farm-pane farm-panel-{{ farm.farm_id }} {% if loop.first %}active{% endif %}" id="farm-pane-{{ farm.farm_id }}">
+            <!-- Farm Summary Header -->
+            <div class="summary-card">
+                <div class="summary-stat">
+                    <span class="stat-label">Farm & Farmer</span>
+                    <span class="stat-value">{{ farm.farm_name }} ({{ farm.farmer_name }})</span>
+                </div>
+                <div class="summary-stat">
+                    <span class="stat-label">In-Game Date</span>
+                    <span class="stat-value">{{ farm.date_str }}</span>
+                </div>
+                <div class="summary-stat">
+                    <span class="stat-label">Total Earnings</span>
+                    <span class="stat-value gold">{{ farm.total_money_formatted }}</span>
+                </div>
+                <div class="summary-stat">
+                    <span class="stat-label">Polyculture</span>
+                    <span class="stat-value">{{ farm.completed_count }} / {{ farm.total_crops }}</span>
+                </div>
+                <div class="summary-stat">
+                    <span class="stat-label">Skills</span>
+                    <span class="stat-value">{{ farm.skills_and_mastery.total_skill_levels }}/50
+                        {% if farm.skills_and_mastery.mastery.is_unlocked %}
+                        <span style="color:#fbbf24;">⭐ Cave Unlocked</span>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Sub-Module Navigation -->
+            <div class="module-nav-bar">
+                <button class="module-nav-btn active" data-farm="{{ farm.farm_id }}" data-module="intel" onclick="switchModule('{{ farm.farm_id }}', 'intel')">
+                    ☀️ Daily Intel &amp; Social
+                </button>
+                <button class="module-nav-btn" data-farm="{{ farm.farm_id }}" data-module="skills" onclick="switchModule('{{ farm.farm_id }}', 'skills')">
+                    ⭐ Skills &amp; Mastery <span class="module-badge">{{ farm.skills_and_mastery.total_skill_levels }}/50</span>
+                </button>
+                <button class="module-nav-btn" data-farm="{{ farm.farm_id }}" data-module="polyculture" onclick="switchModule('{{ farm.farm_id }}', 'polyculture')">
+                    🌾 Polyculture <span class="module-badge">{{ farm.polyculture.completed_count }}/{{ farm.polyculture.total_count }}</span>
+                </button>
+                <button class="module-nav-btn" data-farm="{{ farm.farm_id }}" data-module="fish" onclick="switchModule('{{ farm.farm_id }}', 'fish')">
+                    🎣 Fish Collection <span class="module-badge">{{ farm.collections.fish.caught_count }}/{{ farm.collections.fish.total_count }}</span>
+                </button>
+                <button class="module-nav-btn" data-farm="{{ farm.farm_id }}" data-module="museum" onclick="switchModule('{{ farm.farm_id }}', 'museum')">
+                    🏛️ Museum <span class="module-badge">{{ farm.collections.museum.donated_count }}/{{ farm.collections.museum.total_count }}</span>
+                </button>
+                <button class="module-nav-btn" data-farm="{{ farm.farm_id }}" data-module="shipping" onclick="switchModule('{{ farm.farm_id }}', 'shipping')">
+                    📦 Full Shipment <span class="module-badge">{{ farm.collections.shipping.shipped_count }}/{{ farm.collections.shipping.total_count }}</span>
+                </button>
+                <button class="module-nav-btn" data-farm="{{ farm.farm_id }}" data-module="abilities" onclick="switchModule('{{ farm.farm_id }}', 'abilities')">
+                    ✨ Abilities & Mastery
+                </button>
+            </div>
+
+            <!-- MODULE: Skills & Mastery -->
+            <div class="module-pane" id="module-{{ farm.farm_id }}-skills">
+
+                {% set sm = farm.skills_and_mastery %}
+
+                <!-- 1.6 Mastery Cave Section -->
+                <div class="skills-section-header">⭐ 1.6 Mastery Cave</div>
+
+                <!-- Status Banner -->
+                <div class="mastery-status-banner {% if sm.mastery.is_unlocked %}unlocked{% else %}locked{% endif %}">
+                    {% if sm.mastery.is_unlocked %}
+                    <span class="mastery-status-icon">🏛️</span>
+                    {% else %}
+                    <span class="mastery-status-icon">🔒</span>
+                    {% endif %}
+                    <span>{{ sm.mastery.status_text }}</span>
+                </div>
+
+                <!-- Mastery XP Bar -->
+                {% if sm.mastery.is_unlocked %}
+                <div class="mastery-xp-card">
+                    <div class="mastery-xp-header">
+                        <span class="mastery-xp-label">Mastery XP</span>
+                        <span class="mastery-xp-value">{{ sm.mastery.mastery_exp_formatted }} XP
+                            {% if not sm.mastery.is_all_mastered %}
+                            / {{ sm.mastery.next_threshold_formatted }}
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="mastery-bar-outer">
+                        <div class="mastery-bar-fill" style="width: {{ sm.mastery.percent }}%"></div>
+                    </div>
+                    <div class="mastery-points-row">
+                        {% for i in range(5) %}
+                        <div class="mastery-point-pip {% if i < sm.mastery.points_earned %}earned{% endif %} {% if i < sm.mastery.points_spent %}spent{% endif %}">
+                            {{ i + 1 }}
+                        </div>
+                        {% endfor %}
+                        <span class="mastery-points-label">{{ sm.mastery.points_earned }}/5 Points Earned • {{ sm.mastery.points_available }} Available</span>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- 5 Mastery Shrines -->
+                <div class="mastery-shrines-grid">
+                    {% for shrine in sm.mastery.shrines %}
+                    <div class="shrine-card {% if shrine.claimed %}claimed{% elif sm.mastery.is_unlocked and sm.mastery.points_available > 0 %}available{% elif not sm.mastery.is_unlocked %}locked{% endif %}">
+                        <div class="shrine-top-row">
+                            <span class="shrine-icon">{{ shrine.icon }}</span>
+                            <span class="shrine-name">{{ shrine.name }}</span>
+                            {% if shrine.claimed %}
+                            <span class="shrine-badge claimed">✓ Claimed</span>
+                            {% elif not sm.mastery.is_unlocked %}
+                            <span class="shrine-badge locked">🔒 Locked</span>
+                            {% elif sm.mastery.points_available > 0 %}
+                            <span class="shrine-badge available">★ Available</span>
+                            {% else %}
+                            <span class="shrine-badge pending">Pending XP</span>
+                            {% endif %}
+                        </div>
+                        <div class="shrine-desc">{{ shrine.desc }}</div>
+                        <div class="shrine-rewards-label">Rewards:</div>
+                        <ul class="shrine-rewards-list">
+                            {% for r in shrine.rewards %}
+                            <li>{{ r }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Skills Grid -->
+                <div class="skills-section-header" style="margin-top: 2rem;">⚡ Core Skills</div>
+                <div class="skills-grid">
+                    {% for skill in sm.skills %}
+                    <div class="skill-card {% if skill.is_max %}maxed{% endif %}">
+                        <div class="skill-header-row">
+                            <span class="skill-icon-large">{{ skill.icon }}</span>
+                            <div class="skill-title-area">
+                                <div class="skill-name">{{ skill.name }}</div>
+                                <div class="skill-level-badge {% if skill.is_max %}max{% endif %}">
+                                    {% if skill.is_max %}★ Level MAX{% else %}Level {{ skill.level }}{% endif %}
+                                </div>
+                            </div>
+                            <div class="skill-xp-summary">
+                                <div class="skill-xp-total">{{ skill.current_xp_formatted }} XP</div>
+                                {% if not skill.is_max %}
+                                <div class="skill-xp-need">{{ skill.xp_needed_formatted }} to L{{ skill.level + 1 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- XP Progress Bar -->
+                        <div class="skill-bar-outer">
+                            <div class="skill-bar-fill {% if skill.is_max %}maxed{% endif %}" style="width: {{ skill.percent }}%"></div>
+                        </div>
+                        <div class="skill-bar-label">
+                            {% if skill.is_max %}
+                            <span style="color: #fbbf24;">Max Level Reached</span>
+                            {% else %}
+                            <span>{{ skill.percent }}% — {{ skill.xp_needed_formatted }} XP to go</span>
+                            {% endif %}
+                        </div>
+
+                        <!-- Active Professions -->
+                        {% if skill.active_professions %}
+                        <div class="skill-profs-row">
+                            {% for prof in skill.active_professions %}
+                            <div class="skill-prof-chip tier{{ prof.tier }}" title="{{ prof.desc }}">
+                                <span class="prof-tier-badge">L{{ prof.tier }}</span>
+                                <span class="prof-name">{{ prof.name }}</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% elif skill.level >= 5 %}
+                        <div class="skill-profs-row">
+                            <span style="color: var(--text-muted); font-size: 0.78rem;">No professions selected</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+            <!-- MODULE 1: Daily Intel & Social -->
+            <div class="module-pane active" id="module-{{ farm.farm_id }}-intel">
+                <!-- Forecast & Luck Grid -->
+                <div class="intel-top-grid">
+                    <!-- Tomorrow's Weather -->
+                    <div class="intel-card">
+                        <div class="intel-card-header">
+                            <span class="intel-card-title">🌤️ Tomorrow's Weather</span>
+                        </div>
+                        <div class="weather-hero">
+                            <div class="weather-icon-large">{{ farm.daily_intel.weather.tomorrow.icon }}</div>
+                            <div class="weather-info">
+                                <div class="weather-name">{{ farm.daily_intel.weather.tomorrow.name }}</div>
+                                <div class="weather-desc">{{ farm.daily_intel.weather.tomorrow.desc }}</div>
+                                {% if farm.daily_intel.weather.island_tomorrow %}
+                                <div class="island-weather-badge">
+                                    <span>🏝️ Ginger Island:</span>
+                                    <span>{{ farm.daily_intel.weather.island_tomorrow.icon }} {{ farm.daily_intel.weather.island_tomorrow.name }}</span>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Daily Luck / Welwick Fortune Teller -->
+                    <div class="intel-card">
+                        <div class="intel-card-header">
+                            <span class="intel-card-title">🔮 Welwick's Daily Oracle</span>
+                            <span class="luck-val-pill">Luck: {{ farm.daily_intel.luck.value }}</span>
+                        </div>
+                        <div class="luck-hero">
+                            <div class="luck-icon-large">{{ farm.daily_intel.luck.icon }}</div>
+                            <div class="luck-info">
+                                <div class="luck-tier-badge" style="background: rgba(255,255,255,0.08); color: {{ farm.daily_intel.luck.color }}; border: 1px solid {{ farm.daily_intel.luck.color }};">
+                                    {{ farm.daily_intel.luck.tier }}
+                                </div>
+                                <div class="luck-quote">"{{ farm.daily_intel.luck.fortune }}"</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Birthday Alert Banner -->
+                {% if farm.daily_intel.birthdays_alert %}
+                <div class="bday-alert-card">
+                    <div class="bday-header">
+                        <span class="bday-title">🎂 Upcoming Birthdays (Next 7 Days)</span>
+                        <span style="font-size: 0.8rem; color: var(--text-secondary);">{{ farm.daily_intel.birthdays_alert|length }} Upcoming</span>
+                    </div>
+                    <div class="bday-grid">
+                        {% for bday in farm.daily_intel.birthdays_alert %}
+                        <div class="bday-item {% if bday.days_away == 0 %}today{% endif %}">
+                            <div class="bday-item-top">
+                                <span class="bday-villager-name">{{ bday.name }}</span>
+                                <span class="bday-pill {% if bday.days_away == 0 %}today{% endif %}">{{ bday.badge_text }}</span>
+                            </div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary);">
+                                {{ bday.season }} {{ bday.day }} • {{ bday.friendship.hearts }}/{{ bday.max_hearts }} Hearts
+                            </div>
+                            <div class="loved-gifts-row">
+                                <span class="loved-gifts-label">Loved:</span>
+                                {% for gift in bday.loved_gifts %}
+                                <div class="gift-chip" title="{{ gift.name }}">
+                                    {% if gift.image %}
+                                    <img src="{{ gift.image }}" class="gift-chip-img" alt="{{ gift.name }}">
+                                    {% endif %}
+                                    <span>{{ gift.name }}</span>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Town Social Radar -->
+                <div class="radar-section">
+                    <div class="radar-controls">
+                        <div class="radar-filters" id="radar-filters-{{ farm.farm_id }}">
+                            <button class="filter-btn active" onclick="filterRadar('{{ farm.farm_id }}', 'all')">All ({{ farm.daily_intel.social_radar|length }})</button>
+                            <button class="filter-btn" onclick="filterRadar('{{ farm.farm_id }}', 'datable')">Bachelors & Bachelorettes</button>
+                            <button class="filter-btn" onclick="filterRadar('{{ farm.farm_id }}', 'need_gift')">Needs Gift (&lt; 2)</button>
+                            <button class="filter-btn" onclick="filterRadar('{{ farm.farm_id }}', 'not_talked')">Not Talked Today</button>
+                        </div>
+                        <input type="text"
+                               class="search-box"
+                               placeholder="Search villager..."
+                               onkeyup="searchRadar('{{ farm.farm_id }}', this.value)">
+                    </div>
+
+                    <div class="villager-grid" id="villager-grid-{{ farm.farm_id }}">
+                        {% for v in farm.daily_intel.social_radar %}
+                        <div class="villager-card"
+                             data-datable="{{ 'true' if v.datable else 'false' }}"
+                             data-gifts="{{ v.friendship.gifts_this_week }}"
+                             data-talked="{{ 'true' if v.friendship.talked_today else 'false' }}"
+                             data-name="{{ v.name|lower }}">
+                            <div class="v-top-row">
+                                <div class="v-name">
+                                    {{ v.name }}
+                                    {% if v.friendship.status == 'Married' %}
+                                    <span class="v-badge-datable" style="background: rgba(244, 114, 182, 0.15); color: #f472b6; border-color: #f472b6;">💍 Spouse</span>
+                                    {% elif v.datable %}
+                                    <span class="v-badge-datable">Bachelor{% if v.name in ['Abigail', 'Emily', 'Haley', 'Leah', 'Maru', 'Penny'] %}ette{% endif %}</span>
+                                    {% endif %}
+                                </div>
+                                <span style="font-size: 0.75rem; color: var(--text-muted);">{{ v.season }} {{ v.day }}</span>
+                            </div>
+
+                            <div class="v-hearts-row">
+                                <div class="v-hearts-icons">
+                                    {% for h in range(v.max_hearts) %}
+                                        {% if h < v.friendship.hearts %}
+                                        <span style="color: #ef4444;">❤️</span>
+                                        {% else %}
+                                        <span style="color: #475569;">🤍</span>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <span class="v-pts-label">{{ v.friendship.hearts }}/{{ v.max_hearts }} ({{ v.friendship.points }} pts)</span>
+                            </div>
+
+                            <div class="v-status-row">
+                                {% if v.friendship.talked_today %}
+                                <span class="v-chip green">Talked ✓</span>
+                                {% else %}
+                                <span class="v-chip muted">Not Talked</span>
+                                {% endif %}
+
+                                {% if v.friendship.gifts_this_week >= 2 %}
+                                <span class="v-chip green">Gifts: 2/2 ✓</span>
+                                {% elif v.friendship.gifts_this_week == 1 %}
+                                <span class="v-chip yellow">Gifts: 1/2</span>
+                                {% else %}
+                                <span class="v-chip muted">Gifts: 0/2</span>
+                                {% endif %}
+                            </div>
+
+                            <div class="loved-gifts-row">
+                                <span class="loved-gifts-label">Loved:</span>
+                                {% for gift in v.loved_gifts %}
+                                <div class="gift-chip" title="{{ gift.name }}">
+                                    {% if gift.image %}
+                                    <img src="{{ gift.image }}" class="gift-chip-img" alt="{{ gift.name }}">
+                                    {% endif %}
+                                    <span>{{ gift.name }}</span>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODULE: Abilities & Mastery -->
+            <div class="module-pane" id="module-{{ farm.farm_id }}-abilities">
+                {% set sm = farm.skills_and_mastery %}
+                <div class="skills-section-header">✨ Skill Experience</div>
+                <div class="skills-grid">
+                    {% for ability_id, data in farm.ability_xp.items() if ability_id.startswith('skill_') %}
+                    <div class="skill-card">
+                        <div class="skill-header-row">
+                            <span class="skill-icon-large">{{ data.icon }}</span>
+                            <div class="skill-title-area">
+                                <div class="skill-name">{{ data.name }}</div>
+                                <div class="skill-level-badge {% if data.is_max %}max{% endif %}">
+                                    Level {{ data.level }}{% if data.is_max %} ★{% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skill-bar-outer">
+                            <div class="skill-bar-fill" style="width: {{ data.progress }}%"></div>
+                        </div>
+                        <div class="skill-bar-label">
+                            {% if data.is_max %}
+                                Maxed — {{ data.xp_formatted }} XP
+                            {% else %}
+                                {{ data.progress }}% — {{ data.next_level_xp_formatted }} XP to L{{ data.level + 1 }}
+                                ({{ data.xp_formatted }} XP total)
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                {% set mdata = farm.ability_xp.mastery %}
+                <div class="skills-section-header" style="margin-top: 2rem;">⭐ Mastery Progress</div>
+                <div class="mastery-xp-card">
+                    <div class="mastery-xp-header">
+                        <span class="mastery-xp-label">Total Mastery XP</span>
+                        <span class="mastery-xp-value">{{ mdata.xp_formatted }}</span>
+                    </div>
+                    <div class="mastery-bar-outer">
+                        <div class="mastery-bar-fill" style="width: {{ mdata.progress }}%"></div>
+                    </div>
+                    <div class="mastery-points-row">
+                        {% for i in range(5) %}
+                        <div class="mastery-point-pip {% if i < mdata.level %}earned{% endif %} {% if i < sm.mastery.points_spent %}spent{% endif %}">
+                            {{ i + 1 }}
+                        </div>
+                        {% endfor %}
+                        <span class="mastery-points-label">
+                            {{ mdata.level }}/5 Points Earned •
+                            {{ mdata.points_available }} Available
+                            {% if not mdata.is_unlocked %} • Locked{% endif %}
+                        </span>
+                    </div>
+                    {% if mdata.status_text %}
+                    <div class="skill-bar-label" style="margin-top: 0.75rem;">{{ mdata.status_text }}</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- MODULE 2: Polyculture (15 Crops) -->
+            <div class="module-pane" id="module-{{ farm.farm_id }}-polyculture">
+                <div class="collection-summary">
+                    <div class="progress-header">
+                        <span class="progress-title">🌾 Polyculture Achievement ("Ship 15 of Each Crop")</span>
+                        <span class="progress-ratio">{{ farm.completed_count }} / {{ farm.total_crops }} Crops ({{ farm.progress_percent }}%)</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-fill" style="width: {{ farm.progress_percent }}%;"></div>
+                    </div>
+                </div>
+
+                <div class="radar-controls">
+                    <div class="radar-filters" id="crop-filters-{{ farm.farm_id }}">
+                        <button class="filter-btn active" onclick="filterCrops('{{ farm.farm_id }}', 'all')">All (28)</button>
+                        <button class="filter-btn" onclick="filterCrops('{{ farm.farm_id }}', 'Spring')">Spring (9)</button>
+                        <button class="filter-btn" onclick="filterCrops('{{ farm.farm_id }}', 'Summer')">Summer (10)</button>
+                        <button class="filter-btn" onclick="filterCrops('{{ farm.farm_id }}', 'Fall')">Fall (9)</button>
+                        <button class="filter-btn" onclick="filterCrops('{{ farm.farm_id }}', 'missing')">Needed Only</button>
+                    </div>
+                    <input type="text" class="search-box" placeholder="Search crop..." onkeyup="searchCrops('{{ farm.farm_id }}', this.value)">
+                </div>
+
+                <div class="items-grid" id="crops-grid-{{ farm.farm_id }}">
+                    {% for crop in farm.crops %}
+                    <div class="item-card {% if crop.is_completed %}completed{% else %}missing{% endif %}"
+                         data-season="{{ crop.season }}"
+                         data-completed="{{ 'true' if crop.is_completed else 'false' }}"
+                         data-name="{{ crop.name|lower }}">
+                        <div class="item-sprite-box">
+                            {% if crop.image %}
+                            <img src="{{ crop.image }}" class="item-sprite" alt="{{ crop.name }}">
+                            {% else %}
+                            <span>🌱</span>
+                            {% endif %}
+                        </div>
+                        <div class="item-info">
+                            <div class="item-name">{{ crop.name }}</div>
+                            <div class="item-meta">
+                                <span style="color: var(--season-{{ crop.season|lower }}); font-weight: 600;">{{ crop.season }}</span>
+                                <span>• Shipped: {{ crop.shipped }} / 15</span>
+                            </div>
+                            <div class="crop-progress-bar">
+                                <div class="crop-progress-fill {% if not crop.is_completed %}incomplete{% endif %}"
+                                     style="width: {{ [100, (crop.shipped / 15 * 100)|round]|min }}%;"></div>
+                            </div>
+                            {% if crop.is_completed %}
+                            <div class="item-badge done">[✓ Done]</div>
+                            {% else %}
+                            <div class="item-badge need">[Need {{ crop.remaining }} more]</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- MODULE 3: Fish Collection (Master Angler) -->
+            <div class="module-pane" id="module-{{ farm.farm_id }}-fish">
+                <div class="collection-summary">
+                    <div class="progress-header">
+                        <span class="progress-title">🎣 Master Angler (Fish Collection)</span>
+                        <span class="progress-ratio">{{ farm.collections.fish.caught_count }} / {{ farm.collections.fish.total_count }} Caught ({{ farm.collections.fish.percent }}%)</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-fill" style="width: {{ farm.collections.fish.percent }}%;"></div>
+                    </div>
+                </div>
+
+                <div class="radar-controls">
+                    <div class="radar-filters" id="fish-filters-{{ farm.farm_id }}">
+                        <button class="filter-btn active" onclick="filterFish('{{ farm.farm_id }}', 'all')">All ({{ farm.collections.fish.total_count }})</button>
+                        <button class="filter-btn" onclick="filterFish('{{ farm.farm_id }}', 'caught')">Caught ({{ farm.collections.fish.caught_count }})</button>
+                        <button class="filter-btn" onclick="filterFish('{{ farm.farm_id }}', 'missing')">Missing ({{ farm.collections.fish.total_count - farm.collections.fish.caught_count }})</button>
+                        <button class="filter-btn" onclick="filterFish('{{ farm.farm_id }}', '{{ farm.date_details.season }}')">Current Season ({{ farm.date_details.season }})</button>
+                    </div>
+                    <input type="text" class="search-box" placeholder="Search fish or location..." onkeyup="searchFish('{{ farm.farm_id }}', this.value)">
+                </div>
+
+                <div class="items-grid" id="fish-grid-{{ farm.farm_id }}">
+                    {% for fish in farm.collections.fish.fish_list %}
+                    <div class="item-card {% if fish.is_caught %}completed{% else %}missing{% endif %}"
+                         data-caught="{{ 'true' if fish.is_caught else 'false' }}"
+                         data-seasons="{{ fish.seasons|lower }}"
+                         data-name="{{ fish.name|lower }} {{ fish.location|lower }}">
+                        <div class="item-sprite-box">
+                            {% if fish.image %}
+                            <img src="{{ fish.image }}" class="item-sprite" alt="{{ fish.name }}">
+                            {% else %}
+                            <span>🐟</span>
+                            {% endif %}
+                        </div>
+                        <div class="item-info">
+                            <div class="item-name">{{ fish.name }}</div>
+                            <div class="item-meta">
+                                <span>{{ fish.seasons }}</span> • <span>{{ fish.weather }}</span>
+                            </div>
+                            <div class="item-meta" style="color: var(--text-muted); font-size: 0.7rem;">
+                                <span>{{ fish.location }}</span> • <span>{{ fish.time }}</span>
+                            </div>
+                            {% if fish.is_caught %}
+                            <div class="item-badge done">[✓ Caught (x{{ fish.count }})]</div>
+                            {% else %}
+                            <div class="item-badge need">[Missing]</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- MODULE 4: Museum Collection -->
+            <div class="module-pane" id="module-{{ farm.farm_id }}-museum">
+                <div class="collection-summary">
+                    <div class="progress-header">
+                        <span class="progress-title">🏛️ Complete Museum Collection (Artifacts & Minerals)</span>
+                        <span class="progress-ratio">{{ farm.collections.museum.donated_count }} / {{ farm.collections.museum.total_count }} Donated ({{ farm.collections.museum.percent }}%)</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-fill" style="width: {{ farm.collections.museum.percent }}%;"></div>
+                    </div>
+                </div>
+
+                <div class="radar-controls">
+                    <div class="radar-filters" id="museum-filters-{{ farm.farm_id }}">
+                        <button class="filter-btn active" onclick="filterMuseum('{{ farm.farm_id }}', 'all')">All ({{ farm.collections.museum.total_count }})</button>
+                        <button class="filter-btn" onclick="filterMuseum('{{ farm.farm_id }}', 'donated')">Donated ({{ farm.collections.museum.donated_count }})</button>
+                        <button class="filter-btn" onclick="filterMuseum('{{ farm.farm_id }}', 'missing')">Missing ({{ farm.collections.museum.total_count - farm.collections.museum.donated_count }})</button>
+                        <button class="filter-btn" onclick="filterMuseum('{{ farm.farm_id }}', 'artifact')">Artifacts (42)</button>
+                        <button class="filter-btn" onclick="filterMuseum('{{ farm.farm_id }}', 'mineral')">Minerals (53)</button>
+                    </div>
+                    <input type="text" class="search-box" placeholder="Search museum item..." onkeyup="searchMuseum('{{ farm.farm_id }}', this.value)">
+                </div>
+
+                <div class="items-grid" id="museum-grid-{{ farm.farm_id }}">
+                    {% for item in farm.collections.museum.item_list %}
+                    <div class="item-card {% if item.is_donated %}completed{% else %}missing{% endif %}"
+                         data-donated="{{ 'true' if item.is_donated else 'false' }}"
+                         data-cat="{{ item.category|lower }}"
+                         data-name="{{ item.name|lower }}">
+                        <div class="item-sprite-box">
+                            {% if item.image %}
+                            <img src="{{ item.image }}" class="item-sprite" alt="{{ item.name }}">
+                            {% else %}
+                            <span>🏺</span>
+                            {% endif %}
+                        </div>
+                        <div class="item-info">
+                            <div class="item-name">{{ item.name }}</div>
+                            <div class="item-meta">
+                                <span>Category: {{ item.category }}</span>
+                            </div>
+                            {% if item.is_donated %}
+                            <div class="item-badge done">[✓ Donated]</div>
+                            {% else %}
+                            <div class="item-badge need">[Missing]</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- MODULE 5: Full Shipment -->
+            <div class="module-pane" id="module-{{ farm.farm_id }}-shipping">
+                <div class="collection-summary">
+                    <div class="progress-header">
+                        <span class="progress-title">📦 Full Shipment (Items Shipped Tab)</span>
+                        <span class="progress-ratio">{{ farm.collections.shipping.shipped_count }} / {{ farm.collections.shipping.total_count }} Shipped ({{ farm.collections.shipping.percent }}%)</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-fill" style="width: {{ farm.collections.shipping.percent }}%;"></div>
+                    </div>
+                </div>
+
+                <div class="radar-controls">
+                    <div class="radar-filters" id="shipping-filters-{{ farm.farm_id }}">
+                        <button class="filter-btn active" onclick="filterShipping('{{ farm.farm_id }}', 'all')">All ({{ farm.collections.shipping.total_count }})</button>
+                        <button class="filter-btn" onclick="filterShipping('{{ farm.farm_id }}', 'shipped')">Shipped ({{ farm.collections.shipping.shipped_count }})</button>
+                        <button class="filter-btn" onclick="filterShipping('{{ farm.farm_id }}', 'missing')">Missing ({{ farm.collections.shipping.total_count - farm.collections.shipping.shipped_count }})</button>
+                    </div>
+                    <input type="text" class="search-box" placeholder="Search item..." onkeyup="searchShipping('{{ farm.farm_id }}', this.value)">
+                </div>
+
+                <div class="items-grid" id="shipping-grid-{{ farm.farm_id }}">
+                    {% for item in farm.collections.shipping.item_list %}
+                    <div class="item-card {% if item.is_shipped %}completed{% else %}missing{% endif %}"
+                         data-shipped="{{ 'true' if item.is_shipped else 'false' }}"
+                         data-name="{{ item.name|lower }}">
+                        <div class="item-sprite-box">
+                            {% if item.image %}
+                            <img src="{{ item.image }}" class="item-sprite" alt="{{ item.name }}">
+                            {% else %}
+                            <span>📦</span>
+                            {% endif %}
+                        </div>
+                        <div class="item-info">
+                            <div class="item-name">{{ item.name }}</div>
+                            <div class="item-meta">
+                                <span>Shipped: {{ item.count }}</span>
+                            </div>
+                            {% if item.is_shipped %}
+                            <div class="item-badge done">[✓ Shipped (x{{ item.count }})]</div>
+                            {% else %}
+                            <div class="item-badge need">[Not Shipped]</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+
+        {% else %}
+        <div style="text-align: center; padding: 4rem 1rem; color: var(--text-muted);">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+            <h2>No Stardew Valley save files found</h2>
+            <p style="margin-top: 0.5rem;">Please check that your saves directory is properly mounted.</p>
+        </div>
+        {% endif %}
+
+        <!-- Footer -->
+        <footer>
+            <span>Stardew Valley Save Analyzer • 1.6 Compatible</span>
+            <span>Self-hosted & Local-First • Real-Time Watcher</span>
+        </footer>
+    </div>
+
+    <!-- Client-Side Routing & Filter Scripts -->
+    <script>
+        let currentFarmId = "";
+        let currentModuleId = "intel";
+        const selectFarm = switchFarm;
+
+        function switchFarm(farmId) {
+            currentFarmId = farmId;
+            document.querySelectorAll('.farm-tab-card').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.farm-pane').forEach(p => p.classList.remove('active'));
+
+            const tabBtn = document.getElementById('tab-btn-' + farmId);
+            const pane = document.getElementById('farm-pane-' + farmId);
+            if (tabBtn) tabBtn.classList.add('active');
+            if (pane) pane.classList.add('active');
+
+            // Restore module for this farm
+            const savedModule = localStorage.getItem('stardew_module_' + farmId) || currentModuleId || 'intel';
+            switchModule(farmId, savedModule);
+
+            localStorage.setItem('stardew_active_farm', farmId);
+            updateHash();
+        }
+
+        function switchModule(farmId, moduleId) {
+            currentModuleId = moduleId;
+            const farmPane = document.getElementById('farm-pane-' + farmId);
+            if (!farmPane) return;
+
+            farmPane.querySelectorAll('.module-nav-btn').forEach(b => {
+                if (b.getAttribute('data-module') === moduleId) {
+                    b.classList.add('active');
+                } else {
+                    b.classList.remove('active');
+                }
+            });
+
+            farmPane.querySelectorAll('.module-pane').forEach(p => p.classList.remove('active'));
+            const targetPane = document.getElementById('module-' + farmId + '-' + moduleId);
+            if (targetPane) targetPane.classList.add('active');
+
+            localStorage.setItem('stardew_module_' + farmId, moduleId);
+            updateHash();
+        }
+
+        function updateHash() {
+            if (currentFarmId) {
+                location.replace('#' + currentFarmId + '/' + currentModuleId);
+            }
+        }
+
+        // Radar Filters
+        function filterRadar(farmId, filterType) {
+            const container = document.getElementById('radar-filters-' + farmId);
+            if (container) {
+                container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                event.target.classList.add('active');
+            }
+            const grid = document.getElementById('villager-grid-' + farmId);
+            if (!grid) return;
+
+            grid.querySelectorAll('.villager-card').forEach(card => {
+                let show = true;
+                if (filterType === 'datable') show = card.getAttribute('data-datable') === 'true';
+                else if (filterType === 'need_gift') show = parseInt(card.getAttribute('data-gifts') || '0') < 2;
+                else if (filterType === 'not_talked') show = card.getAttribute('data-talked') === 'false';
+                card.style.display = show ? 'flex' : 'none';
+            });
+        }
+
+        function searchRadar(farmId, query) {
+            const grid = document.getElementById('villager-grid-' + farmId);
+            if (!grid) return;
+            const q = query.trim().toLowerCase();
+            grid.querySelectorAll('.villager-card').forEach(card => {
+                const name = card.getAttribute('data-name') || '';
+                card.style.display = name.includes(q) ? 'flex' : 'none';
+            });
+        }
+
+        // Polyculture Crop Filters
+        function filterCrops(farmId, season) {
+            const container = document.getElementById('crop-filters-' + farmId);
+            if (container) {
+                container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                event.target.classList.add('active');
+            }
+            const grid = document.getElementById('crops-grid-' + farmId);
+            if (!grid) return;
+            grid.querySelectorAll('.item-card').forEach(card => {
+                let show = true;
+                if (season === 'missing') show = card.getAttribute('data-completed') === 'false';
+                else if (season !== 'all') show = card.getAttribute('data-season') === season;
+                card.style.display = show ? 'flex' : 'none';
+            });
+        }
+
+        function searchCrops(farmId, query) {
+            const grid = document.getElementById('crops-grid-' + farmId);
+            if (!grid) return;
+            const q = query.trim().toLowerCase();
+            grid.querySelectorAll('.item-card').forEach(card => {
+                const name = card.getAttribute('data-name') || '';
+                card.style.display = name.includes(q) ? 'flex' : 'none';
+            });
+        }
+
+        // Fish Filters
+        function filterFish(farmId, filterType) {
+            const container = document.getElementById('fish-filters-' + farmId);
+            if (container) {
+                container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                event.target.classList.add('active');
+            }
+            const grid = document.getElementById('fish-grid-' + farmId);
+            if (!grid) return;
+            const filterLower = filterType.toLowerCase();
+            grid.querySelectorAll('.item-card').forEach(card => {
+                let show = true;
+                if (filterType === 'caught') show = card.getAttribute('data-caught') === 'true';
+                else if (filterType === 'missing') show = card.getAttribute('data-caught') === 'false';
+                else if (filterType !== 'all') {
+                    const seasons = card.getAttribute('data-seasons') || '';
+                    show = seasons.includes(filterLower) || seasons.includes('all seasons');
+                }
+                card.style.display = show ? 'flex' : 'none';
+            });
+        }
+
+        function searchFish(farmId, query) {
+            const grid = document.getElementById('fish-grid-' + farmId);
+            if (!grid) return;
+            const q = query.trim().toLowerCase();
+            grid.querySelectorAll('.item-card').forEach(card => {
+                const name = card.getAttribute('data-name') || '';
+                card.style.display = name.includes(q) ? 'flex' : 'none';
+            });
+        }
+
+        // Museum Filters
+        function filterMuseum(farmId, filterType) {
+            const container = document.getElementById('museum-filters-' + farmId);
+            if (container) {
+                container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                event.target.classList.add('active');
+            }
+            const grid = document.getElementById('museum-grid-' + farmId);
+            if (!grid) return;
+            grid.querySelectorAll('.item-card').forEach(card => {
+                let show = true;
+                if (filterType === 'donated') show = card.getAttribute('data-donated') === 'true';
+                else if (filterType === 'missing') show = card.getAttribute('data-donated') === 'false';
+                else if (filterType === 'artifact') show = card.getAttribute('data-cat') === 'artifact';
+                else if (filterType === 'mineral') show = card.getAttribute('data-cat') === 'mineral';
+                card.style.display = show ? 'flex' : 'none';
+            });
+        }
+
+        function searchMuseum(farmId, query) {
+            const grid = document.getElementById('museum-grid-' + farmId);
+            if (!grid) return;
+            const q = query.trim().toLowerCase();
+            grid.querySelectorAll('.item-card').forEach(card => {
+                const name = card.getAttribute('data-name') || '';
+                card.style.display = name.includes(q) ? 'flex' : 'none';
+            });
+        }
+
+        // Shipping Filters
+        function filterShipping(farmId, filterType) {
+            const container = document.getElementById('shipping-filters-' + farmId);
+            if (container) {
+                container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                event.target.classList.add('active');
+            }
+            const grid = document.getElementById('shipping-grid-' + farmId);
+            if (!grid) return;
+            grid.querySelectorAll('.item-card').forEach(card => {
+                let show = true;
+                if (filterType === 'shipped') show = card.getAttribute('data-shipped') === 'true';
+                else if (filterType === 'missing') show = card.getAttribute('data-shipped') === 'false';
+                card.style.display = show ? 'flex' : 'none';
+            });
+        }
+
+        function searchShipping(farmId, query) {
+            const grid = document.getElementById('shipping-grid-' + farmId);
+            if (!grid) return;
+            const q = query.trim().toLowerCase();
+            grid.querySelectorAll('.item-card').forEach(card => {
+                const name = card.getAttribute('data-name') || '';
+                card.style.display = name.includes(q) ? 'flex' : 'none';
+            });
+        }
+
+        // Initial Routing on Page Load
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash.replace(/^#/, '');
+            let targetFarm = '';
+            let targetModule = 'intel';
+
+            if (hash) {
+                const parts = hash.split('/');
+                targetFarm = parts[0];
+                if (parts[1]) targetModule = parts[1];
+            }
+
+            if (!targetFarm) {
+                targetFarm = localStorage.getItem('stardew_active_farm') || '';
+            }
+
+            const tabExists = targetFarm && document.getElementById('tab-btn-' + targetFarm);
+            if (tabExists) {
+                switchFarm(targetFarm);
+                if (targetModule) switchModule(targetFarm, targetModule);
+            } else {
+                const firstTab = document.querySelector('.farm-tab-card');
+                if (firstTab) {
+                    const fid = firstTab.getAttribute('data-farm-id');
+                    switchFarm(fid);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

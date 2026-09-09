@@ -11,7 +11,7 @@ SaveGameInfo
 
 # Local generated output web dashboard
 web/
-*.html
+
 
 # Object ID & sprite cache downloaded/generated at runtime
 data/objects_cache.json
