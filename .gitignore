@@ -18,6 +18,9 @@ data/objects_cache.json
 data/
 
 # Environment variables & editor configs
+# Production docker-compose backup / old files
+docker-compose.old.yml
+
 .env
 .aider*
 .DS_Store

@@ -324,13 +324,11 @@ def evaluate_luck(daily_luck: float) -> Dict[str, Any]:
 
 def load_object_mappings(
     cache_path: Optional[Path] = None,
-    url: str = GITHUB_OBJECTS_URL,
     force_refresh: bool = False,
 ) -> Tuple[Dict[str, str], Dict[str, str]]:
     """
     Loads object ID-to-name and ID-to-image mappings.
-    Uses local cache if present. If missing or force_refresh is True, downloads from GitHub
-    and stores to local cache. Falls back to local cache or hardcoded fallback if offline.
+    Uses local cache (`objects_cache.json`) without remote GitHub fetches.
     Returns: (name_to_id, id_to_image)
     """
     cache_file = cache_path or DEFAULT_CACHE_FILE
@@ -338,22 +336,7 @@ def load_object_mappings(
 
     objects_data = None
 
-    # Try downloading if cache doesn't exist or refresh requested
-    if force_refresh or not cache_file.exists():
-        logger.info(f"Fetching objects mapping from GitHub: {url}")
-        try:
-            req = urllib.request.Request(url, headers={"User-Agent": "StardewAnalyser/1.0"})
-            with urllib.request.urlopen(req, timeout=10) as resp:
-                raw_bytes = resp.read()
-                objects_data = json.loads(raw_bytes.decode("utf-8"))
-                with open(cache_file, "w", encoding="utf-8") as f:
-                    json.dump(objects_data, f, indent=2)
-                logger.info(f"Cached {len(objects_data)} objects to {cache_file}")
-        except Exception as e:
-            logger.warning(f"Could not download objects.json from GitHub: {e}")
-
-    # If objects_data not loaded yet, try loading from local cache
-    if objects_data is None and cache_file.exists():
+    if cache_file.exists():
         try:
             logger.info(f"Loading objects mapping from local cache: {cache_file}")
             with open(cache_file, "r", encoding="utf-8") as f:
@@ -361,6 +344,8 @@ def load_object_mappings(
             logger.info(f"Loaded {len(objects_data)} objects from cache")
         except Exception as e:
             logger.error(f"Error reading local cache {cache_file}: {e}")
+    else:
+        logger.warning(f"Local cache file not found: {cache_file}")
 
     # Build lowercase name -> ID mapping and ID -> base64 image mapping
     name_to_id: Dict[str, str] = dict(FALLBACK_CROP_IDS)
