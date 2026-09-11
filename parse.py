@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import json
 from pathlib import Path
 from src.core.xml_reader import get_player_node
@@ -27,7 +28,6 @@ def generate_debug_html(data, object_map):
         key = item_tuple[0] if isinstance(item_tuple, tuple) else item_tuple
         return (0, int(key)) if str(key).isdigit() else (1, str(key))
 
-    # Build Table Content
     shipped_rows = []
     for item_id, count in sorted(data["shipped_items"].items(), key=sort_key):
         clean_id = str(item_id).replace("(O)", "")
@@ -64,7 +64,6 @@ def generate_debug_html(data, object_map):
             --bg-card: #1e293b;
             --bg-border: #334155;
             --accent: #f59e0b;
-            --accent-hover: #d97706;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
         }}
@@ -76,8 +75,6 @@ def generate_debug_html(data, object_map):
             max-width: 1100px;
             margin: 0 auto;
         }}
-        
-        /* Save File Selector Bar */
         .saves-bar {{
             display: flex;
             gap: 8px;
@@ -100,15 +97,12 @@ def generate_debug_html(data, object_map):
             color: var(--accent);
             border-color: var(--accent);
         }}
-
-        /* Header Base Information */
         .header-card {{
             background: var(--bg-card);
             border: 1px solid var(--bg-border);
             border-radius: 10px;
             padding: 20px 24px;
             margin-bottom: 24px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
         }}
         .header-title {{
             display: flex;
@@ -146,16 +140,12 @@ def generate_debug_html(data, object_map):
             font-size: 0.8em;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.05em;
         }}
         .stat-box .val {{
             font-size: 1.3em;
             font-weight: bold;
             margin-top: 4px;
-            color: var(--text-main);
         }}
-
-        /* Specialised Info Navigation Tabs */
         .nav-tabs {{
             display: flex;
             gap: 12px;
@@ -168,21 +158,13 @@ def generate_debug_html(data, object_map):
             padding: 10px 20px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 0.95em;
             font-weight: 600;
-            transition: all 0.2s ease;
-        }}
-        .tab-btn:hover {{
-            background: var(--bg-border);
-            color: var(--text-main);
         }}
         .tab-btn.active {{
             background: var(--accent);
             color: #0f172a;
             border-color: var(--accent);
         }}
-
-        /* Content Sections */
         .tab-content {{
             display: none;
             background: var(--bg-card);
@@ -193,8 +175,6 @@ def generate_debug_html(data, object_map):
         .tab-content.active {{
             display: block;
         }}
-
-        /* Tables */
         table {{
             width: 100%;
             border-collapse: collapse;
@@ -208,10 +188,6 @@ def generate_debug_html(data, object_map):
             background: #0f172a;
             color: var(--accent);
             font-size: 0.9em;
-            text-transform: uppercase;
-        }}
-        tr:hover {{
-            background: #33415540;
         }}
         code {{
             background: #0f172a;
@@ -223,56 +199,32 @@ def generate_debug_html(data, object_map):
     </style>
 </head>
 <body>
-
-    <!-- Top Bar: Save Game Selection -->
     <div class="saves-bar">
         <button class="save-tab active">Friisen ({data['farmer']})</button>
-        <!-- Future save files can be dynamically added as tabs here -->
     </div>
 
-    <!-- Permanently Displayed Base Information Header -->
     <div class="header-card">
         <div class="header-title">
             <h1>{data['farm']} Farm</h1>
-            <div class="gold-badge"> {data['money']:,} g</div>
+            <div class="gold-badge">G: {data['money']:,} g</div>
         </div>
         <div class="stats-grid">
-            <div class="stat-box">
-                <div class="label">Farmer</div>
-                <div class="val">{data['farmer']}</div>
-            </div>
-            <div class="stat-box">
-                <div class="label">Total Gold Earned</div>
-                <div class="val">{data['total_earned']:,} g</div>
-            </div>
-            <div class="stat-box">
-                <div class="label">Items Shipped</div>
-                <div class="val">{len(data['shipped_items'])}</div>
-            </div>
-            <div class="stat-box">
-                <div class="label">Fish Caught</div>
-                <div class="val">{len(data['fish_caught'])}</div>
-            </div>
-            <div class="stat-box">
-                <div class="label">Museum Pieces</div>
-                <div class="val">{len(data['museum_pieces'])}</div>
-            </div>
-            <div class="stat-box">
-                <div class="label">Recipes Cooked</div>
-                <div class="val">{len(data['recipes_cooked'])}</div>
-            </div>
+            <div class="stat-box"><div class="label">Farmer</div><div class="val">{data['farmer']}</div></div>
+            <div class="stat-box"><div class="label">Total Gold Earned</div><div class="val">{data['total_earned']:,} g</div></div>
+            <div class="stat-box"><div class="label">Items Shipped</div><div class="val">{len(data['shipped_items'])}</div></div>
+            <div class="stat-box"><div class="label">Fish Caught</div><div class="val">{len(data['fish_caught'])}</div></div>
+            <div class="stat-box"><div class="label">Museum Pieces</div><div class="val">{len(data['museum_pieces'])}</div></div>
+            <div class="stat-box"><div class="label">Recipes Cooked</div><div class="val">{len(data['recipes_cooked'])}</div></div>
         </div>
     </div>
 
-    <!-- Specialised Information Navigation Tabs -->
     <div class="nav-tabs">
-        <button class="tab-btn active" onclick="switchTab('shipping')">üí Shipped Items</button>
-        <button class="tab-btn" onclick="switchTab('fishing')">üì Fishing</button>
-        <button class="tab-btn" onclick="switchTab('museum')">üéüè Museum</button>
-        <button class="tab-btn" onclick="switchTab('cooking')">Ô∏èüç Cooking</button>
+        <button class="tab-btn active" onclick="switchTab('shipping', event)">Shipped Items</button>
+        <button class="tab-btn" onclick="switchTab('fishing', event)">Fishing</button>
+        <button class="tab-btn" onclick="switchTab('museum', event)">Museum</button>
+        <button class="tab-btn" onclick="switchTab('cooking', event)">Cooking</button>
     </div>
 
-    <!-- Specialised Tab Contents -->
     <div id="tab-shipping" class="tab-content active">
         <h2>Shipped Items Register ({len(data['shipped_items'])})</h2>
         <table>
@@ -306,16 +258,11 @@ def generate_debug_html(data, object_map):
     </div>
 
     <script>
-        function switchTab(tabName) {{
-            // Hide all tab contents
+        function switchTab(tabName, evt) {{
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            // Deactivate all tab buttons
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-
-            // Show selected tab content
             document.getElementById('tab-' + tabName).classList.add('active');
-            // Activate selected tab button
-            event.currentTarget.classList.add('active');
+            evt.currentTarget.classList.add('active');
         }}
     </script>
 </body>

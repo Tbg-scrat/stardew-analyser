@@ -10,7 +10,6 @@ def parse_fishing(player_node):
             if item_id and val_node is not None:
                 count, length = 0, 0
 
-                # Fixed DeprecationWarning by testing with 'is not None'
                 array_node = val_node.find("ArrayOfInt")
                 if array_node is None:
                     array_node = val_node.find("ArrayOfint")
