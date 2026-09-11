@@ -1,7 +1,0 @@
-Instructions: When writing a implementation plan for the following points: always split the points on different milestones, in case of bigger changes feel free to split one point into several milestones. when leaving plan mode to act always implement one milestone and stop to review before starting the next one.
-
-1. kettle Overview including a hay calculator how much is needed for the winter and a warning if there isn't enough hay In silos
-2. change the logic behind static data/fetching and cache:
-recommendation: Large static data blocks (VILLAGER_DATA, FISH_METADATA, SHIPPING_ITEMS_DEF) live inline in the parser module, while crop object IDs are fetched remotely and cached. Mixing "hardcoded in code" and "fetched from GitHub + cached" for conceptually similar reference data is a bit inconsistent. Since these are static game data that rarely change, moving them to a data/villagers.json, data/fish.json, etc. (loaded once at startup, same pattern as your object cache) would shrink parser.py significantly and separate "game reference data" from "parsing logic" — easier to update without touching code
-before changing code, review it first under the aforementioned aspect and propose what data could be fetched and cached instead of hard coded 
-3. review of UI elements and readme to accommodate the fact it's not a poly culture tracker but a general purpose savegame analyser
