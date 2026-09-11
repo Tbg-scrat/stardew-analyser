@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 import json
 from pathlib import Path
 from src.core.xml_reader import get_player_node
@@ -10,8 +11,12 @@ from src.modules.museum import parse_museum
 from src.modules.cooking import parse_cooking
 from src.modules.social import parse_social
 
-SAVE_FILE_PATH = Path("/srv/docker/data/sv-analyzer/saves/Friisen_433608217/Friisen_433608217")
-OUTPUT_HTML = Path("debug.html")
+# Environment variable configuration with fallback
+SAVE_DIR = Path(os.getenv("SAVE_DIR", "/srv/docker/data/sv-analyzer/saves"))
+SAVE_NAME = os.getenv("SAVE_NAME", "Friisen_433608217")
+SAVE_FILE_PATH = SAVE_DIR / SAVE_NAME / SAVE_NAME
+
+OUTPUT_HTML = Path("index.html")
 
 def analyze_save(file_path):
     root, player = get_player_node(file_path)
@@ -56,7 +61,6 @@ def generate_debug_html(data, object_map):
 
     social_rows = []
     for npc_name, info in data["friendships"].items():
-        # Render heart visual (e.g. 8/10 Hearts)
         heart_str = f"<b>{info['hearts']}</b> / {info['max_hearts']} Hearts ({info['points']} pts)"
         talked_badge = "<span style='color:#10b981;'>Yes</span>" if info['talked_today'] else "<span style='color:#ef4444;'>No</span>"
         status_badge = f"<span style='color:#f59e0b;'>{info['status']}</span>" if info['status'] != 'Friendly' else info['status']
@@ -298,7 +302,7 @@ def generate_debug_html(data, object_map):
 
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html_content)
-    print(f"[✔] Successfully generated tabbed view at {OUTPUT_HTML.resolve()}")
+    print(f"[OK] Successfully generated dashboard at {OUTPUT_HTML.resolve()}")
 
 if __name__ == "__main__":
     object_map = load_object_map()

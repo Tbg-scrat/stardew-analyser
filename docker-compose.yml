@@ -7,7 +7,9 @@ services:
     container_name: stardew-analyzer
     ports:
       - "9999:80"
+    environment:
+      - SAVE_DIR=/saves
+      - SAVE_NAME=Friisen_433608217
     volumes:
-      # Mount your local saves folder read-only into the container
-      - /srv/docker/data/sv-analyzer/saves:/srv/docker/data/sv-analyzer/saves:ro
+      - /srv/docker/data/sv-analyzer/saves:/saves:ro
     restart: unless-stopped
