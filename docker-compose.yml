@@ -1,14 +1,9 @@
-
 services:
-  sv-analyzer:
-    build: .
-    image: stardew-analyzer:latest
-    container_name: stardew-analyzer_dev
+  stardew-analyzer:
+    image: ghcr.io/tbg-scrat/stardew-analyser:latest
+    container_name: stardew-analyzer
+    restart: unless-stopped
     ports:
       - "9999:80"
-    environment:
-      - SAVE_DIR=/saves
-      - SAVE_NAME=Friisen_433608217
     volumes:
-      - /srv/docker/data/sv-analyzer/saves:/saves:ro
-    restart: unless-stopped
+      - /path/to/your/StardewValley/Saves:/saves:ro
