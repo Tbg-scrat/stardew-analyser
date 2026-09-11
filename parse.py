@@ -11,12 +11,21 @@ from src.modules.museum import parse_museum
 from src.modules.cooking import parse_cooking
 from src.modules.social import parse_social
 
-# Environment variable configuration with fallback
-SAVE_DIR = Path(os.getenv("SAVE_DIR", "/srv/docker/data/sv-analyzer/saves"))
-SAVE_NAME = os.getenv("SAVE_NAME", "Friisen_433608217")
-SAVE_FILE_PATH = SAVE_DIR / SAVE_NAME / SAVE_NAME
-
+SAVE_DIR = Path(os.getenv("SAVE_DIR", "/saves"))
 OUTPUT_HTML = Path("index.html")
+
+def find_all_saves(saves_dir):
+    """Scan SAVE_DIR for all valid Stardew Valley save files."""
+    save_files = []
+    if not saves_dir.exists():
+        return save_files
+        
+    for item in saves_dir.iterdir():
+        if item.is_dir():
+            target_file = item / item.name
+            if target_file.exists() and not item.name.startswith("."):
+                save_files.append((item.name, target_file))
+    return sorted(save_files, key=lambda x: x[0])
 
 def analyze_save(file_path):
     root, player = get_player_node(file_path)
@@ -30,48 +39,130 @@ def analyze_save(file_path):
     
     return data
 
-def generate_debug_html(data, object_map):
+def generate_dashboard_html(all_saves_data, object_map):
     def sort_key(item_tuple):
         key = item_tuple[0] if isinstance(item_tuple, tuple) else item_tuple
         return (0, int(key)) if str(key).isdigit() else (1, str(key))
 
-    shipped_rows = []
-    for item_id, count in sorted(data["shipped_items"].items(), key=sort_key):
-        clean_id = str(item_id).replace("(O)", "")
-        item_name = object_map.get(str(item_id)) or object_map.get(clean_id) or str(item_id)
-        shipped_rows.append(f"<tr><td><code>{item_id}</code></td><td><b>{item_name}</b></td><td>{count}</td></tr>")
+    save_tabs_html = []
+    save_views_html = []
 
-    fish_rows = []
-    for item_id, stats in sorted(data["fish_caught"].items(), key=sort_key):
-        clean_id = str(item_id).replace("(O)", "")
-        item_name = object_map.get(str(item_id)) or object_map.get(clean_id) or str(item_id)
-        fish_rows.append(f"<tr><td><code>{item_id}</code></td><td><b>{item_name}</b></td><td>{stats['count']}</td><td>{stats['length']} in.</td></tr>")
+    for idx, (save_id, data) in enumerate(all_saves_data.items()):
+        is_active = "active" if idx == 0 else ""
+        display_style = "block" if idx == 0 else "none"
 
-    museum_rows = []
-    for item_id in sorted(data["museum_pieces"], key=sort_key):
-        clean_id = str(item_id).replace("(O)", "")
-        item_name = object_map.get(str(item_id)) or object_map.get(clean_id) or str(item_id)
-        museum_rows.append(f"<tr><td><code>{item_id}</code></td><td><b>{item_name}</b></td></tr>")
-
-    cooking_rows = []
-    for item_id, count in sorted(data["recipes_cooked"].items(), key=sort_key):
-        clean_id = str(item_id).replace("(O)", "")
-        item_name = object_map.get(str(item_id)) or object_map.get(clean_id) or str(item_id)
-        cooking_rows.append(f"<tr><td><code>{item_id}</code></td><td><b>{item_name}</b></td><td>{count}</td></tr>")
-
-    social_rows = []
-    for npc_name, info in data["friendships"].items():
-        heart_str = f"<b>{info['hearts']}</b> / {info['max_hearts']} Hearts ({info['points']} pts)"
-        talked_badge = "<span style='color:#10b981;'>Yes</span>" if info['talked_today'] else "<span style='color:#ef4444;'>No</span>"
-        status_badge = f"<span style='color:#f59e0b;'>{info['status']}</span>" if info['status'] != 'Friendly' else info['status']
-        
-        social_rows.append(
-            f"<tr><td><b>{npc_name}</b></td>"
-            f"<td>{heart_str}</td>"
-            f"<td>{info['gifts_this_week']} / 2</td>"
-            f"<td>{talked_badge}</td>"
-            f"<td>{status_badge}</td></tr>"
+        # Build top save switchers
+        save_tabs_html.append(
+            f'<button class="save-tab {is_active}" onclick="switchSave(\'{save_id}\', event)">'
+            f'{data["farm"]} ({data["farmer"]})</button>'
         )
+
+        # Build rows for each tab
+        shipped_rows = []
+        for item_id, count in sorted(data["shipped_items"].items(), key=sort_key):
+            clean_id = str(item_id).replace("(O)", "")
+            item_name = object_map.get(str(item_id)) or object_map.get(clean_id) or str(item_id)
+            shipped_rows.append(f"<tr><td><code>{item_id}</code></td><td><b>{item_name}</b></td><td>{count}</td></tr>")
+
+        fish_rows = []
+        for item_id, stats in sorted(data["fish_caught"].items(), key=sort_key):
+            clean_id = str(item_id).replace("(O)", "")
+            item_name = object_map.get(str(item_id)) or object_map.get(clean_id) or str(item_id)
+            fish_rows.append(f"<tr><td><code>{item_id}</code></td><td><b>{item_name}</b></td><td>{stats['count']}</td><td>{stats['length']} in.</td></tr>")
+
+        museum_rows = []
+        for item_id in sorted(data["museum_pieces"], key=sort_key):
+            clean_id = str(item_id).replace("(O)", "")
+            item_name = object_map.get(str(item_id)) or object_map.get(clean_id) or str(item_id)
+            museum_rows.append(f"<tr><td><code>{item_id}</code></td><td><b>{item_name}</b></td></tr>")
+
+        cooking_rows = []
+        for item_id, count in sorted(data["recipes_cooked"].items(), key=sort_key):
+            clean_id = str(item_id).replace("(O)", "")
+            item_name = object_map.get(str(item_id)) or object_map.get(clean_id) or str(item_id)
+            cooking_rows.append(f"<tr><td><code>{item_id}</code></td><td><b>{item_name}</b></td><td>{count}</td></tr>")
+
+        social_rows = []
+        for npc_name, info in data["friendships"].items():
+            heart_str = f"<b>{info['hearts']}</b> / {info['max_hearts']} Hearts ({info['points']} pts)"
+            talked_badge = "<span style='color:#10b981;'>Yes</span>" if info['talked_today'] else "<span style='color:#ef4444;'>No</span>"
+            status_badge = f"<span style='color:#f59e0b;'>{info['status']}</span>" if info['status'] != 'Friendly' else info['status']
+            
+            social_rows.append(
+                f"<tr><td><b>{npc_name}</b></td>"
+                f"<td>{heart_str}</td>"
+                f"<td>{info['gifts_this_week']} / 2</td>"
+                f"<td>{talked_badge}</td>"
+                f"<td>{status_badge}</td></tr>"
+            )
+
+        save_views_html.append(f"""
+        <div id="save-view-{save_id}" class="save-view" style="display: {display_style};">
+            <div class="header-card">
+                <div class="header-title">
+                    <h1>{data['farm']} Farm</h1>
+                    <div class="gold-badge">G: {data['money']:,} g</div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-box"><div class="label">Farmer</div><div class="val">{data['farmer']}</div></div>
+                    <div class="stat-box"><div class="label">Total Gold Earned</div><div class="val">{data['total_earned']:,} g</div></div>
+                    <div class="stat-box"><div class="label">Items Shipped</div><div class="val">{len(data['shipped_items'])}</div></div>
+                    <div class="stat-box"><div class="label">Fish Caught</div><div class="val">{len(data['fish_caught'])}</div></div>
+                    <div class="stat-box"><div class="label">Museum Pieces</div><div class="val">{len(data['museum_pieces'])}</div></div>
+                    <div class="stat-box"><div class="label">Recipes Cooked</div><div class="val">{len(data['recipes_cooked'])}</div></div>
+                    <div class="stat-box"><div class="label">Villagers Met</div><div class="val">{len(data['friendships'])}</div></div>
+                </div>
+            </div>
+
+            <div class="nav-tabs">
+                <button class="tab-btn active" onclick="switchTab('{save_id}', 'shipping', event)">Shipped Items</button>
+                <button class="tab-btn" onclick="switchTab('{save_id}', 'fishing', event)">Fishing</button>
+                <button class="tab-btn" onclick="switchTab('{save_id}', 'museum', event)">Museum</button>
+                <button class="tab-btn" onclick="switchTab('{save_id}', 'cooking', event)">Cooking</button>
+                <button class="tab-btn" onclick="switchTab('{save_id}', 'social', event)">Social / Villagers</button>
+            </div>
+
+            <div id="tab-{save_id}-shipping" class="tab-content active">
+                <h2>Shipped Items Register ({len(data['shipped_items'])})</h2>
+                <table>
+                    <thead><tr><th>ID</th><th>Item Name</th><th>Quantity Shipped</th></tr></thead>
+                    <tbody>{''.join(shipped_rows) if shipped_rows else '<tr><td colspan="3">No shipped items</td></tr>'}</tbody>
+                </table>
+            </div>
+
+            <div id="tab-{save_id}-fishing" class="tab-content">
+                <h2>Fish Caught Log ({len(data['fish_caught'])})</h2>
+                <table>
+                    <thead><tr><th>ID</th><th>Fish Name</th><th>Count Caught</th><th>Record Size</th></tr></thead>
+                    <tbody>{''.join(fish_rows) if fish_rows else '<tr><td colspan="4">No fish caught</td></tr>'}</tbody>
+                </table>
+            </div>
+
+            <div id="tab-{save_id}-museum" class="tab-content">
+                <h2>Museum Collection ({len(data['museum_pieces'])})</h2>
+                <table>
+                    <thead><tr><th>ID</th><th>Donated Item Name</th></tr></thead>
+                    <tbody>{''.join(museum_rows) if museum_rows else '<tr><td colspan="2">No museum pieces donated</td></tr>'}</tbody>
+                </table>
+            </div>
+
+            <div id="tab-{save_id}-cooking" class="tab-content">
+                <h2>Recipes Cooked ({len(data['recipes_cooked'])})</h2>
+                <table>
+                    <thead><tr><th>ID</th><th>Recipe / Dish Name</th><th>Times Cooked</th></tr></thead>
+                    <tbody>{''.join(cooking_rows) if cooking_rows else '<tr><td colspan="3">No recipes cooked</td></tr>'}</tbody>
+                </table>
+            </div>
+
+            <div id="tab-{save_id}-social" class="tab-content">
+                <h2>Villager Friendships ({len(data['friendships'])})</h2>
+                <table>
+                    <thead><tr><th>Villager</th><th>Friendship Level</th><th>Gifts This Week</th><th>Talked Today</th><th>Status</th></tr></thead>
+                    <tbody>{''.join(social_rows) if social_rows else '<tr><td colspan="5">No villagers met</td></tr>'}</tbody>
+                </table>
+            </div>
+        </div>
+        """)
 
     html_content = f"""<!DOCTYPE html>
 <html lang="en">
@@ -102,6 +193,7 @@ def generate_debug_html(data, object_map):
             margin-bottom: 16px;
             border-bottom: 1px solid var(--bg-border);
             padding-bottom: 8px;
+            flex-wrap: wrap;
         }}
         .save-tab {{
             background: #0f172a;
@@ -222,78 +314,24 @@ def generate_debug_html(data, object_map):
 </head>
 <body>
     <div class="saves-bar">
-        <button class="save-tab active">Friisen ({data['farmer']})</button>
+        {''.join(save_tabs_html)}
     </div>
 
-    <div class="header-card">
-        <div class="header-title">
-            <h1>{data['farm']} Farm</h1>
-            <div class="gold-badge">G: {data['money']:,} g</div>
-        </div>
-        <div class="stats-grid">
-            <div class="stat-box"><div class="label">Farmer</div><div class="val">{data['farmer']}</div></div>
-            <div class="stat-box"><div class="label">Total Gold Earned</div><div class="val">{data['total_earned']:,} g</div></div>
-            <div class="stat-box"><div class="label">Items Shipped</div><div class="val">{len(data['shipped_items'])}</div></div>
-            <div class="stat-box"><div class="label">Fish Caught</div><div class="val">{len(data['fish_caught'])}</div></div>
-            <div class="stat-box"><div class="label">Museum Pieces</div><div class="val">{len(data['museum_pieces'])}</div></div>
-            <div class="stat-box"><div class="label">Recipes Cooked</div><div class="val">{len(data['recipes_cooked'])}</div></div>
-            <div class="stat-box"><div class="label">Villagers Met</div><div class="val">{len(data['friendships'])}</div></div>
-        </div>
-    </div>
-
-    <div class="nav-tabs">
-        <button class="tab-btn active" onclick="switchTab('shipping', event)">Shipped Items</button>
-        <button class="tab-btn" onclick="switchTab('fishing', event)">Fishing</button>
-        <button class="tab-btn" onclick="switchTab('museum', event)">Museum</button>
-        <button class="tab-btn" onclick="switchTab('cooking', event)">Cooking</button>
-        <button class="tab-btn" onclick="switchTab('social', event)">Social / Villagers</button>
-    </div>
-
-    <div id="tab-shipping" class="tab-content active">
-        <h2>Shipped Items Register ({len(data['shipped_items'])})</h2>
-        <table>
-            <thead><tr><th>ID</th><th>Item Name</th><th>Quantity Shipped</th></tr></thead>
-            <tbody>{''.join(shipped_rows) if shipped_rows else '<tr><td colspan="3">No shipped items</td></tr>'}</tbody>
-        </table>
-    </div>
-
-    <div id="tab-fishing" class="tab-content">
-        <h2>Fish Caught Log ({len(data['fish_caught'])})</h2>
-        <table>
-            <thead><tr><th>ID</th><th>Fish Name</th><th>Count Caught</th><th>Record Size</th></tr></thead>
-            <tbody>{''.join(fish_rows) if fish_rows else '<tr><td colspan="4">No fish caught</td></tr>'}</tbody>
-        </table>
-    </div>
-
-    <div id="tab-museum" class="tab-content">
-        <h2>Museum Collection ({len(data['museum_pieces'])})</h2>
-        <table>
-            <thead><tr><th>ID</th><th>Donated Item Name</th></tr></thead>
-            <tbody>{''.join(museum_rows) if museum_rows else '<tr><td colspan="2">No museum pieces donated</td></tr>'}</tbody>
-        </table>
-    </div>
-
-    <div id="tab-cooking" class="tab-content">
-        <h2>Recipes Cooked ({len(data['recipes_cooked'])})</h2>
-        <table>
-            <thead><tr><th>ID</th><th>Recipe / Dish Name</th><th>Times Cooked</th></tr></thead>
-            <tbody>{''.join(cooking_rows) if cooking_rows else '<tr><td colspan="3">No recipes cooked</td></tr>'}</tbody>
-        </table>
-    </div>
-
-    <div id="tab-social" class="tab-content">
-        <h2>Villager Friendships ({len(data['friendships'])})</h2>
-        <table>
-            <thead><tr><th>Villager</th><th>Friendship Level</th><th>Gifts This Week</th><th>Talked Today</th><th>Status</th></tr></thead>
-            <tbody>{''.join(social_rows) if social_rows else '<tr><td colspan="5">No villagers met</td></tr>'}</tbody>
-        </table>
-    </div>
+    {''.join(save_views_html)}
 
     <script>
-        function switchTab(tabName, evt) {{
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-            document.getElementById('tab-' + tabName).classList.add('active');
+        function switchSave(saveId, evt) {{
+            document.querySelectorAll('.save-view').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.save-tab').forEach(el => el.classList.remove('active'));
+            document.getElementById('save-view-' + saveId).style.display = 'block';
+            evt.currentTarget.classList.add('active');
+        }}
+
+        function switchTab(saveId, tabName, evt) {{
+            const activeSave = document.getElementById('save-view-' + saveId);
+            activeSave.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            activeSave.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById('tab-' + saveId + '-' + tabName).classList.add('active');
             evt.currentTarget.classList.add('active');
         }}
     </script>
@@ -302,9 +340,20 @@ def generate_debug_html(data, object_map):
 
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html_content)
-    print(f"[OK] Successfully generated dashboard at {OUTPUT_HTML.resolve()}")
+    print(f"[OK] Successfully generated dashboard for {len(all_saves_data)} save(s) at {OUTPUT_HTML.resolve()}")
 
 if __name__ == "__main__":
     object_map = load_object_map()
-    parsed_data = analyze_save(SAVE_FILE_PATH)
-    generate_debug_html(parsed_data, object_map)
+    saves = find_all_saves(SAVE_DIR)
+    
+    all_saves_data = {}
+    for save_id, save_path in saves:
+        try:
+            all_saves_data[save_id] = analyze_save(save_path)
+        except Exception as e:
+            print(f"[WARN] Failed to parse save '{save_id}': {e}")
+            
+    if all_saves_data:
+        generate_dashboard_html(all_saves_data, object_map)
+    else:
+        print(f"[WARN] No valid saves found in {SAVE_DIR.resolve()}")
