@@ -9,3 +9,4 @@ index.html
 Thumbs.db
 .vscode/
 .idea/
+docker-compose.override.yml
