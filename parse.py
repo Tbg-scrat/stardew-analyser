@@ -18,6 +18,7 @@ def find_all_saves(saves_dir):
     """Scan SAVE_DIR for all valid Stardew Valley save files."""
     save_files = []
     if not saves_dir.exists():
+        print(f"[WARN] Save directory '{saves_dir.resolve()}' does not exist.")
         return save_files
         
     for item in saves_dir.iterdir():
@@ -51,13 +52,11 @@ def generate_dashboard_html(all_saves_data, object_map):
         is_active = "active" if idx == 0 else ""
         display_style = "block" if idx == 0 else "none"
 
-        # Build top save switchers
         save_tabs_html.append(
             f'<button class="save-tab {is_active}" onclick="switchSave(\'{save_id}\', event)">'
             f'{data["farm"]} ({data["farmer"]})</button>'
         )
 
-        # Build rows for each tab
         shipped_rows = []
         for item_id, count in sorted(data["shipped_items"].items(), key=sort_key):
             clean_id = str(item_id).replace("(O)", "")
@@ -340,15 +339,20 @@ def generate_dashboard_html(all_saves_data, object_map):
 
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html_content)
-    print(f"[OK] Successfully generated dashboard for {len(all_saves_data)} save(s) at {OUTPUT_HTML.resolve()}")
+    print(f"[OK] Generated static dashboard for {len(all_saves_data)} save game(s) -> {OUTPUT_HTML.resolve()}")
 
 if __name__ == "__main__":
+    print(f"[INFO] Loading game item reference map...")
     object_map = load_object_map()
+    
+    print(f"[INFO] Scanning directory: {SAVE_DIR.resolve()}")
     saves = find_all_saves(SAVE_DIR)
+    print(f"[INFO] Discovered {len(saves)} save candidate(s).")
     
     all_saves_data = {}
     for save_id, save_path in saves:
         try:
+            print(f"[INFO] Processing save file: {save_id}")
             all_saves_data[save_id] = analyze_save(save_path)
         except Exception as e:
             print(f"[WARN] Failed to parse save '{save_id}': {e}")
@@ -356,4 +360,4 @@ if __name__ == "__main__":
     if all_saves_data:
         generate_dashboard_html(all_saves_data, object_map)
     else:
-        print(f"[WARN] No valid saves found in {SAVE_DIR.resolve()}")
+        print(f"[WARN] No valid save games were parsed in {SAVE_DIR.resolve()}")
