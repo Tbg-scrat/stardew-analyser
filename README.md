@@ -1,31 +1,38 @@
 # 🌾 Stardew Valley Save Analyzer
 
-A lightweight, local-first web dashboard for parsing Stardew Valley save files. Designed for self-hosted homelabs, it parses raw save XML and renders a dynamic Jinja2 dashboard for multi-farm progress monitoring.
-
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
+![Version](https://img.shields.io/github/v/release/tbg-scrat/stardew-analyser?sort=semver)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
+
+A lightweight, local-first web dashboard designed specifically for self-hosted homelabs and single-host setups. It parses raw Stardew Valley save XML files and renders a dynamic, responsive dashboard for tracking farm progress, collections, and relationships across multiple saves — without relying on external cloud processing.
+
+---
+
+## 🏠 Self-Hosting & Niche Use Cases
+
+This tool is built from the ground up to solve specific challenges encountered in homelab and self-hosted environments:
+
+- 🗂️ **Multi-Farm Archiving:** Automatically scans and indexes all save subdirectories inside the mounted saves folder. If you manage separate single-player, co-op, or seasonal farms, you can switch between them instantly using top-level tabs.
+- 🔒 **Local-First & Privacy-Focused:** Your save data never leaves your infrastructure. Save parsing happens entirely inside your container, generating static HTML output served via an internal Nginx container.
+- ⚡ **High Efficiency:** Engineered to consume minimal RAM and CPU, making it perfect for running alongside other home services on low-power hardware, Raspberry Pis, or older mini PCs.
 
 ## ✨ Features
 
-- **Multi-Farm Support:** Automatically detects and indexes all farms in your `/saves` directory with top-level tab switching.
+- **Multi-Farm Support:** Automatically detects and indexes all farms in your mounted directory with top-level tab switching.
 - **Collection Tracking:**
-  - 📦 **Shipping:** Item counts and completion mapping.
-  - 🐟 **Fishing:** Fish caught, record lengths, and counts.
+  - 📦 **Shipping:** Shipped item counts and completion status.
+  - 🐟 **Fishing:** Fish caught, record lengths, and caught counts.
   - 🏺 **Museum:** Donated artifacts and minerals.
   - 🍳 **Cooking:** Recipes unlocked and cooked counts.
-- **Social Radar:** Track villager friendship heart levels, daily chat statuses, and weekly gift counts.
-- **Dynamic Sprites:** Automatically maps internal item IDs to Stardew Valley Wiki icons with standard emoji fallbacks.
-- **Lightweight & Fast:** Runs on a minimal Python + Nginx container stack.
+- 💬 **Social Radar:** Track villager friendship heart levels, daily chat statuses, and weekly gift counts.
+- 🖼️ **Dynamic Sprites:** Maps internal item IDs to wiki icons with emoji fallbacks.
 
 ---
 
 ## 🚀 Quickstart (Docker Compose)
 
-The easiest way to run the Stardew Valley Save Analyzer is with `docker-compose`.
+The easiest way to deploy the analyzer is using Docker Compose.
 
 ```yaml
-version: "3.8"
-
 services:
   stardew-analyzer:
     image: ghcr.io/tbg-scrat/stardew-analyser:latest
@@ -37,7 +44,7 @@ services:
       - /path/to/your/StardewValley/Saves:/saves:ro
 ```
 
-Replace `/path/to/your/StardewValley/Saves` with the absolute path to your Stardew Valley save folder on your host machine.
+You can mount the actual save location directly into the container, or copy your savegames into a separate location and mount that instead.
 
 ### Default Save File Locations
 
@@ -48,13 +55,22 @@ Replace `/path/to/your/StardewValley/Saves` with the absolute path to your Stard
 ## 🛠️ Building Locally
 
 ```bash
-# Clone the repository
 git clone https://github.com/tbg-scrat/stardew-analyser.git
 cd stardew-analyser
-
-# Build and run with Docker Compose
 docker compose up --build -d
 ```
+
+---
+
+## ⚖️ Disclaimer & Intellectual Property
+
+This project is an unofficial fan-made tool and is not affiliated with, endorsed by, sponsored by, or associated with ConcernedApe (Eric Barone) or ConcernedApe LLC.
+
+All Stardew Valley assets, item names, character names, graphics, and game data are trademarks and copyrighted property of ConcernedApe LLC. All rights reserved.
+
+## 🤖 AI Assistance Disclaimer
+
+This project was developed with the assistance of Generative AI (LLMs) for scaffolding code, writing Jinja2 HTML templates, refining parsing functions, and drafting documentation. All generated code and logic have been tested, reviewed, and tailored for performance and stability within homelab environments.
 
 ## 📜 License
 
