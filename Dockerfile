@@ -4,9 +4,10 @@ RUN apt-get update && apt-get install -y nginx && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
+RUN pip install --no-cache-dir jinja2
+
 COPY . .
 
-# Nginx default configuration already serves /var/www/html or custom root index.html
 RUN echo 'server { \
     listen 80; \
     server_name localhost; \

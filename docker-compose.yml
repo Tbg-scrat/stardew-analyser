@@ -1,10 +1,9 @@
-version: '3.8'
 
 services:
   sv-analyzer:
     build: .
     image: stardew-analyzer:latest
-    container_name: stardew-analyzer
+    container_name: stardew-analyzer_dev
     ports:
       - "9999:80"
     environment:
