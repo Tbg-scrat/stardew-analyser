@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  sv-analyzer:
+    build: .
+    image: stardew-analyzer:latest
+    container_name: stardew-analyzer
+    ports:
+      - "9999:80"
+    volumes:
+      # Mount your local saves folder read-only into the container
+      - /srv/docker/data/sv-analyzer/saves:/srv/docker/data/sv-analyzer/saves:ro
+    restart: unless-stopped

@@ -73,7 +73,7 @@
         }
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 16px;
         }
         .stat-box {
@@ -96,6 +96,7 @@
             display: flex;
             gap: 12px;
             margin-bottom: 20px;
+            flex-wrap: wrap;
         }
         .tab-btn {
             background: var(--bg-card);
@@ -161,6 +162,7 @@
             <div class="stat-box"><div class="label">Fish Caught</div><div class="val">42</div></div>
             <div class="stat-box"><div class="label">Museum Pieces</div><div class="val">60</div></div>
             <div class="stat-box"><div class="label">Recipes Cooked</div><div class="val">7</div></div>
+            <div class="stat-box"><div class="label">Villagers Met</div><div class="val">36</div></div>
         </div>
     </div>
 
@@ -169,6 +171,7 @@
         <button class="tab-btn" onclick="switchTab('fishing', event)">Fishing</button>
         <button class="tab-btn" onclick="switchTab('museum', event)">Museum</button>
         <button class="tab-btn" onclick="switchTab('cooking', event)">Cooking</button>
+        <button class="tab-btn" onclick="switchTab('social', event)">Social / Villagers</button>
     </div>
 
     <div id="tab-shipping" class="tab-content active">
@@ -200,6 +203,14 @@
         <table>
             <thead><tr><th>ID</th><th>Recipe / Dish Name</th><th>Times Cooked</th></tr></thead>
             <tbody><tr><td><code>194</code></td><td><b>Fried Egg</b></td><td>1</td></tr><tr><td><code>195</code></td><td><b>Omelet</b></td><td>2</td></tr><tr><td><code>205</code></td><td><b>Fried Mushroom</b></td><td>1</td></tr><tr><td><code>227</code></td><td><b>Sashimi</b></td><td>1</td></tr><tr><td><code>240</code></td><td><b>Farmer's Lunch</b></td><td>2</td></tr><tr><td><code>244</code></td><td><b>Roots Platter</b></td><td>2</td></tr><tr><td><code>253</code></td><td><b>Triple Shot Espresso</b></td><td>262</td></tr></tbody>
+        </table>
+    </div>
+
+    <div id="tab-social" class="tab-content">
+        <h2>Villager Friendships (36)</h2>
+        <table>
+            <thead><tr><th>Villager</th><th>Friendship Level</th><th>Gifts This Week</th><th>Talked Today</th><th>Status</th></tr></thead>
+            <tbody><tr><td><b>Abigail</b></td><td><b>1</b> / 10 Hearts (492 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Alex</b></td><td><b>2</b> / 10 Hearts (653 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Caroline</b></td><td><b>9</b> / 10 Hearts (2282 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Clint</b></td><td><b>6</b> / 10 Hearts (1631 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Demetrius</b></td><td><b>5</b> / 10 Hearts (1452 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Dwarf</b></td><td><b>4</b> / 10 Hearts (1024 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Elliott</b></td><td><b>2</b> / 10 Hearts (520 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Emily</b></td><td><b>7</b> / 10 Hearts (1783 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Evelyn</b></td><td><b>5</b> / 10 Hearts (1343 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>George</b></td><td><b>5</b> / 10 Hearts (1475 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Gus</b></td><td><b>7</b> / 10 Hearts (1765 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Haley</b></td><td><b>1</b> / 10 Hearts (448 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Harvey</b></td><td><b>1</b> / 10 Hearts (459 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Henchman</b></td><td><b>0</b> / 10 Hearts (0 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Jas</b></td><td><b>3</b> / 10 Hearts (846 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Jodi</b></td><td><b>5</b> / 10 Hearts (1277 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Justus</b></td><td><b>3</b> / 10 Hearts (838 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Kent</b></td><td><b>4</b> / 10 Hearts (1201 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Krobus</b></td><td><b>0</b> / 10 Hearts (216 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Leah</b></td><td><b>14</b> / 14 Hearts (3736 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td><span style='color:#f59e0b;'>Married</span></td></tr><tr><td><b>Lewis</b></td><td><b>6</b> / 10 Hearts (1648 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Linus</b></td><td><b>4</b> / 10 Hearts (1239 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Marnie</b></td><td><b>5</b> / 10 Hearts (1369 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Maru</b></td><td><b>1</b> / 10 Hearts (280 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Pam</b></td><td><b>8</b> / 10 Hearts (2206 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Penny</b></td><td><b>1</b> / 10 Hearts (298 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Pierre</b></td><td><b>3</b> / 10 Hearts (976 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Robin</b></td><td><b>8</b> / 10 Hearts (2192 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Sam</b></td><td><b>1</b> / 10 Hearts (272 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Sandy</b></td><td><b>0</b> / 10 Hearts (0 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Sebastian</b></td><td><b>4</b> / 10 Hearts (1005 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Shane</b></td><td><b>2</b> / 10 Hearts (555 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Tritu</b></td><td><b>1</b> / 10 Hearts (290 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Vincent</b></td><td><b>3</b> / 10 Hearts (778 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Willy</b></td><td><b>8</b> / 10 Hearts (2227 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr><tr><td><b>Wizard</b></td><td><b>7</b> / 10 Hearts (1967 pts)</td><td>0 / 2</td><td><span style='color:#ef4444;'>No</span></td><td>Friendly</td></tr></tbody>
         </table>
     </div>
 

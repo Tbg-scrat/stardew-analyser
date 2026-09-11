@@ -8,6 +8,7 @@ from src.modules.shipping import parse_shipping
 from src.modules.fishing import parse_fishing
 from src.modules.museum import parse_museum
 from src.modules.cooking import parse_cooking
+from src.modules.social import parse_social
 
 SAVE_FILE_PATH = Path("/srv/docker/data/sv-analyzer/saves/Friisen_433608217/Friisen_433608217")
 OUTPUT_HTML = Path("debug.html")
@@ -20,6 +21,7 @@ def analyze_save(file_path):
     data["fish_caught"] = parse_fishing(player)
     data["museum_pieces"] = parse_museum(root)
     data["recipes_cooked"] = parse_cooking(player)
+    data["friendships"] = parse_social(player)
     
     return data
 
@@ -51,6 +53,21 @@ def generate_debug_html(data, object_map):
         clean_id = str(item_id).replace("(O)", "")
         item_name = object_map.get(str(item_id)) or object_map.get(clean_id) or str(item_id)
         cooking_rows.append(f"<tr><td><code>{item_id}</code></td><td><b>{item_name}</b></td><td>{count}</td></tr>")
+
+    social_rows = []
+    for npc_name, info in data["friendships"].items():
+        # Render heart visual (e.g. 8/10 Hearts)
+        heart_str = f"<b>{info['hearts']}</b> / {info['max_hearts']} Hearts ({info['points']} pts)"
+        talked_badge = "<span style='color:#10b981;'>Yes</span>" if info['talked_today'] else "<span style='color:#ef4444;'>No</span>"
+        status_badge = f"<span style='color:#f59e0b;'>{info['status']}</span>" if info['status'] != 'Friendly' else info['status']
+        
+        social_rows.append(
+            f"<tr><td><b>{npc_name}</b></td>"
+            f"<td>{heart_str}</td>"
+            f"<td>{info['gifts_this_week']} / 2</td>"
+            f"<td>{talked_badge}</td>"
+            f"<td>{status_badge}</td></tr>"
+        )
 
     html_content = f"""<!DOCTYPE html>
 <html lang="en">
@@ -127,7 +144,7 @@ def generate_debug_html(data, object_map):
         }}
         .stats-grid {{
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 16px;
         }}
         .stat-box {{
@@ -150,6 +167,7 @@ def generate_debug_html(data, object_map):
             display: flex;
             gap: 12px;
             margin-bottom: 20px;
+            flex-wrap: wrap;
         }}
         .tab-btn {{
             background: var(--bg-card);
@@ -215,6 +233,7 @@ def generate_debug_html(data, object_map):
             <div class="stat-box"><div class="label">Fish Caught</div><div class="val">{len(data['fish_caught'])}</div></div>
             <div class="stat-box"><div class="label">Museum Pieces</div><div class="val">{len(data['museum_pieces'])}</div></div>
             <div class="stat-box"><div class="label">Recipes Cooked</div><div class="val">{len(data['recipes_cooked'])}</div></div>
+            <div class="stat-box"><div class="label">Villagers Met</div><div class="val">{len(data['friendships'])}</div></div>
         </div>
     </div>
 
@@ -223,6 +242,7 @@ def generate_debug_html(data, object_map):
         <button class="tab-btn" onclick="switchTab('fishing', event)">Fishing</button>
         <button class="tab-btn" onclick="switchTab('museum', event)">Museum</button>
         <button class="tab-btn" onclick="switchTab('cooking', event)">Cooking</button>
+        <button class="tab-btn" onclick="switchTab('social', event)">Social / Villagers</button>
     </div>
 
     <div id="tab-shipping" class="tab-content active">
@@ -254,6 +274,14 @@ def generate_debug_html(data, object_map):
         <table>
             <thead><tr><th>ID</th><th>Recipe / Dish Name</th><th>Times Cooked</th></tr></thead>
             <tbody>{''.join(cooking_rows) if cooking_rows else '<tr><td colspan="3">No recipes cooked</td></tr>'}</tbody>
+        </table>
+    </div>
+
+    <div id="tab-social" class="tab-content">
+        <h2>Villager Friendships ({len(data['friendships'])})</h2>
+        <table>
+            <thead><tr><th>Villager</th><th>Friendship Level</th><th>Gifts This Week</th><th>Talked Today</th><th>Status</th></tr></thead>
+            <tbody>{''.join(social_rows) if social_rows else '<tr><td colspan="5">No villagers met</td></tr>'}</tbody>
         </table>
     </div>
 
