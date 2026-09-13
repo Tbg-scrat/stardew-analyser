@@ -52,6 +52,11 @@ You can mount the actual save location directly into the container, or copy your
 - **Windows:** `%APPDATA%\StardewValley\Saves`
 - **macOS:** `~/.config/StardewValley/Saves`
 
+Depending on the amount of automation you want, you can either copy your files manually or setup automation to copy your files to the container location. 
+From personal experience (Android): I use macrodroid in combination with Shizuku to extract the files via schedule out of the android folder into a less restricted location and then push them via Foldersync to the docker host.
+On PC it would probably even be easier to copy the files via task scheduler.
+For anything apple-related: Sorry, don't it...
+
 ## 🛠️ Building Locally
 
 ```bash
