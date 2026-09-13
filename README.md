@@ -3,6 +3,11 @@
 ![Version](https://img.shields.io/github/v/release/tbg-scrat/stardew-analyser?sort=semver)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
+<p align="center">
+  <img src="assets/overview.png" alt="Stardew Analyser Overview" width="800">
+</p>
+
+
 A lightweight, local-first web dashboard designed specifically for self-hosted homelabs and single-host setups. It parses raw Stardew Valley save XML files and renders a dynamic, responsive dashboard for tracking farm progress, collections, and relationships across multiple saves — without relying on external cloud processing.
 
 ---
@@ -43,6 +48,8 @@ services:
     volumes:
       - /path/to/your/StardewValley/Saves:/saves:ro
 ```
+
+After spinning up the container (docker compose up -d) you can reach it under localhost:9999/.
 
 You can mount the actual save location directly into the container, or copy your savegames into a separate location and mount that instead.
 
