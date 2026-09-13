@@ -32,6 +32,34 @@ This tool is built from the ground up to solve specific challenges encountered i
 - 🖼️ **Dynamic Sprites:** Maps internal item IDs to wiki icons with emoji fallbacks.
 
 ---
+<details>
+<summary>📸 <b>Click to expand full screenshot gallery</b></summary>
+
+<br>
+
+#### 📊 Dashboard & Daily Forecast
+![Dashboard Overview](assets/overview.png)
+![Daily Intel & Forecast](assets/daily_intel%2Bforecast-mobile.png)
+
+#### 👥 Friendship & Loved Gifts Tracker
+![Social Tab](assets/social-mobile.png)
+
+#### 🎣 Fishing Completion & Records
+![Fishing Tab](assets/fishing-mobile.png)
+
+#### 🏛️ Museum Donations & Missing Artifacts
+![Museum Tab](assets/museum-mobile.png)
+
+#### 🍳 Cooking Recipes
+![Cooking Tab](assets/cooking-mobile.png)
+
+#### 📦 Shipping Collections
+![Shipping Tab](assets/shipping-mobile.png)
+
+</details>
+
+
+---
 
 ## 🚀 Quickstart (Docker Compose)
 
