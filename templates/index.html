@@ -79,9 +79,16 @@
         .item-name { font-size: 0.95rem; font-weight: 700; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .item-meta { font-size: 0.75rem; color: var(--text-secondary); }
         .item-id-badge { font-family: monospace; color: var(--accent-blue); font-size: 0.75rem; }
-        .villager-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 0.85rem; }
+        
+        .villager-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 0.85rem; }
         .villager-card { background: var(--bg-subtle); border: 1px solid var(--border-color); border-radius: 9px; padding: 0.95rem 1.1rem; display: flex; flex-direction: column; gap: 0.55rem; }
-        .v-top-row { display: flex; justify-content: space-between; align-items: center; }
+        
+        /* Villager Header with Portrait */
+        .v-header-layout { display: flex; align-items: center; gap: 0.75rem; }
+        .v-portrait-box { width: 42px; height: 42px; min-width: 42px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .v-portrait-img { width: 38px; height: 38px; object-fit: contain; image-rendering: pixelated; }
+        .v-header-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.2rem; }
+        .v-top-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .v-name { font-size: 1rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 0.35rem; }
         
         /* Relationship Status Badges */
@@ -289,24 +296,33 @@
                 <div class="villager-grid">
                     {% for npc_name, info in farm.friendships.items() %}
                     <div class="villager-card" data-name="{{ npc_name|lower }}">
-                        <div class="v-top-row">
-                            <div class="v-name">
-                                {{ npc_name }}
-                                {% if info.is_spouse %}
-                                <span class="v-badge-spouse">&#128141; Spouse</span>
-                                {% elif info.status == 'Datable' %}
-                                <span class="v-badge-datable">Bachelor{% if npc_name in ['Abigail', 'Emily', 'Haley', 'Leah', 'Maru', 'Penny'] %}ette{% endif %}</span>
-                                {% endif %}
+                        <div class="v-header-layout">
+                            <div class="v-portrait-box">
+                                <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ npc_name }}.png" class="v-portrait-img" alt="{{ npc_name }}" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                                <span style="display:none; font-size: 1.2rem;">&#128104;</span>
+                            </div>
+                            <div class="v-header-info">
+                                <div class="v-top-row">
+                                    <div class="v-name">
+                                        {{ npc_name }}
+                                        {% if info.is_spouse %}
+                                        <span class="v-badge-spouse">&#128141; Spouse</span>
+                                        {% elif info.status == 'Datable' %}
+                                        <span class="v-badge-datable">Bachelor{% if npc_name in ['Abigail', 'Emily', 'Haley', 'Leah', 'Maru', 'Penny'] %}ette{% endif %}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="v-hearts-row">
+                                    <div class="v-hearts-icons">
+                                        {% for h in range(info.max_hearts) %}
+                                            {% if h < info.hearts %}<span style="color: #ef4444;">&#x2764;&#xFE0F;</span>{% else %}<span style="color: #475569;">&#x1F90D;</span>{% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    <span class="v-pts-label">{{ info.hearts }}/{{ info.max_hearts }} ({{ info.points }} pts)</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="v-hearts-row">
-                            <div class="v-hearts-icons">
-                                {% for h in range(info.max_hearts) %}
-                                    {% if h < info.hearts %}<span style="color: #ef4444;">&#x2764;&#xFE0F;</span>{% else %}<span style="color: #475569;">&#x1F90D;</span>{% endif %}
-                                {% endfor %}
-                            </div>
-                            <span class="v-pts-label">{{ info.hearts }}/{{ info.max_hearts }} ({{ info.points }} pts)</span>
-                        </div>
+
                         <div class="v-status-row">
                             {% if info.talked_today %}<span class="v-chip green">Talked &#10003;</span>{% else %}<span class="v-chip muted">Not Talked</span>{% endif %}
                             {% if info.gifts_this_week >= 2 %}<span class="v-chip green">Gifts: 2/2 &#10003;</span>{% else %}<span class="v-chip muted">Gifts: {{ info.gifts_this_week }}/2</span>{% endif %}
