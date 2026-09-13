@@ -44,11 +44,11 @@
         .farm-pane { display: none; }
         .farm-pane.active { display: block; }
         
-        /* Overview Cards Layout */
         .overview-cards-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.25rem; margin-bottom: 1.5rem; }
         .overview-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
         .overview-card-title { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; border-bottom: 1px solid rgba(255, 255, 255, 0.06); padding-bottom: 0.5rem; }
-        .stats-subgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .stats-subgrid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .stats-subgrid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; }
         .stat-box { display: flex; flex-direction: column; justify-content: center; }
         .stat-label { font-size: 0.725rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 0.2rem; }
         .stat-value { font-size: 1.15rem; font-weight: 700; color: #ffffff; }
@@ -130,7 +130,7 @@
                 <!-- CARD 1: FARM & FINANCIALS -->
                 <div class="overview-card">
                     <div class="overview-card-title">&#127969; Farm &amp; Financials</div>
-                    <div class="stats-subgrid">
+                    <div class="stats-subgrid-2">
                         <div class="stat-box">
                             <div class="stat-label">Farmer</div>
                             <div class="stat-value">{{ farm.farmer_name }}</div>
@@ -147,7 +147,7 @@
                 <!-- CARD 2: DAILY CONDITIONS -->
                 <div class="overview-card">
                     <div class="overview-card-title">&#127774; Daily Conditions</div>
-                    <div class="stats-subgrid">
+                    <div class="stats-subgrid-3">
                         <div class="stat-box">
                             <div class="stat-label">Tomorrow's Weather</div>
                             <div class="stat-value">
@@ -165,6 +165,18 @@
                                 {{ farm.daily_luck.icon }} {{ farm.daily_luck.label }}
                             </div>
                             <div class="subtext-detail">Modifier: {{ farm.daily_luck.value }}</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Next Festival</div>
+                            {% if farm.festivals.next_festival %}
+                            <div class="stat-value">
+                                {{ farm.festivals.next_festival.icon }} {{ farm.festivals.next_festival.name }}
+                            </div>
+                            <div class="subtext-detail">{{ farm.festivals.status_text }}</div>
+                            {% else %}
+                            <div class="stat-value" style="font-size: 0.95rem; color: var(--text-muted);">None</div>
+                            <div class="subtext-detail">End of Season</div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
