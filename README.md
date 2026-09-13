@@ -69,7 +69,7 @@ The easiest way to deploy the analyzer is using Docker Compose.
 services:
   stardew-analyzer:
     image: ghcr.io/tbg-scrat/stardew-analyser:latest
-    container_name: stardew-analyzer
+    container_name: stardew-analyser
     restart: unless-stopped
     ports:
       - "9999:80"
