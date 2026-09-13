@@ -77,9 +77,17 @@ services:
       - /path/to/your/StardewValley/Saves:/saves:ro
 ```
 
-After spinning up the container (docker compose up -d) you can reach it under localhost:9999/.
+```bash
+docker compose up -d
+```
 
-You can mount the actual save location directly into the container, or copy your savegames into a separate location and mount that instead.
+After spinning up the container you can reach it in your browser under localhost:9999/.
+
+You can mount the actual save location directly into the container, or copy your savegames into a separate location and mount that instead. 
+
+  > *New to Docker? Check out the [Official Docker Compose Getting Started Guide](https://docs.docker.com/compose/gettingstarted/).*
+> 
+
 
 ### Default Save File Locations
 
