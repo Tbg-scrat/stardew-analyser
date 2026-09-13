@@ -58,7 +58,7 @@ From personal experience (Android): I use macrodroid in combination with Shizuku
 
 On PC it would probably even be easier to copy the files via task scheduler.
 
-For anything apple-related: Sorry, don't it...
+For anything apple-related: Sorry, don't own it...
 
 ## 🛠️ Building Locally
 
