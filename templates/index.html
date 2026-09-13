@@ -49,11 +49,15 @@
         .overview-card-title { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; border-bottom: 1px solid rgba(255, 255, 255, 0.06); padding-bottom: 0.5rem; }
         .stats-subgrid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
         .stats-subgrid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; }
-        .stat-box { display: flex; flex-direction: column; justify-content: center; }
+        .stat-box { display: flex; flex-direction: column; justify-content: flex-start; }
         .stat-label { font-size: 0.725rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 0.2rem; }
         .stat-value { font-size: 1.1rem; font-weight: 700; color: #ffffff; }
         .stat-value.gold { color: var(--color-gold); }
         .subtext-detail { font-size: 0.775rem; font-weight: 500; color: var(--text-secondary); margin-top: 0.2rem; }
+
+        .bday-gifts-mini { display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: 0.4rem; }
+        .bday-gift-pill { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 4px; padding: 0.1rem 0.35rem; display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.675rem; color: var(--text-secondary); }
+        .bday-gift-icon { width: 14px; height: 14px; object-fit: contain; image-rendering: pixelated; }
 
         .module-nav-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; background: var(--bg-surface); padding: 0.4rem; border-radius: 10px; border: 1px solid var(--border-color); }
         .module-nav-btn { background: transparent; border: none; color: var(--text-secondary); padding: 0.55rem 1rem; border-radius: 7px; font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.45rem; }
@@ -73,8 +77,8 @@
         .item-name { font-size: 0.95rem; font-weight: 700; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .item-meta { font-size: 0.75rem; color: var(--text-secondary); }
         .item-id-badge { font-family: monospace; color: var(--accent-blue); font-size: 0.75rem; }
-        .villager-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.85rem; }
-        .villager-card { background: var(--bg-subtle); border: 1px solid var(--border-color); border-radius: 9px; padding: 0.95rem 1.1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+        .villager-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 0.85rem; }
+        .villager-card { background: var(--bg-subtle); border: 1px solid var(--border-color); border-radius: 9px; padding: 0.95rem 1.1rem; display: flex; flex-direction: column; gap: 0.55rem; }
         .v-top-row { display: flex; justify-content: space-between; align-items: center; }
         .v-name { font-size: 1rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 0.35rem; }
         .v-badge-datable { font-size: 0.675rem; padding: 0.1rem 0.45rem; border-radius: 4px; background: var(--accent-purple-bg); color: var(--accent-purple); border: 1px solid rgba(192, 132, 252, 0.3); font-weight: 600; }
@@ -85,6 +89,11 @@
         .v-chip { padding: 0.15rem 0.5rem; border-radius: 4px; font-weight: 600; display: inline-flex; align-items: center; gap: 0.25rem; }
         .v-chip.green { background: rgba(16, 185, 129, 0.16); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.4); }
         .v-chip.muted { background: var(--bg-surface); color: var(--text-muted); border: 1px solid var(--border-color); }
+        .v-loved-gifts-section { font-size: 0.725rem; border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: 0.4rem; margin-top: 0.1rem; }
+        .v-loved-gifts-title { font-weight: 600; color: var(--text-muted); text-transform: uppercase; font-size: 0.65rem; margin-bottom: 0.3rem; }
+        .v-gifts-row { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+        .v-gift-badge { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 5px; padding: 0.15rem 0.45rem; display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.725rem; color: var(--text-secondary); }
+        .v-gift-icon { width: 16px; height: 16px; object-fit: contain; image-rendering: pixelated; }
         footer { margin-top: 3rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem; display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); }
     </style>
 </head>
@@ -182,6 +191,16 @@
                                 {{ farm.birthdays.next_birthday.icon }} {{ farm.birthdays.next_birthday.name }}
                             </div>
                             <div class="subtext-detail">{{ farm.birthdays.status_text }}</div>
+                            {% if farm.birthdays.next_birthday.loved_gifts %}
+                            <div class="bday-gifts-mini">
+                                {% for gift in farm.birthdays.next_birthday.loved_gifts[:3] %}
+                                <span class="bday-gift-pill" title="{{ gift.name }}">
+                                    <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ gift.wiki_icon }}.png" class="bday-gift-icon" alt="{{ gift.name }}" onerror="this.onerror=null; this.style.display='none';">
+                                    {{ gift.name }}
+                                </span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
                             {% else %}
                             <div class="stat-value" style="font-size: 0.95rem; color: var(--text-muted);">None</div>
                             <div class="subtext-detail">End of Season</div>
@@ -284,6 +303,21 @@
                             {% if info.talked_today %}<span class="v-chip green">Talked &#10003;</span>{% else %}<span class="v-chip muted">Not Talked</span>{% endif %}
                             {% if info.gifts_this_week >= 2 %}<span class="v-chip green">Gifts: 2/2 &#10003;</span>{% else %}<span class="v-chip muted">Gifts: {{ info.gifts_this_week }}/2</span>{% endif %}
                         </div>
+
+                        <!-- LOVED GIFTS SECTION -->
+                        {% if info.loved_gifts %}
+                        <div class="v-loved-gifts-section">
+                            <div class="v-loved-gifts-title">&#128155; Loved Gifts</div>
+                            <div class="v-gifts-row">
+                                {% for gift in info.loved_gifts %}
+                                <span class="v-gift-badge">
+                                    <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ gift.wiki_icon }}.png" class="v-gift-icon" alt="{{ gift.name }}" onerror="this.onerror=null; this.style.display='none';">
+                                    {{ gift.name }}
+                                </span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
                     </div>
                     {% endfor %}
                 </div>

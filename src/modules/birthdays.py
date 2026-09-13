@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 """
 Birthdays module for Stardew Valley save file parsing.
-Tracks villager birthdays and identifies the next upcoming birthday.
+Tracks villager birthdays, identifies the next upcoming birthday, and attaches loved gifts.
 """
+
+from src.core.gift_data import get_loved_gifts
 
 VILLAGER_BIRTHDAYS = {
     "spring": [
@@ -50,10 +52,11 @@ VILLAGER_BIRTHDAYS = {
 
 def parse_birthdays(root):
     """
-    Parses current date and identifies the next upcoming birthday in the season.
+    Parses current date, identifies the next upcoming birthday in the season,
+    and attaches loved gift details.
 
     :param root: xml.etree.ElementTree Element representing <SaveGame>
-    :return: dict containing next birthday details and status text
+    :return: dict containing next birthday details, status text, and loved gifts
     """
     if root is None:
         return {"next_birthday": None, "status_text": "None"}
@@ -71,9 +74,10 @@ def parse_birthdays(root):
     upcoming = [b for b in seasonal_birthdays if b["day"] >= day]
 
     if upcoming:
-        next_bday = upcoming[0]
+        next_bday = dict(upcoming[0])
         days_away = next_bday["day"] - day
         status_text = "Today!" if days_away == 0 else f"In {days_away} day{'s' if days_away > 1 else ''} (Day {next_bday['day']})"
+        next_bday["loved_gifts"] = get_loved_gifts(next_bday["name"])
     else:
         next_bday = None
         status_text = "None remaining this season"
