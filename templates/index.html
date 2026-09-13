@@ -53,10 +53,11 @@
         .stats-subgrid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; }
         .stat-box { display: flex; flex-direction: column; justify-content: flex-start; }
         .stat-label { font-size: 0.725rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 0.2rem; }
-        .stat-value { font-size: 1.1rem; font-weight: 700; color: #ffffff; }
+        .stat-value { font-size: 1.1rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 0.35rem; }
         .stat-value.gold { color: var(--color-gold); }
         .subtext-detail { font-size: 0.775rem; font-weight: 500; color: var(--text-secondary); margin-top: 0.2rem; }
 
+        .bday-portrait-mini { width: 22px; height: 22px; object-fit: contain; image-rendering: pixelated; vertical-align: middle; }
         .bday-gifts-mini { display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: 0.4rem; }
         .bday-gift-pill { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 4px; padding: 0.1rem 0.35rem; display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.675rem; color: var(--text-secondary); }
         .bday-gift-icon { width: 14px; height: 14px; object-fit: contain; image-rendering: pixelated; }
@@ -95,9 +96,11 @@
         .v-badge-spouse { font-size: 0.675rem; padding: 0.1rem 0.45rem; border-radius: 4px; background: var(--accent-pink-bg); color: var(--accent-pink); border: 1px solid rgba(244, 114, 182, 0.4); font-weight: 700; }
         .v-badge-datable { font-size: 0.675rem; padding: 0.1rem 0.45rem; border-radius: 4px; background: var(--accent-purple-bg); color: var(--accent-purple); border: 1px solid rgba(192, 132, 252, 0.3); font-weight: 600; }
         
-        .v-hearts-row { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; }
-        .v-hearts-icons { display: flex; gap: 2px; font-size: 0.95rem; line-height: 1; }
-        .v-pts-label { font-size: 0.725rem; color: var(--text-muted); margin-left: auto; }
+        /* Uniform Hearts & Points Layout */
+        .v-hearts-row { display: flex; flex-direction: column; gap: 0.15rem; margin-top: 0.1rem; }
+        .v-hearts-icons { display: flex; flex-wrap: wrap; gap: 1px; font-size: 0.775rem; line-height: 1.1; }
+        .v-pts-label { font-size: 0.725rem; color: var(--text-muted); font-weight: 500; }
+        
         .v-status-row { display: flex; gap: 0.4rem; align-items: center; font-size: 0.725rem; }
         .v-chip { padding: 0.15rem 0.5rem; border-radius: 4px; font-weight: 600; display: inline-flex; align-items: center; gap: 0.25rem; }
         .v-chip.green { background: rgba(16, 185, 129, 0.16); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.4); }
@@ -201,7 +204,8 @@
                             <div class="stat-label">Next Birthday</div>
                             {% if farm.birthdays.next_birthday %}
                             <div class="stat-value">
-                                {{ farm.birthdays.next_birthday.icon }} {{ farm.birthdays.next_birthday.name }}
+                                <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ farm.birthdays.next_birthday.name }}.png" class="bday-portrait-mini" alt="{{ farm.birthdays.next_birthday.name }}" onerror="this.onerror=null; this.style.display='none';">
+                                {{ farm.birthdays.next_birthday.name }}
                             </div>
                             <div class="subtext-detail">{{ farm.birthdays.status_text }}</div>
                             {% if farm.birthdays.next_birthday.loved_gifts %}
@@ -222,7 +226,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="module-nav-bar">
                 <button class="module-nav-btn active" data-module="shipping" onclick="switchModule('{{ farm.farm_id }}', 'shipping')">&#128230; Shipping <span class="module-badge">{{ farm.shipped_items|length }}</span></button>
                 <button class="module-nav-btn" data-module="fishing" onclick="switchModule('{{ farm.farm_id }}', 'fishing')">&#127907; Fishing <span class="module-badge">{{ farm.fish_caught|length }}</span></button>
@@ -290,7 +293,6 @@
                     {% endfor %}
                 </div>
             </div>
-
             <div class="module-pane" id="module-{{ farm.farm_id }}-social">
                 <div class="radar-controls"><input type="text" class="search-box" placeholder="Search villager..." onkeyup="filterVillagers(this)"></div>
                 <div class="villager-grid">
@@ -318,7 +320,7 @@
                                             {% if h < info.hearts %}<span style="color: #ef4444;">&#x2764;&#xFE0F;</span>{% else %}<span style="color: #475569;">&#x1F90D;</span>{% endif %}
                                         {% endfor %}
                                     </div>
-                                    <span class="v-pts-label">{{ info.hearts }}/{{ info.max_hearts }} ({{ info.points }} pts)</span>
+                                    <div class="v-pts-label">{{ info.hearts }}/{{ info.max_hearts }} ({{ info.points }} pts)</div>
                                 </div>
                             </div>
                         </div>
