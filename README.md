@@ -95,6 +95,13 @@ On PC it would probably even be easier to copy the files via task scheduler.
 
 For anything apple-related: Sorry, don't own it...
 
+**Feedback welcome!**
+
+Vote on upcoming features or jot something down in the comments that I haven't even thought of.
+
+👉 [Cast your vote & join the discussion](https://github.com/Tbg-scrat/stardew-analyser/discussions/1)
+
+
 ## 🛠️ Building Locally
 
 ```bash
