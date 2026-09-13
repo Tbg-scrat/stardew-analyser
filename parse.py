@@ -14,6 +14,7 @@ from src.modules.social import parse_social
 from src.modules.weather import parse_weather
 from src.modules.luck import parse_luck
 from src.modules.festivals import parse_festivals
+from src.modules.birthdays import parse_birthdays
 
 SAVE_DIR = Path(os.getenv("SAVE_DIR", "/saves"))
 OUTPUT_HTML = Path("index.html")
@@ -41,9 +42,10 @@ def analyze_save(file_path, object_map):
     data = parse_player(player)
 
     # Base overview modules
-    data["weather_tomorrow"] = parse_weather(root)
+    data["weather"] = parse_weather(root)
     data["daily_luck"] = parse_luck(root)
     data["festivals"] = parse_festivals(root)
+    data["birthdays"] = parse_birthdays(root)
 
     raw_shipped = parse_shipping(player)
     shipped_mapped = []
