@@ -43,11 +43,18 @@
         .tab-money { color: var(--color-gold); font-weight: 600; }
         .farm-pane { display: none; }
         .farm-pane.active { display: block; }
-        .base-info-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 1.25rem; }
-        .summary-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; }
-        .stat-label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600; }
-        .stat-value { font-size: 1.2rem; font-weight: 700; color: #ffffff; }
+        
+        /* Overview Cards Layout */
+        .overview-cards-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.25rem; margin-bottom: 1.5rem; }
+        .overview-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+        .overview-card-title { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; border-bottom: 1px solid rgba(255, 255, 255, 0.06); padding-bottom: 0.5rem; }
+        .stats-subgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .stat-box { display: flex; flex-direction: column; justify-content: center; }
+        .stat-label { font-size: 0.725rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 0.2rem; }
+        .stat-value { font-size: 1.15rem; font-weight: 700; color: #ffffff; }
         .stat-value.gold { color: var(--color-gold); }
+        .subtext-detail { font-size: 0.775rem; font-weight: 500; color: var(--text-secondary); margin-top: 0.2rem; }
+
         .module-nav-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; background: var(--bg-surface); padding: 0.4rem; border-radius: 10px; border: 1px solid var(--border-color); }
         .module-nav-btn { background: transparent; border: none; color: var(--text-secondary); padding: 0.55rem 1rem; border-radius: 7px; font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.45rem; }
         .module-nav-btn.active { background: #2563eb; color: #ffffff; }
@@ -117,14 +124,49 @@
                 {% endfor %}
             </div>
         </section>
-
         {% for farm in farms %}
         <div class="farm-pane {% if loop.first %}active{% endif %}" id="farm-pane-{{ farm.farm_id }}">
-            <div class="base-info-card">
-                <div class="summary-stats-grid">
-                    <div class="stat-box"><div class="stat-label">Farmer & Farm</div><div class="stat-value">{{ farm.farmer_name }} ({{ farm.farm_name }})</div></div>
-                    <div class="stat-box"><div class="stat-label">Current Funds</div><div class="stat-value gold">{{ "{:,}".format(farm.money) }} g</div></div>
-                    <div class="stat-box"><div class="stat-label">Total Gold Earned</div><div class="stat-value gold">{{ "{:,}".format(farm.total_earned) }} g</div></div>
+            <div class="overview-cards-container">
+                <!-- CARD 1: FARM & FINANCIALS -->
+                <div class="overview-card">
+                    <div class="overview-card-title">&#127969; Farm &amp; Financials</div>
+                    <div class="stats-subgrid">
+                        <div class="stat-box">
+                            <div class="stat-label">Farmer</div>
+                            <div class="stat-value">{{ farm.farmer_name }}</div>
+                            <div class="subtext-detail">{{ farm.farm_name }} Farm</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Current Funds</div>
+                            <div class="stat-value gold">{{ "{:,}".format(farm.money) }} g</div>
+                            <div class="subtext-detail">Total: {{ "{:,}".format(farm.total_earned) }} g</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 2: DAILY CONDITIONS -->
+                <div class="overview-card">
+                    <div class="overview-card-title">&#127774; Daily Conditions</div>
+                    <div class="stats-subgrid">
+                        <div class="stat-box">
+                            <div class="stat-label">Tomorrow's Weather</div>
+                            <div class="stat-value">
+                                {{ farm.weather_tomorrow.valley.icon }} {{ farm.weather_tomorrow.valley.name }}
+                            </div>
+                            {% if farm.weather_tomorrow.island %}
+                            <div class="subtext-detail">
+                                &#127799; Island: {{ farm.weather_tomorrow.island.icon }} {{ farm.weather_tomorrow.island.name }}
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Daily Luck</div>
+                            <div class="stat-value">
+                                {{ farm.daily_luck.icon }} {{ farm.daily_luck.label }}
+                            </div>
+                            <div class="subtext-detail">Modifier: {{ farm.daily_luck.value }}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -175,7 +217,7 @@
                             <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ item.wiki_icon }}.png" class="item-sprite" alt="{{ item.name }}" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='inline';">
                             <span style="display:none; font-size: 1.2rem;">&#127963;</span>
                         </div>
-                        <div class="item-info"><div class="item-name">{{ item.name }}</div><div class="item-meta" style="color: #34d399;">✓ Donated</div><div class="item-id-badge">ID: {{ item.id }}</div></div>
+                        <div class="item-info"><div class="item-name">{{ item.name }}</div><div class="item-meta" style="color: #34d399;">&#10003; Donated</div><div class="item-id-badge">ID: {{ item.id }}</div></div>
                     </div>
                     {% endfor %}
                 </div>
@@ -195,6 +237,7 @@
                     {% endfor %}
                 </div>
             </div>
+
             <div class="module-pane" id="module-{{ farm.farm_id }}-social">
                 <div class="radar-controls"><input type="text" class="search-box" placeholder="Search villager..." onkeyup="filterVillagers(this)"></div>
                 <div class="villager-grid">
@@ -217,8 +260,8 @@
                             <span class="v-pts-label">{{ info.hearts }}/{{ info.max_hearts }} ({{ info.points }} pts)</span>
                         </div>
                         <div class="v-status-row">
-                            {% if info.talked_today %}<span class="v-chip green">Talked ✓</span>{% else %}<span class="v-chip muted">Not Talked</span>{% endif %}
-                            {% if info.gifts_this_week >= 2 %}<span class="v-chip green">Gifts: 2/2 ✓</span>{% else %}<span class="v-chip muted">Gifts: {{ info.gifts_this_week }}/2</span>{% endif %}
+                            {% if info.talked_today %}<span class="v-chip green">Talked &#10003;</span>{% else %}<span class="v-chip muted">Not Talked</span>{% endif %}
+                            {% if info.gifts_this_week >= 2 %}<span class="v-chip green">Gifts: 2/2 &#10003;</span>{% else %}<span class="v-chip muted">Gifts: {{ info.gifts_this_week }}/2</span>{% endif %}
                         </div>
                     </div>
                     {% endfor %}
@@ -233,8 +276,8 @@
         {% endif %}
 
         <footer>
-            <span>Stardew Valley Save Analyzer • 1.6 Compatible</span>
-            <span>Self-hosted & Local-First</span>
+            <span>Stardew Valley Save Analyzer &bull; 1.6 Compatible</span>
+            <span>Self-hosted &amp; Local-First</span>
         </footer>
     </div>
 

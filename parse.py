@@ -11,6 +11,8 @@ from src.modules.fishing import parse_fishing
 from src.modules.museum import parse_museum
 from src.modules.cooking import parse_cooking
 from src.modules.social import parse_social
+from src.modules.weather import parse_weather
+from src.modules.luck import parse_luck
 
 SAVE_DIR = Path(os.getenv("SAVE_DIR", "/saves"))
 OUTPUT_HTML = Path("index.html")
@@ -20,7 +22,7 @@ def find_all_saves(saves_dir):
     if not saves_dir.exists():
         print(f"[WARN] Save directory '{saves_dir.resolve()}' does not exist.")
         return save_files
-        
+
     for item in saves_dir.iterdir():
         if item.is_dir():
             target_file = item / item.name
@@ -34,17 +36,21 @@ def format_wiki_filename(name):
 
 def analyze_save(file_path, object_map):
     root, player = get_player_node(file_path)
-    
+
     data = parse_player(player)
-    
+
+    # Base overview modules
+    data["weather_tomorrow"] = parse_weather(root)
+    data["daily_luck"] = parse_luck(root)
+
     raw_shipped = parse_shipping(player)
     shipped_mapped = []
     for item_id, count in raw_shipped.items():
         clean_id = str(item_id).replace("(O)", "")
         name = object_map.get(str(item_id)) or object_map.get(clean_id) or f"Item {item_id}"
         shipped_mapped.append({
-            "id": item_id, 
-            "name": name, 
+            "id": item_id,
+            "name": name,
             "count": count,
             "wiki_icon": format_wiki_filename(name)
         })
@@ -56,9 +62,9 @@ def analyze_save(file_path, object_map):
         clean_id = str(item_id).replace("(O)", "")
         name = object_map.get(str(item_id)) or object_map.get(clean_id) or f"Fish {item_id}"
         fish_mapped.append({
-            "id": item_id, 
-            "name": name, 
-            "count": stats["count"], 
+            "id": item_id,
+            "name": name,
+            "count": stats["count"],
             "length": stats["length"],
             "wiki_icon": format_wiki_filename(name)
         })
@@ -70,7 +76,7 @@ def analyze_save(file_path, object_map):
         clean_id = str(item_id).replace("(O)", "")
         name = object_map.get(str(item_id)) or object_map.get(clean_id) or f"Artifact/Mineral {item_id}"
         museum_mapped.append({
-            "id": item_id, 
+            "id": item_id,
             "name": name,
             "wiki_icon": format_wiki_filename(name)
         })
@@ -82,8 +88,8 @@ def analyze_save(file_path, object_map):
         clean_id = str(item_id).replace("(O)", "")
         name = object_map.get(str(item_id)) or object_map.get(clean_id) or f"Recipe {item_id}"
         cooking_mapped.append({
-            "id": item_id, 
-            "name": name, 
+            "id": item_id,
+            "name": name,
             "count": count,
             "wiki_icon": format_wiki_filename(name)
         })
@@ -91,7 +97,7 @@ def analyze_save(file_path, object_map):
 
     data["friendships"] = parse_social(player)
     data["daily_intel"] = None
-    
+
     return data
 
 def generate_dashboard_html(all_saves_data):
@@ -116,11 +122,11 @@ def generate_dashboard_html(all_saves_data):
 if __name__ == "__main__":
     print(f"[INFO] Loading game item reference map...")
     object_map = load_object_map()
-    
+
     print(f"[INFO] Scanning directory: {SAVE_DIR.resolve()}")
     saves = find_all_saves(SAVE_DIR)
     print(f"[INFO] Discovered {len(saves)} save candidate(s).")
-    
+
     all_saves_data = {}
     for save_id, save_path in saves:
         try:
@@ -128,7 +134,7 @@ if __name__ == "__main__":
             all_saves_data[save_id] = analyze_save(save_path, object_map)
         except Exception as e:
             print(f"[WARN] Failed to parse save '{save_id}': {e}")
-            
+
     if all_saves_data:
         generate_dashboard_html(all_saves_data)
     else:
