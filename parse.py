@@ -5,6 +5,8 @@ from jinja2 import Environment, FileSystemLoader
 
 from src.core.xml_reader import get_player_node
 from src.core.reference_data import load_object_map
+from data.data_loader import FISH_CATALOG, MUSEUM_CATALOG, SHIPPING_CATALOG
+
 from src.modules.player import parse_player
 from src.modules.shipping import parse_shipping
 from src.modules.fishing import parse_fishing
@@ -47,45 +49,66 @@ def analyze_save(file_path, object_map):
     data["festivals"] = parse_festivals(root)
     data["birthdays"] = parse_birthdays(root)
 
+    # 1. SHIPPING CATALOG MERGING
     raw_shipped = parse_shipping(player)
+    # Normalize keys from save file (strip "(O)" if present)
+    shipped_save_map = {str(k).replace("(O)", ""): v for k, v in raw_shipped.items()}
+    
     shipped_mapped = []
-    for item_id, count in raw_shipped.items():
-        clean_id = str(item_id).replace("(O)", "")
-        name = object_map.get(str(item_id)) or object_map.get(clean_id) or f"Item {item_id}"
+    for item_id, catalog_item in SHIPPING_CATALOG.items():
+        count = shipped_save_map.get(item_id, 0)
+        is_shipped = count > 0
         shipped_mapped.append({
             "id": item_id,
-            "name": name,
+            "name": catalog_item.get("name", f"Item {item_id}"),
             "count": count,
-            "wiki_icon": format_wiki_filename(name)
+            "status": "shipped" if is_shipped else "not_shipped",
+            "is_unlocked": is_shipped,
+            "achievement_required": catalog_item.get("achievement_required", False),
+            "image": catalog_item.get("image", ""),
+            "wiki_icon": format_wiki_filename(catalog_item.get("name", ""))
         })
     data["shipped_items"] = sorted(shipped_mapped, key=lambda x: x["name"])
 
+    # 2. FISHING CATALOG MERGING
     raw_fish = parse_fishing(player)
+    fish_save_map = {str(k).replace("(O)", ""): v for k, v in raw_fish.items()}
+
     fish_mapped = []
-    for item_id, stats in raw_fish.items():
-        clean_id = str(item_id).replace("(O)", "")
-        name = object_map.get(str(item_id)) or object_map.get(clean_id) or f"Fish {item_id}"
+    for item_id, catalog_item in FISH_CATALOG.items():
+        stats = fish_save_map.get(item_id)
+        is_caught = stats is not None
         fish_mapped.append({
             "id": item_id,
-            "name": name,
-            "count": stats["count"],
-            "length": stats["length"],
-            "wiki_icon": format_wiki_filename(name)
+            "name": catalog_item.get("name", f"Fish {item_id}"),
+            "count": stats["count"] if is_caught else 0,
+            "length": stats["length"] if is_caught else 0,
+            "status": "caught" if is_caught else "not_caught",
+            "is_unlocked": is_caught,
+            "image": catalog_item.get("image", ""),
+            "wiki_icon": format_wiki_filename(catalog_item.get("name", ""))
         })
     data["fish_caught"] = sorted(fish_mapped, key=lambda x: x["name"])
 
+    # 3. MUSEUM CATALOG MERGING
     raw_museum = parse_museum(root)
+    donated_set = {str(item_id).replace("(O)", "") for item_id in raw_museum}
+
     museum_mapped = []
-    for item_id in raw_museum:
-        clean_id = str(item_id).replace("(O)", "")
-        name = object_map.get(str(item_id)) or object_map.get(clean_id) or f"Artifact/Mineral {item_id}"
+    for item_id, catalog_item in MUSEUM_CATALOG.items():
+        is_donated = item_id in donated_set
         museum_mapped.append({
             "id": item_id,
-            "name": name,
-            "wiki_icon": format_wiki_filename(name)
+            "name": catalog_item.get("name", f"Artifact/Mineral {item_id}"),
+            "type": catalog_item.get("type", "Artifact"),
+            "status": "found" if is_donated else "not_found",
+            "is_unlocked": is_donated,
+            "image": catalog_item.get("image", ""),
+            "wiki_icon": format_wiki_filename(catalog_item.get("name", ""))
         })
     data["museum_pieces"] = sorted(museum_mapped, key=lambda x: x["name"])
 
+    # Cooking & Social remain standard
     raw_cooking = parse_cooking(player)
     cooking_mapped = []
     for item_id, count in raw_cooking.items():
