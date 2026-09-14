@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,7 +46,7 @@
         .tab-money { color: var(--color-gold); font-weight: 600; }
         .farm-pane { display: none; }
         .farm-pane.active { display: block; }
-        
+
         .overview-cards-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem; margin-bottom: 1.5rem; }
         .overview-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
         .overview-card-title { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; border-bottom: 1px solid rgba(255, 255, 255, 0.06); padding-bottom: 0.5rem; }
@@ -68,39 +69,51 @@
         .module-badge { font-size: 0.725rem; padding: 0.1rem 0.4rem; border-radius: 9999px; background: rgba(255, 255, 255, 0.15); }
         .module-pane { display: none; }
         .module-pane.active { display: block; }
-        .radar-controls { display: flex; justify-content: flex-end; margin-bottom: 1rem; }
+        
+        .radar-controls { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem; }
+        .filter-group { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+        .filter-btn { background: var(--bg-surface); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 0.35rem 0.75rem; border-radius: 6px; font-size: 0.775rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+        .filter-btn:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+        .filter-btn.active { background: #2563eb; border-color: #3b82f6; color: #ffffff; }
         .search-box { background: var(--bg-surface); border: 1px solid var(--border-color); color: #ffffff; padding: 0.45rem 0.85rem; border-radius: 6px; font-size: 0.8rem; width: 240px; outline: none; }
         .search-box:focus { border-color: var(--accent-blue); }
+
         .items-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.85rem; }
-        .item-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.9rem 1rem; display: flex; align-items: center; gap: 0.85rem; transition: border-color 0.15s; }
+        .item-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.9rem 1rem; display: flex; align-items: center; gap: 0.85rem; transition: border-color 0.15s, opacity 0.2s; }
         .item-card:hover { border-color: #3b507a; }
+        
+        .item-card.status-not_shipped,
+        .item-card.status-not_caught,
+        .item-card.status-not_found { opacity: 0.45; filter: grayscale(70%); }
+        .item-card.status-not_shipped:hover,
+        .item-card.status-not_caught:hover,
+        .item-card.status-not_found:hover { opacity: 0.75; filter: grayscale(20%); }
+
         .item-sprite-box { width: 44px; height: 44px; min-width: 44px; background: var(--bg-subtle); border: 1px solid var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
         .item-sprite { width: 32px; height: 32px; object-fit: contain; image-rendering: pixelated; }
         .item-info { display: flex; flex-direction: column; gap: 0.2rem; flex: 1; min-width: 0; }
         .item-name { font-size: 0.95rem; font-weight: 700; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .item-meta { font-size: 0.75rem; color: var(--text-secondary); }
-        .item-id-badge { font-family: monospace; color: var(--accent-blue); font-size: 0.75rem; }
-        
+        .status-badge { display: inline-block; font-size: 0.675rem; padding: 0.1rem 0.4rem; border-radius: 4px; font-weight: 600; text-transform: capitalize; width: fit-content; margin-top: 0.1rem; }
+        .status-badge.unlocked { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3); }
+        .status-badge.locked { background: rgba(100, 116, 139, 0.2); color: var(--text-muted); border: 1px solid var(--border-color); }
+
         .villager-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 0.85rem; }
         .villager-card { background: var(--bg-subtle); border: 1px solid var(--border-color); border-radius: 9px; padding: 0.95rem 1.1rem; display: flex; flex-direction: column; gap: 0.55rem; }
-        
-        /* Villager Header with Portrait */
         .v-header-layout { display: flex; align-items: center; gap: 0.75rem; }
         .v-portrait-box { width: 42px; height: 42px; min-width: 42px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .v-portrait-img { width: 38px; height: 38px; object-fit: contain; image-rendering: pixelated; }
         .v-header-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.2rem; }
         .v-top-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .v-name { font-size: 1rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 0.35rem; }
-        
-        /* Relationship Status Badges */
+
         .v-badge-spouse { font-size: 0.675rem; padding: 0.1rem 0.45rem; border-radius: 4px; background: var(--accent-pink-bg); color: var(--accent-pink); border: 1px solid rgba(244, 114, 182, 0.4); font-weight: 700; }
         .v-badge-datable { font-size: 0.675rem; padding: 0.1rem 0.45rem; border-radius: 4px; background: var(--accent-purple-bg); color: var(--accent-purple); border: 1px solid rgba(192, 132, 252, 0.3); font-weight: 600; }
-        
-        /* Uniform Hearts & Points Layout */
+
         .v-hearts-row { display: flex; flex-direction: column; gap: 0.15rem; margin-top: 0.1rem; }
         .v-hearts-icons { display: flex; flex-wrap: wrap; gap: 1px; font-size: 0.775rem; line-height: 1.1; }
         .v-pts-label { font-size: 0.725rem; color: var(--text-muted); font-weight: 500; }
-        
+
         .v-status-row { display: flex; gap: 0.4rem; align-items: center; font-size: 0.725rem; }
         .v-chip { padding: 0.15rem 0.5rem; border-radius: 4px; font-weight: 600; display: inline-flex; align-items: center; gap: 0.25rem; }
         .v-chip.green { background: rgba(16, 185, 129, 0.16); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.4); }
@@ -117,7 +130,7 @@
     <div class="container">
         <header>
             <div class="header-title">
-                <span class="logo-icon">&#127806;</span>
+                <span class="logo-icon"></span>
                 <div>
                     <h1>Stardew Valley Save Analyzer</h1>
                     <div class="header-subtitle">Multi-Farm Save Monitoring & Collections Tracker</div>
@@ -125,7 +138,7 @@
             </div>
             <button class="sync-badge" onclick="location.reload()" title="Click to reload latest save data">
                 <div class="sync-pulse"></div>
-                <span>&#128260; Reload Saves</span>
+                <span> Reload Saves</span>
             </button>
         </header>
         {% if farms %}
@@ -152,9 +165,8 @@
         {% for farm in farms %}
         <div class="farm-pane {% if loop.first %}active{% endif %}" id="farm-pane-{{ farm.farm_id }}">
             <div class="overview-cards-container">
-                <!-- CARD 1: TODAY'S CONDITIONS -->
                 <div class="overview-card">
-                    <div class="overview-card-title">&#128197; Today's Conditions</div>
+                    <div class="overview-card-title"> Today's Conditions</div>
                     <div class="stats-subgrid-2">
                         <div class="stat-box">
                             <div class="stat-label">Today's Weather</div>
@@ -173,9 +185,8 @@
                     </div>
                 </div>
 
-                <!-- CARD 2: FORECAST & UPCOMING -->
                 <div class="overview-card">
-                    <div class="overview-card-title">&#12560; Forecast &amp; Upcoming</div>
+                    <div class="overview-card-title"> Forecast &amp; Upcoming</div>
                     <div class="stats-subgrid-3">
                         <div class="stat-box">
                             <div class="stat-label">Tomorrow</div>
@@ -184,7 +195,7 @@
                             </div>
                             {% if farm.weather.island %}
                             <div class="subtext-detail">
-                                &#127799; Island: {{ farm.weather.island.icon }} {{ farm.weather.island.name }}
+                                 Island: {{ farm.weather.island.icon }} {{ farm.weather.island.name }}
                             </div>
                             {% endif %}
                         </div>
@@ -226,116 +237,192 @@
                     </div>
                 </div>
             </div>
+
             <div class="module-nav-bar">
-                <button class="module-nav-btn active" data-module="shipping" onclick="switchModule('{{ farm.farm_id }}', 'shipping')">&#128230; Shipping <span class="module-badge">{{ farm.shipped_items|length }}</span></button>
-                <button class="module-nav-btn" data-module="fishing" onclick="switchModule('{{ farm.farm_id }}', 'fishing')">&#127907; Fishing <span class="module-badge">{{ farm.fish_caught|length }}</span></button>
-                <button class="module-nav-btn" data-module="museum" onclick="switchModule('{{ farm.farm_id }}', 'museum')">&#127963; Museum <span class="module-badge">{{ farm.museum_pieces|length }}</span></button>
-                <button class="module-nav-btn" data-module="cooking" onclick="switchModule('{{ farm.farm_id }}', 'cooking')">&#127859; Cooking <span class="module-badge">{{ farm.recipes_cooked|length }}</span></button>
-                <button class="module-nav-btn" data-module="social" onclick="switchModule('{{ farm.farm_id }}', 'social')">&#128101; Social <span class="module-badge">{{ farm.friendships|length }}</span></button>
+                <button class="module-nav-btn active" data-module="shipping" onclick="switchModule('{{ farm.farm_id }}', 'shipping')"> Shipping <span class="module-badge">{{ farm.shipped_items|selectattr('is_unlocked')|list|length }}/{{ farm.shipped_items|length }}</span></button>
+                <button class="module-nav-btn" data-module="fishing" onclick="switchModule('{{ farm.farm_id }}', 'fishing')"> Fishing <span class="module-badge">{{ farm.fish_caught|selectattr('is_unlocked')|list|length }}/{{ farm.fish_caught|length }}</span></button>
+                <button class="module-nav-btn" data-module="museum" onclick="switchModule('{{ farm.farm_id }}', 'museum')"> Museum <span class="module-badge">{{ farm.museum_pieces|selectattr('is_unlocked')|list|length }}/{{ farm.museum_pieces|length }}</span></button>
+                <button class="module-nav-btn" data-module="cooking" onclick="switchModule('{{ farm.farm_id }}', 'cooking')"> Cooking <span class="module-badge">{{ farm.recipes_cooked|length }}</span></button>
+                <button class="module-nav-btn" data-module="social" onclick="switchModule('{{ farm.farm_id }}', 'social')"> Social <span class="module-badge">{{ farm.friendships|length }}</span></button>
             </div>
 
             <div class="module-pane active" id="module-{{ farm.farm_id }}-shipping">
-                <div class="radar-controls"><input type="text" class="search-box" placeholder="Search item..." onkeyup="filterItems(this)"></div>
+                <div class="radar-controls">
+                    <div class="filter-group">
+                        <button class="filter-btn active" onclick="setCatalogFilter(this, 'all')">All</button>
+                        <button class="filter-btn" onclick="setCatalogFilter(this, 'shipped')">Shipped</button>
+                        <button class="filter-btn" onclick="setCatalogFilter(this, 'not_shipped')">Not Shipped</button>
+                        <button class="filter-btn" onclick="setCatalogFilter(this, 'achievement_shipped')">🏆 Full Shipment Shipped</button>
+                        <button class="filter-btn" onclick="setCatalogFilter(this, 'achievement_not_shipped')">🏆 Full Shipment Needed</button>
+                   </div>
+
+                    <input type="text" class="search-box" placeholder="Search shipping items..." onkeyup="filterItems(this)">
+                </div>
                 <div class="items-grid">
                     {% for item in farm.shipped_items %}
-                    <div class="item-card" data-name="{{ item.name|lower }}">
+                    <div class="item-card status-{{ item.status }}" 
+                         data-name="{{ item.name|lower }}" 
+                         data-status="{{ item.status }}" 
+                         data-achievement="{{ 'true' if item.achievement_required else 'false' }}">
                         <div class="item-sprite-box">
+                            {% if item.image %}
+                            <img src="data:image/png;base64,{{ item.image }}" class="item-sprite" alt="{{ item.name }}">
+                            {% else %}
                             <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ item.wiki_icon }}.png" class="item-sprite" alt="{{ item.name }}" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='inline';">
-                            <span style="display:none; font-size: 1.2rem;">&#128230;</span>
+                            <span style="display:none; font-size: 1.2rem;"></span>
+                            {% endif %}
                         </div>
-                        <div class="item-info"><div class="item-name">{{ item.name }}</div><div class="item-meta">Shipped: <b>{{ item.count }}</b></div><div class="item-id-badge">ID: {{ item.id }}</div></div>
+                        <div class="item-info">
+                            <div class="item-name">{{ item.name }}</div>
+                            <div class="item-meta">Shipped: <b>{{ item.count }}</b></div>
+                            <span class="status-badge {{ 'unlocked' if item.is_unlocked else 'locked' }}">{{ item.status|replace('_', ' ') }}</span>
+                        </div>
                     </div>
                     {% endfor %}
                 </div>
             </div>
 
             <div class="module-pane" id="module-{{ farm.farm_id }}-fishing">
-                <div class="radar-controls"><input type="text" class="search-box" placeholder="Search fish..." onkeyup="filterItems(this)"></div>
+                <div class="radar-controls">
+                    <div class="filter-group">
+                        <button class="filter-btn active" onclick="setCatalogFilter(this, 'all')">All</button>
+                        <button class="filter-btn" onclick="setCatalogFilter(this, 'caught')">Caught</button>
+                        <button class="filter-btn" onclick="setCatalogFilter(this, 'not_caught')">Not Caught</button>
+                    </div>
+                    <input type="text" class="search-box" placeholder="Search fish..." onkeyup="filterItems(this)">
+                </div>
                 <div class="items-grid">
                     {% for item in farm.fish_caught %}
-                    <div class="item-card" data-name="{{ item.name|lower }}">
+                    <div class="item-card status-{{ item.status }}" 
+                         data-name="{{ item.name|lower }}" 
+                         data-status="{{ item.status }}">
                         <div class="item-sprite-box">
+                            {% if item.image %}
+                            <img src="data:image/png;base64,{{ item.image }}" class="item-sprite" alt="{{ item.name }}">
+                            {% else %}
                             <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ item.wiki_icon }}.png" class="item-sprite" alt="{{ item.name }}" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='inline';">
-                            <span style="display:none; font-size: 1.2rem;">&#128031;</span>
+                            <span style="display:none; font-size: 1.2rem;"></span>
+                            {% endif %}
                         </div>
-                        <div class="item-info"><div class="item-name">{{ item.name }}</div><div class="item-meta">Count: <b>{{ item.count }}</b> • Record: {{ item.length }} in.</div><div class="item-id-badge">ID: {{ item.id }}</div></div>
+                        <div class="item-info">
+                            <div class="item-name">{{ item.name }}</div>
+                            <div class="item-meta">Caught: <b>{{ item.count }}</b> {% if item.length > 0 %}(Max: {{ item.length }} in){% endif %}</div>
+                            <span class="status-badge {{ 'unlocked' if item.is_unlocked else 'locked' }}">{{ item.status|replace('_', ' ') }}</span>
+                        </div>
                     </div>
                     {% endfor %}
                 </div>
             </div>
-
             <div class="module-pane" id="module-{{ farm.farm_id }}-museum">
-                <div class="radar-controls"><input type="text" class="search-box" placeholder="Search museum..." onkeyup="filterItems(this)"></div>
+                <div class="radar-controls">
+                    <div class="filter-group">
+                        <button class="filter-btn active" onclick="setCatalogFilter(this, 'all')">All</button>
+                        <button class="filter-btn" onclick="setCatalogFilter(this, 'found')">Donated</button>
+                        <button class="filter-btn" onclick="setCatalogFilter(this, 'not_found')">Missing</button>
+                    </div>
+                    <input type="text" class="search-box" placeholder="Search museum pieces..." onkeyup="filterItems(this)">
+                </div>
                 <div class="items-grid">
                     {% for item in farm.museum_pieces %}
-                    <div class="item-card" data-name="{{ item.name|lower }}">
+                    <div class="item-card status-{{ item.status }}" 
+                         data-name="{{ item.name|lower }}" 
+                         data-status="{{ item.status }}">
                         <div class="item-sprite-box">
+                            {% if item.image %}
+                            <img src="data:image/png;base64,{{ item.image }}" class="item-sprite" alt="{{ item.name }}">
+                            {% else %}
                             <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ item.wiki_icon }}.png" class="item-sprite" alt="{{ item.name }}" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='inline';">
-                            <span style="display:none; font-size: 1.2rem;">&#127963;</span>
+                            <span style="display:none; font-size: 1.2rem;"></span>
+                            {% endif %}
                         </div>
-                        <div class="item-info"><div class="item-name">{{ item.name }}</div><div class="item-meta" style="color: #34d399;">&#10003; Donated</div><div class="item-id-badge">ID: {{ item.id }}</div></div>
+                        <div class="item-info">
+                            <div class="item-name">{{ item.name }}</div>
+                            <div class="item-meta">Type: <b>{{ item.type }}</b></div>
+                            <span class="status-badge {{ 'unlocked' if item.is_unlocked else 'locked' }}">{{ item.status|replace('_', ' ') }}</span>
+                        </div>
                     </div>
                     {% endfor %}
                 </div>
             </div>
 
             <div class="module-pane" id="module-{{ farm.farm_id }}-cooking">
-                <div class="radar-controls"><input type="text" class="search-box" placeholder="Search recipe..." onkeyup="filterItems(this)"></div>
+                <div class="radar-controls">
+                    <input type="text" class="search-box" placeholder="Search recipes..." onkeyup="filterItems(this)">
+                </div>
                 <div class="items-grid">
                     {% for item in farm.recipes_cooked %}
                     <div class="item-card" data-name="{{ item.name|lower }}">
                         <div class="item-sprite-box">
                             <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ item.wiki_icon }}.png" class="item-sprite" alt="{{ item.name }}" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='inline';">
-                            <span style="display:none; font-size: 1.2rem;">&#127859;</span>
+                            <span style="display:none; font-size: 1.2rem;"></span>
                         </div>
-                        <div class="item-info"><div class="item-name">{{ item.name }}</div><div class="item-meta">Times Cooked: <b>{{ item.count }}</b></div><div class="item-id-badge">ID: {{ item.id }}</div></div>
+                        <div class="item-info">
+                            <div class="item-name">{{ item.name }}</div>
+                            <div class="item-meta">Cooked: <b>{{ item.count }}</b></div>
+                        </div>
                     </div>
                     {% endfor %}
                 </div>
             </div>
+
+            <!-- SOCIAL MODULE PANE -->
             <div class="module-pane" id="module-{{ farm.farm_id }}-social">
-                <div class="radar-controls"><input type="text" class="search-box" placeholder="Search villager..." onkeyup="filterVillagers(this)"></div>
+                <div class="radar-controls">
+                    <div class="filter-group">
+                        <button class="filter-btn active" onclick="setCatalogFilter(this, 'all')">All</button>
+                        <button class="filter-btn" onclick="setCatalogFilter(this, 'can_gift')">🎁 Can Gift (&lt;2)</button>
+                        <button class="filter-btn" onclick="setCatalogFilter(this, 'gifts_maxed')">✅ Gifts Done (2/2)</button>
+                        <button class="filter-btn" onclick="setCatalogFilter(this, 'needs_hearts')">❤️ Needs Hearts</button>
+                        <button class="filter-btn" onclick="setCatalogFilter(this, 'datable')">💍 Datable</button>
+                    </div>
+                    <input type="text" class="search-box" placeholder="Search villagers..." onkeyup="filterItems(this)">
+                </div>
                 <div class="villager-grid">
-                    {% for npc_name, info in farm.friendships.items() %}
-                    <div class="villager-card" data-name="{{ npc_name|lower }}">
+                    {% for villager in farm.friendships %}
+                    <div class="villager-card" 
+                         data-name="{{ villager.name|lower }}"
+                         data-gifts="{{ villager.gifts_this_week }}"
+                         data-datable="{{ 'true' if villager.datable else 'false' }}"
+                         data-maxed-hearts="{{ 'true' if villager.hearts >= villager.max_hearts else 'false' }}">
                         <div class="v-header-layout">
                             <div class="v-portrait-box">
-                                <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ npc_name }}.png" class="v-portrait-img" alt="{{ npc_name }}" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='inline';">
-                                <span style="display:none; font-size: 1.2rem;">&#128104;</span>
+                                <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ villager.name }}.png" class="v-portrait-img" alt="{{ villager.name }}" onerror="this.onerror=null; this.style.display='none';">
                             </div>
                             <div class="v-header-info">
                                 <div class="v-top-row">
-                                    <div class="v-name">
-                                        {{ npc_name }}
-                                        {% if info.is_spouse %}
-                                        <span class="v-badge-spouse">&#128141; Spouse</span>
-                                        {% elif info.status == 'Datable' %}
-                                        <span class="v-badge-datable">Bachelor{% if npc_name in ['Abigail', 'Emily', 'Haley', 'Leah', 'Maru', 'Penny'] %}ette{% endif %}</span>
+                                    <span class="v-name">
+                                        {{ villager.name }}
+                                        {% if villager.is_spouse %}
+                                        <span class="v-badge-spouse">💍 Spouse</span>
+                                        {% elif villager.datable %}
+                                        <span class="v-badge-datable">Datable</span>
                                         {% endif %}
-                                    </div>
+                                    </span>
                                 </div>
                                 <div class="v-hearts-row">
-                                    <div class="v-hearts-icons">
-                                        {% for h in range(info.max_hearts) %}
-                                            {% if h < info.hearts %}<span style="color: #ef4444;">&#x2764;&#xFE0F;</span>{% else %}<span style="color: #475569;">&#x1F90D;</span>{% endif %}
-                                        {% endfor %}
+                                    <div class="v-hearts-icons" style="font-size: 0.85rem; line-height: 1.4; display: block; margin-top: 2px;">
+                                        {% for i in range(villager.max_hearts) %}{% if i < villager.hearts %}❤️{% else %}🤍{% endif %}{% endfor %}
                                     </div>
-                                    <div class="v-pts-label">{{ info.hearts }}/{{ info.max_hearts }} ({{ info.points }} pts)</div>
+                                    <span class="v-pts-label">{{ villager.hearts }}/{{ villager.max_hearts }} ({{ villager.points }} pts)</span>
                                 </div>
                             </div>
                         </div>
 
+                        <!-- Single Clean Status Badge -->
                         <div class="v-status-row">
-                            {% if info.talked_today %}<span class="v-chip green">Talked &#10003;</span>{% else %}<span class="v-chip muted">Not Talked</span>{% endif %}
-                            {% if info.gifts_this_week >= 2 %}<span class="v-chip green">Gifts: 2/2 &#10003;</span>{% else %}<span class="v-chip muted">Gifts: {{ info.gifts_this_week }}/2</span>{% endif %}
+                            {% if villager.gifts_this_week >= 2 %}
+                            <span class="v-chip muted" style="color: #64748b; background: rgba(100, 116, 139, 0.15);">Gifts: 2/2 (Maxed)</span>
+                            {% else %}
+                            <span class="v-chip green">Gifts: {{ villager.gifts_this_week }}/2</span>
+                            {% endif %}
                         </div>
 
-                        <!-- LOVED GIFTS SECTION -->
-                        {% if info.loved_gifts %}
+                        <!-- Loved Gifts Section -->
+                        {% if villager.loved_gifts %}
                         <div class="v-loved-gifts-section">
-                            <div class="v-loved-gifts-title">&#128155; Loved Gifts</div>
+                            <div class="v-loved-gifts-title">💛 Loved Gifts</div>
                             <div class="v-gifts-row">
-                                {% for gift in info.loved_gifts %}
+                                {% for gift in villager.loved_gifts %}
                                 <span class="v-gift-badge">
                                     <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ gift.wiki_icon }}.png" class="v-gift-icon" alt="{{ gift.name }}" onerror="this.onerror=null; this.style.display='none';">
                                     {{ gift.name }}
@@ -348,65 +435,133 @@
                     {% endfor %}
                 </div>
             </div>
+
+
+
         </div>
         {% endfor %}
         {% else %}
-        <div style="text-align: center; padding: 4rem 1rem; color: var(--text-muted);">
-            <h2>No Stardew Valley save files found</h2>
-        </div>
+        <p>No farms parsed.</p>
         {% endif %}
-
         <footer>
-            <span>Stardew Valley Save Analyzer &bull; 1.6 Compatible</span>
-            <span>Self-hosted &amp; Local-First</span>
+            <div>Stardew Valley Save Analyzer</div>
+            <div>Generated automatically from save data</div>
         </footer>
     </div>
 
     <script>
         function switchFarm(farmId) {
-            document.querySelectorAll('.farm-tab-card').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.farm-pane').forEach(p => p.classList.remove('active'));
-            const tabBtn = document.getElementById('tab-btn-' + farmId);
-            const pane = document.getElementById('farm-pane-' + farmId);
-            if (tabBtn) tabBtn.classList.add('active');
-            if (pane) pane.classList.add('active');
-            localStorage.setItem('stardew_active_farm', farmId);
+            document.querySelectorAll('.farm-tab-card').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.farm-pane').forEach(pane => pane.classList.remove('active'));
+
+            const activeBtn = document.getElementById('tab-btn-' + farmId);
+            const activePane = document.getElementById('farm-pane-' + farmId);
+
+            if (activeBtn) activeBtn.classList.add('active');
+            if (activePane) activePane.classList.add('active');
         }
 
-        function switchModule(farmId, moduleId) {
+        function switchModule(farmId, moduleName) {
             const farmPane = document.getElementById('farm-pane-' + farmId);
             if (!farmPane) return;
-            farmPane.querySelectorAll('.module-nav-btn').forEach(b => { b.classList.toggle('active', b.getAttribute('data-module') === moduleId); });
-            farmPane.querySelectorAll('.module-pane').forEach(p => p.classList.remove('active'));
-            const targetPane = document.getElementById('module-' + farmId + '-' + moduleId);
-            if (targetPane) targetPane.classList.add('active');
+
+            farmPane.querySelectorAll('.module-nav-btn').forEach(btn => btn.classList.remove('active'));
+            farmPane.querySelectorAll('.module-pane').forEach(pane => pane.classList.remove('active'));
+
+            const activeBtn = farmPane.querySelector(`.module-nav-btn[data-module="${moduleName}"]`);
+            const activePane = document.getElementById(`module-${farmId}-${moduleName}`);
+
+            if (activeBtn) activeBtn.classList.add('active');
+            if (activePane) activePane.classList.add('active');
         }
 
-        function filterItems(inputElem) {
-            const q = inputElem.value.trim().toLowerCase();
-            const grid = inputElem.closest('.module-pane').querySelector('.items-grid');
-            if (!grid) return;
-            grid.querySelectorAll('.item-card').forEach(card => {
+        function setCatalogFilter(btn, filterValue) {
+            const filterGroup = btn.closest('.filter-group');
+            filterGroup.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const modulePane = btn.closest('.module-pane');
+            const searchBox = modulePane.querySelector('.search-box');
+            applyCombinedFilters(modulePane, filterValue, searchBox ? searchBox.value : '');
+        }
+
+        function filterItems(searchInput) {
+            const modulePane = searchInput.closest('.module-pane');
+            const activeFilterBtn = modulePane.querySelector('.filter-btn.active');
+            const filterText = activeFilterBtn ? activeFilterBtn.textContent.trim().toLowerCase() : 'all';
+            
+            let targetFilter = 'all';
+
+            if (filterText.includes('full shipment shipped')) {
+                targetFilter = 'achievement_shipped';
+            } else if (filterText.includes('full shipment needed')) {
+                targetFilter = 'achievement_not_shipped';
+            } else if (filterText.includes('can gift')) {
+                targetFilter = 'can_gift';
+            } else if (filterText.includes('gifts done')) {
+                targetFilter = 'gifts_maxed';
+            } else if (filterText.includes('needs hearts')) {
+                targetFilter = 'needs_hearts';
+            } else if (filterText.includes('datable')) {
+                targetFilter = 'datable';
+            } else if (filterText.includes('shipped') && !filterText.includes('not')) {
+                targetFilter = 'shipped';
+            } else if (filterText.includes('not shipped')) {
+                targetFilter = 'not_shipped';
+            } else if (filterText.includes('caught') && !filterText.includes('not')) {
+                targetFilter = 'caught';
+            } else if (filterText.includes('not caught')) {
+                targetFilter = 'not_caught';
+            } else if (filterText.includes('donated')) {
+                targetFilter = 'found';
+            } else if (filterText.includes('missing')) {
+                targetFilter = 'not_found';
+            }
+
+            applyCombinedFilters(modulePane, targetFilter, searchInput.value);
+        }
+
+        function applyCombinedFilters(modulePane, statusFilter, searchQuery) {
+            const query = searchQuery.toLowerCase().trim();
+            const cards = modulePane.querySelectorAll('.item-card, .villager-card');
+
+            cards.forEach(card => {
                 const name = card.getAttribute('data-name') || '';
-                card.style.display = name.includes(q) ? 'flex' : 'none';
+                const status = card.getAttribute('data-status') || '';
+                const isAchievement = card.getAttribute('data-achievement') === 'true';
+                
+                const gifts = parseInt(card.getAttribute('data-gifts') || '0', 10);
+                const isDatable = card.getAttribute('data-datable') === 'true';
+                const isMaxedHearts = card.getAttribute('data-maxed-hearts') === 'true';
+
+                let matchesStatus = true;
+
+                if (statusFilter === 'achievement_shipped') {
+                    matchesStatus = isAchievement && (status === 'shipped');
+                } else if (statusFilter === 'achievement_not_shipped') {
+                    matchesStatus = isAchievement && (status === 'not_shipped');
+                } else if (statusFilter === 'can_gift') {
+                    matchesStatus = gifts < 2;
+                } else if (statusFilter === 'gifts_maxed') {
+                    matchesStatus = gifts >= 2;
+                } else if (statusFilter === 'needs_hearts') {
+                    matchesStatus = !isMaxedHearts;
+                } else if (statusFilter === 'datable') {
+                    matchesStatus = isDatable;
+                } else if (statusFilter !== 'all') {
+                    matchesStatus = (status === statusFilter);
+                }
+
+                let matchesSearch = !query || name.includes(query);
+
+                if (matchesStatus && matchesSearch) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
             });
         }
-
-        function filterVillagers(inputElem) {
-            const q = inputElem.value.trim().toLowerCase();
-            const grid = inputElem.closest('.module-pane').querySelector('.villager-grid');
-            if (!grid) return;
-            grid.querySelectorAll('.villager-card').forEach(card => {
-                const name = card.getAttribute('data-name') || '';
-                card.style.display = name.includes(q) ? 'flex' : 'none';
-            });
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedFarm = localStorage.getItem('stardew_active_farm');
-            const targetBtn = savedFarm && document.getElementById('tab-btn-' + savedFarm);
-            if (targetBtn) switchFarm(savedFarm);
-        });
     </script>
+
 </body>
 </html>

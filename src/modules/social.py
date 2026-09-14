@@ -17,12 +17,12 @@ def parse_social(player):
     Parses friendship data from the <player> XML node.
 
     :param player: xml.etree.ElementTree Element representing <player>
-    :return: dict of villagers sorted descending by friendship points
+    :return: list of villager dictionaries sorted descending by friendship points
     """
     if player is None:
-        return {}
+        return []
 
-    friendships = {}
+    friendships_list = []
     friendship_data = player.find("friendshipData")
 
     if friendship_data is not None:
@@ -50,32 +50,33 @@ def parse_social(player):
                 hearts = points // 250
                 is_datable = npc_name in DATABLE_VILLAGERS
                 is_spouse = status_raw == "Married"
+                is_dating = status_raw == "Dating"
                 
-                # Determine display status badge
+                # Determine display status badge & accurate game max hearts
                 if is_spouse:
                     status_display = "Spouse"
                     max_hearts = 14
                 elif is_datable:
                     status_display = "Datable"
-                    max_hearts = 10
+                    max_hearts = 10 if is_dating else 8
                 else:
                     status_display = "Normal"
                     max_hearts = 10
 
-                friendships[npc_name] = {
+                friendships_list.append({
+                    "name": npc_name,
                     "points": points,
                     "hearts": min(hearts, max_hearts),
                     "max_hearts": max_hearts,
                     "talked_today": talked,
                     "gifts_this_week": gifts_this_week,
                     "status": status_display,
+                    "datable": is_datable,
                     "is_spouse": is_spouse,
                     "loved_gifts": get_loved_gifts(npc_name)
-                }
+                })
 
-    # Sort dictionary descending by friendship points (highest points first)
-    sorted_friendships = dict(
-        sorted(friendships.items(), key=lambda x: x[1]["points"], reverse=True)
-    )
+    # Sort list descending by friendship points (highest points first)
+    friendships_list.sort(key=lambda x: x["points"], reverse=True)
     
-    return sorted_friendships
+    return friendships_list
