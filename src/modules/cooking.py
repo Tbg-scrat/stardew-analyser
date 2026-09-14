@@ -1,13 +1,41 @@
-from src.core.xml_reader import get_key_value
+# -*- coding: utf-8 -*-
+"""
+Cooking module for Stardew Valley save file parsing.
+Extracts cooked recipe counts keyed by item ID string from <recipesCooked>.
+"""
 
-def parse_cooking(player_node):
-    """Extract recipesCooked dictionary."""
-    recipes_cooked = {}
-    recipes_node = player_node.find("recipesCooked")
-    if recipes_node is not None:
-        for item in recipes_node.findall("item"):
-            item_id, val_node = get_key_value(item)
-            if item_id and val_node is not None:
-                count = val_node.findtext("int", "0")
-                recipes_cooked[item_id] = int(count)
-    return recipes_cooked
+def parse_cooking(player):
+    """
+    Parses <recipesCooked> from the player node or any sub-tree.
+
+    :param player: xml.etree.ElementTree Element representing <player>
+    :return: dict mapping item IDs (e.g. "194", "253") to cooked counts
+    """
+    if player is None:
+        return {}
+
+    cooked_counts = {}
+
+    recipes_cooked_node = player.find("recipesCooked") or player.find(".//recipesCooked")
+
+    if recipes_cooked_node is not None:
+        for item in recipes_cooked_node.findall("item"):
+            key_node = item.find("key")
+            val_node = item.find("value")
+
+            if key_node is not None:
+                raw_key = "".join(key_node.itertext()).strip().replace("(O)", "")
+
+                count = 0
+                if val_node is not None:
+                    val_text = "".join(val_node.itertext()).strip()
+                    try:
+                        count = int(val_text)
+                    except ValueError:
+                        count = 0
+
+                if raw_key:
+                    cooked_counts[raw_key] = count
+
+    return cooked_counts
+    
