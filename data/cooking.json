@@ -1,0 +1,392 @@
+{
+  "194": {
+    "id": "194",
+    "name": "Fried Egg",
+    "wiki_icon": "Fried_Egg"
+  },
+  "195": {
+    "id": "195",
+    "name": "Omelet",
+    "wiki_icon": "Omelet"
+  },
+  "196": {
+    "id": "196",
+    "name": "Salad",
+    "wiki_icon": "Salad"
+  },
+  "197": {
+    "id": "197",
+    "name": "Cheese Cauliflower",
+    "wiki_icon": "Cheese_Cauliflower"
+  },
+  "198": {
+    "id": "198",
+    "name": "Baked Fish",
+    "wiki_icon": "Baked_Fish"
+  },
+  "199": {
+    "id": "199",
+    "name": "Parsnip Soup",
+    "wiki_icon": "Parsnip_Soup"
+  },
+  "200": {
+    "id": "200",
+    "name": "Vegetable Medley",
+    "wiki_icon": "Vegetable_Medley"
+  },
+  "201": {
+    "id": "201",
+    "name": "Complete Breakfast",
+    "wiki_icon": "Complete_Breakfast"
+  },
+  "202": {
+    "id": "202",
+    "name": "Fried Calamari",
+    "wiki_icon": "Fried_Calamari"
+  },
+  "203": {
+    "id": "203",
+    "name": "Strange Bun",
+    "wiki_icon": "Strange_Bun"
+  },
+  "204": {
+    "id": "204",
+    "name": "Lucky Lunch",
+    "wiki_icon": "Lucky_Lunch"
+  },
+  "205": {
+    "id": "205",
+    "name": "Fried Mushroom",
+    "wiki_icon": "Fried_Mushroom"
+  },
+  "206": {
+    "id": "206",
+    "name": "Pizza",
+    "wiki_icon": "Pizza"
+  },
+  "207": {
+    "id": "207",
+    "name": "Bean Hotpot",
+    "wiki_icon": "Bean_Hotpot"
+  },
+  "208": {
+    "id": "208",
+    "name": "Glazed Yams",
+    "wiki_icon": "Glazed_Yams"
+  },
+  "209": {
+    "id": "209",
+    "name": "Carp Surprise",
+    "wiki_icon": "Carp_Surprise"
+  },
+  "210": {
+    "id": "210",
+    "name": "Hashbrowns",
+    "wiki_icon": "Hashbrowns"
+  },
+  "211": {
+    "id": "211",
+    "name": "Pancakes",
+    "wiki_icon": "Pancakes"
+  },
+  "212": {
+    "id": "212",
+    "name": "Salmon Dinner",
+    "wiki_icon": "Salmon_Dinner"
+  },
+  "213": {
+    "id": "213",
+    "name": "Fish Taco",
+    "wiki_icon": "Fish_Taco"
+  },
+  "214": {
+    "id": "214",
+    "name": "Crispy Bass",
+    "wiki_icon": "Crispy_Bass"
+  },
+  "215": {
+    "id": "215",
+    "name": "Pepper Poppers",
+    "wiki_icon": "Pepper_Poppers"
+  },
+  "216": {
+    "id": "216",
+    "name": "Bread",
+    "wiki_icon": "Bread"
+  },
+  "218": {
+    "id": "218",
+    "name": "Tom Kha Soup",
+    "wiki_icon": "Tom_Kha_Soup"
+  },
+  "219": {
+    "id": "219",
+    "name": "Trout Soup",
+    "wiki_icon": "Trout_Soup"
+  },
+  "220": {
+    "id": "220",
+    "name": "Chocolate Cake",
+    "wiki_icon": "Chocolate_Cake"
+  },
+  "221": {
+    "id": "221",
+    "name": "Pink Cake",
+    "wiki_icon": "Pink_Cake"
+  },
+  "222": {
+    "id": "222",
+    "name": "Rhubarb Pie",
+    "wiki_icon": "Rhubarb_Pie"
+  },
+  "223": {
+    "id": "223",
+    "name": "Cookies",
+    "wiki_icon": "Cookies"
+  },
+  "224": {
+    "id": "224",
+    "name": "Spaghetti",
+    "wiki_icon": "Spaghetti"
+  },
+  "225": {
+    "id": "225",
+    "name": "Fried Eel",
+    "wiki_icon": "Fried_Eel"
+  },
+  "226": {
+    "id": "226",
+    "name": "Spicy Eel",
+    "wiki_icon": "Spicy_Eel"
+  },
+  "227": {
+    "id": "227",
+    "name": "Sashimi",
+    "wiki_icon": "Sashimi"
+  },
+  "228": {
+    "id": "228",
+    "name": "Maki Roll",
+    "wiki_icon": "Maki_Roll"
+  },
+  "229": {
+    "id": "229",
+    "name": "Tortilla",
+    "wiki_icon": "Tortilla"
+  },
+  "230": {
+    "id": "230",
+    "name": "Red Plate",
+    "wiki_icon": "Red_Plate"
+  },
+  "231": {
+    "id": "231",
+    "name": "Eggplant Parmesan",
+    "wiki_icon": "Eggplant_Parmesan"
+  },
+  "232": {
+    "id": "232",
+    "name": "Rice Pudding",
+    "wiki_icon": "Rice_Pudding"
+  },
+  "233": {
+    "id": "233",
+    "name": "Ice Cream",
+    "wiki_icon": "Ice_Cream"
+  },
+  "234": {
+    "id": "234",
+    "name": "Blueberry Tart",
+    "wiki_icon": "Blueberry_Tart"
+  },
+  "235": {
+    "id": "235",
+    "name": "Autumn's Bounty",
+    "wiki_icon": "Autumn%27s_Bounty"
+  },
+  "236": {
+    "id": "236",
+    "name": "Pumpkin Soup",
+    "wiki_icon": "Pumpkin_Soup"
+  },
+  "237": {
+    "id": "237",
+    "name": "Super Meal",
+    "wiki_icon": "Super_Meal"
+  },
+  "238": {
+    "id": "238",
+    "name": "Cranberry Sauce",
+    "wiki_icon": "Cranberry_Sauce"
+  },
+  "239": {
+    "id": "239",
+    "name": "Stuffing",
+    "wiki_icon": "Stuffing"
+  },
+  "240": {
+    "id": "240",
+    "name": "Farmer's Lunch",
+    "wiki_icon": "Farmer%27s_Lunch"
+  },
+  "241": {
+    "id": "241",
+    "name": "Survival Burger",
+    "wiki_icon": "Survival_Burger"
+  },
+  "242": {
+    "id": "242",
+    "name": "Dish O' The Sea",
+    "wiki_icon": "Dish_O%27_The_Sea"
+  },
+  "243": {
+    "id": "243",
+    "name": "Miner's Treat",
+    "wiki_icon": "Miner%27s_Treat"
+  },
+  "244": {
+    "id": "244",
+    "name": "Roots Platter",
+    "wiki_icon": "Roots_Platter"
+  },
+  "253": {
+    "id": "253",
+    "name": "Triple Shot Espresso",
+    "wiki_icon": "Triple_Shot_Espresso"
+  },
+  "604": {
+    "id": "604",
+    "name": "Plum Pudding",
+    "wiki_icon": "Plum_Pudding"
+  },
+  "605": {
+    "id": "605",
+    "name": "Artichoke Dip",
+    "wiki_icon": "Artichoke_Dip"
+  },
+  "606": {
+    "id": "606",
+    "name": "Stir Fry",
+    "wiki_icon": "Stir_Fry"
+  },
+  "607": {
+    "id": "607",
+    "name": "Roasted Hazelnuts",
+    "wiki_icon": "Roasted_Hazelnuts"
+  },
+  "608": {
+    "id": "608",
+    "name": "Pumpkin Pie",
+    "wiki_icon": "Pumpkin_Pie"
+  },
+  "609": {
+    "id": "609",
+    "name": "Radish Salad",
+    "wiki_icon": "Radish_Salad"
+  },
+  "610": {
+    "id": "610",
+    "name": "Fruit Salad",
+    "wiki_icon": "Fruit_Salad"
+  },
+  "611": {
+    "id": "611",
+    "name": "Blackberry Cobbler",
+    "wiki_icon": "Blackberry_Cobbler"
+  },
+  "612": {
+    "id": "612",
+    "name": "Cranberry Candy",
+    "wiki_icon": "Cranberry_Candy"
+  },
+  "618": {
+    "id": "618",
+    "name": "Bruschetta",
+    "wiki_icon": "Bruschetta"
+  },
+  "648": {
+    "id": "648",
+    "name": "Coleslaw",
+    "wiki_icon": "Coleslaw"
+  },
+  "649": {
+    "id": "649",
+    "name": "Fiddlehead Risotto",
+    "wiki_icon": "Fiddlehead_Risotto"
+  },
+  "651": {
+    "id": "651",
+    "name": "Poppyseed Muffin",
+    "wiki_icon": "Poppyseed_Muffin"
+  },
+  "727": {
+    "id": "727",
+    "name": "Chowder",
+    "wiki_icon": "Chowder"
+  },
+  "728": {
+    "id": "728",
+    "name": "Fish Stew",
+    "wiki_icon": "Fish_Stew"
+  },
+  "729": {
+    "id": "729",
+    "name": "Escargot",
+    "wiki_icon": "Escargot"
+  },
+  "730": {
+    "id": "730",
+    "name": "Lobster Bisque",
+    "wiki_icon": "Lobster_Bisque"
+  },
+  "731": {
+    "id": "731",
+    "name": "Maple Bar",
+    "wiki_icon": "Maple_Bar"
+  },
+  "732": {
+    "id": "732",
+    "name": "Crab Cakes",
+    "wiki_icon": "Crab_Cakes"
+  },
+  "733": {
+    "id": "733",
+    "name": "Shrimp Cocktail",
+    "wiki_icon": "Shrimp_Cocktail"
+  },
+  "903": {
+    "id": "903",
+    "name": "Ginger Ale",
+    "wiki_icon": "Ginger_Ale"
+  },
+  "904": {
+    "id": "904",
+    "name": "Banana Pudding",
+    "wiki_icon": "Banana_Pudding"
+  },
+  "905": {
+    "id": "905",
+    "name": "Mango Sticky Rice",
+    "wiki_icon": "Mango_Sticky_Rice"
+  },
+  "906": {
+    "id": "906",
+    "name": "Poi",
+    "wiki_icon": "Poi"
+  },
+  "907": {
+    "id": "907",
+    "name": "Tropical Curry",
+    "wiki_icon": "Tropical_Curry"
+  },
+  "921": {
+    "id": "921",
+    "name": "Squid Ink Ravioli",
+    "wiki_icon": "Squid_Ink_Ravioli"
+  },
+  "Moss_Soup": {
+    "id": "Moss_Soup",
+    "name": "Moss Soup",
+    "wiki_icon": "Moss_Soup"
+  }
+}

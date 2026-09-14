@@ -242,7 +242,8 @@
                 <button class="module-nav-btn active" data-module="shipping" onclick="switchModule('{{ farm.farm_id }}', 'shipping')"> Shipping <span class="module-badge">{{ farm.shipped_items|selectattr('is_unlocked')|list|length }}/{{ farm.shipped_items|length }}</span></button>
                 <button class="module-nav-btn" data-module="fishing" onclick="switchModule('{{ farm.farm_id }}', 'fishing')"> Fishing <span class="module-badge">{{ farm.fish_caught|selectattr('is_unlocked')|list|length }}/{{ farm.fish_caught|length }}</span></button>
                 <button class="module-nav-btn" data-module="museum" onclick="switchModule('{{ farm.farm_id }}', 'museum')"> Museum <span class="module-badge">{{ farm.museum_pieces|selectattr('is_unlocked')|list|length }}/{{ farm.museum_pieces|length }}</span></button>
-                <button class="module-nav-btn" data-module="cooking" onclick="switchModule('{{ farm.farm_id }}', 'cooking')"> Cooking <span class="module-badge">{{ farm.recipes_cooked|length }}</span></button>
+               <button class="module-nav-btn" data-module="cooking" onclick="switchModule('{{ farm.farm_id }}', 'cooking')"> 🍳 Cooking <span class="module-badge">{{ farm.recipes_cooked|selectattr('is_unlocked')|list|length }}/{{ farm.recipes_cooked|length }}</span></button>
+
                 <button class="module-nav-btn" data-module="social" onclick="switchModule('{{ farm.farm_id }}', 'social')"> Social <span class="module-badge">{{ farm.friendships|length }}</span></button>
             </div>
 
@@ -345,25 +346,39 @@
                 </div>
             </div>
 
+            <!-- COOKING MODULE PANE -->
             <div class="module-pane" id="module-{{ farm.farm_id }}-cooking">
                 <div class="radar-controls">
+                    <div class="filter-group">
+                        <button class="filter-btn active" onclick="setCatalogFilter(this, 'all')">All</button>
+                        <button class="filter-btn" onclick="setCatalogFilter(this, 'cooked')">Cooked</button>
+                        <button class="filter-btn" onclick="setCatalogFilter(this, 'not_cooked')">Not Cooked</button>
+                    </div>
                     <input type="text" class="search-box" placeholder="Search recipes..." onkeyup="filterItems(this)">
                 </div>
                 <div class="items-grid">
                     {% for item in farm.recipes_cooked %}
-                    <div class="item-card" data-name="{{ item.name|lower }}">
+                    <div class="item-card status-{{ item.status }}" 
+                         data-name="{{ item.name|lower }}" 
+                         data-status="{{ item.status }}">
                         <div class="item-sprite-box">
+                            {% if item.image %}
+                            <img src="data:image/png;base64,{{ item.image }}" class="item-sprite" alt="{{ item.name }}">
+                            {% else %}
                             <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ item.wiki_icon }}.png" class="item-sprite" alt="{{ item.name }}" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='inline';">
-                            <span style="display:none; font-size: 1.2rem;"></span>
+                            <span style="display:none; font-size: 1.2rem;">🍳</span>
+                            {% endif %}
                         </div>
                         <div class="item-info">
                             <div class="item-name">{{ item.name }}</div>
                             <div class="item-meta">Cooked: <b>{{ item.count }}</b></div>
+                            <span class="status-badge {{ 'unlocked' if item.is_unlocked else 'locked' }}">{{ item.status|replace('_', ' ') }}</span>
                         </div>
                     </div>
                     {% endfor %}
                 </div>
             </div>
+
 
             <!-- SOCIAL MODULE PANE -->
             <div class="module-pane" id="module-{{ farm.farm_id }}-social">
@@ -516,6 +531,10 @@
                 targetFilter = 'found';
             } else if (filterText.includes('missing')) {
                 targetFilter = 'not_found';
+             } else if (filterText.includes('cooked') && !filterText.includes('not')) {
+                targetFilter = 'cooked';
+            } else if (filterText.includes('not cooked')) {
+                targetFilter = 'not_cooked'; 
             }
 
             applyCombinedFilters(modulePane, targetFilter, searchInput.value);

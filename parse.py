@@ -5,7 +5,7 @@ from jinja2 import Environment, FileSystemLoader
 
 from src.core.xml_reader import get_player_node
 from src.core.reference_data import load_object_map
-from data.data_loader import FISH_CATALOG, MUSEUM_CATALOG, SHIPPING_CATALOG
+from data.data_loader import FISH_CATALOG, MUSEUM_CATALOG, SHIPPING_CATALOG, COOKING_CATALOG
 
 from src.modules.player import parse_player
 from src.modules.shipping import parse_shipping
@@ -108,20 +108,26 @@ def analyze_save(file_path, object_map):
         })
     data["museum_pieces"] = sorted(museum_mapped, key=lambda x: x["name"])
 
-    # Cooking & Social remain standard
+    # 4. COOKING CATALOG MERGING
     raw_cooking = parse_cooking(player)
+    cooking_save_map = {str(k).replace("(O)", ""): v for k, v in raw_cooking.items()}
+
     cooking_mapped = []
-    for item_id, count in raw_cooking.items():
-        clean_id = str(item_id).replace("(O)", "")
-        name = object_map.get(str(item_id)) or object_map.get(clean_id) or f"Recipe {item_id}"
+    for item_id, catalog_item in COOKING_CATALOG.items():
+        count = cooking_save_map.get(str(item_id), 0)
+        is_cooked = count > 0
         cooking_mapped.append({
             "id": item_id,
-            "name": name,
+            "name": catalog_item.get("name", f"Recipe {item_id}"),
             "count": count,
-            "wiki_icon": format_wiki_filename(name)
+            "status": "cooked" if is_cooked else "not_cooked",
+            "is_unlocked": is_cooked,
+            "image": catalog_item.get("image", ""),
+            "wiki_icon": catalog_item.get("wiki_icon", format_wiki_filename(catalog_item.get("name", "")))
         })
     data["recipes_cooked"] = sorted(cooking_mapped, key=lambda x: x["name"])
 
+    # Social remains standard
     data["friendships"] = parse_social(player)
     data["daily_intel"] = None
 
@@ -166,3 +172,4 @@ if __name__ == "__main__":
         generate_dashboard_html(all_saves_data)
     else:
         print(f"[WARN] No valid save games were parsed in {SAVE_DIR.resolve()}")
+        
