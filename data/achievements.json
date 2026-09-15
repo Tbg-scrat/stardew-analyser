@@ -1,0 +1,312 @@
+[
+  {
+    "id": 0,
+    "key": "Greenhorn",
+    "name": "Greenhorn",
+    "description": "Earn 15,000g",
+    "category": "Money",
+    "icon": "Achievement_Star_01.png",
+    "target": 15000,
+    "tip": "Focus on high-yield crops early on like Strawberries, Blueberries, or Cranberries."
+  },
+  {
+    "id": 1,
+    "key": "Cowpoke",
+    "name": "Cowpoke",
+    "description": "Earn 50,000g",
+    "category": "Money",
+    "icon": "Achievement_Star_02.png",
+    "target": 50000,
+    "tip": "Expand your farm with preserved goods like Jelly and Pickles."
+  },
+  {
+    "id": 2,
+    "key": "Homesteader",
+    "name": "Homesteader",
+    "description": "Earn 250,000g",
+    "category": "Money",
+    "icon": "Achievement_Star_03.png",
+    "target": 250000,
+    "tip": "Invest in Artisan Equipment like Kegs and Casks for Wine production."
+  },
+  {
+    "id": 3,
+    "key": "Millionaire",
+    "name": "Millionaire",
+    "description": "Earn 1,000,000g",
+    "category": "Money",
+    "icon": "Achievement_Star_04.png",
+    "target": 1000000,
+    "tip": "Starfruit and Ancient Fruit Wine processed in Kegs generate massive income."
+  },
+  {
+    "id": 4,
+    "key": "Legend",
+    "name": "Legend",
+    "description": "Earn 10,000,000g",
+    "category": "Money",
+    "icon": "Achievement_Star_04.png",
+    "target": 10000000,
+    "tip": "Fill the Greenhouse and Ginger Island farm with Ancient Fruit."
+  },
+  {
+    "id": 5,
+    "key": "A_Complete_Collection",
+    "name": "A Complete Collection",
+    "description": "Complete the Museum collection",
+    "category": "Museum",
+    "icon": "Achievement_Star_06.png",
+    "target": 95,
+    "tip": "Donate all 53 Minerals and 42 Artifacts to Gunther."
+  },
+  {
+    "id": 6,
+    "key": "A_New_Friend",
+    "name": "A New Friend",
+    "description": "Reach a 5-heart friendship level with someone",
+    "category": "Social",
+    "icon": "Achievement_Star_07.png",
+    "target": 5,
+    "tip": "Talk to villagers daily and give loved gifts on their birthdays."
+  },
+  {
+    "id": 7,
+    "key": "Best_Friends",
+    "name": "Best Friends",
+    "description": "Reach a 10-heart friendship level with someone",
+    "category": "Social",
+    "icon": "Achievement_Star_08.png",
+    "target": 10,
+    "tip": "Bouquets are required to reach 9-10 hearts with marriage candidates."
+  },
+  {
+    "id": 8,
+    "key": "The_Beloved",
+    "name": "The Beloved",
+    "description": "Reach a 10-heart friendship level with 10 people",
+    "category": "Social",
+    "icon": "Achievement_Star_09.png",
+    "target": 10,
+    "tip": "Focus on non-dateable villagers first as their hearts don't decay at max rank."
+  },
+  {
+    "id": 9,
+    "key": "Cliques",
+    "name": "Cliques",
+    "description": "Reach a 5-heart friendship level with 4 people",
+    "category": "Social",
+    "icon": "Achievement_Star_07.png",
+    "target": 4,
+    "tip": "Attend seasonal festivals to talk to almost everyone in town at once."
+  },
+  {
+    "id": 10,
+    "key": "Singular",
+    "name": "Singular",
+    "description": "Reach a 5-heart friendship level with 10 people",
+    "category": "Social",
+    "icon": "Achievement_Star_07.png",
+    "target": 10,
+    "tip": "Universal Likes such as Coffee, Ice Cream, and Tree Fruit are easy mass gifts."
+  },
+  {
+    "id": 11,
+    "key": "Popular",
+    "name": "Popular",
+    "description": "Reach a 5-heart friendship level with 20 people",
+    "category": "Social",
+    "icon": "Achievement_Star_07.png",
+    "target": 20,
+    "tip": "Keep a chest near the Saloon on Friday nights to gift visiting villagers."
+  },
+  {
+    "id": 12,
+    "key": "Cook",
+    "name": "Cook",
+    "description": "Cook 10 different recipes",
+    "category": "Cooking",
+    "icon": "Achievement_Star_10.png",
+    "target": 10,
+    "tip": "Watch 'The Queen of Sauce' on TV every Sunday for free recipes."
+  },
+  {
+    "id": 13,
+    "key": "Sous_Chef",
+    "name": "Sous Chef",
+    "description": "Cook 25 different recipes",
+    "category": "Cooking",
+    "icon": "Achievement_Star_10.png",
+    "target": 25,
+    "tip": "Befriend villagers via mail to receive their unique household recipes."
+  },
+  {
+    "id": 14,
+    "key": "Gourmet_Chef",
+    "name": "Gourmet Chef",
+    "description": "Cook every recipe",
+    "category": "Cooking",
+    "icon": "Achievement_Star_10.png",
+    "target": 80,
+    "tip": "Requires cooking all 80 recipes available across vanilla Stardew Valley."
+  },
+  {
+    "id": 15,
+    "key": "Moving_Up",
+    "name": "Moving Up",
+    "description": "Upgrade your house",
+    "category": "Building",
+    "icon": "Achievement_Star_11.png",
+    "target": 1,
+    "tip": "Pay Robin 10,000g and 450 Wood for the first house upgrade (adds Kitchen)."
+  },
+  {
+    "id": 16,
+    "key": "Living_Large",
+    "name": "Living Large",
+    "description": "Upgrade your house to the maximum size",
+    "category": "Building",
+    "icon": "Achievement_Star_11.png",
+    "target": 3,
+    "tip": "Requires the Nursery and Cellar upgrades from Robin."
+  },
+  {
+    "id": 17,
+    "key": "DIY",
+    "name": "D.I.Y.",
+    "description": "Craft 15 different items",
+    "category": "Crafting",
+    "icon": "Achievement_Star_11.png",
+    "target": 15,
+    "tip": "Leveling up skills unlocks essential crafting blueprints automatically."
+  },
+  {
+    "id": 18,
+    "key": "Artisan",
+    "name": "Artisan",
+    "description": "Craft 30 different items",
+    "category": "Crafting",
+    "icon": "Achievement_Star_11.png",
+    "target": 30,
+    "tip": "Purchase extra crafting recipes from Robin, Pierre, and festival shops."
+  },
+  {
+    "id": 19,
+    "key": "Craft_Master",
+    "name": "Craft Master",
+    "description": "Craft every item",
+    "category": "Crafting",
+    "icon": "Achievement_Star_11.png",
+    "target": 129,
+    "tip": "Turn on 'Show Advanced Crafting Information' in game settings to track crafted counts."
+  },
+  {
+    "id": 20,
+    "key": "Fisherman",
+    "name": "Fisherman",
+    "description": "Catch 10 different fish",
+    "category": "Fishing",
+    "icon": "Achievement_Star_08.png",
+    "target": 10,
+    "tip": "Fish across different seasons, weather conditions, and locations."
+  },
+  {
+    "id": 21,
+    "key": "Ol_Mariner",
+    "name": "Ol' Mariner",
+    "description": "Catch 24 different fish",
+    "category": "Fishing",
+    "icon": "Achievement_Star_08.png",
+    "target": 24,
+    "tip": "Use Crab Pots in fresh and salt water to catch ocean/river invertebrates."
+  },
+  {
+    "id": 22,
+    "key": "Master_Angler",
+    "name": "Master Angler",
+    "description": "Catch every fish",
+    "category": "Fishing",
+    "icon": "Achievement_Star_08.png",
+    "target": 67,
+    "tip": "Requires catching all standard fish, night market fish, and Legendary Fish."
+  },
+  {
+    "id": 23,
+    "key": "Mother_Catch",
+    "name": "Mother Catch",
+    "description": "Catch 100 fish",
+    "category": "Fishing",
+    "icon": "Achievement_Star_08.png",
+    "target": 100,
+    "tip": "Total quantity catch count across any species."
+  },
+  {
+    "id": 24,
+    "key": "Treasure_Trove",
+    "name": "Treasure Trove",
+    "description": "Donate 40 items to the Museum",
+    "category": "Museum",
+    "icon": "Achievement_Star_06.png",
+    "target": 40,
+    "tip": "Process Geodes at Clint's Blacksmith shop to quickly find minerals."
+  },
+  {
+    "id": 25,
+    "key": "Gofer",
+    "name": "Gofer",
+    "description": "Complete 10 'Help Wanted' requests",
+    "category": "Quests",
+    "icon": "Achievement_Star_09.png",
+    "target": 10,
+    "tip": "Check the bulletin board outside Pierre's store daily."
+  },
+  {
+    "id": 26,
+    "key": "A_Big_Help",
+    "name": "A Big Help",
+    "description": "Complete 40 'Help Wanted' requests",
+    "category": "Quests",
+    "icon": "Achievement_Star_09.png",
+    "target": 40,
+    "tip": "Item delivery quests are usually the easiest and fastest to complete."
+  },
+  {
+    "id": 27,
+    "key": "Polyculture",
+    "name": "Polyculture",
+    "description": "Ship 15 of each crop",
+    "category": "Shipping",
+    "icon": "Achievement_Star_01.png",
+    "target": 15,
+    "tip": "Requires shipping 15 of each of the 28 primary farm crops."
+  },
+  {
+    "id": 28,
+    "key": "Monoculture",
+    "name": "Monoculture",
+    "description": "Ship 300 of one crop",
+    "category": "Shipping",
+    "icon": "Achievement_Star_01.png",
+    "target": 300,
+    "tip": "High-yield berries like Cranberries or Blueberries make this trivial."
+  },
+  {
+    "id": 29,
+    "key": "Full_Shipment",
+    "name": "Full Shipment",
+    "description": "Ship every item",
+    "category": "Shipping",
+    "icon": "Achievement_Star_01.png",
+    "target": 145,
+    "tip": "Complete the 'Items Shipped' collection tab in the player menu."
+  },
+  {
+    "id": 34,
+    "key": "Fector_Challenge",
+    "name": "Fector's Challenge",
+    "description": "Beat 'Journey of the Prairie King' without dying",
+    "category": "Minigames",
+    "icon": "Achievement_Star_11.png",
+    "target": 1,
+    "tip": "You can exit the arcade machine after completing a level to save your progress."
+  }
+]
