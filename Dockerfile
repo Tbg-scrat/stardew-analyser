@@ -4,7 +4,7 @@ RUN apt-get update && apt-get install -y nginx && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-RUN pip install --no-cache-dir jinja2
+RUN pip install --no-cache-dir jinja2 watchdog
 
 COPY . .
 
