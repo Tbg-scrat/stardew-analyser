@@ -71,7 +71,7 @@
     "target": 5,
     "tip": "Talk to villagers daily and give liked gifts on their birthdays.",
     "link_module": "social",
-    "link_filter": "all"
+    "link_filter": "needs_hearts"
   },
   {
     "id": 7,
@@ -83,7 +83,7 @@
     "target": 10,
     "tip": "Loved gifts grant 80 friendship points (8x multiplier on birthdays).",
     "link_module": "social",
-    "link_filter": "all"
+    "link_filter": "needs_hearts"
   },
   {
     "id": 9,
@@ -95,7 +95,7 @@
     "target": 8,
     "tip": "Focus on easily accessible villagers or those with easy loved gifts.",
     "link_module": "social",
-    "link_filter": "all"
+    "link_filter": "needs_hearts"
   },
   {
     "id": 11,
@@ -107,7 +107,7 @@
     "target": 4,
     "tip": "Talk to everyone at town festivals to gain passive friendship points.",
     "link_module": "social",
-    "link_filter": "all"
+    "link_filter": "needs_hearts"
   },
   {
     "id": 12,
@@ -119,7 +119,7 @@
     "target": 10,
     "tip": "Universal Likes such as Coffee, Ice Cream, and Tree Fruit make easy mass gifts.",
     "link_module": "social",
-    "link_filter": "all"
+    "link_filter": "needs_hearts"
   },
   {
     "id": 13,
@@ -131,7 +131,7 @@
     "target": 20,
     "tip": "Carry a stack of Coffee or Fruit in your inventory while doing daily errands.",
     "link_module": "social",
-    "link_filter": "all"
+    "link_filter": "needs_hearts"
   },
   {
     "id": 15,
@@ -309,7 +309,7 @@
     "target": 15,
     "tip": "Requires shipping 15 of each of the 28 primary farm crops.",
     "link_module": "shipping",
-    "link_filter": "not_shipped"
+    "link_filter": "polyculture_needed"
   },
   {
     "id": 32,

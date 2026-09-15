@@ -249,40 +249,45 @@
 
 
             <div class="module-pane active" id="module-{{ farm.farm_id }}-shipping">
-                <div class="radar-controls">
-                    <div class="filter-group">
-                        <button class="filter-btn active" onclick="setCatalogFilter(this, 'all')">All</button>
-                        <button class="filter-btn" onclick="setCatalogFilter(this, 'shipped')">Shipped</button>
-                        <button class="filter-btn" onclick="setCatalogFilter(this, 'not_shipped')">Not Shipped</button>
-                        <button class="filter-btn" onclick="setCatalogFilter(this, 'achievement_fs_shipped')">🏆 Full Shipment Shipped</button>
-                        <button class="filter-btn" onclick="setCatalogFilter(this, 'achievement_fs_not_shipped')">🏆 Full Shipment Needed</button>
-                   </div>
+    <div class="radar-controls">
+        <div class="filter-group">
+            <button class="filter-btn active" onclick="setCatalogFilter(this, 'all')">All</button>
+            <button class="filter-btn" onclick="setCatalogFilter(this, 'shipped')">Shipped</button>
+            <button class="filter-btn" onclick="setCatalogFilter(this, 'not_shipped')">Not Shipped</button>
+            <button class="filter-btn" onclick="setCatalogFilter(this, 'achievement_fs_shipped')">🏆 Full Shipment Done</button>
+            <button class="filter-btn" onclick="setCatalogFilter(this, 'achievement_fs_not_shipped')">🏆 Full Shipment Needed</button>
+            <button class="filter-btn" onclick="setCatalogFilter(this, 'polyculture_shipped')">🌾 Polyculture Done</button>
+            <button class="filter-btn" onclick="setCatalogFilter(this, 'polyculture_needed')">🌾 Polyculture Needed</button>
+        </div>
 
-                    <input type="text" class="search-box" placeholder="Search shipping items..." onkeyup="filterItems(this)">
-                </div>
-                <div class="items-grid">
-                    {% for item in farm.shipped_items %}
-                    <div class="item-card status-{{ item.status }}" 
-                         data-name="{{ item.name|lower }}" 
-                         data-status="{{ item.status }}" 
-                         data-achievement="{{ 'true' if item.achievement_required else 'false' }}">
-                        <div class="item-sprite-box">
-                            {% if item.image %}
-                            <img src="data:image/png;base64,{{ item.image }}" class="item-sprite" alt="{{ item.name }}">
-                            {% else %}
-                            <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ item.wiki_icon }}.png" class="item-sprite" alt="{{ item.name }}" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='inline';">
-                            <span style="display:none; font-size: 1.2rem;"></span>
-                            {% endif %}
-                        </div>
-                        <div class="item-info">
-                            <div class="item-name">{{ item.name }}</div>
-                            <div class="item-meta">Shipped: <b>{{ item.count }}</b></div>
-                            <span class="status-badge {{ 'unlocked' if item.is_unlocked else 'locked' }}">{{ item.status|replace('_', ' ') }}</span>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
+        <input type="text" class="search-box" placeholder="Search shipping items..." onkeyup="filterItems(this)">
+    </div>
+    <div class="items-grid">
+        {% for item in farm.shipped_items %}
+        <div class="item-card status-{{ item.status }}" 
+             data-name="{{ item.name|lower }}" 
+             data-status="{{ item.status }}" 
+             data-achievement="{{ 'true' if item.achievement_required else 'false' }}"
+             data-polyculture="{{ 'true' if item.is_polyculture else 'false' }}"
+             data-shipped-count="{{ item.count }}">
+            <div class="item-sprite-box">
+                {% if item.image %}
+                <img src="data:image/png;base64,{{ item.image }}" class="item-sprite" alt="{{ item.name }}">
+                {% else %}
+                <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ item.wiki_icon }}.png" class="item-sprite" alt="{{ item.name }}" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                <span style="display:none; font-size: 1.2rem;"></span>
+                {% endif %}
             </div>
+            <div class="item-info">
+                <div class="item-name">{{ item.name }}</div>
+                <div class="item-meta">Shipped: <b>{{ item.count }}</b></div>
+                <span class="status-badge {{ 'unlocked' if item.is_unlocked else 'locked' }}">{{ item.status|replace('_', ' ') }}</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
 
             <div class="module-pane" id="module-{{ farm.farm_id }}-fishing">
                 <div class="radar-controls">
@@ -589,6 +594,10 @@
                 targetFilter = 'achievement_fs_shipped';
             } else if (filterText.includes('full shipment needed')) {
                 targetFilter = 'achievement_fs_not_shipped';
+            } else if (filterText.includes('polyculture done')) {
+                targetFilter = 'polyculture_shipped';
+            } else if (filterText.includes('polyculture needed')) {
+                targetFilter = 'polyculture_needed';
             } else if (filterText.includes('can gift')) {
                 targetFilter = 'can_gift';
             } else if (filterText.includes('gifts done')) {
@@ -626,6 +635,8 @@
                 const name = card.getAttribute('data-name') || '';
                 const status = card.getAttribute('data-status') || '';
                 const isAchievement = card.getAttribute('data-achievement') === 'true';
+                const isPolyculture = card.getAttribute('data-polyculture') === 'true';
+                const shippedCount = parseInt(card.getAttribute('data-shipped-count') || '0', 10);
                 
                 const gifts = parseInt(card.getAttribute('data-gifts') || '0', 10);
                 const isDatable = card.getAttribute('data-datable') === 'true';
@@ -637,6 +648,10 @@
                     matchesStatus = isAchievement && (status === 'shipped');
                 } else if (statusFilter === 'achievement_fs_not_shipped') {
                     matchesStatus = isAchievement && (status === 'not_shipped');
+                } else if (statusFilter === 'polyculture_shipped') {
+                    matchesStatus = isPolyculture && (shippedCount >= 15);
+                } else if (statusFilter === 'polyculture_needed') {
+                    matchesStatus = isPolyculture && (shippedCount < 15);
                 } else if (statusFilter === 'can_gift') {
                     matchesStatus = gifts < 2;
                 } else if (statusFilter === 'gifts_maxed') {
@@ -659,6 +674,7 @@
             });
         }
     </script>
+
 
 
 </body>
