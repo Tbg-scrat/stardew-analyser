@@ -5,7 +5,13 @@ from jinja2 import Environment, FileSystemLoader
 
 from src.core.xml_reader import get_player_node
 from src.core.reference_data import load_object_map
-from data.data_loader import FISH_CATALOG, MUSEUM_CATALOG, SHIPPING_CATALOG, COOKING_CATALOG
+from data.data_loader import (
+    FISH_CATALOG, 
+    MUSEUM_CATALOG, 
+    SHIPPING_CATALOG, 
+    COOKING_CATALOG, 
+    ACHIEVEMENTS_CATALOG
+)
 
 from src.modules.player import parse_player
 from src.modules.shipping import parse_shipping
@@ -17,6 +23,7 @@ from src.modules.weather import parse_weather
 from src.modules.luck import parse_luck
 from src.modules.festivals import parse_festivals
 from src.modules.birthdays import parse_birthdays
+from src.modules.achievements import parse_achievements
 
 SAVE_DIR = Path(os.getenv("SAVE_DIR", "/saves"))
 OUTPUT_HTML = Path("index.html")
@@ -126,6 +133,9 @@ def analyze_save(file_path, object_map):
             "wiki_icon": catalog_item.get("wiki_icon", format_wiki_filename(catalog_item.get("name", "")))
         })
     data["recipes_cooked"] = sorted(cooking_mapped, key=lambda x: x["name"])
+
+    # 5. ACHIEVEMENTS MODULE MERGING
+    data["achievements"] = parse_achievements(player, ACHIEVEMENTS_CATALOG)
 
     # Social remains standard
     data["friendships"] = parse_social(player)

@@ -238,14 +238,15 @@
                 </div>
             </div>
 
-            <div class="module-nav-bar">
-                <button class="module-nav-btn active" data-module="shipping" onclick="switchModule('{{ farm.farm_id }}', 'shipping')"> Shipping <span class="module-badge">{{ farm.shipped_items|selectattr('is_unlocked')|list|length }}/{{ farm.shipped_items|length }}</span></button>
-                <button class="module-nav-btn" data-module="fishing" onclick="switchModule('{{ farm.farm_id }}', 'fishing')"> Fishing <span class="module-badge">{{ farm.fish_caught|selectattr('is_unlocked')|list|length }}/{{ farm.fish_caught|length }}</span></button>
-                <button class="module-nav-btn" data-module="museum" onclick="switchModule('{{ farm.farm_id }}', 'museum')"> Museum <span class="module-badge">{{ farm.museum_pieces|selectattr('is_unlocked')|list|length }}/{{ farm.museum_pieces|length }}</span></button>
-               <button class="module-nav-btn" data-module="cooking" onclick="switchModule('{{ farm.farm_id }}', 'cooking')"> 🍳 Cooking <span class="module-badge">{{ farm.recipes_cooked|selectattr('is_unlocked')|list|length }}/{{ farm.recipes_cooked|length }}</span></button>
-
-                <button class="module-nav-btn" data-module="social" onclick="switchModule('{{ farm.farm_id }}', 'social')"> Social <span class="module-badge">{{ farm.friendships|length }}</span></button>
+             <div class="module-nav-bar">
+                <button class="module-nav-btn active" data-module="shipping" onclick="switchModule('{{ farm.farm_id }}', 'shipping')">📦 Shipping <span class="module-badge">{{ farm.shipped_items|selectattr('is_unlocked')|list|length }}/{{ farm.shipped_items|length }}</span></button>
+                <button class="module-nav-btn" data-module="fishing" onclick="switchModule('{{ farm.farm_id }}', 'fishing')">🎣 Fishing <span class="module-badge">{{ farm.fish_caught|selectattr('is_unlocked')|list|length }}/{{ farm.fish_caught|length }}</span></button>
+                <button class="module-nav-btn" data-module="museum" onclick="switchModule('{{ farm.farm_id }}', 'museum')">🏛️ Museum <span class="module-badge">{{ farm.museum_pieces|selectattr('is_unlocked')|list|length }}/{{ farm.museum_pieces|length }}</span></button>
+                <button class="module-nav-btn" data-module="cooking" onclick="switchModule('{{ farm.farm_id }}', 'cooking')">🍳 Cooking <span class="module-badge">{{ farm.recipes_cooked|selectattr('is_unlocked')|list|length }}/{{ farm.recipes_cooked|length }}</span></button>
+                <button class="module-nav-btn" data-module="achievements" onclick="switchModule('{{ farm.farm_id }}', 'achievements')">🏆 Achievements <span class="module-badge">{{ farm.achievements.unlocked_count }}/{{ farm.achievements.total_count }}</span></button>
+                <button class="module-nav-btn" data-module="social" onclick="switchModule('{{ farm.farm_id }}', 'social')">👥 Social <span class="module-badge">{{ farm.friendships|length }}</span></button>
             </div>
+
 
             <div class="module-pane active" id="module-{{ farm.farm_id }}-shipping">
                 <div class="radar-controls">
@@ -379,6 +380,45 @@
                 </div>
             </div>
 
+            <!-- ACHIEVEMENTS MODULE PANE -->
+            <div class="module-pane" id="module-{{ farm.farm_id }}-achievements">
+                <div class="radar-controls">
+                    <div class="filter-group">
+                        <button class="filter-btn active" onclick="setCatalogFilter(this, 'all')">All</button>
+                        <button class="filter-btn" onclick="setCatalogFilter(this, 'unlocked')">Unlocked</button>
+                        <button class="filter-btn" onclick="setCatalogFilter(this, 'locked')">Locked</button>
+                    </div>
+                    <input type="text" class="search-box" placeholder="Search achievements..." onkeyup="filterItems(this)">
+                </div>
+                <div class="items-grid">
+                    {% for item in farm.achievements.list %}
+                    <div class="item-card status-{{ 'unlocked' if item.unlocked else 'locked' }}" 
+                         data-name="{{ item.name|lower }}" 
+                         data-status="{{ 'unlocked' if item.unlocked else 'locked' }}">
+                        <div class="item-sprite-box">
+                            <img src="static/img/achievements/{{ item.icon }}" 
+                                 class="item-sprite {% if not item.unlocked %}grayscale{% endif %}" 
+                                 alt="{{ item.name }}"
+                                 onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                            <span style="display:none; font-size: 1.2rem;">🏆</span>
+                        </div>
+                        <div class="item-info">
+                            <div class="item-name">{{ item.name }}</div>
+                            <div class="item-meta">{{ item.description }}</div>
+                            {% if not item.unlocked and item.tip %}
+                            <div class="item-tip" style="font-size: 0.8rem; opacity: 0.8; margin-top: 4px;">
+                                💡 <i>{{ item.tip }}</i>
+                            </div>
+                            {% endif %}
+                            <span class="status-badge {{ 'unlocked' if item.unlocked else 'locked' }}" style="margin-top: 6px;">
+                                {{ 'unlocked' if item.unlocked else 'locked' }}
+                            </span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            
 
             <!-- SOCIAL MODULE PANE -->
             <div class="module-pane" id="module-{{ farm.farm_id }}-social">
