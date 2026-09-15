@@ -243,7 +243,7 @@
                 <button class="module-nav-btn" data-module="fishing" onclick="switchModule('{{ farm.farm_id }}', 'fishing')">🎣 Fishing <span class="module-badge">{{ farm.fish_caught|selectattr('is_unlocked')|list|length }}/{{ farm.fish_caught|length }}</span></button>
                 <button class="module-nav-btn" data-module="museum" onclick="switchModule('{{ farm.farm_id }}', 'museum')">🏛️ Museum <span class="module-badge">{{ farm.museum_pieces|selectattr('is_unlocked')|list|length }}/{{ farm.museum_pieces|length }}</span></button>
                 <button class="module-nav-btn" data-module="cooking" onclick="switchModule('{{ farm.farm_id }}', 'cooking')">🍳 Cooking <span class="module-badge">{{ farm.recipes_cooked|selectattr('is_unlocked')|list|length }}/{{ farm.recipes_cooked|length }}</span></button>
-                <button class="module-nav-btn" data-module="achievements" onclick="switchModule('{{ farm.farm_id }}', 'achievements')">🏆 Achievements <span class="module-badge">{{ farm.achievements.unlocked_count }}/{{ farm.achievements.total_count }}</span></button>
+                <button class="module-nav-btn" data-module="achievements" onclick="switchModule('{{ farm.farm_id }}', 'achievements')">🏆 Achievements <span class="module-badge">{{ farm.achievements.unlocked_count }}/{{ farm.achievements.total }}</span></button>
                 <button class="module-nav-btn" data-module="social" onclick="switchModule('{{ farm.farm_id }}', 'social')">👥 Social <span class="module-badge">{{ farm.friendships|length }}</span></button>
             </div>
 
@@ -254,8 +254,8 @@
                         <button class="filter-btn active" onclick="setCatalogFilter(this, 'all')">All</button>
                         <button class="filter-btn" onclick="setCatalogFilter(this, 'shipped')">Shipped</button>
                         <button class="filter-btn" onclick="setCatalogFilter(this, 'not_shipped')">Not Shipped</button>
-                        <button class="filter-btn" onclick="setCatalogFilter(this, 'achievement_shipped')">🏆 Full Shipment Shipped</button>
-                        <button class="filter-btn" onclick="setCatalogFilter(this, 'achievement_not_shipped')">🏆 Full Shipment Needed</button>
+                        <button class="filter-btn" onclick="setCatalogFilter(this, 'achievement_fs_shipped')">🏆 Full Shipment Shipped</button>
+                        <button class="filter-btn" onclick="setCatalogFilter(this, 'achievement_fs_not_shipped')">🏆 Full Shipment Needed</button>
                    </div>
 
                     <input type="text" class="search-box" placeholder="Search shipping items..." onkeyup="filterItems(this)">
@@ -380,7 +380,7 @@
                 </div>
             </div>
 
-            <!-- ACHIEVEMENTS MODULE PANE -->
+                       <!-- ACHIEVEMENTS MODULE PANE -->
             <div class="module-pane" id="module-{{ farm.farm_id }}-achievements">
                 <div class="radar-controls">
                     <div class="filter-group">
@@ -405,11 +405,25 @@
                         <div class="item-info">
                             <div class="item-name">{{ item.name }}</div>
                             <div class="item-meta">{{ item.description }}</div>
-                            {% if not item.unlocked and item.tip %}
-                            <div class="item-tip" style="font-size: 0.8rem; opacity: 0.8; margin-top: 4px;">
-                                💡 <i>{{ item.tip }}</i>
-                            </div>
+                            
+                            {% if not item.unlocked %}
+                                {% if item.tip %}
+                                <div class="item-tip" style="font-size: 0.8rem; opacity: 0.8; margin-top: 4px;">
+                                    💡 <i>{{ item.tip }}</i>
+                                </div>
+                                {% endif %}
+                                
+                                {% if item.link_module %}
+                                <div class="item-action-link" style="margin-top: 6px;">
+                                    <a href="#" 
+                                       onclick="navigateToModule('{{ farm.farm_id }}', '{{ item.link_module }}', '{{ item.link_filter }}'); return false;" 
+                                       style="color: #4a90e2; font-size: 0.82rem; text-decoration: underline; cursor: pointer;">
+                                        View missing in {{ item.link_module|capitalize }} →
+                                    </a>
+                                </div>
+                                {% endif %}
                             {% endif %}
+
                             <span class="status-badge {{ 'unlocked' if item.unlocked else 'locked' }}" style="margin-top: 6px;">
                                 {{ 'unlocked' if item.unlocked else 'locked' }}
                             </span>
@@ -418,6 +432,7 @@
                     {% endfor %}
                 </div>
             </div>
+
             
 
             <!-- SOCIAL MODULE PANE -->
@@ -504,7 +519,7 @@
         </footer>
     </div>
 
-    <script>
+<script>
         function switchFarm(farmId) {
             document.querySelectorAll('.farm-tab-card').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.farm-pane').forEach(pane => pane.classList.remove('active'));
@@ -540,6 +555,29 @@
             applyCombinedFilters(modulePane, filterValue, searchBox ? searchBox.value : '');
         }
 
+        function navigateToModule(farmId, moduleName, filterState) {
+            switchModule(farmId, moduleName);
+
+            const targetPane = document.getElementById(`module-${farmId}-${moduleName}`);
+            if (!targetPane) return;
+
+            if (filterState) {
+                // Finds matching filter button by onclick attribute value or button text
+                const buttons = Array.from(targetPane.querySelectorAll('.filter-btn'));
+                const filterBtn = buttons.find(btn => {
+                    const onclickAttr = btn.getAttribute('onclick') || '';
+                    const btnText = btn.textContent.trim().toLowerCase();
+                    return onclickAttr.includes(`'${filterState}'`) || btnText.includes(filterState.replace('_', ' '));
+                });
+
+                if (filterBtn) {
+                    setCatalogFilter(filterBtn, filterState);
+                }
+            }
+
+            targetPane.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
         function filterItems(searchInput) {
             const modulePane = searchInput.closest('.module-pane');
             const activeFilterBtn = modulePane.querySelector('.filter-btn.active');
@@ -548,9 +586,9 @@
             let targetFilter = 'all';
 
             if (filterText.includes('full shipment shipped')) {
-                targetFilter = 'achievement_shipped';
+                targetFilter = 'achievement_fs_shipped';
             } else if (filterText.includes('full shipment needed')) {
-                targetFilter = 'achievement_not_shipped';
+                targetFilter = 'achievement_fs_not_shipped';
             } else if (filterText.includes('can gift')) {
                 targetFilter = 'can_gift';
             } else if (filterText.includes('gifts done')) {
@@ -571,7 +609,7 @@
                 targetFilter = 'found';
             } else if (filterText.includes('missing')) {
                 targetFilter = 'not_found';
-             } else if (filterText.includes('cooked') && !filterText.includes('not')) {
+            } else if (filterText.includes('cooked') && !filterText.includes('not')) {
                 targetFilter = 'cooked';
             } else if (filterText.includes('not cooked')) {
                 targetFilter = 'not_cooked'; 
@@ -595,9 +633,9 @@
 
                 let matchesStatus = true;
 
-                if (statusFilter === 'achievement_shipped') {
+                if (statusFilter === 'achievement_fs_shipped') {
                     matchesStatus = isAchievement && (status === 'shipped');
-                } else if (statusFilter === 'achievement_not_shipped') {
+                } else if (statusFilter === 'achievement_fs_not_shipped') {
                     matchesStatus = isAchievement && (status === 'not_shipped');
                 } else if (statusFilter === 'can_gift') {
                     matchesStatus = gifts < 2;
@@ -621,6 +659,7 @@
             });
         }
     </script>
+
 
 </body>
 </html>

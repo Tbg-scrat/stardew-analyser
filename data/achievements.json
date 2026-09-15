@@ -57,7 +57,9 @@
     "category": "Museum",
     "icon": "Achievement_Star_06.png",
     "target": 95,
-    "tip": "Trade Omni Geodes for Artifact Troves at the Desert Trader."
+    "tip": "Trade Omni Geodes for Artifact Troves at the Desert Trader.",
+    "link_module": "museum",
+    "link_filter": "not_found"
   },
   {
     "id": 6,
@@ -67,7 +69,9 @@
     "category": "Social",
     "icon": "Achievement_Star_07.png",
     "target": 5,
-    "tip": "Talk to villagers daily and give liked gifts on their birthdays."
+    "tip": "Talk to villagers daily and give liked gifts on their birthdays.",
+    "link_module": "social",
+    "link_filter": "all"
   },
   {
     "id": 7,
@@ -77,7 +81,9 @@
     "category": "Social",
     "icon": "Achievement_Star_07.png",
     "target": 10,
-    "tip": "Loved gifts grant 80 friendship points (8x multiplier on birthdays)."
+    "tip": "Loved gifts grant 80 friendship points (8x multiplier on birthdays).",
+    "link_module": "social",
+    "link_filter": "all"
   },
   {
     "id": 9,
@@ -87,7 +93,9 @@
     "category": "Social",
     "icon": "Achievement_Star_07.png",
     "target": 8,
-    "tip": "Focus on easily accessible villagers or those with easy loved gifts."
+    "tip": "Focus on easily accessible villagers or those with easy loved gifts.",
+    "link_module": "social",
+    "link_filter": "all"
   },
   {
     "id": 11,
@@ -97,7 +105,9 @@
     "category": "Social",
     "icon": "Achievement_Star_07.png",
     "target": 4,
-    "tip": "Talk to everyone at town festivals to gain passive friendship points."
+    "tip": "Talk to everyone at town festivals to gain passive friendship points.",
+    "link_module": "social",
+    "link_filter": "all"
   },
   {
     "id": 12,
@@ -107,7 +117,9 @@
     "category": "Social",
     "icon": "Achievement_Star_07.png",
     "target": 10,
-    "tip": "Universal Likes such as Coffee, Ice Cream, and Tree Fruit make easy mass gifts."
+    "tip": "Universal Likes such as Coffee, Ice Cream, and Tree Fruit make easy mass gifts.",
+    "link_module": "social",
+    "link_filter": "all"
   },
   {
     "id": 13,
@@ -117,7 +129,9 @@
     "category": "Social",
     "icon": "Achievement_Star_07.png",
     "target": 20,
-    "tip": "Carry a stack of Coffee or Fruit in your inventory while doing daily errands."
+    "tip": "Carry a stack of Coffee or Fruit in your inventory while doing daily errands.",
+    "link_module": "social",
+    "link_filter": "all"
   },
   {
     "id": 15,
@@ -127,7 +141,9 @@
     "category": "Cooking",
     "icon": "Achievement_Star_10.png",
     "target": 10,
-    "tip": "Watch 'The Queen of Sauce' on TV every Sunday and Wednesday."
+    "tip": "Watch 'The Queen of Sauce' on TV every Sunday and Wednesday.",
+    "link_module": "cooking",
+    "link_filter": "not_cooked"
   },
   {
     "id": 16,
@@ -137,7 +153,9 @@
     "category": "Cooking",
     "icon": "Achievement_Star_10.png",
     "target": 25,
-    "tip": "Befriend villagers to receive their unique home recipes in the mail."
+    "tip": "Befriend villagers to receive their unique home recipes in the mail.",
+    "link_module": "cooking",
+    "link_filter": "not_cooked"
   },
   {
     "id": 17,
@@ -147,7 +165,9 @@
     "category": "Cooking",
     "icon": "Achievement_Star_10.png",
     "target": 80,
-    "tip": "Store one of every crop, fish, and forage item in kitchen chests."
+    "tip": "Store one of every crop, fish, and forage item in kitchen chests.",
+    "link_module": "cooking",
+    "link_filter": "not_cooked"
   },
   {
     "id": 18,
@@ -207,7 +227,9 @@
     "category": "Fishing",
     "icon": "Achievement_Star_08.png",
     "target": 10,
-    "tip": "Fish across different seasons, weather conditions, and locations."
+    "tip": "Fish across different seasons, weather conditions, and locations.",
+    "link_module": "fishing",
+    "link_filter": "not_caught"
   },
   {
     "id": 25,
@@ -217,7 +239,9 @@
     "category": "Fishing",
     "icon": "Achievement_Star_08.png",
     "target": 24,
-    "tip": "Use Crab Pots in fresh and salt water to catch ocean/river invertebrates."
+    "tip": "Use Crab Pots in fresh and salt water to catch ocean/river invertebrates.",
+    "link_module": "fishing",
+    "link_filter": "not_caught"
   },
   {
     "id": 26,
@@ -227,7 +251,9 @@
     "category": "Fishing",
     "icon": "Achievement_Star_08.png",
     "target": 67,
-    "tip": "Requires catching all standard fish, night market fish, and Legendary Fish."
+    "tip": "Requires catching all standard fish, night market fish, and Legendary Fish.",
+    "link_module": "fishing",
+    "link_filter": "not_caught"
   },
   {
     "id": 27,
@@ -237,7 +263,9 @@
     "category": "Fishing",
     "icon": "Achievement_Star_08.png",
     "target": 100,
-    "tip": "Total quantity catch count across any species."
+    "tip": "Total quantity catch count across any species.",
+    "link_module": "fishing",
+    "link_filter": "not_caught"
   },
   {
     "id": 28,
@@ -247,7 +275,9 @@
     "category": "Museum",
     "icon": "Achievement_Star_06.png",
     "target": 40,
-    "tip": "Process Geodes at Clint's Blacksmith shop to quickly find minerals."
+    "tip": "Process Geodes at Clint's Blacksmith shop to quickly find minerals.",
+    "link_module": "museum",
+    "link_filter": "not_found"
   },
   {
     "id": 29,
@@ -277,7 +307,9 @@
     "category": "Shipping",
     "icon": "Achievement_Star_01.png",
     "target": 15,
-    "tip": "Requires shipping 15 of each of the 28 primary farm crops."
+    "tip": "Requires shipping 15 of each of the 28 primary farm crops.",
+    "link_module": "shipping",
+    "link_filter": "not_shipped"
   },
   {
     "id": 32,
@@ -287,7 +319,9 @@
     "category": "Shipping",
     "icon": "Achievement_Star_01.png",
     "target": 300,
-    "tip": "High-yield berries like Cranberries or Blueberries make this trivial."
+    "tip": "High-yield berries like Cranberries or Blueberries make this trivial.",
+    "link_module": "shipping",
+    "link_filter": "not_shipped"
   },
   {
     "id": 34,
@@ -297,7 +331,9 @@
     "category": "Shipping",
     "icon": "Achievement_Star_01.png",
     "target": 145,
-    "tip": "Complete the 'Items Shipped' collection tab in the player menu."
+    "tip": "Complete the 'Items Shipped' collection tab in the player menu.",
+    "link_module": "shipping",
+    "link_filter": "achievement_fs_not_shipped"
   },
   {
     "id": 35,
