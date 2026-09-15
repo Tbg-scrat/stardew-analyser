@@ -77,6 +77,7 @@ def analyze_save(file_path, object_map):
                 "is_unlocked": is_shipped,
                 "achievement_required": catalog_item.get("achievement_required", False),
                 "is_polyculture": catalog_item.get("is_polyculture", False),
+                "is_monoculture": catalog_item.get("is_monoculture", False),
                 "image": catalog_item.get("image", ""),
                 "wiki_icon": format_wiki_filename(catalog_item.get("name", "")),
             }
@@ -149,7 +150,25 @@ def analyze_save(file_path, object_map):
     data["recipes_cooked"] = sorted(cooking_mapped, key=lambda x: x["name"])
 
     # 5. ACHIEVEMENTS MODULE MERGING
-    data["achievements"] = parse_achievements(player, ACHIEVEMENTS_CATALOG)
+    achievements_data = parse_achievements(player, ACHIEVEMENTS_CATALOG)
+    data["achievements"] = achievements_data
+
+    # Calculate Monoculture progress (highest count among 33 qualified crops)
+    monoculture_items = [item for item in shipped_mapped if item.get("is_monoculture")]
+    max_monoculture_count = (
+        max([item["count"] for item in monoculture_items], default=0)
+        if monoculture_items
+        else 0
+    )
+
+    # Safely iterate over the "list" array inside achievements_data
+    for ach in achievements_data.get("list", []):
+        if ach.get("name") == "Monoculture":
+            ach["progress_current"] = min(max_monoculture_count, 300)
+            ach["target"] = 300
+            ach["unlocked"] = max_monoculture_count >= 300
+            ach["link_module"] = None
+            ach["link_filter"] = None
 
     # Social remains standard
     data["friendships"] = parse_social(player)
@@ -174,12 +193,13 @@ def generate_dashboard_html(all_saves_data):
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(rendered_html)
     print(
-        f"[OK] Generated static dashboard for {len(all_saves_data)} save game(s) -> {OUTPUT_HTML.resolve()}"
+        f"[OK] Generated static dashboard for {len(all_saves_data)} save game(s)"
+        f" -> {OUTPUT_HTML.resolve()}"
     )
 
 
 if __name__ == "__main__":
-    print(f"[INFO] Loading game item reference map...")
+    print("[INFO] Loading game item reference map...")
     object_map = load_object_map()
 
     print(f"[INFO] Scanning directory: {SAVE_DIR.resolve()}")

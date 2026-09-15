@@ -3,1495 +3,1744 @@
     "name": "Wild Horseradish",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA5UlEQVR4nJVRuw3CMBC16KhTUUEklwFRIFFB7wmoEV1SsQA1KRgEmrAOQzBD0HNy1svFgWDp6U7W+9zZxgwclye1YIjTE9idCajeLoDvo4YuTwL58lx7EsjoUaezpgfAiZpYlSI9xLIKc3riSqVDKJA7VJkimFgSA8frwhM5WXrhdEwc7c9JnKjXYr7Ru63sJAi0cTZvxu78iFMvKga8Ghvr3zN8kHDabwLEqDgkHriTKaInaw1YgFqe0/pxW3r8ZVCeU4/XfevFqD8NijYZQk4Xk1ET6NG5fjXQJrLCaDGbxBAjfwAh8zz/5bRDaAAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "18": {
     "name": "Daffodil",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA6UlEQVR4nI1SwQ3CMAyM5E8HQGEIfkjMwAaIBxJDIbFCP12hA/BmBH5MkF+QHV8waRJqKXVS+87nOM51jPa7iNXLqxqD4usSY5jEryYhrfi+bzOYPZ+rasjIlOA4JNDsqt6f3W8+8ed5ECAHeZ8rzy4+rpsvSZgkDpKFCq+BW0wAlo3FZ/6/AFuDmix5dgmse/4PBW2CcUgtmDbyNLgFtNqy09FLFWkDRGGS89/q1JgI++6DIk3GBUkVBcFjQlUSKkaJc6lGVklCOjb0mAFKaBXhbrK6Wu+2JUsIEluoOQkA7KOpFera2sQPjDVM7lmfN+0AAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "20": {
     "name": "Leek",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA90lEQVR4nJWRMQ7CMAxFLZkzoB4BqR1Ql45ISICYK7H0BJ06dkUcoAsDE3dgZkQcgAtwDtiMbJwoaVMRIlmO7P9fnARgZGGekhtjOm95hiah9QMkeP8ThnlKRwIJNomwKoLAAQTVDN33NM5W2Dn1qpA9az0I5qk3qhGaLL1OTXqAhaAxq8COrONzz06ntTCgSTzRbjMNAsx17BVRiRbEoqoYAIzOfRsLQH0Qt7GFycDU1wZ/A7XIgDP43wmxa5mtaDGf0SHLqNufxFyXLUWb67IV4/1ypdfzRkRviSjIUgF9Mwf3/pqAAQbCOQoQmoJztNmFuDEm/ADV+TD0MhhjGgAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "22": {
     "name": "Dandelion",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA+ElEQVR4nJ2RPQrCQBCFF/YKSgrrVAkIOYEuxAvYilYWHkByE0+RwsIqYCM2HkA7KzsvYLonszrraLKaODDsLDvvm59VqqUdZh2Qq39s2QuAywQ4hvUQE6dYjDPrdeLrKgDKHNgqC3qDmDjF7bwDUFr/hDjAMXxAyrwK2K8LB5EAnUSYbmI4yFbZuNL+fl04CN2leJD1QTEJK2I2ErF350MrYACdqo3pJHIQrv5ToEWSBMhuvCCdRFidXpXsOTJWzKd89wKmPO/IuOVx/BUgISxiIMeNFqmf1ckJREK+N1okt8qb5194G88npqS6RAnxjiK/qS7B934HVNMQU+KuXokAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "24": {
     "name": "Parsnip",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAt0lEQVR4nKWQMQ4CIRBF/zG2I3MHGgtvQK83sLWw9Ax7IAtLvYrxBHZjZhfYcQILGyeZAIH3+ADUisC5NxeBT88/YIxGoNM0pQTGcZbARyCtu2EfRwW3n0TxltHA3iSpSkjdQoXoZJIVExA4uIGvezcfUtHvl920V/9IWmA5nCUEft0O/HmffyWlCkogUAKlmR+LYK2CG7JAwzJOqVoVYgqbQOZdApgUqbvh0l90vX1NshnWkhb8BZ4+2U103mE3AAAAAElFTkSuQmCC",
     "achievement_required": true,
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   },
   "30": {
     "name": "Lumber",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAPklEQVR4nGNgGAXUB////29BZiPz0eWJMuw/KRqoAv7jsZGga/4T4Vy8av4TCDDahcl/MkylnUsIxQLVExIAF5lNF+AUWU0AAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "69": {
     "name": "Banana Sapling",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA7UlEQVR4nGNgIAQ8NP4TVEPQAA+N/1L6+mAMEkJmEwYeGv+nXdP/H7dF579DOUQjiAaJkWSIFNRWGIYZxkAsAClGdgVRmuv8xf+DMMwAmLNBhoAMw2tInb/4/0fnp4KxqQwPRiCCDEOJoUA94//IeFqszf9PL9/8D9Bj+H98giXYEGTvoBgQCNVwbHosHIP4INtBLgEZAmPDAhWr5lIzhf8LHsj///Cf4f+aQja4ISCXYBiA7PRpSLaDNIIMQDYEhOGa0UEgFuf/v4QwAMQHqcEZ2oEEXECSAehhAAtMvAYgG4INE9SMbAg2TEgjAMR4HaO1E7tVAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "73": {
     "name": "Golden Walnut",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAvElEQVR4nK2T0Q0CIRBEt65rgi//LcYfWqECYyUW4OeVYMSs7sRhb4ia3CUbYGEes8CZ7fEVs45Ari7WET8B+sX6evqA2vE99vgKKyFwiC+CGLnH9fAKzEtAXcYdM+C+njWkhNgXQ4hyZi6wiQRUQG4jCH1vBxclAP9CJKAGZCgnICiFQ5bRyAVD2AXfmPE1Khezg90cZCNRbtFniOf45ZoPQFcu8EJ5bgAoJxAqyEacfywW59xUrEA58sIn+eaAhiVudVQAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "78": {
     "name": "Cave Carrot",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAqElEQVR4nJWQMQ7CMAxFvYPUCyCGMHCFTpnp0mvQGzAx5Tq9Y5CRf/VlqOxashJFed8vEUlWuUrXlqNAMUjX9+uWCyl2WXt+nL6QrtiHNoUuMYg9wtM2s4NSFvUiHc0hDIUBy3jeAvxzwqnr897bNPR/JmFIm4at1QIm0N79wGraALxFKqDZVBgA5IAfuNoEBTGVtbnCty8GsnZYHubzdICfmoZ90FHoA9qGtFPykAk7AAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "88": {
     "name": "Coconut",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAmUlEQVR4nGNgoBXwMWD+j4xJ1phoJfrfUpYJjEFsogyylGX6X+8gCdaADYPkcBpiKcuE1WaQJmT+XGd17IZYQhXANKFjkEYQxuoKSyTbsWlGNgTGRjHEkoDtBF1hiRR4xBgACyecoV9PwAsg21EMIMYVMM0YtuNLA+iGwBIUVgMYiEhIkSaCuDUjG4Icrci2EtSMzSCSNZIKAP9k935uYZBgAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "90": {
     "name": "Cactus Fruit",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAxUlEQVR4nK2QsQ3CMBBFTcQA6XBFmzID0FAiCioadyzAHEgUWSMDMdChb2LzfTknEsLSl+27+88/ce6f67rZCcRnrq2aZetkaLpowI471/QjM8DQdOJD/zU/Lh9NEO6ZEB962T9P1QS31zlDCoAPfWxgAACc9T9AbZR77kPm6+M0pAU4eilFYW6Ph1jkQUspIQQP5BiQIAnE0okKc6sAetdCPQOwGKCT1ECLn+ArCfheJHALKazzzMwQC8TGqtkCaa0af1lvBWs0zUpyWFsAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "91": {
     "name": "Banana",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAmUlEQVR4nGNgoDawlGX6X2qmAMZrCtnAmGiNlrJM/xc8kAfjD/8Z4JgoQyyhBiAb9P8SiYYgA5AhjxdDNFJsyAeoASAXgcKGJAPWILkAhEkyAGYIzPlkG/AfKTApMmBNIRt5YfD/EiQAQQFKtAGWskz/C2rE4JpBmKALLJESEkgzLDERpRnZVlhyhrFBNEiOaKdjw0RpJgcAAMqCwvcOaq7LAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "92": {
     "name": "Sap",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAWklEQVR4nGNgGP4gzEv7P0WaN89n+E+WIWFQzb8uM5BnSJiXNljz/x9rwDRJBoR5af/vboDYDjOEJFeEQQ2AeYFkb4RBDYAZAsNkeaMbismOiTAoJlkzw8gBAE8hXiwEQqqXAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "166": {
     "name": "Treasure Chest",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA5ElEQVR4nI2TPQrDMAyFvWT23iMYugcC1Q16AR+gU4bOXXOZXqBb5x6gB1KReQpyLKcxPGyw9enXIWBRTHxEwVsUE3+niZ/juKvlfPUhBICK53ndVdZBA6GYCj2fLl3JvULcSCim8rCXu9yJsUK6qWRAbp/A/BqYeWgguwCKqRipsej9mDjcudxJ+E0KGV6LgRQNADHSs0AUUEWQEZY+Kp7V++ZsO7MCCC20Lfsr1KVq4dKRFm11gjQrACNUSacK3QoFdVNYMEQW1I0AU+kC7NSpse52xKs2HqmBjcT9lUe/sjd9P9g0wV3vctSFAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "174": {
     "name": "Large Egg",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAYUlEQVR4nGNgGAW0BQlW1v9BmGzNZ7ae/f/z5RXSDUmwsv6/Z9l0sGYQINmQBDQDQIBoAxKgmtENAHmHKEMSoH4HGQALA5K8kYBkALIhZBuwBwmTFA7ohpAVlciYJM2kAAAs+Khu5ASiIwAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "176": {
     "name": "Egg",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAQklEQVR4nGNgGAWDHCRYWf8HYbI1/3x5BYxJNiTByvr/nmWdYM0gQLIhCWgGgMDAGLAHaghF4bBnWSdlMUG2ZroBAHaMYzu0YzBqAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "178": {
     "name": "Hay",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAzUlEQVR4nIWSwQ2DMAxFc+PaQ3fohLl1BIbrBEyClMqQhx4mpZGiksTv+9t1KTdrfj1abM51Ki32X2DuUPyun7KdA1zeu0COOxZAa8/tMYD4BvT9Ca7dGuoGDYU48KmUOu2P2MWJhXyOHedNpCo7gf4mGJj3o6FV2QFtGQcWvzSvKmOGXRZvlybGsq0MW9A9uHWy9roNcudZKKMmYjH3IE/iIbCkrKMhIutwlKscuGYAYJcwFCGIsSXYLvyXD5vHA8EWvgxRLiFb892vmC+BJ65tGXaQuwAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "180": {
     "name": "Egg",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAS0lEQVR4nGNgGAWDHCQoi/8HYbI1P5piDcYkG5KgLP5/bawCWPP/jZGkG5KAbMCVcrAh5BuwMZJ8A9ZCDaEoHNbGKlAWE2RrphsAACSaTZmUXZRLAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "182": {
     "name": "Large Egg",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAcklEQVR4nGNgGAW0BSU2Uv9BmCzNCcri/49kJf1/NMWadEMSlMX/r41VAGv+vzGSdEMSkA24Ug42hGgDEqCakV1AkisSoH4HGQALAxgmyoASGym4ATBDYJgsA9YiYZDriAoHbIYQrRnZEJAmGCZJMykAALQyhG4Tjq47AAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "184": {
     "name": "Milk",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAuklEQVR4nJ2TsQ3DIBBF2cJ7uLLkmtTZg95Zgt6p6L1ARqCiS1ZggXSpLrrTEf0CCwjSFyfgP+AOjDlpzk6EOltXbWyIu6X8uIo47oY4NYdt/u3OcTfE2Ul25d57L8KxbkDYZqLPm1JKEg8BghrodRMVYBPg1Fx6FM41AVEThipV6QZkLSGKr8PzXYCoQvMQ4H4xdCyLxM91FQ0D4m4Fwsa/AVmPz4BSziYA84D/YegtYCK7zQipqbb4CwW9P6fSQfOqAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "186": {
     "name": "Large Milk",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAzUlEQVR4nI2TOw7DIAyGuUXuwRQpM5l7D3Z6CfZkYu8FeoRMbO0VcoFunVwZ4cjljfTLwtifE1sWonC0mqCmUvzfwaBjU3A+b5nQ34TomOyMLFZHfxOi1RQqobXWZuLvTYAzErz3AN/PJbyjvwtwMQhtKvIXATomcwi875d4chGi40OtgSSaUBVwbKoqGid+EcY2Ac5I2FcREh7znP1WF7CvIlhMJgjvyTDgjFVfyzIGcBHSAtBEqqNMm5buQzGZQ2hcHEI7MLSRHNRb5R8Xb6mSjcYnWwAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "188": {
     "name": "Green Bean",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAcElEQVR4nGNgGLRALILhPwyTpZmhD6GRJEPEoJphmkh2hVgEw//042Q6HQxcTP8Xvo3+z5DrRaYBuV7/V/zvoYIBO1Ip88IKqhmS64XpHaK8l+sFdgE4QEEugRmEzUAGPC6BGQLDcMNI8Q55ttMLAADZTmXda3O+/gAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   },
   "190": {
     "name": "Cauliflower",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAs0lEQVR4nN2Ruw3CQBBER3IPDrcBMkJ6ICclogpK4EqgHWK3QCOL5nSDltVxNikrrcb23bz9GPjfsCOcmZ83my8POAp82u+q8n0VYq3S4Qovt7M/l7u7L1X5bQixUJVmGmWWDkcxHhT4fMKHSSAmwbwzhMwNkCFUAthl3UuOqS2LAM0fU9Xfi+0BLIxBQ0y1zuwCGDzQIgnJ+rV9tNAY6kS/TdBh9QjRxayr5gjp5Sbzr/EC6vDlwgsrmX4AAAAASUVORK5CYII=",
     "achievement_required": true,
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   },
   "192": {
     "name": "Potato",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAmUlEQVR4nGNgGAUowFKW6X+EITcYM5AKnMUY/mfqMPzv9lEGY5INspRlAmvcU2v4/2mHOpiGGUSU5ghDbrgBILw8URxOg8QJGpAJdT5MI8gVMJeAxPC6xBLqApAhIMXIhsDYBL1jCQ0DmJORDSHaFZlI3oAZgBwOBAPUEskQEEaPVlBU4zUAPTxgGMQHiRPUjGwIOiZaM6kAAJqZolIbE4gtAAAAAElFTkSuQmCC",
     "achievement_required": true,
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   },
   "245": {
     "name": "Sugar",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAyElEQVR4nNVSMQ7CMAy0xAO6sWXLL6qKN3TjGVmYy8BP+gVmJsZ+BrZORhdxYBKTgQ1LJ8vu3cW2KvKX0Q2ihHgRxqTfkEVH0d114xuEMWl/WfRwU13WN1Cjv903xAh8ADlO88fLqNGHAaeoTLpBMoHkcgL0yaluEJ6vIIPAPQnUFHKqShynOe/JY5VAH5PYFcUaQMzsgWvxoJVBNGIQkXW9ZwFz06AvJgA5nU8vMUGee4fejAwx0RRbE8+IsP9GJfaMPDSFv8QDhdRpnqJNcicAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "246": {
     "name": "Wheat Flour",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAcElEQVR4nGNgGFTARZvhPy5MlOanGzTheF+HIgqfoCEu2gwYmkgyxEWb4X9NMA/5hrhADSBkCFEG1EANwYbJMuD/EyvyDXi6QRNsAMwrZLngKVQzWQb8f2IFx3gNYMASEyS5AN0QkmMB3RCy8wSpAAAAxRPV2JlSigAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "247": {
     "name": "Oil",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAp0lEQVR4nGNgwAGiORj+I2MGUkE0B8P/gzHMYEyWAY5ugXDbQWyyDFi/dy8Yk2yAI1Tz2Xv3wJgkQxzdAsGafv2X+f/jVQEYg9hEG+LoFoiiGdkQogzQkWf4////VQwXgMRAckQZ8ONVAVgDMgYZQrQBfy4woNgOw0Qb8HZpINgQmEEkG3CvA6EZRJNtwB8kF4BokgxA9waIJsoAXIYQrRnZEGSMSyEAKZYD0p4JkqMAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "248": {
     "name": "Garlic",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAfklEQVR4nGNgGJ4g2o3hPwijs4nW/P//1f//b7aDNW7tVQfTyJgo27dCNcIMAtEgg4l2UTTUEJAmEA0zkHhv3GyHGIBEE23zfyRNsPAgyhXRaM6GG4DEx2tINLoBUNvR+cQbcBPVCwRdwIAtDKCYpJjAFgskRSPMEJJSILkAALkv+NdRZaPSAAAAAElFTkSuQmCC",
     "achievement_required": true,
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   },
   "250": {
     "name": "Kale",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAtUlEQVR4nK1RsQ3DMAzTJPQAP9EvsnbtkmQo0C/yTv7KMSlomAArO4kLVIAGW6QkUmb/jNvruTN/qeXwx7DP2zvnfR2/gKilZcr/qDebeGkAEBIEAJXc3SAVAhtEMv4qspfUJjqd7yZ5ltVJUtOUXBnpwTyCVQqJeKu8SkISguqOVzg002X9CFQZ3LjyA0GQTovON81EqHaSdLqdhcs19N7qx2mTqI3TVU7XFhF0aVpPHJpmZh/Y4iYBgAKKGgAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   },
   "251": {
     "name": "Tea Sapling",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAu0lEQVR4nGNgIACYVaT/gzAhdVgBSKNYCSt5BjCrSP9n0uP9z+zNQ7wBzFDnwjDIABhGFsdrgOEiVrCzYbbDaJAYQe8wg2zw5gEbAtMEo2GuINrvTHq8cNeAaKINQA9AmGvQw4eB2EBkJiUcmKHxju53uBeIiVJmpDBA9gLRYcDKyhpjzCqP8AqS/wNNLQkbYMwqD1bY7qgPpkEaQex9KQ5wMYIGgBQia0KmiXYFNkOI0oxsCAyDNOLSDACZdLM2g8KwNAAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "252": {
     "name": "Rhubarb",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAsUlEQVR4nJ2RwQ2DMAxF/ynijsQSvVodAjFAx0CZgG3ofF3AlWM78gVI8iXLjuC/5CfAheYN7IVezWI6p1p9EDLzAUZO2pshFMwHePlob4dQMOakhpx03QpYzCxdDL4uJ6NRwDkp5BZA9mQGkXnHq8aI36/zZ8stMynA5wh6vETkxG+Av0Dp9Tkf70BEapLdf2uANJlNYhajA0qUHu0BINUN8PwOGQL4KYYiOMRBdz/+AZBfo9OnFzhMAAAAAElFTkSuQmCC",
     "achievement_required": true,
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   },
   "254": {
     "name": "Melon",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAwklEQVR4nKVRwQ2DMAy0VIkxOoWl/qjEo0v006yAGIF3V8gGTNFVmMOV3QQs4wRQLZ0Sm7uzHQC8QCDBX4HK5JQhJrLG80bwNiauISZy35C93z+XX66NN+K+kU5C5py75s6pLt/sNGAJCBSgXTtngapXdw7QUrw+VjICzd2LaBzklLq3f0hCJjH4nnMW0zTIybWNPhhx7rYIFbheNIjGxIp3DeYDE1RXiHsmpTcAZ4pFrFAUaxPPKP+Vqtgz0jgsPhNfLo4uYePjU0QAAAAASUVORK5CYII=",
     "achievement_required": true,
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   },
   "256": {
     "name": "Tomato",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAApklEQVR4nN2RwQnCQBBFfxF2kaMBwYuQg01Yg5Amck0dqWTPggV9+ePMugTNbq4OfHZmyXuTEOCPqwct0e+GbydidkmczfAMXh8f2HoJq5LeoTKxPQQ1yQAwARzRUb2Ayc+Yf0oGB3k58Hl8gwtgM+9nE5tka/sEGBxQjku1oCpIsXWVZsFSvoUn+X31E0Z0WSJIIkWz7jcFa0mZ/FdaSg9+SxO8t15N4qMixuzF+gAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   },
   "257": {
     "name": "Morel",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAiElEQVR4nGNgoDXo9lH+D8Jkaz7b4Q7GJTZS/8nS/P9QJBiTbEi3jzJYI8wLIDbRBnQj2R4swwA2gGgXdKPZjOwNkg0IlmEg3RvBMgzwkMfmDRCboAH/kVwAMwREw8SIMuAsVAOyzQQ1wwBMMTJmIAcEQ/1OlgHIAUdWUkY2gKRUiG4ICOPTDAAaX79UYDLKFgAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "258": {
     "name": "Blueberry",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAY0lEQVR4nGNgGAU4AQ9DzX8QllK+AccMxIASGym4RobC/yiYKEN4sGhOOwjBBA3hwWEzzBCKDGAgxhs8SIGGbCsyBqkhygVSOAKRKAOkkAxBxng1M2AxhGTNyIagY6I10x0AAOQysV9Ms/NHAAAAAElFTkSuQmCC",
     "achievement_required": true,
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   },
   "259": {
     "name": "Fiddlehead Fern",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA0UlEQVR4nI2SSw6DMAxELXWVC2RfseymdN8tZ+AgHIZjcSMqA6+dfFVLoxDiGduTmF0RZ9sd7PVf7SyJONs+bSdIDO/nPix2YFzTs6rAuJ4JvjqZvX87KNIViSLgyRAR6goQmkwnPoZ2VRCimISAjsIYTYFp+3mgBrLShcPuFYFhOcmQaB8B9UF9+YqELFHbdtxejwMU8fNinHAps+YeaKfsE/IoqmoYY+kIiQeEOk1VfYmMh6C1ImSPR0ndDiBzpcW8+fU1wxMzHFX/FugJVuIDDKj83yAPUloAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "260": {
     "name": "Hot Pepper",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAYklEQVR4nGNgGIFAkeE/GA+sIYqUGKDI8J8hX4I8AzIZoJrJMSCTgeH/OgaG/zXFVqQbkMnA8P+/vQgYgwwBu4TmmjOhionWnAlVAMMgDSTZjK7pqZEFXCPJzkbGRGmkBAAA8eFZUdr/Zc0AAAAASUVORK5CYII=",
     "achievement_required": true,
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   },
   "262": {
     "name": "Wheat",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAnUlEQVR4nGNgQAMr4tT+w2hsbLxgRZza//+rRP7D6P//MdmEDfgvAteAQkMNxqt5BciAn5+wGwISx2XICpgzQfgJVPF/NPoJsS5YhWTIKoRmgl6AAYwA/E+CZhBAdgWYTYrtuKKTJM1UMcBRYNp/qZgb/y2nvwfTID7JBjgiGUKyASuweIG0WICGPApNal6AsWEGEp2I0LMxsjg2TQBt6S9gkYOz+QAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   },
   "264": {
     "name": "Radish",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAhUlEQVR4nGNgGAUEAbOR9n8YJkkDA5TN0MAAx4QNiUBTDOXbH2EGYzAfn2Z7kCKYjREQQ2AaiTbAHqoQ7hUom2E5B2EDGGAY5n+YZmR5vAYggUwGhv/rGBj+g2i4IF4DkIAnAwtY83cHBzBGMYQUA9ZBDSHLgFaoARjeINUQsjQjG0JIEQBofmvVJuW4HwAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   },
   "266": {
     "name": "Red Cabbage",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAhUlEQVR4nN2S0QnAIAxEb6aOkwlcovjTETpEd+owKUoPjqCi/axwBCR5lxOB/x5DctXyYMbuFw6/t7PWKZAh1WaqQIoIIWgIyOLMQa1dgIk7nelO8a4JsbB+Kwa36wLy2xwjTMUwyR8jKLAbIUI0AiHDYTRi6PrDB4wQBenan37k8uDqeQDGe+lF9jf2SQAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   },
   "268": {
     "name": "Starfruit",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAkklEQVR4nLVRyQ3AIAzLIGzQeTpTB8mfB1OxRSqoEiAcaZGK5AeS7SQ2wJ8vXkAJ22KiB59NCJ2IibxtEs6DErKwFqs/n8R8EZNMg16sTStkkyAGXtbtxI1J4RUDdFtoz8A5aSnmp4mWKUx7R2ODUaUxi40AVZCNSeAm3gbIDczu59VrLHMYBagzMjn1tC7hBecG75LIywGApQEAAAAASUVORK5CYII=",
     "achievement_required": true,
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   },
   "270": {
     "name": "Corn",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAwUlEQVR4nNWQwQ2CQBBFJ6EADpI9mdiAF70bynATC/BgE3ShJ0vxRCvWMeYv/BFWdNCbm0wIC+/9nxH5i3M9lsr5Cb7ftqp6Ts+3khBFMdNwZZJJQYiim4to3RYmyZMpYdAoLPClET3oMn0cJ1cGIShvaqfcPQU5jHs0RAj+k0+Cui1eYIAuHGK3B7bAHpiKwZ0rkKaTcKEUzIJDL8CibFkeLL2AIDdN0IVx1itRzBBmKxem4LRfJMmw8iw4b/Et+AAunN9UIP5pZQAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   },
   "271": {
     "name": "Unmilled Rice",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAfElEQVR4nGNgGLQgxoLhPwiTrfnPBUwDiDLUXpbx/95izv9PN2j+B7EJGYoBQJo6wphQFOIyFCuwl2XEUIRuKDY1WAHMz8gaYIYRNCAGh59x2h6DFMLY/Iw3BmLQbEN3Jt4YsMdiG7qf8caAPYFAwRatGArwhSjRUTZgAABTy4MMUEGccAAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "272": {
     "name": "Eggplant",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAeElEQVR4nGNgGJmA2Uj7PwiTrdFwBgPpmjWFAv87Ckz7LxbBQLrtmlDN8WoHwTSIT7RGTSTNMIzXAE2oJphGmOY6/4tgjNcATTRNMAzSuLj7KZgmSXMd1FaYZrJtryOkmQHNAHRDCGrGZQgsyoiONpghyJhojeQCADaen8OUGKJiAAAAAElFTkSuQmCC",
     "achievement_required": true,
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   },
   "274": {
     "name": "Artichoke",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAmklEQVR4nM2TzQ2AIAyFe/XMCK7whvCg2zgASzmOs2AKRRoif3rRpAkkfq99r0r07wfkfL2FzRpqXATkyAoIcts5IoIEcPflmNy8k68+ESQwjt9vBaG7BvSdResiCN6jBQ+o+51LEYa8ZGUCObN/bedZBGnEOHKeAVd5IwjdtAif8400bRgdmFiIQdbhPIt8fcOftQr00//Qgi8SD5uzWw5AMwAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   },
   "275": {
     "name": "Artifact Trove",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA+klEQVR4nK2TsQrCQAyGM+rkLoKjo6sUwSdwcegLdHLoG7i4ufgAPoFOQvEVpOAouPoiLpGk94fc1YqDB7nkLvd/zV0o0T9HMZnyL9YprFbE9+13kzMRqHBCvjT+sZ9rzHXOLx6plz1/BiCSKU1ILN4b9vxZA1SrGJBeJd1DdQrIxn3ezQYGAajLJI9riZZkEhIg/gvmg4kQYslFgMxVIh7xJyjWBsjGfeb1Qr0HtCqrc42Xz2YdAU5EEUDEm+GBr+VN1wBITMee+tYVitARJM9UKsQ6FSoAUAFEZBAP8FDrUp1bN0yMkVYASAQID9gSpxC8S2rI/fUPfgP95qaZf9NIYQAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "276": {
     "name": "Pumpkin",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAr0lEQVR4nGNgGJwggP0/wxzB/1QxZKKVDBgTpSdZXf8/CMM1gVwRwP7/YLg8XAynYclQjSDF/6sZwDTYFVADQGL/10HEMQxJxqIZxkdm4zQkWV0foaCaAUMDTAwmD+Pjtf0/kmKQIThdkYxmAIpCJANQDEZyFQOxBqB7AyUckqFhgBFgaBhZDqQHayxMJMIAEI1iALIhyNGHrBk5MWFoxpYSYYaga8SpGZtB6BibYgAxMlIjE2kE6gAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   },
   "277": {
     "name": "Wilted Bouquet",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA+0lEQVR4nGNgIBJ4Gpv9h2EMSR4Otf8gjE9zX3oQGOM0IMo05b+2vDpWQ0DiODXDDLDXDgG7ApshIDGcmtG9gG4ALlfhBdpImrAZCMJWYrpgzAATwGaAkVngfxBG1ghigzTOT8pDGFDQlA6WRMYgjZO2nAZjmCHIAO4CEABpcLHUA2sEmQwzIDGz839l+wowGyaPESbaUBcsOtKH1RAQ9vQLA8uB1IAwiiHa8upgQWRvwAwCaYQZDhNH5sMN0EYLdZDCzKQUuK0wProFKF5hQDIAhGEaQIqXzJ8ExkSnCZgBIE0vHl8AYxCfKM3ohlw6u4d0zTADYIGGz+kAygTrNIz55HEAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "278": {
     "name": "Bok Choy",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAzElEQVR4nJWSQQ4CIQxFm8zGFUs2uvMSs5t4i0l06RE8xxzEc8zSK7jyIJiPfCwIDDZpCqX/0RJECmbGnYPLP2aCwMdF3LQOCYTQItgEEaKdxR1vEvd05Etgb0hARBDWEPx0s3zBUgNM65B0k4haADt/btVF3Ot8cQTdBYpRpEfIR9l8h7M7JMXsAPkEmpsJLw4RizmazjX/iA2ta4FeV2/XdrrsvejlHjHyb8SRWuL78+pFjHScNcXSAWiKNSCHIHYBcgi9W6wh2muFbwpKGXp0mS7DAAAAAElFTkSuQmCC",
     "achievement_required": true,
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   },
   "280": {
     "name": "Yam",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAfUlEQVR4nGNgGN4gWIbhf70pw3+yNW8MY/5/s4iVdEOCoTaDNIMwyCCSDAmWYfg/zwViwP+ZEEOINiAYajvM+TBDiHZFMJIByIYQ7YpgNBcg0yQZMM8F0xCSDKhH8gYIgwwEyRE0gAHNEJBGkjSjGwDDJBkAMwQZk6SZFAAAIweI2TCQ2ZQAAAAASUVORK5CYII=",
     "achievement_required": true,
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   },
   "281": {
     "name": "Chanterelle",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAn0lEQVR4nGNgGFRgojnDf3S8wheBCWp+WIAf4zQoVxki8X8mK0FDQGowDAmWgTiXGAPAhuzhRDUkGGoAzAZCBoEMALkaxYBcqDdABl3LZ4IbBFKMgqFeQDEA2RXIBuGjMQxAdgmyQeg0TI4BHwiWYfiPCxPUDAIwhSAMYjOQAnKhXiDaucgAFpCwFAdLfUQbgmwALE2AaJJdgRxghDQDANfxCHI7p4D+AAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "282": {
     "name": "Cranberries",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAnElEQVR4nGNgGAUkA7EIhv8wTJbm5v8QjNUAMXymmzD8d7vA8J+hD0LjdoEJDgWKDP+VSyAYpAa3OxUhigxnQAxRZmD4b8ug8x8kDqLBbIJAEWobA8P/Igbm///tRcAakdk49drCbFFEGLCOAcEGYZwG2KLZAtIE8wJMI4iP03ZlJBthNNGakQ2BaYJpJNr/2AxCdhle/5NiIDIAAKp6fjCr9TBNAAAAAElFTkSuQmCC",
     "achievement_required": true,
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   },
   "283": {
     "name": "Holly",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA00lEQVR4nMVTMQ7DMAhk6NI96o7ygQ5eq26V+oN+oZ/JU/KW/MgV5kjAjtyoS5EQCtwdGDtEf7NE+TdSct4F1Ca5ifJjUd8wqQIDGPLIXV7qRYC9QHIEVlARYXjS3Pl2jbXQcYIIOyBTzvehQ4aAjLQWIfKkUx5Jv41sos1+CCI2qkTpPJPG9Si7ZDErugneIEssk+A4rQgrWNx3mpGzGKYIIrx1M/BYkWUfsod2gTsido0mImTLfRURL8v0bwDXarX4iLxheeGM9eJ8/fDP1L0+og/AXNEXSIrbOAAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "284": {
     "name": "Beet",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAwUlEQVR4nJ2SwQ3DIAxFv9TMgLgijj21B0aIlA2yQk4MkSU6RWfJRq4gOLEQARpLlhD2f7Y+ACnUDOJEIWS92KNm0LiBVio0GNDrs9dCz9UQhEJoDBlELIbX8a624RlCEM8miRjYFWYXOIAsQBOGE9ICKW70+oAcQq/bHoyb8CCJHu8n5WZevoQSRoX1cwgPaZppAVoKADmoKp4wRABDlnRXnSoBTkC+Kf8GuGyT6ElvWAHh/9AtziG3xBJyW9wD+QEtgJhvglVjsgAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   },
   "289": {
     "name": "Ostrich Egg",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAo0lEQVR4nGNgGN5gT537fxC+sajgP1ma/z/e////h7tgTJIhMxMNUDSDAbGGzARp3r8cYgDMEBggxpCZMNthmkE0sQbMTDT4f6NjPsIAZG8gYZyGzIQZgOwFdK883o/bgAQra7ABGK5A8xIohggbsB/NFbDweLz/P8ilOA34P/ssbkNAeP9y3AZgMwTFoP3L/4PkcWrGZwjIVqI0IxuCjrEpBAClllo8UaYZ+wAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "296": {
     "name": "Salmonberry",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAtklEQVR4nL2SwQ3CMAxF/5UFOHHxDB2ASw6MgMQEqEt0KXbJNh8ZxZbrpAUJQSQrjpT/8m0H+MkS0OMbyI2nNeRTYIFQAwt4vAY37wAzJmpUTOT9TAdJAm2JaxNabrvGS7iAl8dhDCkQF1geoe5iBJnDS1FkZw0rRcVdcwtkVXfuQ8y76ZR2IVqOTnJpPs4IYLO750Tz/E+6BpY2tpGTDpDrr+lydrL5ebLtWM6uMEOsQTH/y3oCUZrlmuYTh7UAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "300": {
     "name": "Amaranth",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAu0lEQVR4nGNgIACMWeX/wzC6GCG9cABSHMuWDdcEoidz9eA2xBjNVmQNMMP2B+3Eb8Bkrh4UTTANMM0gmihnT4Ya9KjlJpwP8w7BcDBGshFkAEgzjI3XC7gMgDmdoO1iisn/QRgWFsiaYa7AGQtiisn/g9L3oQQYTAO6//EaIKaYjBKI2JyOYYAxUjzDDMFrG7ImY6RoA9EwQ2AGER3fsVA2SBwWmDg1Y3M6wXSOzxXoBpFkAHLGISW7AgCmKfLSZ3QbhQAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   },
   "303": {
     "name": "Pale Ale",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAoklEQVR4nLWSyw2AQAhE6WlqsAQb2tiKV2sxnizDDjC4TIJ/PLjJxI1xHgwo8scpjWjUZ/PYiepQZfc0pNA8dTulIaXxygeAvQPwDgCgusxnwDJvANNjJwBqBIMEMQJncwsBoH17iOGDZAePceAAM7BaHOAr4ApCAPOzG7k78A8JsWeEprfRt9XM6lTaXPw3TleNAObmRj4D4s45gzSAkGzuFVriAcn7JF29AAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "304": {
     "name": "Hops",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAwklEQVR4nJWTzQ2DMAxGc/ONCyobdAfEnVsHQepgGaHjBTnKV72GpIAlFEeyXz7/EMJNs3lM/t0KtOL7N7wffYAhcP0sOXh6PfPp90uv2zymmLacpET5Ap4qiGn7QnQ6qFZzSB7wAktxiAC6/wAMNYvOHhDqfhMQi2yWIYjUCdgtwTAmARUs389mI60ks1ZKV/JBvoxBrJuN7U7ATTLrV7kDnE5o2VSksw8cG1e7CdDiSKZG9nf7aJzCJcktQP0HniXtKIQYt6+K7Y8AAAAASUVORK5CYII=",
     "achievement_required": true,
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   },
   "305": {
     "name": "Void Egg",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAb0lEQVR4nGNgGAW0BWpqav9BmGzNIb5eYEyyIWpQzf/tRf6X56SQZoiamtp/MzMzsCaQZhgm2hA1JKfDNMNcQrQBZmZm/9cxMGC4giQXmEG9gWwISS4IQTIE5hqSArKIgRlsAMwQsqISGZOkmRQAAP1cbnYNsgYaAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "306": {
     "name": "Mayonnaise",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAiUlEQVR4nGNgGJSAh6HmPzomSTND4X8UnHbwP3GG8GDRTJIhUso3wApxGQCSJ8oFaQcxMUicsAukpMCKwDYV/kehweJSUoQN6OnpwYgBEAaJE21ADxSfOXPm//+fn8AYxCbZgP9QzUQbEBgYiNV2mAEgebIN6OnpIWwANkNAmGjNyIagY6I1kwoADGAAlQbVpaQAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "307": {
     "name": "Duck Mayonnaise",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAoUlEQVR4nGNgGJzA1PI/BiZFs/7idSjY7td/Ig0xxdRMkiGSMUlghbgMAMkT5QK7X/8xMEicoAukpKTAikA2gTQg0yBxsDwhAwIDAzFjwNTyf1NuAH4DpKCaQQpBeM2C6v93zs3////bDTAGsUFiOA2RkpJC0YxuAMwQsAuxgUA020EYWTPJBtzBYjtIHKcB6IaANCBjgpqRDcGFCWomBwAAngEavtmTWkgAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "308": {
     "name": "Void Mayonnaise",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAArElEQVR4nGNgGJTAk4HlPzomSfM6BgYU/N9ehDhDPLFoJskQTwYWsEKsBuRaETZASkoKbhsY51ohsL3If5A8QQMyGRjAGNl2mBheA6SkpMBOtDI2wIqDvN3B8jgNkZKSAisE2QRSDNMEwiBXlOekgNkEDbBCshGkCRnjDQcpqP+x2dzT0wPGIDbJLujp6QHbTJIXkF0Ccz7MRUTHBMwbIDYsPxBMBzBDcGFsGgAm/tydpXaqGgAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "330": {
     "name": "Clay",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAfklEQVR4nGNgGN5Aj5fhv7MYBBOlwRlJMUxzlTEEEzREjxehGKY5UwchhtcQPTTbsBkCogka4IxkCEgMhkHiMDZRAaaHxIbxYS7B6go9NFtgGtGdjzUs9LCENqEwwWqAM1QSmwvQw4Uk/zsjGUwwEGEKsAUiTo2EDCRLMykAAKQqn4VoDvn8AAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "334": {
     "name": "Copper Bar",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAhUlEQVR4nGNgoDXI1GH4D8Nkad4cisAkGZKJppkkQzKhmm8Us2BggoZk4rAZhkGGOIvhMCCTgM0gGqQGqwGZRNgMiw0MAzJ1IArI0oxsADZDCGpGdv7/+Voo/gbxq4wJaAYBkCSyIf83Q2hYlOHVzAAFMEPQMVGacRlCkmZkQ2CYZM3kAADXkdctXS5Z6QAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "335": {
     "name": "Iron Bar",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAhUlEQVR4nGNgoDVoWnr4PwyTpfnQ0/9wTJIhTWiaSTKkCar5waf//7//h2AQGyaG15AmHDbDMMgAg+DC/zg1P/iEajM227Ea0ESEzbDYwDCgCWozWZpBACSIywCCmkEAJAFzBbrfCWpGNgBbwiGomQEKkA1BxkRpxmUISZqRDYFhkjWTAwC+P24BGoMI4gAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "336": {
     "name": "Gold Bar",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAg0lEQVR4nGNgoDU4VmL3H4bJ0vz/KgMck2TIMTTNJBlyDKb5Sz0E//wEwSA2IUOO4bAZjr/U/1/sEvqfLJv/f6kH247VgGNE2AyLDQwDjlGiGQRAgnBnkqoZBEASYFcg+xvqd4KakQ3AlnAIamaAAmRDkDFRmnEZQpJmZENgmGTN5AAAiwE7mEbp7cwAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "337": {
     "name": "Iridium Bar",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAk0lEQVR4nLWSwQ2AIAxF2YBVXMotTLy7RA9M4sUN4MbNEbzXVIE0QEVM/Mk/kPJeE4JSfwc0Im83jMam+ml/L4EMxnW7a2xbAgGmjdSaZNQORdgHkDcJjlkWgADnAjoXAniALwGD6W4hGLVrbo9wVTDo5Rp8gqOABlHCX70JcwFv/gtFWIU8SZqwJOmCuYS3C+7NCc36cwM2v7ddAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "338": {
     "name": "Refined Quartz",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAc0lEQVR4nGNgGAW0By0h///DMFmaLxz5/P/zCwhNkiEtSJphgGhDWrBohhmQyn/tP9GaPyMZAGKv7/j/34C/6z9Jmj9D2SBxgprXd6AaANNIUDMDAwMDyG8wA5AxQWfDAEgRsitI0ozNEJI1IxsCw8RoAADVjugCub0H/gAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "340": {
     "name": "Honey",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAp0lEQVR4nGNgGLQgRFv7PzImWXOJjRQKJtoQKyGG/8tj2DEMAImB5IgyIERbG6wBGYPECBrQm5Xzv+fC/1yYIcgYJAaSA6nBa8D/kwz/7zYwgDUgY5AYSA6vAbsmTQcrwodBavAb8PPT//8nZLAb8PMTkQb8xI3xGtALCgOYYpAr/otAMIgNFScYiHdBgYXDdpAcXgOQDbmRKIiCidKMbAg2TJRmUgEADOQWVT2N62wAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "341": {
     "name": "Tea Set",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA6klEQVR4nJVSsQ3CMBD0EjSpqWg9ABUKVTpTUdCnQ5FQlAFYgBIpHX0UsUWmyCKPzvitt50I89Ipfufu/mJHqYxqm5oYOfygIHo9H2Sq0j9VTrVuIgsZ6LOStE1N0zRZkfwETpBtYtxEmWDRQGtNQGeKAEodvAEScZ+IL+eTBdbDfe9hJxZX2uietse37b/GokxVWiHABNnLBFjD2Jt0pvAnDQKbyUTYYyPwOZ016dwGk9gwTgTOaBRRv0sN5vEWbMaJYiEATZBgXjBZm87c4BwG90IaxZDvk5vge5fEGCxMxEtGa/j5+/5bH4/5e0Wp9xkIAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "342": {
     "name": "Pickles",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAApUlEQVR4nGNgGLQgRFv7PzImWWOJjRQKJsogKyEGsOLlMewYBsDEQGrwGhACtR2kARnDXIHXAH1zG7ACmEHIGCYOUoPTAGffoP9+NXM39Vz4n4sNg+RAaggawCDD8F/MRxWMQRqZjbT/gzBRBjBANTM0MEAwEh9kCFEGMBtpYzWEJAMYsLiEaAPEoLYhhwVRBoAAOJrQDIFpxhuF6IZgw0RpJhUAAMRPv7UskueRAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "344": {
     "name": "Jelly",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAlklEQVR4nGNgGLQgRFv7PzImWWOJjRQKJsogKyEGsOLlMewYBsDEQGrwGhACtR2kARnDXIHXAH1zG7ACmEHIGCYOUoPTAGffoP9mDAx4MUgNQQM8GVgwNILEMkkxwBMNgzSvI8WATAYGOJ4E1fzdwYF0AyYhaSbJBZ5YDAGJ4TUABEDRhB4OIENANN4oRDcEGyZKM6kAAIrftJmAZ7l8AAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "346": {
     "name": "Beer",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA0UlEQVR4nK2RvQ2DQAyFXWQDhmAKKiqQMkEqdqCnprxBaLJDOooskoY6kiNf5OPh85Emlp7uB7/v+QSRqTAQl0S/KgzEzBMzb2ad+Pm4nUNCZp7gvJ1DwkDx495stZuLAHbS9E7NY1/7Twhpgq9hmSvGO9mv90u879omgjJYMAaEKOD9uqZV+g6Qsa9jIyaK0Cw9OkEG6NomGSRd0zBRerRXgYQANOHIurcAPR8mwHciTIRPkLMLWB2VoBlgmSt3fPyFqGS2EE+uwSubUkz7V30AriW9BYbbhzYAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "348": {
     "name": "Wine",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAArElEQVR4nGNgIANYyXP+B2EGcjUvDWX4f6GFgXRDNAUc/4Nwkq0c2BCiDNCEagLhEK0aMAaxidYcAtUEwhNSNoMxSJxov4Ygab7auB7MJkrzhRYGuAEwzSCaoAFW8pz/X1xsA2OYITCnw/yP189LQxnAmtsZ6lEMAWGCmkOg/gVpQjcEb6hrooU2siEgTDDKNJEMQPYvSYklBC26iI5vdENISizYDIFhkjWTCwDnc8oPrfZuCAAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "350": {
     "name": "Juice",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAuUlEQVR4nGNgoBWwkuf8n2QrB8cka14aygDGF1ogmCRDrNBsB2GQGNEGqHi5/ddMNvtvUOMAxiA2SIxkzR7rrOEYxCfKEBUvN7Bi83k+YI0tF13BGMQmaICVPOf/ihYGnAaA5PCGhZU85/89K3L/v7jYBsf/32wFYxAbJEe0AYJVEmAM0uy0TYI4A1S83MDORHYFsgtAcnjDQQUpBrCFAcGYUMFiAElRCTMA2RAYJjpBgRTgw3g1kwMAeqr0L8pilsEAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "368": {
     "name": "Basic Fertilizer",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAnElEQVR4nGNgoBbIt+D5TyzGqvn5BMP/Z0q0icIYhuRb8Pxv95In3xAbKUawATBDiME4DThTov1/c4oKBt6+fTsKH6SHaAOmdVeTbsA0qCYYPnvvHpxNlAEtbrJgjGwQiA0SI9oL25E0gmiYZqIM2I5kI7JLiDagBaoRpgGdT1IsbMaCCRoAS/cwNroYigHIhhBjO1YDYIYQi2GaAKplq79NNE1lAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "369": {
     "name": "Quality Fertilizer",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAlklEQVR4nGNgoBboM2L4TyzGqvnPKob/f7KIwxiG9Bkx/N/uzki+IX6iEAPghhCBcRuQxfD/YTQm/v8flQ/SQ7QBz46RYcAzqCY4/vkJzibKgGV2TGCMbBCIDRIj2gv/kTSCaJhmogz4j2QjskuINmAZVCNMAzqfpFh4iAUTNACW7mFsdDEUA5ANIcZ2rAbADCEWwzQBANPPrcz5biSrAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "370": {
     "name": "Basic Retaining Soil",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAmElEQVR4nGNgoBaQLVn6nxSMoTn9+///ZudfE41RDBENbvgvlTqZfENEoQbADCEWYzXA7Pzr/1rbzhCFQfoYcBkAEgNhGJtkA7SwYAaGNaQZIIrkCpBmqZgbKIaQ5AIGhjX/Lae/J88ABqjtIAOQXYHXAMMZDBgGwAwhygAtLC6AYZJdADMEhjHCANkQYhMRhgEwQ0jBIE0Ay10PVvAv3pEAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "371": {
     "name": "Quality Retaining Soil",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAl0lEQVR4nGNgoApwXfmfZIysWWP///8M80jEcENcV/5niFpMgSGGfWADYIaQgjEMYACZ2vaZeAzSy4DNAJAYCJNtQBuSAiS+YFAhCQYYYmrW2nYG1RC8XmhDdS5IY/r3/yQYYIgIB5jtIANQXEEwDNpQnQ8zhLABUYtRaGQDyHIBzBAYRg0DEIAZQkoiQjEAZgipmIGBAQDk5Q7NaqVBtAAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "373": {
     "name": "Golden Pumpkin",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAxElEQVR4nLWSsQ3CQAxFXUXKCOkomIERGIMdUtxEtEfLIKzAAtQ0Rv/CRx/HJyEQkSxfHP/3rXPM/vGMkznja4Cd926H7e+QcTKv8/AZpOw2joCgAZ4TXI8LhNEV13lozX6xBoIYmbWbL7GClCCmI7KeIb77aQ0p4oJQGJpZ4zsgL0ARd3ykozbTkVDUCLUI0EaFRHAK8M746kgwgaZ3oBemE6ijbindQk0A8XKR3wAK0fVRqCOn4uxPJCQKu+IMFCNrfgC8cYNix9u0SgAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "376": {
     "name": "Poppy",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAuklEQVR4nJ2RwQ3CMAxF/6knFkBFLFB1AS4ZADEBx946hEfoErACCzBM1jBy4kASWuFg6cux6v/S3wIrRei4FqxF6Jjv+JIJQmp+jtGQJLMJQgrwc1w+Yx+6zGaA1+VaCWqK4ecYI+/NH5L+/QtFOXBxzufVcuVCPw1sBzkwFn2oC1uA2wN8PdUQp4AFHIz5TdWNYt4E9NPw1mHcfUA/8yNCxHi8IEgA0hPQBBFTrgRN8exvU8dritJQLwpytRkbMnLiAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "378": {
     "name": "Copper Ore",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAR0lEQVR4nGNgGAW0A/Mtrf7DMFman6Za/f/f7wLGJBuSrmcH1gQ2YDMD2DCyDHlKDVc8Jcd2ZANAGMRmIAek69mRr5lh5AAAMgRAXYoy4noAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "380": {
     "name": "Iron Ore",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAd0lEQVR4nGNgGAU4gX962X8QZiAH+KeX/Z+zd+//Pddu/s+ZMBuMSTbg1POXcAwziGQD/v/8BMYgNswlBF1k6h4Edj7MABCNzCfoGlP3ILACkEJ0zTA+QQP80QIRphFmOMEwMIUaguxnkBgRwceAYggyJknz0AIA9retWNJtPSwAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "382": {
     "name": "Coal",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAATElEQVR4nGNgGAW0A2qykv9hmCzNVsYG/4O83cE0SYYIsLH8RzaAZEME2FjgGpBdARIn2QVqSOFAsgFqaJhoA0AApBgdgyVGAQM2AADV5jikwl0D8gAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "384": {
     "name": "Gold Ore",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAZ0lEQVR4nGNgGAU4weJgt/8wTJbm/88D/v/fZw3GJBmyGFkzOYYsBhnwPxDVECgmypAqYwaIRpAh/89AcSDxrqgyZvh/o9kK7nQYBokR7Y0qYwawYpAmGCY5NqqMGf7DMFlRyTByAAB9g4GqsWk69gAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "386": {
     "name": "Iridium Ore",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAaElEQVR4nGNgGP7AzKD9PwiTpVlU0Ow//46F5BkgKmj2P1yyH4xBbJKcKwrTnNoPdgHRhpgZtMM1gGihJ5vAGGQQ0YaIItkOMwDZUKLCQxRqCFgjku0kxYgoOYGILTzI0sxAaQIaWgAAbY1mOdCfXVYAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "388": {
     "name": "Wood",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAY0lEQVR4nGNgGBkg2UrkPzIbmU8QgBS3BimBNYHwqiw9OJtkA1Zl6aEYRpTmZCSNMM1u6pzEaW4NUiJf86osPco0u6lzgjEs0IjSDALIIQ0zgGjN2LxAsmYGKIB5gSzNQwsAAPwtZ0T+Q6TwAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "390": {
     "name": "Stone",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAbElEQVR4nGNgGH4g2Nv7PwjrqWuBMUma9dS1/pfnpMAxSQbpqWuBNSAbgG4QUbavWjiFPEP0oC7AZQAIE2VAOQ5XgMTwukIPagCyIciYJG+UI/mbrHAIRnIJMp+k6AxG00hSooJpICs10h0AAG09uGtJWWtvAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "392": {
     "name": "Nautilus Shell",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAw0lEQVR4nJWT0Q2DMAxE0yGyBFLn6J8/+9NRMkz+uwBzdITsgZTKNAcX14QW6YQRuXd2AiE4l8RQrbx1h8byCLXmaZM+n4KEja/7twg0NufPwvl2WZWuYZXWhxCJezLMXSd56iAdQGJ70RZzEtLRndYI2SCC9g0AiRjjL0Bp6ai5Ixcw08w2mcWwDpDMS4ZwF3xC7kYWA+EjZLnHmMzMquW5743Ww69RCAKpESaMqffTfwEgpHJ3Q4AFwQT9ZPbGgrxFb5Xpf2c54v2IAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "393": {
     "name": "Coral",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAqElEQVR4nI1S0RGFMAhjDYfwy0HYTUdzILy8Jx6koO0d11JJmggiE0uX1RAztQMAux1HygdC/QAg30XMz4hz++fCICaI3yNRUqHL+mP0oo7AwY90tmC3NH4J5ySZwUa+sCMA9IgEyYKGJBYA1CmqbD6rAruimJdtVPrbLj0qcPLXDuzUKp6LRKJUGF/qXvW7wcZ5e+NOdMP1Os7uv5y8mVWRTIOr7nRFFxRITyBUb/kfAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "394": {
     "name": "Rainbow Shell",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAzElEQVR4nK2Tuw0CMRBEtwaHiAIQGQk9XA2OaYeElDquipMoAhFRxKK1PNbcYIsLsDS6C3afn39mfxmnq3ezZSTLvrvc/HCf/Tgvbv7y7Hs/P97bYMlyKQgAwqBI/A9BqQLYAt9iQaBmpYDJngWAsImCmo0CrCoqpGezMkkEiEb+AsDL+LJIdQ96kEjMFjWcgA4tTAy0GSkmCpgEwrPDEjUrwAgCADe3Gj0No/1AsARtjnTvBCB8uVDIzeVkfr0V3fFIO9atD41BHC74APsKerP8vDr8AAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "396": {
     "name": "Spice Berry",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAyklEQVR4nKWRMQ7CMAxFLZlLVGJnCF1yAXYW2Dv1REiciYWlVzJylB/9JkQUsGTFavKfv12RHBqDIeWX0Bhssn1KQBi4Ca4x2OmhFm7n9PhwPZbaT9RvxZdhLA9diNqBdY1mK/FdpOwAAE4X+3hw0QA0CyGGfXYECO8pBVuv5+fZu39KaXmYkzviG0b1swFMZM0f8Fh8t8y7NUAraxB7JyTfNwAE2/PTH9pTSvLdZsCSIajhrhELQdg+hJ7dzj0Q7+Arce3mo+1/4wU5dgqyb9OMKAAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "397": {
     "name": "Sea Urchin",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAuklEQVR4nM2QwQ3CMAxFPULlZTh3AgaIGKErMEavvXNnAy49dgUYJOhFMXIaGgonLFmxrP+f7Yj8ffTdGMmfhH03xvvlWvRPh0ckK4BKiLdhLsTUvvcOWEHOxyUJSCZNw5JyDdsMlfAyMw0Tr0E2TZrTT8Zsr9W2XQHTfL9NRGhT7eU0r6m2UbeF34DETM//z+5/mPJ0avpNI4EIEwYgZra6CVEJ6UZ/DrB13QR4gQf67Xad0oJ+BfgUT+th/r2cgZBcAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "398": {
     "name": "Grape",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA4UlEQVR4nIVSsQ3CMBC8GlmpURQ6aKnToYyQJeiQGCAVWzAFS9AwAPMYvcmh88cOll5+v3z3d28DAA6nTWQ0HVJYnXntnK2mQ3zHLp4fu9hfv5eYk9h2O1u9StLPYNuZa5CkSBAwLgAKUosLgoAxMobtLQUvUrZaYQ6CDTC190Rg+/Py+s3BZqN21B5IQBDJqEYl79tjpiizEcQCCUlEdbRFVWYDakEvqqKSqiLBNIO0u58P6xwk1IK/6IeqNf5g1J5RQb5GgtXug1OgDYo/UP371yh2LZHUBvcX7Ofg87X1AbNBQAK36WLFAAAAAElFTkSuQmCC",
     "achievement_required": true,
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   },
   "399": {
     "name": "Spring Onion",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAw0lEQVR4nGNgIATUjf/DMTqIdsMUw2VI1f80VENAmkkx4Ob/VQgDYAaS5QJ14/8Mx1xJMEDdGKLwmOt/OLvXGXuYYAVQG8GaQJpxBShWALUR7FyQAVCnYwQoVgBS0OuM8CtydMIMxWmIOpJmbE6GeQurAepogYYLoBvs6eT1H4SPXp7yf82CauICCqbGU8br/6NVW////3IRjEEGEdQMt1nG6/8FtyNwzWQZ0Gu+AO4CEA0SI9kAEAa5hCTNyIbAMKmaAcHBwaw1I8CSAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "400": {
     "name": "Strawberry",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAxElEQVR4nJWSwQ3DIAxFfWoPUQfIEL1ZYgi26LFD9NxBeukamaITZA0ig11sQnFqyXJA/z8bCMCvwJBMHgpUhtslwftckr5dGIa+uAfdQTAk+ExFIAAN0nuUpDUQZADTI8x1Gu6a92RKA0A7JgkfcCprErKY9r6Q3n1ENuoU0XKFnOsdKqiNyAARC4RMtE6vWjN8BFjZVM1PU13AYjpasxyj+ytEmJvOtg7N3jGkDgHgQFyzhshd6Fc5ZJZon/Qvs4Z45g32cQ+SzUfmqQAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   },
   "402": {
     "name": "Sweet Pea",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAu0lEQVR4nLWQyw0CMQxER0oPaYITdJGtYJugij1z50gPtMAViYKQgibaiZzPfkDCkuUk9jw7Bv5pAUOk/yQKGOIFt+S7IaESMb7wSL4JCZVAEJ7f07Q+iTsdio7xjtxVdzrzXbEfkQHsJpHeBFwEuNktRCPXb6xrAJiNk1igdYlV00ziR8TjFbnAxh64EZ+fLgGYZLRn5ljTm7oAiC6YpupBCvPmXxamd95XATWs3oPdxSbAWr2wrwF77AOCNOev6IQ4/AAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "404": {
     "name": "Common Mushroom",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAgElEQVR4nGNgGL4gTI7hPzImS2O2PsP/SZ7MYJoog8LQNMMMgGGYQVg123FAFOPSDMP7k3mwG2LHgaoJ3QCQRhAGiYPUYjUgDMn5MA0fGsTgGmHyWA0AAZAEskHoGCbPQAjYQRWiY4IasYUJTj8TAnZIgUq2AQQDjRhDyNZMLAAAQ6SJrzagZvoAAAAASUVORK5CYII=",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "406": {
     "name": "Wild Plum",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAgUlEQVR4nGNgGAUogNlI+z8MM5ALmI20/xvOYIAbgmwo0YYzG2n/F4uAGAKiQQYiG4pXIzMUWzHYgzHRNjOjaW6XqPgfyZYIpkEYJEbQAAYGBgaQQmSNIPYZ/XziDEE3AKSRJFdgcwHMdpINiEQyhCQD0A2BYaI1IxuCjEnSTAoAAFKwgdFPYLTbAAAAAElFTkSuQmCC",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "408": {
     "name": "Hazelnut",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAhUlEQVR4nGNgGLQghZnhPzImWeMCH9b/17K5wRjEJsqgFDSN6BhmEFbNTgwQzcgYWSMyBqnFakAKkp/RNU2UZ4BjvAZMlEc1CIZB4nvNWQgbkAJVjI5BmmEYqwHYXIGsEcbGqRmbK7C5Bq8BuLwCYxPUzAAF2AwhWjM2Q0jWjGwI2ZqJBQCqk7NSCAaErAAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "410": {
     "name": "Blackberry",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAw0lEQVR4nI1SwQnDMAw0aII+RL/99dFPKMVZo4t0jj777joZJ0ukKPjCWZZxDUK2T3c6GafkltzPGyI6h0uoyGJZL9v8ue17y3b2NZWgBODjea0yhBCNIylFFiCxGLAueSnKbB3EyGE1hrhLPeVDDB0h5t8jMSlP7z1bwBUwHrEaQ4g8v76HiGXDcM+izTtoIbADFvLOwn+hRERHJnqs+UxKRT0iY6FAdt15z6Lhd1ZXGDnpkqMxIvtDgZGTIdk7+cf6Dz4SMcfYsxaCAAAAAElFTkSuQmCC",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "412": {
     "name": "Winter Root",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAcElEQVR4nGNgGHTAjVfmPzImSzMDlD1Zl4E0Q9zQFJNsiBuas0Hsh9EkugLddrIMcEPS/H++FphNtub/87XAbKINcYP6G27ASRJc4YZkO7ohZBnwH+p8il3wkNgwgBmAbAiMT1AzNkNITsrIhhCbmQDlRpcQzHYKagAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "413": {
     "name": "Blue Slime Egg",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAnUlEQVR4nM2Suw2AMAxEEUXarOGeko0yC6vBPHSHDJjEBodPRaSTDOaeP6Rp/nsoQemtsRuBFps4fgaihDhAmYF5Fcecq0NIV76C+ABKCP10ALiaSCBqnBog9JMycvwYEIcMKLs5LdRbYNwBAinH8BdJuX0LKfcieX6nIZR/X1mVn61Z5AI686GV5KtjXN0F6ULGcu/SMZ/RrfHrWQAVkWOBiEW7YQAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "414": {
     "name": "Crystal Fruit",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA2UlEQVR4nLVQOw7CMAyNitSVgZU9lcrUkZ4BqefoMZiR2DhNz9DzsBm9NM/kU6IsWHpKbfc9+9mYQhxOgxCmJux0E4AkfPf3Z1YDdslneTlcl8URScCLHHX+E4nYhMwpJIf5roj1jdBzSA5fgoMMBfRQ3SztuOravANy1NHngfNbdLMcH7IJDL1bE2S8FECfIhm5EVEBO13UK/2iB+A/t83e9CYS2W5DMnoib+1nAu24RkDN+fTiIXIBBLwlUM/JAFOM7ktQvz4vE00sQoHfK1cIlD1XiCj+FR/E3i2kMxpA9AAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "416": {
     "name": "Snow Yam",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAk0lEQVR4nGNggAJmYaP/yBgmTqw8A0hQ5v80MLbaswdFEYgNEoPJYzUAWaF2U/9/9QBfuG0gNkgM3WCsgBmqgc36HAqGGchADGCzPvefYd7//0z/IRjEBouRovn/z08omGhD2KzPgW1FNwAkNoQMYKAkDEAApBDdAKI1Y/MG0c5nQALIriBZM7IryLId2RCyNRMLAKU6DpgA19/9AAAAAElFTkSuQmCC",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "417": {
     "name": "Sweet Gem Berry",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAuklEQVR4nGNgoCVQD9D5D8NkadTu9/pvtScITBNtkHqADoYmZMPwGqIeoPM/+r8MXDOIRtYIYoPkcRqiDrXdQsDpP7JLYJpA4nhdoQ5VlCxrjGIjzEUgcZjhOL1hATUA2RCY5rXG+mAD8AaihYATWCFIA4+6GFgziAaJwcSJMmAtkiEg9o1EQeIMAAGYc2EaQfj/ZgbiNCMbgKwZhEFiDMSAZDQXgDTDvECUAdhcQZJmZENgBpGsmVgAADWMzZFv+HSvAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "418": {
     "name": "Crocus",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAwklEQVR4nL1RwQ3CMAy0lA3CEPz5IGUHJP6oI3SVMEIX6Qo8ukA/DFLkkLMuFcJ5ICJZsRPf+S4R+ceKctuS3Eu4zak2Kgjg4fzcpnHpJ5jGpYAARt6tJFYgyB7rWvIuJZEm6a4ADZzDmit/qAqYcK8gHE5vMiT8gOyXyXCmmIYg1DheLyadp2LXO+2RLC2BZCkXn34BQLZgYCwoYBtca979jYHsQFnj2QMLgeBVazvzCNI8N49q07PY3VfpaPDqn6wXdK/5aWsFgZ0AAAAASUVORK5CYII=",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "419": {
     "name": "Vinegar",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAo0lEQVR4nGNgoCWY4cbwf3Mow3+yNJsxMPwPlmH4DzIExCbZAD1NF7ABIAxik2VAz4X/uSBMsgF6SJpJNkRP0+V/vNrB/3X+F1EwSIwoQ/Q0XTA0n713D0wTNEAPajsuFxB0hZ6my/91i/vhitExSI4oA9ZB8c0LezEwUQboabqAMUwDOk0wDNYhuQIZExUGuPxPVCDCDMFmEEwcr2ZsBhHSCAAyC/G5pGtFSQAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "420": {
     "name": "Red Mushroom",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAkUlEQVR4nGNgoAXwl9T9jw0TrXkSA8P/y8YI/H/yZLAYQUP8JXXBipE1I2OChvjjsB2Zj9MAf6hmdAPQMchArIb4Qw1AthGXd/AaMImAK/CGgz+aIcgGkRQTybLGGAaBxIhKC8myxv+PtCRgxSA5og34f3U2BL85CMbkGfAGohnEJtoAbK4gSTOyIciYJM2kAAAHeP2S6ZZxQwAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "421": {
     "name": "Sunflower",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAuElEQVR4nGNgwAEavIz/gzA6myjQ4GX8//9/BjBGZxOl+UGpDETTPgYIex/EABAbryENSLbBFIfo8P1HMRSfSxpgBuxjQNEMo2EuIeiKB6UyGJpBNPFe2EemCxooDQOKY4GidOCQIfcfhmGGgLCMLg+YJmizQ4bc/8UHzf5XrzX4r+MpAlYM0gzDDISAjqcIWDPIIJghII0wmigDIvo04d4AYZAYiCbKAJghME3IBsC8RDSAGUSM/wHI0Bd550jXSwAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "422": {
     "name": "Purple Mushroom",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAo0lEQVR4nGNgGJyAI+w/Vkys5kzrc/8dBab9X9z9FMyG8QkbwoHQDNOIjAkbwhGGVTOyS3AbwAHRDDMAWROyQbhdwRH230q5H8ML2NiYBnBA/A4yAIRhLkHHMHlMQzgQtqMHGrYwAanF6goGJIxsIFwDsWnCSogBQwNYjBhgJcTwvzrA/v+RlgQU/P/qbOIMQTYApAmGQXyyXEGyZmRDkDEuhQDNFQYQUSyB4QAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "423": {
     "name": "Rice",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAkUlEQVR4nGNgGHRgfXzBf1yYKM3/r0zCifEasp6AZoKGrAcZ8Ho/fgNe78duQIJl8P+r/a1wRTjxlUlgdRiGJEANIBbjNCDBMvg/MhtdDIZBfIpckIDPgAQ0F8CcDMJ4DViPpADdv/9/foLLg2gMAxjQXFF7gwFuE7JmrLbjcwV6AOK0Hd0QXBivZmRDcGFsGgC3g6ZY4f4RWgAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "424": {
     "name": "Cheese",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAhElEQVR4nGNgGN4gWUfyPzomSfP/m4r////fBME3Ff+/71ckzpBkHUmwYrhmZHyTCEOSsdiObAheA5Lx2U6sAf9hNoJoZDYhLySj245sADEBmQyzHc3PMI0gvDVCCbsByTqSYElsNhLUzIDsfKgLkDUS1IxsAC6NRMU9SDEyJiv5kpruAU32LB5SotgOAAAAAElFTkSuQmCC",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "426": {
     "name": "Goat Cheese",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAnElEQVR4nGNgGLSgPlzjPzomSePTJUn//z+ZBscgPkFD6rFoJNqQVGNBiML/J3EaAJPDMCQVpBkkCQYn8Rv0//9/kHrsBjyZht0QFLn/YDaKIalQ58P9j24IzHVIfKyueLokCY7RvYEujtWAemgsICtG5m9tsIeLYRiAbAhIIbJGmGaYOFbNDFAAkkQ2CIRBbJg4Xs3YDCJJ04AAAFavbTUVmbBTAAAAAElFTkSuQmCC",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "428": {
     "name": "Cloth",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAu0lEQVR4nJ2TwQ2DMAxFsxCbcGIGS1VH6I2OgRBjMETFHlx6YoDKyJE/dUIChEgWMuY/km/HOV1UV4xwpYvqirv3g8f+5aMIREY8fwbm7+RD3l2CkAJEvAF+i39KLrVTQPtsQsAdyKhHKIaQ7uAKJOkJqQcwrRhCKpI4hOS6Q0ZwBkGOWQmOwPpBDoKa+IW5CSBszmkhdsjQblt3MSAFwW4kBwSd+wMityGAKPZqZ6QdZ/vnXCTn4c6VXgE6yOnm9ij98AAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "430": {
     "name": "Truffle",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAvElEQVR4nL2RwQnDMAxFvUICDsUr5Bp6D6UbaJJCbtmk52yTDTqMyw/9RnbkNu2hgg/B0n/+cpz7R0nwkfraIMHHqe/iPLSbqhApDJAFWK4GRIKP6+2UhmguITCbKUQNcKgGebvCPLS7JBTjmyugcIgmAExhCX1zhbE5p1sIIYjfPM8Aoh6Qa3D4cb8k6WS4LANMfbcNcFcN0knYywAovjIaNGuQ/jYB7lW133bIzGKKUjj/aNaQUoeMv9QTViQBkGnC3L0AAAAASUVORK5CYII=",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "432": {
     "name": "Truffle Oil",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAlElEQVR4nGNgoCVwYmD4D8Jka76WzQ3GZBnixMDwf6I8w/8FPqzkGRBto/W/58L/XBAGsUnWfCRP+P//zQxgDGITbUg0mub//0UgeDMDcYZEoxsANWRFRxrxBlRWVoI1gAyCYZAYSQZkZ9egYJINiLbRAmOQZmQxogxY0ZGG4goQm+RAPALFFEUlMiYrMSFjkjSTAgCwyricf66qwgAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "436": {
     "name": "Goat Milk",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAo0lEQVR4nGNgwAc0sv6DMVlAI+s/f89/MCbdEI2s/8ZnIZpBGMQmzRANiO1M/yGYdFdoZP1nsz6HgkkyIMw5CKIBCYPFiNU8rTHt/6PjS1EwSIwoQ8Kcg8Aa/v//AdcEwiA+QQPCoLaDFMM0wNjIBhJl+38kA0AaYd4iy4D/UENINuARVAPMW0QZMA1qE7LfYZqJigls0QgLA5LSAjZMlGZSAQCbECEwWTkntwAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "437": {
     "name": "Red Slime Egg",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAq0lEQVR4nM2TwQ3DIAxF/wgdIBs0Vy4M0AnoLr1lCAbKNNkhN1dG/ApTQsgtSF9YMn74WwDcdgXMUupy4QqIvB9JGg+BHLwsmEyxxCgie4o114U4eFvcgBwCHLxpnZ38gBlAO932A+YU8/YE0S5GAEv2Wc6iNdBTQMgQigCN9Wzb//PzBynnojtzBuLovwDUQ2QxdQhYK0gt5rs2tlc0Ilh1+iLpr9blPzG6vhOxCd/CjGYOAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "438": {
     "name": "L. Goat Milk",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAtElEQVR4nGNgwAc0sv6jYJKARtZ//p7/KJg0QzSy/hufRWgGsUk2gL/n/3+m/xBMlgvYrM+hYKINCHMO+g/D0xrTwBhZjChNj44vxYphhmFo/v//B1wBiIbxkQ2GGYJiQBhUM7IzQXwQRncNTA6rAWFQQXQDYGxkjOKNMKjTYIIgGt0AdNdh9cY0aGjD/I/NBTgNYECKBWQDkAMRW+BijUp0V6BjnFGJzRCi0wG+RIUNIysGAIy7sE5XEihPAAAAAElFTkSuQmCC",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "439": {
     "name": "Purple Slime Egg",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAArElEQVR4nGNgGLQglGHpf2RMtEY5Bl+whk3B///fTj8CxiA2UQbJMfj+b5B/BNf8f77W/y8PdoExiA2Sw2uIHIMvis3ohoD4OA2QQ3M6yDYYhhmE7B28BoQyLEXRCGMTZUAD1J/IYUG0AQ1QJ8NCHN0bMMMwDJBDcj66Icjhgi6PNfoakGwF8bFpxmvAJjSF6Bgmj9cb6GkBOQBB6kAYZ2ICGQJThA3j1EguAAB4WVxmbxIOIgAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "440": {
     "name": "Wool",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAnklEQVR4nK2TwQ3AIAhFHasrOAOjdJlevLlId2COXm000CBFbExJSJWUxwdiCH8axK1IXwLgmUq5sH0laAqGuLXEx+icj71IsAvIx/78yJB6r3GOua2BhrALRdzapxZQgNqZ4kMAnslsQStyVWRjDp2ykQpQK+yqqoG+1glU2apkJU+lIw2sa2UmH8glSK/UVWGp0dBpslZjxZYemWc3ueTJpTyj2SQAAAAASUVORK5CYII=",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "441": {
     "name": "Explosive Ammo",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAARUlEQVR4nGNgGAXDHWQyMPwHYbI1T2Jg+L/ThQxDMpE0vwknwxAzqAEwQ0A0yQZkIhlCsgEMSIaAMIhNkmZkQ8jWTDcAALdCLXFai8RFAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "442": {
     "name": "Duck Egg",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAXElEQVR4nGNgGAXDHUxMlPoPwmRpdlGQ+H98cyEYk2yIi4IEWNOLi23///+/CKZJMsRFQeL/glZLyg24sj8Zjkk2YGKiFNwQUDiAxIg2ANkQECZZM7IhZGsmFgAAaBVTeq0qXXsAAAAASUVORK5CYII=",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "444": {
     "name": "Duck Feather",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAzUlEQVR4nGNgwAGYjbT/gzCnJAMY41KHU6N2v9d/qz1BYAxiE2UIM5LG6P8y/8/+NwBjEFssgoBLmI204bbBMLJBIDZOA5jx2AzDeA0Ri2CA244eeDCDCRqgDdUM4oMUIRsEkgMZgDUwxSIYwAGErhkmjuw1omKCE2qjxpxtYAzTTDAW0DVLpU4mTTMIgBSBNDIY9pGnmRkUDoZ9cNuJ1szAwMBga2z0v7KyEiUKYQFLlOatK2f+B9EkZRyY5n2zUsCaSdKIbADZmhkYGADJj91QSGHuSgAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "445": {
     "name": "Caviar",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAvklEQVR4nLWSPQ7CMAyFcwzzdw+27oxZGBi5CkO2DlygJ+EWOU/Qi2Jq4leKkIj0FCfx+2xXDeEfa7c9FBU7f2U+b8Zyv5bCzqtm2V/KcZiqiZ2pWVoSq443yMYUcIrZVbMwxMjBzgEpu2oWBgHmANISAbBjWBiENwBcF9Lar0ptj7km59ssNbsupLWvRlTqpW8Kw50HpBlihYqvbh6fANF3wcZB/AYIHUSNutvZqZl+zIUx6D/QQ5a0av5lPQE/ClZXxn7NVQAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "446": {
     "name": "Rabbit's Foot",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAh0lEQVR4nGNgGAX0AyHKDP9B2EoIgknW/H8fw////yGGgMSIMiQEaisIPyiVARtCtAEhygz/F7RagnFNuBHcIJBcg5fxfxDGq/nK/mQ4BhmCrBmmDqshIVDN//9fBGOSDAhRZvj/6vwUnJqRNRLU/Or8FBR/EwTgqCJHIzbNRGtENoBkW6EAAHgpl1kISYuLAAAAAElFTkSuQmCC",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "447": {
     "name": "Aged Roe",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAvElEQVR4nGNgoAWQlw35jwsTpdnWdev//IrvYNy25QucDRLHa4g8Fs1td78Qb4i8bAiGrdjYOA3QZdCFuwBuOwxDNYPkQepwGqDLoAu2AaQQHYPEQfI+svq4DfCR1QcrwoXL9eVxG+Ajq/9/j48iWAEIgxSDMEjsVb8qmP3//xkwjdMF5UiaYAaiG0LQCz5Q22E0siF4XeCDpAGZDbOZoAG6UBcgewOZRjYcqwHEeAOvZmRD0DHMUIKaSQUAnwYg4qgs/LQAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "454": {
     "name": "Ancient Fruit",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA7ElEQVR4nJ2SSw6CQAyGmzQhIe65BHHDHdy5NhzBrTtP4ZYQzsElPIHuPIBHMNZ0nL8WZPAxSTOF9v/6AKLR4aoUGP1zuCplf81ldcwHkK/BXJVBTC0ZBFC1JIBdhZDUkhQ1ma+WBBT1sxpEEML0WWOTY7BrGcFsuTGhhwGk+cH3AI5CiNF28HedcNMPwLZkjskA0PpgS0PS4nyR7U3CDcgAUMQ2Q7DpBxC9VXy6S7h9hwbguBQNahUFADIF8F+N/DHArntBmv5thORPlHmAM0CwyFkA6w4mAHg/C5iD6DgfxWOIgX4Re4i3VOIDevwv9Z3Pq9AAAAAASUVORK5CYII=",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": true
   },
   "458": {
     "name": "Bouquet",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAABMUlEQVR4nJWTsUoDQRCGFznSyb6AkDZ4iKnS2Ia0aeyEQBAbS1vzBMHOBzghbQjkEdIE0qSzSwrh3sAm3cg/u/+we+ipCz+7Ozf/N7PLnnON0fdzoSzYexRT2+j7uRxntaryYqbOzV78i8iZxNhP5sqLyOJdRUhq/hVwnNUBICeDIA7A65VTAVAMhqrvq2+2QXIyAIxSXapgLFdTVff2WrLqgBhss9V5dH4RADsXOouQsTwEQDEY6oLG9BIRA+DjzmUgrOExQBnbIYRmnhVGQCCsAcgusIhdYOYbSGOYYaJYwMzlaqpn4rlYmZ1xZg6hCujGD0iikRDGUxP3GaCIraM1Jj5N7q0q92kBA7jGP8AkGpC4fHtWZY+nbRAA02e9VmH/J3MTcthX/zcTwEtra/0LKQeGQmC6SpUAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "459": {
     "name": "Mead",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAx0lEQVR4nKWSzQ3CMAyFfemFc08MUAmxBGISIm6swArdIMfOwDgIZQtuDzm1kZufEhVLT1Gcfs92UqIN4QbC/bwHbYUf1wOe4zE3cQNB5U+UVdA8i014T/YQUwe8LgD6uPKH1jDcdlGaz+Aghyzdq6K55BawNVBnW+0Lc2fSFaXhhhlIYQvGsdDXDXytqoDAe70DJ11UYV6nrjy/l4srtz1XLsJ2/mBuemGwBlsDb7tQg19wOoI3/0D1zVtMdKQm2Jqkaob/iQ/j8kV4VMKE6gAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "460": {
     "name": "Mermaid's Pendant",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAlklEQVR4nGNgIBdoZP0HY5I1QDHT//9EGqAB0cDf8x+sCYZBfMIGaCA0gmg263NwF8DZeAHUqciaQTSKYcTajqyZsPM1EIppYgADIc1M//+j2IYS6sTYzIQUcMhOloxJIhzqbFicjq4ZxMY0TAPT6TDnomuAsRFiGphRRkgzhgG4QhjZNpya8YUwul8x/U9EtoRpwhYLABjmDtq0+l5GAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "465": {
     "name": "Speed-Gro",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAqklEQVR4nKXSsQnDMBAF0D9Jdon7VMFzuMkOLlKqT+cNMsp1WcAbBFdnDnThdML4QwQfpIP/kLGAukYsygZ5jVj0NXx1xkalQ6546l/IBbff9QzJsUKeHQIzNn3g00Qm7WZ2awqQSXV9a4dY5xSQWvZE5BSQUM57ClhDweMzGpBaLPcWoT9BatnjMxootWjziFBACWU7R4QC/Bz/fZw1QETyiztKBzjCxks7gSr9Fv2NqcEAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "466": {
     "name": "Deluxe Speed-Gro",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAApUlEQVR4nJ3SMQqEQAwF0ClzsLmIC3sLC7s9huXewVpvsAewGBYkrX1kIIGYQfw48MH58B+IpqRnoK+gSfFk6uT/FtkIS4Nk6mSk+TmSFTAkpg5idwlsJPIL4aVvOhjgpZd9nRqkbm4B1rHFI7cAu3F8hoDdDSzWwQDrsHxeJwR+BdaxxToYKDqsvUcgoLhxvXsEAuzuv73vToBH4h93lQYwBI2NDoTIPjg++jQXAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "535": {
     "name": "Geode",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAe0lEQVR4nGNgGL7AjYHtf7KdCRyTrHlGXigY75ldCMYgNkk2z4BqBtEvLm8l3hA3JANghoAMAGGCBrghacZmCEFXuCEFHLJm5LDAG6BuaAaghwVMjCgDkrF4haAB2AxBN4yBEHDD4QoQBskRNACXK4jWjGwIMiZJMykAAP+ivZFhYf+wAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "536": {
     "name": "Frozen Geode",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAjElEQVR4nGNgGPRAMibpP0Wa9Rev+0+WIZJQzdpHH5FniGRMEliz3a//YJokAyRjkv5rtPTADQBhkCsYTC3/k+x8O6gBIDZxBpha/kc2AMMbBA0xtQRrhmGYISA2yFv4DTBF2I4L43eFKcQAkE3YNIPEiTJAEopBGmAYWZygN9ANQtFIbFTCFSNjWgAA9tPGWMzbHzwAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "537": {
     "name": "Magma Geode",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAh0lEQVR4nN2PsQ3AIAwEXxRhIC9AlS5zMAUrZQXGSunICEcRIoDbWHp9AX9vA/+eA2BVAtgUJu9K6AQ4V1+GkHelVcPZCqHariHxK4TiUwB5xxEoajdQDSHUAbQu503Xj7WpB5E/n4Ad2wN4Q1TJCoiN5H0IwAAit0/DLURBS809iIRUpvDq3EWEjDNqaBhkAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "591": {
     "name": "Tulip",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAqUlEQVR4nJVS2w3DIAy8PRihQ5BdkLIFE0Rim3wzVj+pTGzioNbFlk6RrXtgCGBUBprA4n0tErV9H3CZZBKX0irQ8d623i+bZEkv5YbnFJlTZ7gM6mRCvfseKpuIOKRXhykMiqSfkWbpxJpBUkQxpJnLIJ1oiCyIaDjumb18ZOLBYPGj/1vxIkt6/3rEQQnHCnoda39J1sKHmZzsl8G4qDmVYb7Eyo8ycz7PTtEZ/In9SwAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": true
   },
   "593": {
     "name": "Summer Spangle",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAoUlEQVR4nK2R0Q3DIAxEvUbUEToEH+kmbJGOkAny7Rn63736cRGuqRy3WAH1JIQ4c0+HIArE84SyaFQ8T3jdb2MQ1jCw9UFYa+O5SNjuddaEsQ1qSFo4LwSwb+CCXU+Bq38q+LdfECXqq/2lRPisoVAiXPL1cI5hiUArIT/e+wHg/CYg20urAsy5zMX7pTIQgFatMO+FADusQO81AS1odGEHTbzbC/xncioAAAAASUVORK5CYII=",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": true
   },
   "595": {
     "name": "Fairy Rose",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAuklEQVR4nJWTvRGDMAyFNQxzWDt4AjdqMkGGoKRmkOyRIm2GoHVOxg+UH0e27t4Bd9LHezIQ/SiZ1gzRaMm05sfleWgIInV4u+Ui3HdDxAAsqABSPNVjfzMuiEOm+7LrHwCQr+H5uksB+uyV4AS0GbYV4A6n2oxGvVq5leKZFUMW6BbXZaldDFbr/R8Wm9zInuLgN8EmN5bHwYeI/QesE0Tj0AZ8nn9pauyi+XYMHwAstEZw87/Z7zz/Fw5rIkoYiH12AAAAAElFTkSuQmCC",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": true
   },
   "597": {
     "name": "Blue Jazz",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAd0lEQVR4nGNgwAFUVef9R8e41GIAkGLr0O//689+AWMYmyhDVJE0IxsCwwQNUYUagE0zSIwoA1SxGEK0N1ShmpENQfYSSeGgiuQasmJCFaTBnoF0zXBgz/BfOlkbbAgDWcCe4T9DNwNlBkgPfRdID6wBUEPwyQMAL96viZMMZNQAAAAASUVORK5CYII=",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": true
   },
   "613": {
     "name": "Apple",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAdklEQVR4nN2SMQrAIAxF/9ReK5MH6p6zeSzHFItKCFFDl0IDH0V8D40C/62EQ76RMCAV9BKCMyB9rFBWa0sJt42FaAA6Wwm3TXKdQ2ITEhSiR+KJloKk7ltBD94K2Dm27ceykalJZgk9pZbY+RbWkg6EP9HbugG0LJTWpwvNLgAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "614": {
     "name": "Green Tea",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAq0lEQVR4nGNgGD5ANyzsPzEYp+aU7T3/t37ahxeD1GA1RDcsDK4gIFUQK4ZZgNU1umFh/0EApLBmgRQc9+yT+z/9jSKYBsmBDIABg85MhCG6UANAtiAbADMERIPkQACkFqQZxmZA9gIhgOwFDANSSAhEkAtghjFgi4nphxTBGKYRxgd5BatmEAAJgBRg0wizHTkmGLABXTxegYU6Ts34DMGZgPAZQlQSpgYAAFm8eTZBAtPYAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "628": {
     "name": "Cherry Sapling",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA8UlEQVR4nI2RMQ6CQBBFp7IysSQxHoDCQGEsMByADvcAHMDKCxDOYCPewdY7aOkd7Eys7KzG/JUlk11hd5IfhmX+25mByBdFzN4aL6CIeZ6mWjiSuT+KmGeXjRbV2c8IqMmDQnTQ396dUWjo4jpzxhmNpowYQg4DxggeoSkjftyPWuvF1Fmi3on8QypZsVRb5fx+vnibEN8OmYaYWgegOsP1VPXCO25HJ4CYXP7aQTN1BchhRCcOQLbeVjmfifizn/BuSVoGgm9Qb7ZDCQCEWwEwneCJmsFtK2sE04kcKQhgILITs8xRgA2x5TVLyD/5jF/zfgq2gUJZ+AAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "629": {
     "name": "Apricot Sapling",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA5klEQVR4nGNgIAQ8NP4TVEPQAA+N/1L6+mAMEkJmEwYeGv/5N1uBMUONJUQjyFAYmyiA5AK47VAxBmIBWHGNJYZ38II6f/H/IAxigzSAvEG0F+r8xf8/Oj8VjE1leDACERwmyDEUqGf8HxlPi7X5/+nlm/8Begz/j0+wBBsCU4thQCBUw7HpsXAM4oNsB7kEZAiMjRy1ODUfQ8IgjSCXYBiA7PRpUANAAXM4Qub/581qKC4BYbhmdBAINQAWRSADQBjEhxkCUoMztAOxeAEWTSQZgCscQOJ4DUA3BB0T1IxsCDZMSCMA7EYTcGT56Q0AAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "630": {
     "name": "Orange Sapling",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA50lEQVR4nGNgIAQ8NP4TVEPQAA+N/1L6+mAMEkJmEwYeGv/5N1uBMUONJUQjyFAYmyiA5AK47VAxBmIBWHGNJYZ38II6f/H/IAxigzSAvEG0F+r8xf8/Oj8VjE1leDACERwmyDEUqGf8HxlPi7X5/+nlm/8Begz/j0+wBBsCU4thQCBUw7HpsXAM4oNsB7kEZAiMjRy1WDV/3qwGxjA+SCPIJRgGIDt9GtSAwxEyYM1//+rBDQHJgTBcMzoIRDMAZgiyK0BqcIZ2IJoXYIYghwdRBqAHInJg4jUA3RB0TFAzsiHYMCGNALqUGdqvU9HBAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "631": {
     "name": "Peach Sapling",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA8ElEQVR4nGNgIAQ8NP4TVEPQAA+N/1L6+mAMEkJmEwYeGv/5N1uBMUONJUQjyFAYmyiA5AK47VAxBmIBWHGNJYZ38II6f/H/IAxigzSAvEG0F+r8xf8/Oj8VjE1leDACERwmyDEUqGf8HxlPi7X5/+nlm/8Begz/j0+wBBsCU4thQCBUw7HpsXAM4oNsB7kEZAiMjRy1WDX/z571///cWXA+SCPIJRgGIDt9GtSANdYWYAN+PH0HNwQkB8JwzeggEM2Ac65GEFdkI1wBUoMztAPRvAAyBISRw4MoA9ADETkw8RqAbgg6JqgZ2RBsmJBGAMMRG9/5g9SUAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "632": {
     "name": "Pomegranate Sapling",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA6klEQVR4nGNgIAQ8NP4TVEPQAA+N/1L6+mAMEkJmEwYeGv/5N1uBMUONJUQjyFAYmyiA5AK47VAxBmIBWHGNJYZ38II6f/H/IAxigzSAvEG0F+r8xf8/Oj8VjE1leDACERwmyDEUqGf8HxlPi7X5/+nlm/8Begz/j0+wBBsCU4thQCBUw7HpsXAM4oNsB7kEZAiMjRy1WDVnMhSDMYwP0ghyCYYByE6fBjXAgcEVrHlx91O4ISA5EIZrRgeBaAbADEF2BUgNztAORDIgKTgdbghyeBBlAHogIgcmXgPQDUHHBDUjG4INE9IIAOMEEA03EFrOAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "633": {
     "name": "Apple Sapling",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA60lEQVR4nI2RsQ3CMBBFPQASZSTEAKmSAlEEUaRMFzxANgmZgYZkEAagCyU70CFR0VAe+ocdHTbEOelLZ/v+852tVCiKmII1QUAR0yJNWdiSeTiKmOanDUvV2ccIqM0nhehguN3sqanBxXXmjTMaTRkRhBwGjDF5hKaM6HY9stbLmfeI/Cbyh3SyIqm22tLz/qBdouhyyBhiaz2ANgb7ZX1X8Rq3oxNAbM4GU/dl7ruK5zorxcIaghGdeADZemsAe2N+5fkAwRk0mN3QDsBCZBeo+fvaWgAkxK4nAyRECvujABfiKmiWkF8KGd+j1gug1O4pMgAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "634": {
     "name": "Apricot",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAUklEQVR4nGNgGAWjgJagxc/6PwyTrDlDSeb/581q/z9e0ARjkgzJUJL5fzgCYsD/xwvhBhFtSAbUAJAmZININgDdFWR5A4ZBfKI1IxsCw/gUAgD8t1W+P3IJewAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "635": {
     "name": "Orange",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAvElEQVR4nLXSyw3CMAwG4DAB9yinnHrzuUzQGbhwzRAdJRIb9MImLJBRjJwXVuuagkQlS3n9X620xvzjsQBI9XPYzCOaacjIV5gFwPPjUoB5LMFpeI+PAra+NXiHfI3mHwELgMvVYLqdctG4rWM0OmJZmA7js1YsSBuLSPBuG+YI3kvtIcG73nYO8nAHsCPHgSh3oQJJQ2qJwMLuQEW0i0yrDjaXqn1K3gWH1qD6L9CmBNG87e2GJYiXdPAF2/RFZhTRKUEAAAAASUVORK5CYII=",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "636": {
     "name": "Peach",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAkUlEQVR4nGNgGAVEAyl9/f8wTJZmBg+N/ww1lv/5N1tB2MSADCWZ/zAM1kSKIRlKMv8vZs/6/3/uLDC9xtoCrAmkmaABGUoyYI1g/HghmAYZADII7hIYxmczTDPMBTA22Eu4QAaaATDNYDGogcQbMBcNk2LARWRDQBqRvIPXAHRD0DFBzfgMIVozsiEoiQkLAADuGN9ilHwnqwAAAABJRU5ErkJggg==",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "637": {
     "name": "Pomegranate",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAcUlEQVR4nGNgGAWDGPgzmPxHxiRrvsyQC9bYV0SiIf4MJv/nMQSCDZjA4AnWCKL/Z88izhB/JANAGKQRhGF8vIb4M5j8z2SwBxuAbAgyJsmAeVgMIcqATDRDkDHRLsBmCEiMYEBiMwTmKpKiEhvGphgADHKVHXs8uUoAAAAASUVORK5CYII=",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "638": {
     "name": "Cherry",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAmElEQVR4nLWQsQ2AMAwEv4IhGICCkgGgygTZgA3omYB5qBmL0igoBmMJbApeeskp/l4f4Hd1oJu/KLb1EaqGhjCDhiXf7jAuSAqzXZAoAXlKCrLdAH0nmYCoAvptKqrABBD7MyCgoBU4bUICirON7xTc+p5oLN8hQbVJAEMeAeGhTUNcgFW0yUk8y9yuZ0i7P/C1zYK42rJ2gd+gPgitVWwAAAAASUVORK5CYII=",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "680": {
     "name": "Green Slime Egg",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAw0lEQVR4nM2TsQ3CMBBFvQGliwxBDRvcBGERupQp0yFRQpERkBiFmk0OfTvfuSSGGCpO+jpb1n93Z9nO/W14qdTqa2P9POpJ70FYF4G8VLq57SfmXp2qXsMaZx8hflZ5BMTA/i3A46DZJQCqbR+HIOzZBcdZEqRLAGSOgg4AQS4AtMFIAIwwsIt1wPkyANoEoQjIX6TE6gRYiL0XZHY4hUisThECw9xMLQEN5s+DrAjKjyFdgFixC2r9RQ4gq5/+RGm8ALk5PsFs5H4oAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "684": {
     "name": "Bug Meat",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAkUlEQVR4nGNgGBJgoWLufxgmS+OdwElwTNCQhUi2wTT8z5z7//+8w2AaJJYgF4RpSIJcEFwTWANUMYrYvMPYDUhA0oxsI7IYzBAQG6sBd5BshnkB3SVYNWMYgORMZD6y4Ti9sBDJqdjCBOYtvIGYgBYe6FGJVTMIgCTQDUE3DKdmBijAZwhBzdgMQsZEa6Y7AADXSBSJC5n6FAAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "685": {
     "name": "Bait",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAeUlEQVR4nGNgGBIgQS7oP0WaE+SC/i9UzCVsSAJUIbJimNj/zLlgg4gy5P+8w9gNmXcYbAhWgxKgEiCbQIrRFcHk8boiAWoTVQKNAQmghwtZhv6HhgtBgxZiiQVc4YLV6f9xxABRgfcfi00EQx5ZES7FRBlAlEJaAAB4eIexUdBqcAAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "686": {
     "name": "Spinner",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAYklEQVR4nGNgGAW0B2LWRf+RMcmaA1f8/6+ZeRGOiTZEzLoIrKHg6n+wITCD6G9A4Ir/YENgBuE1ICAg4D8yG2YIUf4PQNIM48MMISoGAtBsRzeQKADTSJZmfK4h2xBiNAMAS1x257VaQZAAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "687": {
     "name": "Dressed Spinner",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAArUlEQVR4nK2QMQ7CMAxF/6E4QJaKseEYFDGx9iQMLBG36YI4kNFHSWRMGweJL31FTvxfEgOdOuIi2vhFAYOkaZFHkupuSMjheX+vLjAXEjC8m9jMUDEh3YA5N/8dkKalH5DMAFnz7CswYifaZQZ6gKxXw0UMyukqT5wrxBqexvyCGw4fqxuk2Mjbdbi8BluKMcraDPSXNgExh3Wt9yywCbAwLfcL9uYWrCkL8vQC5zXqrmNvLF4AAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "691": {
     "name": "Barbed Hook",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAc0lEQVR4nMWTUQoAIQhEO54daQ7lYTyRi0uBtILpzw7MR5EPx2qMRERTzdm5UFbIzK9bEKKpAPoAD/kXwJUIALQNAKARQERyANa0T4CtDXDuhwAR+UDKABwxWoDRiUBr2r4LH+vqFjxku/yM9+/zvi7u6AGMg7rp1jO42gAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "692": {
     "name": "Lead Bobber",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAU0lEQVR4nGNgGAW0A5nzDv1HxiRrfvPtNxwfe/SFeEMy5x0Ca0A2AIaJMiQwedN/XIaA5Ig2IBOKkQ0iy4BMJEyUAbgMIVozAxSANCBjkjQPLQAAq8KeYcxe27IAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "693": {
     "name": "Treasure Hunter",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAX0lEQVR4nGNgGAUEwX4Ghv8M5IJaBob/MEyW5v0MDP+/OziAaZIMqYVqRMdEG+LGwPYfhEEanu7SBtMwMZKd/x2KSfKGGwMbWAM6JtoFblDno2OiDWBACgdkTLTmoQUATZhS6wYR3AMAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "694": {
     "name": "Trap Bobber",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAUElEQVR4nGNgGAW0AR4env+xYaI1r127FismyhAPqAGVlZVwm0Fskgy4ePEiVky0AR5QW7GxiTZgLdTJ6GyiDKiE+hlEI7NJigkPcqNx6AEA5q2K9du/VAIAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "695": {
     "name": "Cork Bobber",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAARklEQVR4nGNgGAV4wVQ3sf/ImGTNd5daoGCSDJlKDQNOTzZBwWQZsK1AH06TbMA2JM1kuWBbgT7lLtiGhMmKyqnkpoOhAwCjeXEe/MgZmAAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "703": {
     "name": "Magnet",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAeklEQVR4nGNgGJTA2d7hPwijs4nWzECATVsDYCBbifc/DDOQCrKVeP/vZ2CAY5INyVbi/T/dzgiOSTbA2d7hf3tNyf+1S6aDMcn+B4FAL1+wISCagVTgjOYCsgwJpIYL2qGY5DAA2QpzPlleAGm4efMmHJMdBjCMTyEAZzp3yCw6GzEAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "709": {
     "name": "Hardwood",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAlElEQVR4nGNgGHTAjYfrf7yCIhgTI44BQAr79XX+307QhyuGiS0xlgFjkgxxg9oM00ySIUuMZcCGIGsEGQzCRLtiCRbNIAySJ1tzPz4D3HBohtEgp+PVvATN32RpjldQxDAEr2YQgGkCKYJhEJ8ozQxIBsAUwwwgSjOyAcjxDHMRQc0ggJz6YJhozciGwDIMwZQGBQCSutHDlho7VgAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "724": {
     "name": "Maple Syrup",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAvElEQVR4nGNgoDXIVuL9D8IkabIQ4PwPwiCNnzer/b99aBZphlgIcP6H0e8rdMEYJkaWK7KVeEkzwAKqeao11/9zmdpgDGLDxAlqnmrNBXb2/zkMGBhkGE5DLJBsRdYECkgYG2QwzDUYBvgaaP6/O7cSjNENgWmGyYPU4jTg9qFZeDFRBpjK8IAxjI1M4zTAQoDzf4EmK15XgORAarCGgQU0EInBeGMCZAMujThtRzcEZhAyJiohYTMIn0YAsDARRZNrSQAAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "725": {
     "name": "Oak Resin",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAkklEQVR4nGNgoCWI9BT9D8KTqrT+k23ApCotsCFkGaAWaAXWDKJJ1iylrw/WGLwuAUyD+CRpNi9y/5/9KheOQXyiDJHConnq233EGyKlrw92NrIBMAwSJ9qAYDRDYGJEGXD70Cy4BmQMEifagNuHZv03leFBoYk2IBhqGzom2gvmRe44MUlRSZZmZEPQMdGaSQEAJrzOVjgIVFYAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "726": {
     "name": "Pine Tar",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAlklEQVR4nGNgGAV4QaCX738YZiAH+Bpo/m+vKfkPoskyQE9ZBmw7iCZZo56yDNjmCh87MA0TI0pzhY/d/8VtqRgYJI7XED1lmf+3D83CqhmGQfI4DdGDGgDD6+8t/G9e5A6mkcXxGrAYagsIgzTDMEwMJI/XAF8DTbghIJsjPUXhLgCJwwIUbziAFOHCRMcELkxQM6kAADhTtO1w+gQIAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "747": {
     "name": "Rotten Plant",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA2ElEQVR4nK1TsQ0CMQx0R0VJk4qKjv8NKKgpPAATMMFPwQKMwTK/BQUDBNnKoUsc8UgQyZ/EyZ3P9kfk3yONY/7l3IcOks14zb6PQwfJl+M6X88bB9g837b5Me3fviApkSyAAIQ97zufzQ+M45J9dOWbVi7IAAaBqygYgQqWzhdbEvhCMbUQsFwmqKIvFW8uJLbvpRWKKNQuqOilAX8gUopuhjUUgIjTw5lAhTkYwHsmD91IpY2cgtl0OlTRW4VVdDOw43KvfayK6xd+X1aDqIvvoXf4zSN6AepzO2ztnErxAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "748": {
     "name": "Rotten Plant",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAwklEQVR4nN1Ruw3CMBS8LhVl+lRINFEmoEgNkgdgAk/AFCwAW7AMe2QAo7M460gUgyiJdIrf8929j4H/+uK4Scdhl34WX05tNiAYE7pXrmrwuHbF5HzY57NEzHm8ahBfY8y7YKz76giwlpX3EaoGcTZz6FGg+OMygwnYEdvWblhA96tihKYscrpvM9IN5SyzhUnokSt4Rf4llJhgEXUDF1Ok5yORlSWSqT/vwkAgwSGyc94MfHlOZKu+NOdUX+RrIoAn7i3s8i4IMnsAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "749": {
     "name": "Omni Geode",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAABSklEQVR4nI1TvUoDQRC+ynfwEWyuVbC4hQ1IFi7xFgkhSeMlRAsxQYQ0118hpLxrxGvsRBt7BR/Al7GwOkZmLrPuusfhwvDNwnzf/OxOEHQcGQmwrSvWOUy4Wixgm+dQZBn5/xKSkYBExYb8Wt7BtxCEeGehVqLc2eHNiRHgChCfH8t2ERkJEzwdajjr92GVpp5xjCMgrV6rp5J8DsaMdla0iT71sycqhvn6EvZfUkKbPIIvT2RzPXMrSFRMpsba6Z1FbIFim0Fdh4SeiIwEzcAeGGL9HpKvd6+DZLy3tjId6oZUh44IElGARbxBJiqG6qFyymefyx/0enB+cGSqdYc4X8Pe8SeJYBWjeGAysS218n+jtIaIIlxa8zIrQy7yDOA+IGz9SCxik28/3kCNJ2YvNhczQqeFtq/8+6wNme92ks5l+rvCXWv9A8/PtzSzi/nMAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "766": {
     "name": "Slime",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAXUlEQVR4nGNgGMZAT2kyCiZVc/nCaSiYeEP0UDVf//8FjIkzRA/TZmRDKDagHK8r9LBrJt4VehADYDaR7go9wgbgjxE9hBdwGUI4SvXwhwPRUYkzIZGUIilKyiQAAJXv1W9g3BwBAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "767": {
     "name": "Bat Wing",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAe0lEQVR4nGNgGFyAX+o/GOOTwyXPQECzmZ0LHGOq44cowGoA1GCQfHBMMhhjquUnbACyRqwGBENNR5FA8jdcE9aw4EfYADcEDWM1HFcgBSMZgiGGywAGLIYgBxrOMMLlX3SMXzMIoAUW1kAj6AIGtBRH0FZ8gCqG0AMAAN9/lgrPbdomAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "768": {
     "name": "Solar Essence",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAfUlEQVR4nLWSgQnAMAgEs4EzdK/ulDV+i06SWSwGBZG0FUMDEgj582O+tT8XzoOltgA8qA6BAPiqASDiTjUHcGJxMKsTpwYGE0fA21Ogw5oXZX8AyJlvtOwOgxnAQ1yTbzc9QFSUygYiRK2nfmAVonoOuBii6KAEMMgWILNuxvffY6LvNKsAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "769": {
     "name": "Void Essence",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAh0lEQVR4nGNgGLbAjoGB4T8DA0MoGh+EiQL/obgBiv+jGYhXYyiIttZ1gGn6j4Vvh9dma12H/6GKUWBc7ZQLxiA2miF4/f4f2YDLdbPBNJK38HqlAaQQZiuyIUgG4ASh2AyAGUJyGFSjGUJSGFjjjgVwLOHzBgOSImxpgSiA7leYgTj9PnAAAHnEdD7pux8jAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "771": {
     "name": "Fiber",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAtklEQVR4nJVS2w0CMQzLBJGYhiXusyvwizrMbXB7sBrIXI3ckBQRKeojseOkNSvMr5cnvIqXAB8grO1uXyQxbzJc9v0ExT3j281SYtOqBB6PcyVAY6kkH04AklExEn7AJOi7vYMqGUA47pUw7d+lMpIIUJDeT2C1igR7PZcKPHG0ERVOg/QR5Ax04tlgf6poYWBUwPNff6Alf2KpoEsLEbh8Ba0YW9HK/C/LV+A59p7llRbJVoAXe6cUbNvi2KsAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "774": {
     "name": "Wild Bait",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAsUlEQVR4nGNgoBcIEbT4D8NkaeyRtf1/S8UNTBNtSAiSxv+puXAM4uM0hElb5j8Is4YpgjHMAJjtMMOwGsAE1eg2kxOOQXyQOMzpIIzVACY0zU0HueEYZggII4cLhrOZ0DDMQJhBIDbMEJz+doNqgClGdxlWA0AAl+3IzoexGQiFPCuSJmwuwmuAG5IGomxnINEgDE3IaRyWWHB5CautMI3IyRSWaJADFa/TkV1Bao4DAImL8wyQZUk1AAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "787": {
     "name": "Battery Pack",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA1UlEQVR4nGNgoAcIl+z/LypohoJJ0hyYvOl/5rxD/ysrK8F47dq1xBkSLtn/v+uC0f///wP///9/5r/Qk03/+XcshBuE15BwyX6wrSANII0gDDIEJAZyEQjjNCAci2YQGyQGcg1IMyxcGIh1Nszm//uswZqxGhBOhLNvNFsRr5kfi7Nxal67du3/ixcvwjHIAKKdvXbtWnjUwDDIEJAL8DobBEQFzeAG+Ln7gjEssYBonDZjM0AUmkxhBoAMw6sZZgDM2cgugPGJSrLIhpCsGdkQcnIcAGhpSoHT0AHZAAAAAElFTkSuQmCC",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "797": {
     "name": "Pearl",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAlklEQVR4nGNgGL5A2yvtPwiLl0/7X3PqFBiTpLnm1Kn/h949/f/i/yswBrGJMkQbTTMyAPHxGqLtlfY/d8tWsCKYzeiG4HWJNtR2ZAPQAV5XaHulwW1A9wKMDaJBAYvVAPHyaXAD0AMROTBBFuE14BAOQ2DiOA2AGYKsGB3j1cwABcgugRkEih2iNCMbAsKwFEmSZroCAHEDM/fSmWxzAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "803": {
     "name": "Iridium Milk",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA00lEQVR4nGNgQANqamr/cWEGQkBNTe1/iK/X//KcFAwMEsdriBpUs5mZ2X8D/i4MDBLHa4iamhrYJpDiVP5rGBgkDpInyoD5/P///4/cCccgPlEGmJmZgRVhcwFIHCSP1QA1NbX/wYZN/5ENmdjZAsfImrEaogY1AGYILgySL3XdjtuAUtftYIxuEExuW8FTMCZowP8bb8H4Tf1/OBukEcQn2oBtBU8xaJJcsA2HAUSFwbn1B1BsBPHRwwdnVMIUYsM4NSMbghyl2GIFp2ZsBhGTlQHZ8Hwh+C7aTgAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "805": {
     "name": "Tree Fertilizer",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAtElEQVR4nGNgQAN8sVb/8WEGfIDXxfF/wXHV/7NeCWBgkLhRqwFuQ3ihmnEZgNcQXhdHsATMAJINYdZQQTEAWSEyRpbDaoBRqwFWzSDF6AZhGMAHVYTNZpgX8RpghMUmmBi6AVjDgA+PZhBGl8dqAB+aIphmGMZrAC+aLTADkV2ALo/hAl4kW5A1Y/MGQRcYQXGYiTkYEwxEdH/CnFzhYwfGeL1AyBXYMEgtRoYCGUIshmkCAAWvgDiTWVt4AAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "807": {
     "name": "Dinosaur Mayonnaise",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA2UlEQVR4nGNgoAVItBL9jwsTpbkzwOL/gXqD/9dnM6DQIHG8hiRaiYIVImNkQ2BsnIYkWoliaEDGP/dBaJwGyOswgJ2JrAEZg8RA8iB1OA2Q14HYAFKIjkHiIHn3IAFMA+R1GP47OkMwzCCYYTAM0ljQKfV/91pVTEPkoSbDcGy2H1gxTAMIP3+lBcdYDYjN9sMwAF3z/5+fwBgkh9cAdyTnwgyAacZqgHuQwP+8+hoMb2AzAKsX3KEGYPMGCCP7H2sgohsCw+gBCWLjTAcwQ5CjERvGqZkcAAA/QE8mUvktwQAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "808": {
     "name": "Void Ghost Pendant",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAApElEQVR4nKWTwQmAMAxF/xyZQvDmAh68OYMXwXuX6CyuqKQ0koZqqhZCm9D3800R+LiI6ODAW0AibEubAGVgnsYExRhTcO4KkAJ5H/ruciBneAIW5l3n8LpruwK79kld/i0Q8ifomguHbSm6aZGmzjHbtpZXwJ/6ULFu4R04OFzrlO2uBhCxq0aVJ/Pg4vw0Yd2tKiTd7yZsB8d5UWv5LQWqvcIJcvzVL4Gj9L4AAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "809": {
     "name": "Movie Ticket",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAjElEQVR4nKVTwQ2AMAhkDLdwKh/s5xgdwiH8nyEKQVtsFZKmKdxdgVKirDERWmsYx0TAPgMo575O2JYaKD6JeaxdxCoiAAUpUIUf8VcyB+k2RTgrIHYLOpARfWlNMkpdv8vE+wyHEpeAq3km4JvZLQElFtBMu0+IDxlwNAO9HgwN0hqfa/LfUU5/pqwdo9r8aiZL7SIAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "812": {
     "name": "Roe",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAmklEQVR4nGNgGJSgSVf//yZHp/9kaz4XlPj///8z5BniIq/1/3/FbLAhIDbIEKIM2oSkEKQRhJN1bf7/T9ck7JpkLApBXgGLz5YAy4HYOA1JRlIIUgSyHRYORLskGWoDiEYOBzgfyQKC3kiGagJhmBzMJfjDYTbEFpBiWFogOiBBANlm5DAg6HwGNAC2FS0M8DoflyEkaxoQAABdgsaYROrXmwAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "814": {
     "name": "Squid Ink",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAoklEQVR4nGNgwAO4RLX/gzA+NTgBWGPA+v/s82+QZwgXSJNJERiTZQArQ9H/3ln/d4EwiE2yARwM6+EGgNik6v8PspWFwR6MoS4g2pD/IA0gW5ExKYb8h2mAYRCf3fwG2DUENbNAnQyzGaQRhIl1xX+Yv6EKUQwkygBWpMBDN4QoAzigNiEbQkps/Ed2LkwjTDOSq/AClBhANoSktIADUx8AAOlDko1Dt29SAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "815": {
     "name": "Tea Leaves",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAtklEQVR4nLWTMQ6DMBAEqdxHSnM1JV1KmjyDB/AQap6Rx+Udjk7ySptlr8TSSYBvZ1f2MU13rNjnzlXtl+Lz++rb59nbunQnzH0LCBIzAML8lvsWENQAQQKyWMg9pXsMsbqWCULc4cr1Ph5/oAvgpIPDe4ogBsjGb+tycQeAna17Loj40NQZZa+vjdgA5LPGdnNRQsLcOeDoL5NsI6bOAsDliOs5qFDnwQIQ0YlYWP5IDqjxtfEHV305qlXIPZ8AAAAASUVORK5CYII=",
     "achievement_required": true,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "820": {
     "name": "Fossilized Skull",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAt0lEQVR4nJWT0Q2EMAxD880QLJE/trgtmOd2uCW6AaP0lwWKLGFkIClHpQhI61fXFWbB8HFoKHszXAR4b+tygxB8g/s4tLr8jgk858909FjlO4dgi3akCCAIAeMa9E5OPAFQyMI3xerY2FCyCqMC7AQoshvcEKZH0ApzKLLwGh7nCE6vsu4OWHp2BXcBdYdcg9N8QognyatInTy6qGKZsDREC1zQeuYqBWRX9yjuQSj8+y/V1HvCDVlPi/R4VCQZAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "821": {
     "name": "Fossilized Spine",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAiUlEQVR4nGNgoBcwluP6j4+PF4AUvzy59D9MEzofK0CWBLH/fzqJYgAyH6sGdBtBGnZNygCLYRhgjEMDTDFII4gPU4PMZ8CmAd1GkEJkA5D5DIRsgGkAYWQDYXwGZAF8GjICreCuQ+YzEFJAMAqNCSjAxoe5jIEYBcYE+AzEaEBPIxgJCK+CQQ8AlMgu3J6Xp3YAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "822": {
     "name": "Fossilized Tail",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAd0lEQVR4nGNgoAUwluP6D6NhbKI1Gstx/f//6SQKTZIB/z+dBONdkzLgbJIN2QXVDKJJ1vzy5FLynZ8RaAXXRJJmECDLVnwuIBkYI/mfdN0MCC9QxRUZUENITokMSGEBMgibYUQZiq4YlKBgBpKcuLAZSHYYYQMAjxiSkt0WViwAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "823": {
     "name": "Fossilized Leg",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAoklEQVR4nGNgIBIYy3H9B2Fi1WMAkOZdkzLAhpBlmLEc1/+XJ5f+///pJJgmyQBjqO0gzTBXkGz7f3JsRredrEA0hvodhG3VeHEbYIwjZEFiGYFWYFcQNOD/cj+UaIJpBmEwX4H7P9HOfYmGQS6AGYTXkAyojTBnoxuC1wBjPC4gaIAxNAxgTkV2ATwMCNmOHOLIUUdysgW5hKxUh+wSYjUDAOfZ3Khw9qHCAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "824": {
     "name": "Fossilized Ribs",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAiklEQVR4nGNgoBYwluP6D8LE8jE0//90Eq6AGD7cMGMyNCPzGUCMlyeXoigghc8AYuyalIGigBQ+AykaQDgj0AqM4eFgTIKTkQ2DW2JMpAEwW5ENA4kxEOsFmAHIbHg4ZARaoWjCx0eXIysgMQxgwBJYIJtw8fG6Aj3E8fGxugJbBjJW4MbMA9QCAGdGPuFa7UVrAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "825": {
     "name": "Snake Skull",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAApklEQVR4nM1SwQmAMBDzLbiCTxfoT+gQbtF53MEl3KCj+HWBkzsaCdKWIj4sBHN4SXOeXfer48ZeANR+GgxN4n0NcsTNnlwrYFoVyxkNEHEN06KBnFHCMhsg5Lqawo393QDONUapGuwp4isDPw0WVRufI0CsnDdUHONIHw+c0+CCrJGjTTyNWKQ8O45LL1WE2ODc3DRGSOsDzza3bKP685QMmuN+dS6qGyAmMJufFQAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "826": {
     "name": "Snake Vertebrae",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAdUlEQVR4nGNgoAYwluP6D8PoYkQb8PLk0v+7JmXADULnE+2Kl1gMygi0Is4gYzxeQTaYKG+hA5BGkEtABlFsyC5KXfKSkCuM8QQYSByvC4zxKECPFayaM3BIEuV/YwLRiNNmBjQnkp2Q0G0kKSnjMohkjaQCAC6Dn6GZ7vd0AAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "827": {
     "name": "Mummified Bat",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAqUlEQVR4nM1SwQ2AIBDj5wIuwBpu4RbMww4uwQaOwtcFMEeoKQ0a/UlCwHLt1btz7jfLz1Ph/fXdGZhiKHnf6qmEsC7d262LFEMNBonvQ7IXW5zRCCyoMfXbz1Mpx17tMdlOw4CziGHGuQRyA2wjK4QRCBwYhB0EuICwDwcjrBNILaOBWjQtKohdQb38+10XtBbDNgbpN88HyI/TmJtF7opir0f6CfvPOgFAJitKBb21NQAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "828": {
     "name": "Mummified Frog",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAn0lEQVR4nJVTwQ2AMAjsrwt0AdZwC7dwHsdxA9dxAQxNMRcCtJIQVI7jgFhKYtQqq2c416ToOg/m5+7xFwmN4mPfOoHEJRICydgdVYQjUasdqEklUcfviPsMEwgW+fgeEtjZvSUu7YKga/QcFoshGBUgUYmMzAgS1acjEMxsl2Yv4JLQSGZzqor0Chx08BSGe/BA6f0tKCNISWa/r5d/AYMZCXhsQeUpAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "829": {
     "name": "Ginger",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAgklEQVR4nGNgoBdItBL9D8JEK0xEUgxiX5ufAsZ4DUlEUoisGESvzdUkbEgikgEgDTCXwDTDaLwGrM3VRFGIbDNMjGhvrIUahs1Agq64hmQrzDvIhhJ0xVokm5H9T3JsrEUzhCLbE0kJwGukaGRAMuDni0g4JuhXqhsAMwRbfqAZAAA2qwjV8BlOhAAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "830": {
     "name": "Taro Root",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAoklEQVR4nJ2TywmAMBBEvQfBk6d0YAN7sowUYQlpLcVFVnZhWDcfFQaJOm8mH5fl40UxVNYvE8VQ87nXcq1jCIEpHdsjNjKA1QUQJKl4jJApQJJkhWl6dwoUg5tsIS6AxKwfoclCXgAytdVgIW59AjOmW4iOXUCSl7YBVtfnLqBAAla2gO7iJZkj3hEw3LrcqDx9dFv7P/3z4LlvLtgMBDUy3AhR/4feSFwBAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "832": {
     "name": "Pineapple",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA3UlEQVR4nJVQMQ7CMAz0XrUSC1OVjaUTYqqoFClv6MwHmJi78wKeg8TKX/hE0Dlx5ZY2DZZO5yS+sx2ihaguZw/M79befgIFr0/jybpQaB2f5X7RoIrO/Ggd8+194Px0P6bFCCkAIBATMkEkd5SKSnVngWkCxCzy5h8QOolYASsl10BMxo1Gsso4yebvmwAxEwPkmGLdxEQxEbV1MY4NlrOuSUZbFyxCN/DzWgaTnGjrwg92zxAx8iyTYS56lL7rd8zyBt6coFMibZI/gRJrzp5g0jmug/yvj1zCvPALGAjvt8mFbeQAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "834": {
     "name": "Mango",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAjUlEQVR4nGNgGPQgrdzwPzomSmOBIUTxzzOS/79/lobjhZfF8RtSYGj4H4T/z5LE0EzQkCxxvf9vg8ThmmEYmyEYBmShaUZ2ATZD8BrwH4sLkA3B6oUsHC5A9waIjdf/b5FcgW4IDIMCGa8Bb7G4BESDxLFqJuQKojQzYDEEhkFiIExQM7IhyJhojQMCAFtBJN9/i0EAAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "835": {
     "name": "Mango Sapling",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAABBklEQVR4nJWRLQ4CMRCFewBWFzYcYAVhBUGQIDAkONgDwAG4AI4LYDAsmjvg8CARJOBxEDA41JDX3WlKt/x0kpfubPq+mc4I8WeEcUyQ8IpeRCyYR+uaOv1gvYjSY2buTDIjTvzzgoRGZYZ4PSnMn8DGn+ak3iBo2pfqIgzcNiA8D+Eysc77hVKzWnqryjA1YA4Y0mFbC/njcqNBXdBu3lIQvlsAJLl5uxzSWJaVkKM6ngAIf7+t12W+PitKq4PUEHSCE3c1wG59LMt0n0miUwaAuBMI1TXAjMQAHLuBhiBHVxAPtWC2AZsgUBCubAKcZnv65gDZzBv5CHCt0F7nV7MJcemX8QV7fyLbCXLn2QAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "848": {
     "name": "Cinder Shard",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA9ElEQVR4nJ2SsQ3CMBBFb4aMkBYmcEPHBFGKKCkiRqDJBjBFCpoUrIDcQMsWFNni0D/7TCwFh2Dpy0X8nu8uJkqskQ5M/y5LZ+anZeyr4SrfMfcPEWA/UcvrBaZ2ElOLALG0Z7TFjZEkBSMOmlp2wAL1F+aXlUTzKbdH1qgAvUfwkoDxsTFBBAHgUHLXOhjnOtdOLGj8LWbge8ahZ0RgD+KMVhb1XULiYSTc6m9LwlOJTnykLCp3EdZV5cXkl2UCais/wVfChG+yazVIlW/CYBdhNkOQAFQY7+KrBAKFHVhIPt/d29CXOSuYZr7KXWgpOYs16w1j9UdWNuQlQAAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "851": {
     "name": "Magma Cap",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAx0lEQVR4nJ2PwQ3CMAxFLXWrSlxQTsxg7lxJL92AEXrgzBJsUDbhygA1spUvuUnVECx9fcv1f3WINoqpF1Xe7xZnoaUbxHsVyNTLnU4Cj3Qwab+Mk/UeuAmIackWx8nCXgAWgJD+CjoW4RAuKa4I7mwA/Pn5k17EEnJARKAbigCkQZXOCwAn6UcsKkwvUEcQewUgJHFFfncFoAy0J59ZlR9qfzueTfmcahVS+Hm9yHt+mP8UJAdAWD6zuQL/AkBNAP8MqCncUl+ATRZqqLBe/gAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "852": {
     "name": "Dragon Tooth",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAoElEQVR4nGNgoAdoZ0j8j4xJ1vj/xtv//z+dhGOiDGkHaZx3BKIZhOcdId4Fftqz/7+p/w/GYEOgmolytj23yX9kA7YVPAXzidIMM6DUdTtYIwwTbYA91HaYATAaJE6yAaVIhpBkQCr/NRRDQBjEJ8oQe6gBMENgBsHYBA2x5zb5P5//P4orkGmSDEhFcgXRLsBmCAwTHZAwQ9Ax0ZpJBQDDK96U8vt9ggAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "856": {
     "name": "Curiosity Lure",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAuklEQVR4nGNgIADmmUv9R8axXNz/CemBA5CG/1/0UfEpHuIMmQfTfIoHjB/UcYExjE/QkHlQA2DOhmGYISAaryGxXNxwm5D9DhMnyoAHWGwj2gAQQHY6WIBUA/C5iiTbY8kKQFOG//8fbgUHIHL04dRcEBr6H4ThBpQxgA3B5hKsmp8+fQo3IFDPGLdiQpoLQkP/L+ju/g8yhKBmmIaLFy+CDYBhEJ9oA0AKQTaCNMEw0ZqRDUHGpGgGAHUZ+RIej4VLAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "857": {
     "name": "Tiger Slime Egg",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAy0lEQVR4nM2RzQ3CMAyFM0HFERXJY3SBnBiDDThlhI7QbTgyAlyzRm5Bz4rRa9JUFSciWU4bv89/zv3tmU8ush0Wehki7H2/xLRIDNOo90MgL4MK4CFOD1FxTrcVaBfwvJ6/wQbJOb9g+O4CfMkOAEMMhCrg8YbYbu9hGjULAiGyzKjExF1AKP0bQMsvmXG3d/jd/ucycYUs0mykAXgqv4YwiGewasNT+QyBt0FaZo5tAIG2wNvY+tcMsm7DZsKzMeHmFmpQz7rCX88HnqEHAZAPxSoAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "858": {
     "name": "Qi Gem",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAnklEQVR4nGNgoAVwEJ75Hx2TpDnL+P//+moEBvGJMsQBSfOdtf///38FwSA2SAyvIQ5QzXM0ITbCbEc2CKchDmiasRoAAq+weMcBydkwzehhgO4dFEMchGf+z1GE2A5TjKwRW1iA1GO4IgdqCLI3kAMUphkkTzAc5qCFBcwVODUTCkyiNOMyBGQ70ZoZ0AzB62diDMEIbXIMIVszsQAAI0RWqMHHkHwAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "872": {
     "name": "Fairy Dust",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA1klEQVR4nK2TsQ3CMBBFMwII5I7aAzBDVqBBmQFSeQRKKibIHi7TsQclGxz6kb+5mDh2gaWT4/j+u++T3TR/G9ZJ043CpdmcJY0yYHhOSUhud3fp9z4G1usQOwcMR5HD9jGJMGMNSPEIJthF1fEkMeiirg/WSfyGK/5bHF1IUol0gYqwjqCDXxc2VFNCJmO+vUSu7nuUbC+M6jxnCC/yroOYAKAYSRBzEFQA+GmDlbW40oGfOUBFVmYzGauANoGkYuwt3socRF/prFhDdEN11D2qBFR6jR/MuGkkjre7tgAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "877": {
     "name": "Quality Bobber",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAqElEQVR4nKWRwQ2EMAwE/YAXHfBMAVeLxfuelEM7VwnN3M9ouVjai8BJxEqWEpJZr4NIp9LrY6hh3c+SXk3z25bvblCTQcodAaIAjZudJvguEeRrXAbE8WF2aZAywIfemdOEM47bbz6PzZ1xVjUY8kU34s7h7HeRPU35PqEmil6NXcqj8jicSK6kqn+v7h2b/r2qmhvwujS8hSXYV8VAN8xgGf2xWStwAHgnzifv5UbkAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "881": {
     "name": "Bone Fragment",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAQklEQVR4nGNgGAVEgUA94/8gTLbmz082kmdAIFQz0QYEQp0Kw7smZYA1g2iiDdgF1QTDRGuGAXTbBybwKI46hpEFAIusTxMxTXA3AAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "889": {
     "name": "Qi Fruit",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA+0lEQVR4nHVTMQ7CMAzMB6JKfKEDU9W5AwwdEVKRQOIbVWcmvtGBN7HwA17BYHRRr72mSSQrseM7+5zWOedcUTVGc7Jy8c0qqsbun6edX6c5GTt8xJUoS1hUjZVDN5PQVyIWYXzVZjl0trtcZ0MMuwKSXRRTBYLUBzAFTrbvfR8u0aaCtAPk0FYE3ve2P35nAHb4GuMwETvcfguJ930IwFgV5/phwTQOcDuatW9bSLwQEKQGAO8JDjbaQuAnCaqRYE1O5Tp2oAkAqZ+6W0moJ61xFcqIu6OcDUEt2uOBxfo3LxGT4Myn5DyChBis30LqRRSgMrN/Zm54OeAfGSWx8pIogy4AAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "908": {
     "name": "Magic Bait",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAzElEQVR4nGNgoAVgN7/xnyLN7DgMqPblw28wK0PR/9wP//+L9T/9j00zDGPVyMpQBNHoVwRX0MiMcAlI4/83HmCM1xAGKLDkq/5/o+P/f3RDbqxg/v//XQdu18A0n/KAaAaxQZgor8AASANMMwO5wBLNZhC4wVz1H4TJNrSaL+H//46D/3EaJG9qChHs6f8PxkgawZo9ZoA1gthYbZAHGZCY+5/h/XYUA2CGENbc0//f4/8OiGaQQSCM5gqc/gMZgIxxhQFeA1DCgV4AAK/moItZ8JyKAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "909": {
     "name": "Radioactive Ore",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAU0lEQVR4nGNgGObgP/N/MCZX80UoJt2g/8z/O6Ca///3A9MdRBvyH1nzOij2I82Ai3DNMOBHghf+YzeATC/4gQ0iLQzQDCFdMwwgRx/ZaYFhRAAAxF6Sq9R1fPMAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "910": {
     "name": "Radioactive Bar",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAjElEQVR4nLWSywnAIBBEBXtLbR4C6SRl7N2KNoxGXY2fzcGBgah5j0U0ZmvoYMO2Lvb+wMx3qGfLTi2hAgNEU/xSQhH2ncZphOS8eAjL0XUCirD7jF5/I+Eu8H8WUIEl1E6RYa3AV+OPYASL97AnmcMINsSjKRJWwBNJ6ho2fUn1fJdwK5FVw1IiuzMPJK9zyp5WpW4AAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "913": {
     "name": "Enricher",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAsUlEQVR4nGNgGLRATCD6PzImWbOy7gQUTLQhYgLR/9Xtnv7n5S1AwSAxogwRE4j+7zT7P4YBIDGiDXBo/fvf8v9NMAZpBGGSXGAb8htsCAjbl/wB84k2AARchfvBGkAaYZpBYgzEADGB6P8F5f/BAKQRhEEAJEaUC1yF+/8fC4NogAEQGyRGlCtchfv/F4rsA2sA0chsogwQE4j+7yq877+TvBMKBokRHQvYFJKVpOkCAOOjtMAS/X3OAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "915": {
     "name": "Pressure Nozzle",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAdklEQVR4nGNgGN6Al7fgv3rDUzAGsYnSpA7VANMEwk6z/4MxQUN4kRRb/r8JxjCNtiG/wRivIbwgJ9s9hWOYQQjbu4gzgBfJIJiLYLaT5AJeKJ8o58MATBPIuciGEXQ+LpcgG0i0ASAA8y+yQQzkAF5CATf0AQC0IZjdaW1HXwAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "917": {
     "name": "Qi Seasoning",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA3UlEQVR4nGNgoDaI5mD4j4zJMuBgDDMYk2WAo1sg3HYQGyaGjAkasH7vXjCGaUgubflv6eoPpnsXbMBtiCNUM7qNyJpBtDKfBqYBjm6B/8/euwfWAFMI0wTSADIEhLFqBgEdeYb/b5cGghXANCLbODE/5f+mSR34DbjXwfD/zwUGDBtBmk+e3AbGIDZWQ3TQDLAt+f3fNuQ33ACYCwgaoMyn8d9p9v//aZ//g2l1u6coriDoDWWo7SDNIBrdAJwuYIACuPOhmmEGIGOcmmEGwDQiG4BXEzZDiLaRUgAAnQ0AiNp0s3gAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "918": {
     "name": "Hyper Speed-Gro",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAArElEQVR4nKXSwQnDMAwFUK+SCUSzQKH0VMguPtcjdI6QCTJNBymBgoqM1H5HBAtq+Acr/GeDk5KtceZw3BpnvtxfnK5bLA45Pfg/ZJi+1xNkHym42RGQRD8/m9BS3KzeOgLQUnh93zwinR5AWrY0SA8gKOeteKQHrFC22CwMZC3KqYiEgAxl+Y5IGCAt1zkgsVcYpl9Z9orUhADb49vjrAEQ2f9xR3GAIdHo+gDsV8JA+BlSNAAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "919": {
     "name": "Deluxe Fertilizer",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAp0lEQVR4nGNggIJuFov/xGIGdNDNYvH/W2Tg/2/mxGEMQ7pBBrAHkm+ID5PK/81szghDiMBYDdgMMsQ88P8dNh+CGKSHJAP+XGAg0gB2TAPupTKQbsA9qCYY/v/5G5xNlAGL2OzBGNkgEBskRrQX/iBpBNEwzUQZ8AfJRmSXEG3AIqhGmAZ0PkmxcIekdAA1AJZxYGx0MRQDkA0hxnasBsAMIRbDNAEA5IzF9PdrbZYAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "920": {
     "name": "Deluxe Retaining Soil",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAuElEQVR4nGNgoAYwlS7/TypG0RwTc+G/i8UhkjDcEFPp8v+uhlv+94T9J88QA9HE//qKlXBDiMUgV6MYoK9YCRYEGUQsBullQDYg1u4pWOJY2H8wBtmErMHP5SdxBrhCMcgQZM0M2z6jGILXgGNotjMUfv5vcfcQmCbZBX5Q28EGILmC6DBgKPwM1gg3BOoKgi5wRXI+SQb0oLkA5gUYJugFbBhsSCGWWAAB5NRIckKCARCHVAzSCAAQJ/pxAJDMqgAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "928": {
     "name": "Golden Egg",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAZklEQVR4nGNgGAW0A/PMpf5vz2AHY7I0/3+oD8ckGTLPXOr/rwm6EM3/50MwKYbMA9m+lBXJABCYT6kB/0kz4BfMC0jeIN0FS6GugGKQOAOxYHsGO9gAkEtAmCTNyC6BYZI10xUAAJYhilHvgGOGAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "930": {
     "name": "???",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAXklEQVR4nGNgGAUYYKqE/X8YxsbHC6ZK2P//xcXw/7+nPxhj4+M1IFbEBK7hV00mhEbiE23ALyRbkflEGXCEzQmuCR0TFQ6xOAwhSjMuQ0jSjG4IWZoZkAwhW/PQAQAlK3hCCAOYQQAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "FarAwayStone": {
     "name": "Far Away Stone",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAkElEQVR4nGNgoCWwmJv2X9DX4z/Zmss/9P3f8XPOfz4b7/8ka97xcw7cALH4AOINsYBqRjYA5A2iDbFAM+Dh/2PEG2CBphnZAKIMsUDyO8z5JBtQDtUI0wzigzQSZYBYfMD/iJMl/2EuARkAEoNhpbocwuEghmQICJOkmSoGMKAZQrJmqhiAbAhZmpENIaQZAPLY6jJ9onbXAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "CalicoEgg": {
     "name": "Calico Egg",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAt0lEQVR4nM2RsRGDMAxF3VKm8wAUKTNDzjNoCGZJR+UVWIIZMgAde4iT48/JYBGni+50Z3O8J8ly7u8j3O5Mj57js9uzGQwK5omY15l59N8lIYPIQrDOvAw+fTfhmFuFQKry+1UI5D+z8jL4lAk8wBjBFERpVyBpWUCk3MePuCqgXLmAUVXOGYbg9AakBZAYguoD0mHXSYYu1AjV6tbqdsnV7E6Ftf8muCZBF3JugrUEIpyb4V9jA+uLImPKZFGAAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "MysteryBox": {
     "name": "Mystery Box",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAlElEQVR4nKWSwQ2AIAxFe/TkBCaO0Y24MQsHhmATd3CaGoIhLVCsSvIPLfmvvwEAflwgk4bHBdrPoxPE1NU9BH25UDQECwh6dboqDliXbThJnT4EoC9NS3wVgDdkJnUFZICYiAiqqsEKoGxiaURtSuCkvgNiWUX03wCoNXNA7v96BWSA7i88JWjNAvKUQDNzyEyt4QKJEqjWXAJHUwAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "TroutDerbyTag": {
     "name": "Golden Tag",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAuklEQVR4nJXRwQ3DIAwFUA8QqWvk3kyRAZjHB2aqOHcThuDsyjFuHWpCQPIhxP/FAQAAwHUjLZhduG5ELyDKUtMIMhAlyFDZl+80bXWBsi8HclUKj5EM8ksWSLI/RCjWMBko1+c0mAQViCakq5nKRdACqQHsRD0E3QmcqpALFD5I/bpF8o1bCSCbp2ZFasDW3xkEAHo/nqemA6FfmN9zX/cqg4fU+9ewG7xC+MBuhy3CYyo0DShiq9f4AYsAfNkgR0BaAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "DeluxeBait": {
     "name": "Deluxe Bait",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAzUlEQVR4nGNgoCaYqW7zH4bJNuB/z67//w/VYBgiHJn4X3uxOhjjNSRI1Q6sGdkQYVP1/yADMv+r/3/zP404Q/737MIwAKQRZAiIjaEhSNUOLghiH/GoQ/EGzBDhGnUIRjYkCKoBZhBII4yPEg4gQ5AwVr8fgdqMrpkoEAR1ATbNJEWxMMivUAzTDHIZOIrvTsNtiDDUb7DoghkACyOwAT27sHtPGC2qwNEFDSiiwkcYKZpAhoDZSCGNL3xQnA/3P3o0EQw4qAascUxLAAA9Us+9byCRQgAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "Moss": {
     "name": "Moss",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAoUlEQVR4nLWPMQqAMAxFOzk4ZRd0UXD2CoK36IkcPI138TaVlKZ8U1uKYCCkhbyXxJg/g9bFcTZ2cp/gxk6O9s5tZ+9r9URS8HGNUZIVUYD0VC3h+noSwWSRICzJfy9fl1TSDrOHSpK4mRa0DMPtusbJAeb+VwHBGVqShRNJaHyIwj8LS3CDACgTeZWAAGABvyWLsAEJblMNlrb5JMBtfosbdCi+msHGjRkAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "SonarBobber": {
     "name": "Sonar Bobber",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAhklEQVR4nGNgoBVQVLT4D8IuVj5gTLJmFyuf/7mxVf97Kyv+L+2fT5ohiooWYM0wV4AMIcsAF6jzYYaR5HwXJM1Ee0MRyWaY85EDk6Ahimh+B+P/FsSHhSKSAf8VFTFcQZ4LFBGGkW7Af1SDQF7AGxuKBAKRqOhUhBqCDZOUFrBhojTTHQAAkai8aLBMVaQAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "SpecificBait": {
     "name": "Bait",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAoklEQVR4nNVRsQ2AMAzrK34CdYKNATYWTmHlOh7gBS7ggSIjgkJRStWNSJGatHbs1LlfBOBDVzWhGLzvfWB8kkBN4pk5jUPYlvYk4Z1JgmiSgBgkYS+pBPCPSTzrep3ru+bbpIXuAjClpgrpmQQxifavrTgroGyIVy2ddfI3AP8CiGz2ZJHJHawRQKxoNZ87wLWH+NvkzgRb+8gGWWqKwLlxADhg9oEe2x7wAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "MysticSyrup": {
     "name": "Mystic Syrup",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAApElEQVR4nGNgGLSgUEXyLzImWfNCa86/R7IZ/v6/DcEkGVIINQBmCAiT7AoeblW480FskjRzi5T+Zai7i4rd9v4lTXPKWQgGsQ8+g2AQm6Dmg8+wGvD//3/8hnDDNCMrhGK+Wf//TvkPwWA5bN7hRjIApvgwEv4Ppcky4D+aAWC1OAPvIKohyAaBvVd3F7sBcENAzkOPQqSoxKkZ2RB8GK9mcgAApG0MN8SsVaQAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "Raisins": {
     "name": "Raisins",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAvElEQVR4nGNgGLSgzsnpLzomqMlL3hyueEuWy9//m8v/PuwIhWO8hnjJm2NoQDcExAaJ4TTgIUjRlWashoDE/7/YCKaxGuIlbw6WgBkCVgzCaC4AYQyveCH5HVkhzMkweZgFeA3YAnMF1GaQ3KTYnX//192By4MwiiFeWAyA+R8kF6TfATbkaO51uCsJGrAFqhlmO8wQWGDj9MYWNAOQNSIHNNY04YWkAOZPmEac/idkCDImKUljwwQ1kgMAlrpQydrUwCcAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "DriedFruit": {
     "name": "Dried",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA2UlEQVR4nGNgQAM2YhJ/8WF09SgApGCCozRejNMQGzGJv+vTBAgaAFKD1RAbqO0gBfgwQVdkaCnhxXjDwdoy8H+JoigY7w3ShGNksQIR/v84Ne+Favg+O/P//01VYBqmESYGYoPUYrV5L1QhDCO7ACYHYr+sykQ1xBrJ6ciaYbb+f3EVbghMHYYBe5FsQncNyBBkCzC8YW0ZiKEQOTyQDQOxQeqwGvAd6sfNGmJwg5C9BbMAxMbphc0aYhhRCAo0ZAtwxgTMZmTnwjTADMGqGdkQYjDOlEgOAADi/XgDELBXqAAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "DriedMushrooms": {
     "name": "Dried",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA0ElEQVR4nJWSQQrDIBBFPUJXIdBdlrlAKdhFr1HotuQgPUBW2fQQXqWXyLYnqFi++GFCnagDQ4zOfzpfjVFiGgcvU6vLBgTz9eg/r0tMjJsg0zj48L579zjExJiA5WwCsghwSUgQ5iBcbxUABAQoRjaJbdfH3dA3W6AHRR9s12/MowgQ/LOVavEqWtiF2CRmkRTDREIwzkKsAHCRAHkK3go3+QN8nyZI0yQQcxEQTkEFuCSgSPqBb/EELnkg+5QGqh5okFxiHbXqVdbk7mNqjR/MJUlcWP0fTQAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "StardropTea": {
     "name": "Stardrop Tea",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAtUlEQVR4nGNgoAUoZL78Hx2TpHlH538MTJQh9vIpcMXomKAh9vIp/9+sgyiaKv/7/3bV/2B8N/A/mE/QEHuoAeia/3cgDPl/EeE6ogzYDjUERMMMAKmBGYTV/29wGAISB+FW7+///7/BYUCr93e4ISBbQArhAGo7SCNOF8RIPsM0BAmDxEHyIDmQeqzh0Or9Ha4IrvkNwgCcmgm5AsQHyePUzAAFyK5ATokENaIbgo6J1kx3AADlKHHWsJbjxwAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "PrizeTicket": {
     "name": "Prize Ticket",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAmklEQVR4nJ2T0Q2AIAwFu407OAI7OEfHcAh2cQa3qSm0WhCwSPI+UO58TQTAsRCANJ7zxWKI9pxpATK8AtH2CNxNkOEAdC45KnE1QYYFPOBJEn01QQOnr3KMaNgEW3AlseMUAlS7haNE9rdgHcDnQJDehRYcK0FjBH3enjuOJV1YBSipJbeoB381IWnh/vNeTbxwr8nv2zdzdS9PLSAmilSCbwAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "GoldCoin": {
     "name": "Gold Coin",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAcklEQVR4nGNgGHRgfZrAX3RMtOYJjtJ///8P/I+OiTIkQ0sJovk2w98LfUJwDOITZUgGyACQYqgBMDYMg1xHtAFP1iFcQbQBXvLmGLYiGwCygGgDLkBtB7kEJgaSx2sAiiHIsUCsZhgAKUbHcMlRQBsAAP0Tq7dOgAFhAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "ChallengeBait": {
     "name": "Challenge Bait",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA8klEQVR4nI1RsQ2DQAykp3uliYSyQaoUQSkY4VmBhhlIQcMCGYGOBVggEjuwQzpGcHROLDn8G2LpdP/S3/nsT5KNKt1AwNYbsyCcPUUN3GkgICq8pA2L+pxo6V7MOgmEradtg9l/xDRemXWSoHsZmRMm6AyhNcaPQf+NiXvhar4D67M5f6lS4KFAG4J357fq4Gq65cR4dguz+RNV1hKwNkBniLFYcDRJlbVEfgwMUOmx4c4QBuLC1Syazg+iOzHrJHoEMZIxEjFAZ4gRkVklgQGEgKQBghQTEsDIGMMsEQP6LCaxxQYG67+Xvewt9++yUrwBFConzrdoQugAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "Carrot": {
     "name": "Carrot",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAkklEQVR4nGNgoBfQKef7D8LobKIATIP2SQEUmoFUYGIrT7ohMz1Y/4NwlAb3f5ABMEyUATM9WP//b2EA4xuJDGBD0L3FgAuUWynCNf9fD6FBBhLl13IrRbCNcM2kGjAT6nS4IaTa/h/N2SAxkjTfgNoMoknSfAPNyURrZkALdZJsRredZJuRDSBLM8wAoqMJDQAALtCpoQwBucoAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "SummerSquash": {
     "name": "Summer Squash",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAgUlEQVR4nGNgGChgIybxF4QZSAUNbtL/QRpdXVlIN6DBTfr/n/naYEyW5nMp6v//3NQGYxCfdM3ztUkzoMFN+j82zSA2VgMaoBpwasRnewMeDSgYm+02YhJ/idKMy3YbYgzA5W9kA7AaMl8bLE4w1G3QDYFqJCnJwhQjY6I0DigAAH0M6X2ei4GqAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "Broccoli": {
     "name": "Broccoli",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAvElEQVR4nL2SzQ3CMAyFfSxXzlmgp4oNWCR3JmAdBmGT7hIJvcTPcdIUcWixZDlu+r76pyKH2z2k7D6PU813LSwJfnle0/ySAtH8sUqFDIFhyQKKESm+vcUi3sF9AzRAnKoYl/ol5owAWYV9BUKhP6uYlVg10DQWFDIQ9RWMZxDbFnj2ED7PM9hrYWZ/DmJgtgYfthBKJVxhPxduZyv2puvzEPs3vgq96b69/y6WAsDwMKztwP4CUEjjZ9kHWhPPlJDD9HMAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "Powdermelon": {
     "name": "Powdermelon",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAwUlEQVR4nK1SwQ3DIAz0amySR7aI1G+W6BIdocq7Un959dstkKsDjpgEaFXF0gkb7s6ALHJaDLMv0DurccRNXq6zl+fNi64bAfuoLQ5iBsjWaEgraqArrhnRjGLUX2N8eLm/I5BTjJzoinWNYq64ctpfVDfjZmeNQpApYK40qJqMZfcsMHk24JN+MViMmHW42b8Gwr84GLg0MJdXJgWirkX39hPcFA9hQNL+Q3lDoDoT2ISBNdmZhbPuQNkpbOHM+AA4F5yB5R/pKwAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "SmokedFish": {
     "name": "Smoked",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAqklEQVR4nGNgIBJYyYr9R8YMpGpM1hf63xamBMd4DUnWFwJrgGkE4RJ3WbDGg/0J+A1JhipG1oxsAF5XJEOdCTMARIMwzBBkzTAXMmAzAGY7zABkTDAMkpH8jmzjtBQjOCYYC1ZQ52PTTDAGrNBsR9ZMtO1teGwGGY5VkxUUg5yOTSNMDsMAK1kxFMUwv6MnW5i38LqgBEkzNu9h1YzNNSRlFqoaADOEFA0AXNbrnvLkVyIAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "GoldenMysteryBox": {
     "name": "Golden Mystery Box",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAsElEQVR4nJWRyxGAIAxEacISrMCbFuCFPiyFIuyDOyVY0Tr8JMSAyMwOQ2BfEqIUWe5YMCLqeZa/wLUBIPLnM+0k9oKYfY0P82Mqy6BJFcR4AM+OZJaAJwPoeYrZOUCCSm3oeQqBVwtS+VcDYPa1QFqyHwCTISGzKrJ/AVDV3PN5GOCYPOAZ9R8AwmSimX/yGADFXAHsFuLDLTgKSB9aAfgouxVI5h6EV9A0U0hP3HADxo0Qc4HquAMAAAAASUVORK5CYII=",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "ButterflyPowder": {
     "name": "Butterfly Powder",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAApUlEQVR4nGNgoAXg0Jz6Hx2TpJkh9wEGJtoQDpDCzcdQbYfySXPB5mMITKwLOJBtDX4KMSj4KXFhwYGsqf8GJkYyDL/TH375P///fzBGZ+P0CgfM9v4bCMVQzShskEuwuYIDZjuaAQzbsBiAzRUcSAaANMENgRoA5m8j0oD5hLyA04BgRBhgC0TCYQCLQmT/wzBMDF9Uwg2BGYSOoXIEExMhjK4JAKdBdU/dpeBOAAAAAElFTkSuQmCC",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "PetLicense": {
     "name": "Pet License",
     "image": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAmklEQVR4nGNgQAIZWkp/icXI+sAAJDjBUfrv+jQBghikDsOQDCwG/J9t/R+GSTJggqM0WDOyBnQ+QQMmILkGGx/dgDhKwyCOYgPstXTAfrzULUIQg9SB1GMYMMFRGiwR6OD0H0TjYsPUYTUgwdf/Pz4MMgSvAfZINv2/zvAXG5ugAQm+/nBnY2PTzwv25AQisRjDAJghxGKYTgCH6opN2Lr1PQAAAABJRU5ErkJggg==",
     "achievement_required": false,
-    "is_polyculture": false
+    "is_polyculture": false,
+    "is_monoculture": false
   },
   "433": {
     "id": 433,
     "name": "Coffee Bean",
     "category": "Crop",
     "icon": "Coffee_Bean.png",
-    "is_polyculture": true
+    "is_polyculture": true,
+    "is_monoculture": true
   }
 }

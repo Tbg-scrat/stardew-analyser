@@ -385,7 +385,7 @@
                 </div>
             </div>
 
-                       <!-- ACHIEVEMENTS MODULE PANE -->
+            <!-- ACHIEVEMENTS MODULE PANE -->
             <div class="module-pane" id="module-{{ farm.farm_id }}-achievements">
                 <div class="radar-controls">
                     <div class="filter-group">
@@ -410,6 +410,12 @@
                         <div class="item-info">
                             <div class="item-name">{{ item.name }}</div>
                             <div class="item-meta">{{ item.description }}</div>
+                            
+                            {% if item.progress_current is defined and item.target is defined and item.target > 1 %}
+                            <div class="item-progress" style="font-size: 0.85rem; font-weight: bold; margin-top: 4px; color: #d0d0d0;">
+                                Progress: {{ item.progress_current }} / {{ item.target }}
+                            </div>
+                            {% endif %}
                             
                             {% if not item.unlocked %}
                                 {% if item.tip %}
@@ -437,6 +443,7 @@
                     {% endfor %}
                 </div>
             </div>
+
 
             
 
