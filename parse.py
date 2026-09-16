@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import time
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 
@@ -188,7 +189,12 @@ def generate_dashboard_html(all_saves_data):
         data["farm_name"] = data.get("farm", "Farm")
         farms_context.append(data)
 
-    rendered_html = template.render(farms=farms_context)
+    # Generate unix timestamp for auto-reload detection
+    build_time = int(time.time())
+
+    rendered_html = template.render(
+        farms=farms_context, build_timestamp=build_time  # <-- ADD THIS PARAMETER
+    )
 
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(rendered_html)

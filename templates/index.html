@@ -677,6 +677,33 @@
             });
         }
     </script>
+        <!-- Automatic Reload on Save Update -->
+    <script>
+        (function() {
+            const currentBuildTime = "{{ build_timestamp }}";
+            const CHECK_INTERVAL_MS = 3000;
+
+            setInterval(async () => {
+                try {
+                    const cacheBusterUrl = window.location.pathname + '?_t=' + Date.now();
+                    const response = await fetch(cacheBusterUrl, {
+                        cache: 'no-store',
+                        headers: { 'Cache-Control': 'no-cache, no-store' }
+                    });
+                    
+                    const text = await response.text();
+                    const match = text.match(/const currentBuildTime = "(\d+)";/);
+                    
+                    if (match && match[1] && match[1] !== currentBuildTime) {
+                        console.log("[WATCHDOG] Save update detected. Reloading page...");
+                        window.location.reload();
+                    }
+                } catch (err) {
+                    // Ignore transient fetch errors during script rebuilds
+                }
+            }, CHECK_INTERVAL_MS);
+        })();
+    </script>
 
 
 

@@ -14,8 +14,10 @@ RUN echo 'server { \
     location / { \
         root /app; \
         index index.html; \
+        add_header Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0"; \
     } \
 }' > /etc/nginx/sites-available/default
+
 
 EXPOSE 80
 
