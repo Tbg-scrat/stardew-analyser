@@ -1,0 +1,364 @@
+{
+  "upgrades": [
+    {
+      "current_id": "(T)Axe",
+      "current_name": "Axe",
+      "upgrade_level": 0,
+      "next_id": "(T)CopperAxe",
+      "next_name": "Copper Axe",
+      "requirements": {
+        "gold": 2000,
+        "materials": [
+          {
+            "item_id": "334",
+            "qualified_id": "(O)334",
+            "name": "Copper Bar",
+            "amount": 5
+          }
+        ]
+      }
+    },
+    {
+      "current_id": "(T)CopperAxe",
+      "current_name": "Copper Axe",
+      "upgrade_level": 1,
+      "next_id": "(T)SteelAxe",
+      "next_name": "Steel Axe",
+      "requirements": {
+        "gold": 5000,
+        "materials": [
+          {
+            "item_id": "335",
+            "qualified_id": "(O)335",
+            "name": "Iron Bar",
+            "amount": 5
+          }
+        ]
+      }
+    },
+    {
+      "current_id": "(T)SteelAxe",
+      "current_name": "Steel Axe",
+      "upgrade_level": 2,
+      "next_id": "(T)GoldAxe",
+      "next_name": "Gold Axe",
+      "requirements": {
+        "gold": 10000,
+        "materials": [
+          {
+            "item_id": "336",
+            "qualified_id": "(O)336",
+            "name": "Gold Bar",
+            "amount": 5
+          }
+        ]
+      }
+    },
+    {
+      "current_id": "(T)GoldAxe",
+      "current_name": "Gold Axe",
+      "upgrade_level": 3,
+      "next_id": "(T)IridiumAxe",
+      "next_name": "Iridium Axe",
+      "requirements": {
+        "gold": 25000,
+        "materials": [
+          {
+            "item_id": "337",
+            "qualified_id": "(O)337",
+            "name": "Iridium Bar",
+            "amount": 5
+          }
+        ]
+      }
+    },
+    {
+      "current_id": "(T)Pickaxe",
+      "current_name": "Pickaxe",
+      "upgrade_level": 0,
+      "next_id": "(T)CopperPickaxe",
+      "next_name": "Copper Pickaxe",
+      "requirements": {
+        "gold": 2000,
+        "materials": [
+          {
+            "item_id": "334",
+            "qualified_id": "(O)334",
+            "name": "Copper Bar",
+            "amount": 5
+          }
+        ]
+      }
+    },
+    {
+      "current_id": "(T)CopperPickaxe",
+      "current_name": "Copper Pickaxe",
+      "upgrade_level": 1,
+      "next_id": "(T)SteelPickaxe",
+      "next_name": "Steel Pickaxe",
+      "requirements": {
+        "gold": 5000,
+        "materials": [
+          {
+            "item_id": "335",
+            "qualified_id": "(O)335",
+            "name": "Iron Bar",
+            "amount": 5
+          }
+        ]
+      }
+    },
+    {
+      "current_id": "(T)SteelPickaxe",
+      "current_name": "Steel Pickaxe",
+      "upgrade_level": 2,
+      "next_id": "(T)GoldPickaxe",
+      "next_name": "Gold Pickaxe",
+      "requirements": {
+        "gold": 10000,
+        "materials": [
+          {
+            "item_id": "336",
+            "qualified_id": "(O)336",
+            "name": "Gold Bar",
+            "amount": 5
+          }
+        ]
+      }
+    },
+    {
+      "current_id": "(T)GoldPickaxe",
+      "current_name": "Gold Pickaxe",
+      "upgrade_level": 3,
+      "next_id": "(T)IridiumPickaxe",
+      "next_name": "Iridium Pickaxe",
+      "requirements": {
+        "gold": 25000,
+        "materials": [
+          {
+            "item_id": "337",
+            "qualified_id": "(O)337",
+            "name": "Iridium Bar",
+            "amount": 5
+          }
+        ]
+      }
+    },
+    {
+      "current_id": "(T)Hoe",
+      "current_name": "Hoe",
+      "upgrade_level": 0,
+      "next_id": "(T)CopperHoe",
+      "next_name": "Copper Hoe",
+      "requirements": {
+        "gold": 2000,
+        "materials": [
+          {
+            "item_id": "334",
+            "qualified_id": "(O)334",
+            "name": "Copper Bar",
+            "amount": 5
+          }
+        ]
+      }
+    },
+    {
+      "current_id": "(T)CopperHoe",
+      "current_name": "Copper Hoe",
+      "upgrade_level": 1,
+      "next_id": "(T)SteelHoe",
+      "next_name": "Steel Hoe",
+      "requirements": {
+        "gold": 5000,
+        "materials": [
+          {
+            "item_id": "335",
+            "qualified_id": "(O)335",
+            "name": "Iron Bar",
+            "amount": 5
+          }
+        ]
+      }
+    },
+    {
+      "current_id": "(T)SteelHoe",
+      "current_name": "Steel Hoe",
+      "upgrade_level": 2,
+      "next_id": "(T)GoldHoe",
+      "next_name": "Gold Hoe",
+      "requirements": {
+        "gold": 10000,
+        "materials": [
+          {
+            "item_id": "336",
+            "qualified_id": "(O)336",
+            "name": "Gold Bar",
+            "amount": 5
+          }
+        ]
+      }
+    },
+    {
+      "current_id": "(T)GoldHoe",
+      "current_name": "Gold Hoe",
+      "upgrade_level": 3,
+      "next_id": "(T)IridiumHoe",
+      "next_name": "Iridium Hoe",
+      "requirements": {
+        "gold": 25000,
+        "materials": [
+          {
+            "item_id": "337",
+            "qualified_id": "(O)337",
+            "name": "Iridium Bar",
+            "amount": 5
+          }
+        ]
+      }
+    },
+    {
+      "current_id": "(T)WateringCan",
+      "current_name": "Watering Can",
+      "upgrade_level": 0,
+      "next_id": "(T)CopperWateringCan",
+      "next_name": "Copper Watering Can",
+      "requirements": {
+        "gold": 2000,
+        "materials": [
+          {
+            "item_id": "334",
+            "qualified_id": "(O)334",
+            "name": "Copper Bar",
+            "amount": 5
+          }
+        ]
+      }
+    },
+    {
+      "current_id": "(T)CopperWateringCan",
+      "current_name": "Copper Watering Can",
+      "upgrade_level": 1,
+      "next_id": "(T)SteelWateringCan",
+      "next_name": "Steel Watering Can",
+      "requirements": {
+        "gold": 5000,
+        "materials": [
+          {
+            "item_id": "335",
+            "qualified_id": "(O)335",
+            "name": "Iron Bar",
+            "amount": 5
+          }
+        ]
+      }
+    },
+    {
+      "current_id": "(T)SteelWateringCan",
+      "current_name": "Steel Watering Can",
+      "upgrade_level": 2,
+      "next_id": "(T)GoldWateringCan",
+      "next_name": "Gold Watering Can",
+      "requirements": {
+        "gold": 10000,
+        "materials": [
+          {
+            "item_id": "336",
+            "qualified_id": "(O)336",
+            "name": "Gold Bar",
+            "amount": 5
+          }
+        ]
+      }
+    },
+    {
+      "current_id": "(T)GoldWateringCan",
+      "current_name": "Gold Watering Can",
+      "upgrade_level": 3,
+      "next_id": "(T)IridiumWateringCan",
+      "next_name": "Iridium Watering Can",
+      "requirements": {
+        "gold": 25000,
+        "materials": [
+          {
+            "item_id": "337",
+            "qualified_id": "(O)337",
+            "name": "Iridium Bar",
+            "amount": 5
+          }
+        ]
+      }
+    },
+    {
+      "current_id": "(T)TrashCan",
+      "current_name": "Trash Can",
+      "upgrade_level": 0,
+      "next_id": "(T)CopperTrashCan",
+      "next_name": "Copper Trash Can",
+      "requirements": {
+        "gold": 1000,
+        "materials": [
+          {
+            "item_id": "334",
+            "qualified_id": "(O)334",
+            "name": "Copper Bar",
+            "amount": 5
+          }
+        ]
+      }
+    },
+    {
+      "current_id": "(T)CopperTrashCan",
+      "current_name": "Copper Trash Can",
+      "upgrade_level": 1,
+      "next_id": "(T)SteelTrashCan",
+      "next_name": "Steel Trash Can",
+      "requirements": {
+        "gold": 2500,
+        "materials": [
+          {
+            "item_id": "335",
+            "qualified_id": "(O)335",
+            "name": "Iron Bar",
+            "amount": 5
+          }
+        ]
+      }
+    },
+    {
+      "current_id": "(T)SteelTrashCan",
+      "current_name": "Steel Trash Can",
+      "upgrade_level": 2,
+      "next_id": "(T)GoldTrashCan",
+      "next_name": "Gold Trash Can",
+      "requirements": {
+        "gold": 5000,
+        "materials": [
+          {
+            "item_id": "336",
+            "qualified_id": "(O)336",
+            "name": "Gold Bar",
+            "amount": 5
+          }
+        ]
+      }
+    },
+    {
+      "current_id": "(T)GoldTrashCan",
+      "current_name": "Gold Trash Can",
+      "upgrade_level": 3,
+      "next_id": "(T)IridiumTrashCan",
+      "next_name": "Iridium Trash Can",
+      "requirements": {
+        "gold": 12500,
+        "materials": [
+          {
+            "item_id": "337",
+            "qualified_id": "(O)337",
+            "name": "Iridium Bar",
+            "amount": 5
+          }
+        ]
+      }
+    }
+  ]
+}
