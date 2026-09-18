@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+
+from parsers.chests import parse_chests
+from src.modules.chests_processor import process_chest_data
+
+
 import os
 import time
 from pathlib import Path
@@ -174,7 +179,22 @@ def analyze_save(file_path, object_map):
     # Social remains standard
     data["friendships"] = parse_social(player)
     data["daily_intel"] = None
+   
+    # Raw XML extraction -> Module processing
+    raw_chests = parse_chests(root)
+    chest_summary = process_chest_data(raw_chests)
 
+    print(f"[DEBUG parse.py] Material types aggregated: {len(chest_summary['material_totals'])}")
+
+    # Build context dictionary
+    context = {
+        # ... your existing context fields (e.g. player, achievements) ...
+        "chests": chest_summary,
+    }
+
+
+    
+    
     return data
 
 
