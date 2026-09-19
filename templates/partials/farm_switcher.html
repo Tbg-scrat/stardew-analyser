@@ -1,0 +1,218 @@
+<style>
+    /* Collapsible Farm Switcher Bar */
+    .farm-switcher-section {
+        margin-bottom: 1.25rem;
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    }
+    
+    .farm-switcher-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        user-select: none;
+        gap: 0.75rem;
+    }
+
+    .active-farm-summary-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #ffffff;
+        flex-wrap: wrap;
+    }
+
+    .active-farm-summary-chip .farmer-meta {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    .active-farm-summary-chip .gold-meta {
+        color: var(--color-gold);
+        font-weight: 600;
+        font-size: 0.8rem;
+    }
+
+    .switcher-toggle-btn {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-color);
+        color: var(--text-secondary);
+        padding: 0.35rem 0.75rem;
+        border-radius: 6px;
+        font-size: 0.775rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        white-space: nowrap;
+    }
+
+    .switcher-toggle-btn:hover {
+        background: var(--bg-card-hover);
+        color: #ffffff;
+        border-color: var(--accent-blue);
+    }
+
+    /* Collapsible Grid for Compact Farm Selector Cards */
+    .farm-tabs-collapsible {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 0.6rem;
+        margin-top: 0.75rem;
+        padding-top: 0.75rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .farm-tabs-collapsible.collapsed {
+        display: none;
+    }
+
+    /* Compact Selector Pills */
+    .farm-pill-card {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 0.5rem 0.75rem;
+        cursor: pointer;
+        text-align: left;
+        transition: all 0.15s ease;
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+    }
+
+    .farm-pill-card:hover {
+        background: var(--bg-card-hover);
+        border-color: var(--accent-blue);
+    }
+
+    .farm-pill-card.active {
+        background: #19233c;
+        border-color: var(--accent-blue);
+        box-shadow: 0 0 0 1px var(--accent-blue);
+    }
+
+    .pill-top-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 700;
+        font-size: 0.875rem;
+        color: #ffffff;
+    }
+
+    .pill-bottom-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+    }
+
+    .pill-money {
+        color: var(--color-gold);
+        font-weight: 600;
+    }
+</style>
+
+{% if farms %}
+<section class="farm-switcher-section">
+    <div class="farm-switcher-header" onclick="toggleFarmSwitcher()">
+        <div class="active-farm-summary-chip" id="active-farm-summary">
+            🚜 <b>{{ farms[0].farm_name }} Farm</b> 
+            <span class="farmer-meta">({{ farms[0].farmer_name }})</span> 
+            <span class="gold-meta">G: {{ "{:,}".format(farms[0].money) }} g</span>
+        </div>
+        <button class="switcher-toggle-btn" type="button">
+            <span>Switch Farm ({{ farms|length }})</span>
+            <span id="switcher-arrow-icon">▾</span>
+        </button>
+    </div>
+
+    <div class="farm-tabs-collapsible collapsed" id="farm-tabs-grid-collapsible">
+        {% for farm in farms %}
+        <button class="farm-pill-card {% if loop.first %}active{% endif %}"
+                data-farm-id="{{ farm.farm_id }}"
+                data-farm-name="{{ farm.farm_name }}"
+                data-farmer-name="{{ farm.farmer_name }}"
+                data-farm-money="{{ "{:,}".format(farm.money) }}"
+                id="tab-btn-{{ farm.farm_id }}"
+                onclick="switchFarm('{{ farm.farm_id }}')">
+            <div class="pill-top-row">
+                <span>{{ farm.farm_name }} Farm</span>
+                <span class="pill-money">{{ "{:,}".format(farm.money) }}g</span>
+            </div>
+            <div class="pill-bottom-row">
+                <span>Farmer: {{ farm.farmer_name }}</span>
+            </div>
+        </button>
+        {% endfor %}
+    </div>
+</section>
+
+<script>
+    function toggleFarmSwitcher() {
+        const grid = document.getElementById('farm-tabs-grid-collapsible');
+        const icon = document.getElementById('switcher-arrow-icon');
+        if (!grid) return;
+
+        const isCollapsed = grid.classList.toggle('collapsed');
+        if (icon) {
+            icon.textContent = isCollapsed ? '▾' : '▴';
+        }
+        localStorage.setItem('stardew_switcher_collapsed', isCollapsed ? 'true' : 'false');
+    }
+
+    function switchFarm(farmId) {
+        document.querySelectorAll('.farm-pill-card').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.farm-pane').forEach(pane => pane.classList.remove('active'));
+
+        const activeBtn = document.getElementById('tab-btn-' + farmId);
+        const activePane = document.getElementById('farm-pane-' + farmId);
+
+        if (activeBtn) activeBtn.classList.add('active');
+        if (activePane) activePane.classList.add('active');
+
+        // Update active farm summary chip in header
+        if (activeBtn) {
+            const farmName = activeBtn.getAttribute('data-farm-name') || '';
+            const farmerName = activeBtn.getAttribute('data-farmer-name') || '';
+            const farmMoney = activeBtn.getAttribute('data-farm-money') || '';
+
+            const summaryLabel = document.getElementById('active-farm-summary');
+            if (summaryLabel) {
+                summaryLabel.innerHTML = `🚜 <b>${farmName} Farm</b> <span class="farmer-meta">(${farmerName})</span> <span class="gold-meta">G: ${farmMoney} g</span>`;
+            }
+        }
+
+        // Save active farm selection in localStorage
+        localStorage.setItem('stardew_active_farm_id', farmId);
+    }
+
+    // Restore state from localStorage on page render
+    (function restoreSwitcherState() {
+        const savedCollapsed = localStorage.getItem('stardew_switcher_collapsed');
+        const grid = document.getElementById('farm-tabs-grid-collapsible');
+        const icon = document.getElementById('switcher-arrow-icon');
+
+        if (savedCollapsed === 'false' && grid) {
+            grid.classList.remove('collapsed');
+            if (icon) icon.textContent = '▴';
+        }
+
+        const savedFarmId = localStorage.getItem('stardew_active_farm_id');
+        if (savedFarmId && document.getElementById('farm-pane-' + savedFarmId)) {
+            switchFarm(savedFarmId);
+        }
+    })();
+</script>
+{% endif %}

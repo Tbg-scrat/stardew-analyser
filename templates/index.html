@@ -31,18 +31,7 @@
         .logo-icon { font-size: 2.2rem; }
         h1 { font-size: 1.75rem; font-weight: 700; color: #ffffff; }
         .header-subtitle { font-size: 0.85rem; color: var(--text-secondary); }
-        .sync-badge { display: inline-flex; align-items: center; gap: 0.45rem; background: var(--bg-surface); padding: 0.35rem 0.85rem; border-radius: 9999px; font-size: 0.775rem; color: var(--text-secondary); border: 1px solid var(--border-color); cursor: pointer; }
-        .sync-pulse { width: 8px; height: 8px; background-color: #10b981; border-radius: 50%; box-shadow: 0 0 8px #10b981; }
-        .farm-switcher-section { margin-bottom: 1.5rem; }
-        .farm-switcher-label { display: flex; justify-content: space-between; margin-bottom: 0.65rem; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); }
-        .farm-tabs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.85rem; }
-        .farm-tab-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1rem 1.15rem; cursor: pointer; text-align: left; transition: all 0.2s; display: flex; flex-direction: column; gap: 0.4rem; }
-        .farm-tab-card:hover { background: var(--bg-card-hover); }
-        .farm-tab-card.active { background: #19233c; border-color: var(--accent-blue); box-shadow: 0 0 0 1px var(--accent-blue), 0 8px 24px rgba(56, 189, 248, 0.15); }
-        .tab-farm-name { font-size: 1.1rem; font-weight: 700; color: #ffffff; }
-        .tab-farmer-name { font-size: 0.85rem; color: var(--text-secondary); }
-        .tab-details-row { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.2rem; padding-top: 0.4rem; border-top: 1px solid rgba(255, 255, 255, 0.06); }
-        .tab-money { color: var(--color-gold); font-weight: 600; }
+
         .farm-pane { display: none; }
         .farm-pane.active { display: block; }
 
@@ -54,7 +43,6 @@
         .stat-box { display: flex; flex-direction: column; justify-content: flex-start; }
         .stat-label { font-size: 0.725rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 0.2rem; }
         .stat-value { font-size: 1.1rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 0.35rem; }
-        .stat-value.gold { color: var(--color-gold); }
         .subtext-detail { font-size: 0.775rem; font-weight: 500; color: var(--text-secondary); margin-top: 0.2rem; }
 
         .bday-portrait-mini { width: 22px; height: 22px; object-fit: contain; image-rendering: pixelated; vertical-align: middle; }
@@ -84,9 +72,6 @@
         .item-card.status-not_shipped,
         .item-card.status-not_caught,
         .item-card.status-not_found { opacity: 0.45; filter: grayscale(70%); }
-        .item-card.status-not_shipped:hover,
-        .item-card.status-not_caught:hover,
-        .item-card.status-not_found:hover { opacity: 0.75; filter: grayscale(20%); }
 
         .item-sprite-box { width: 44px; height: 44px; min-width: 44px; background: var(--bg-subtle); border: 1px solid var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
         .item-sprite { width: 32px; height: 32px; object-fit: contain; image-rendering: pixelated; }
@@ -98,7 +83,7 @@
         .status-badge.locked { background: rgba(100, 116, 139, 0.2); color: var(--text-muted); border: 1px solid var(--border-color); }
 
         .villager-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 0.85rem; }
-        .villager-card { background: var(--bg-subtle); border: 1px solid var(--border-color); border-radius: 99px; padding: 0.95rem 1.1rem; display: flex; flex-direction: column; gap: 0.55rem; }
+        .villager-card { background: var(--bg-subtle); border: 1px solid var(--border-color); border-radius: 12px; padding: 0.95rem 1.1rem; display: flex; flex-direction: column; gap: 0.55rem; }
         .v-header-layout { display: flex; align-items: center; gap: 0.75rem; }
         .v-portrait-box { width: 42px; height: 42px; min-width: 42px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .v-portrait-img { width: 38px; height: 38px; object-fit: contain; image-rendering: pixelated; }
@@ -136,31 +121,14 @@
                 </div>
             </div>
         </header>
+
+        <!-- Farm Switcher Partial -->
+        {% include 'partials/farm_switcher.html' %}
+
         {% if farms %}
-        <section class="farm-switcher-section">
-            <div class="farm-switcher-label">
-                <span>Select Active Farm</span>
-                <span>{{ farms|length }} Farm{{ 's' if farms|length > 1 else '' }} Detected</span>
-            </div>
-            <div class="farm-tabs-grid">
-                {% for farm in farms %}
-                <button class="farm-tab-card {% if loop.first %}active{% endif %}"
-                        data-farm-id="{{ farm.farm_id }}"
-                        id="tab-btn-{{ farm.farm_id }}"
-                        onclick="switchFarm('{{ farm.farm_id }}')">
-                    <div class="tab-farm-name">{{ farm.farm_name }} Farm</div>
-                    <div class="tab-farmer-name">Farmer: {{ farm.farmer_name }}</div>
-                    <div class="tab-details-row">
-                        <span class="tab-money">G: {{ "{:,}".format(farm.money) }} g</span>
-                    </div>
-                </button>
-                {% endfor %}
-            </div>
-        </section>
         {% for farm in farms %}
         <div class="farm-pane {% if loop.first %}active{% endif %}" id="farm-pane-{{ farm.farm_id }}">
-        
-                   <div class="overview-cards-container">
+            <div class="overview-cards-container">
                 <div class="overview-card">
                     <div class="overview-card-title">📅 Today's Conditions</div>
                     <div class="stats-subgrid-2">
@@ -233,8 +201,7 @@
                     </div>
                 </div>
             </div>
-
-            <div class="module-nav-bar">
+                        <div class="module-nav-bar">
                 <button class="module-nav-btn active" data-module="shipping" onclick="switchModule('{{ farm.farm_id }}', 'shipping')">📦 Shipping <span class="module-badge">{{ farm.shipped_items|selectattr('is_unlocked')|list|length }}/{{ farm.shipped_items|length }}</span></button>
                 <button class="module-nav-btn" data-module="fishing" onclick="switchModule('{{ farm.farm_id }}', 'fishing')">🎣 Fishing <span class="module-badge">{{ farm.fish_caught|selectattr('is_unlocked')|list|length }}/{{ farm.fish_caught|length }}</span></button>
                 <button class="module-nav-btn" data-module="museum" onclick="switchModule('{{ farm.farm_id }}', 'museum')">🏛️ Museum <span class="module-badge">{{ farm.museum_pieces|selectattr('is_unlocked')|list|length }}/{{ farm.museum_pieces|length }}</span></button>
@@ -378,8 +345,7 @@
                     {% endfor %}
                 </div>
             </div>
-
-            <div class="module-pane" id="module-{{ farm.farm_id }}-achievements">
+                        <div class="module-pane" id="module-{{ farm.farm_id }}-achievements">
                 <div class="radar-controls">
                     <div class="filter-group">
                         <button class="filter-btn active" onclick="setCatalogFilter(this, 'all')">All</button>
@@ -436,7 +402,8 @@
                     {% endfor %}
                 </div>
             </div>
-                        <div class="module-pane" id="module-{{ farm.farm_id }}-social">
+
+            <div class="module-pane" id="module-{{ farm.farm_id }}-social">
                 <div class="radar-controls">
                     <div class="filter-group">
                         <button class="filter-btn active" onclick="setCatalogFilter(this, 'all')">All</button>
@@ -521,17 +488,6 @@
     </div>
 
     <script>
-        function switchFarm(farmId) {
-            document.querySelectorAll('.farm-tab-card').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.farm-pane').forEach(pane => pane.classList.remove('active'));
-
-            const activeBtn = document.getElementById('tab-btn-' + farmId);
-            const activePane = document.getElementById('farm-pane-' + farmId);
-
-            if (activeBtn) activeBtn.classList.add('active');
-            if (activePane) activePane.classList.add('active');
-        }
-
         function switchModule(farmId, moduleName) {
             const farmPane = document.getElementById('farm-pane-' + farmId);
             if (!farmPane) return;

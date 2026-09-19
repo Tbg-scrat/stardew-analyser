@@ -2,6 +2,8 @@ FROM python:3.11-slim
 
 RUN apt-get update && apt-get install -y nginx && rm -rf /var/lib/apt/lists/*
 
+ENV PYTHONUNBUFFERED=1
+
 WORKDIR /app
 
 RUN pip install --no-cache-dir jinja2 watchdog
