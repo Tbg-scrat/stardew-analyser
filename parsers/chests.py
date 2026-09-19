@@ -79,7 +79,7 @@ def parse_chests(root):
                 "location": loc_name,
                 "chest_name": name or "Chest",
                 "item_count": len(chest_items),
-                "items": chest_items
+                "chest_items": chest_items
             })
 
     return {

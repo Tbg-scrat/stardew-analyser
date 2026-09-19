@@ -1,0 +1,31 @@
+<section class="chests-section">
+    <h2>Chests Inventory</h2>
+
+    {% if farm.chests and farm.chests.chests %}
+        <div class="locations-grid">
+            {% for chest in farm.chests.chests %}
+                <div class="chest-card">
+                    <div class="chest-header">
+                        <span class="chest-title">{{ chest.chest_name }}</span>
+                        <span class="chest-location">{{ chest.location }}</span>
+                    </div>
+
+                    {% if chest.chest_items %}
+                        <ul class="chest-items-list">
+                            {% for item in chest.chest_items %}
+                                <li class="item-row">
+                                    <span class="item-name">{{ item.name }}</span>
+                                    <span class="item-stack">x{{ item.stack }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="empty-chest">Chest is empty</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="no-chests">No chests found in this save file.</p>
+    {% endif %}
+</section>

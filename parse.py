@@ -186,15 +186,9 @@ def analyze_save(file_path, object_map):
 
     print(f"[DEBUG parse.py] Material types aggregated: {len(chest_summary['material_totals'])}")
 
-    # Build context dictionary
-    context = {
-        # ... your existing context fields (e.g. player, achievements) ...
-        "chests": chest_summary,
-    }
+    # Attach chest data directly to the save data dictionary
+    data["chests"] = chest_summary
 
-
-    
-    
     return data
 
 

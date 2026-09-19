@@ -241,6 +241,7 @@
                 <button class="module-nav-btn" data-module="cooking" onclick="switchModule('{{ farm.farm_id }}', 'cooking')">🍳 Cooking <span class="module-badge">{{ farm.recipes_cooked|selectattr('is_unlocked')|list|length }}/{{ farm.recipes_cooked|length }}</span></button>
                 <button class="module-nav-btn" data-module="achievements" onclick="switchModule('{{ farm.farm_id }}', 'achievements')">🏆 Achievements <span class="module-badge">{{ farm.achievements.unlocked_count }}/{{ farm.achievements.total }}</span></button>
                 <button class="module-nav-btn" data-module="social" onclick="switchModule('{{ farm.farm_id }}', 'social')">👥 Social <span class="module-badge">{{ farm.friendships|length }}</span></button>
+                <button class="module-nav-btn" data-module="chests" onclick="switchModule('{{ farm.farm_id }}', 'chests')">🧰 Chests <span class="module-badge">{{ farm.chests.total_chests if farm.chests else 0 }}</span></button>
             </div>
 
 
@@ -513,6 +514,13 @@
                     {% endfor %}
                 </div>
             </div>
+            
+                        <!-- CHESTS MODULE PANE -->
+            <div class="module-pane" id="module-{{ farm.farm_id }}-chests">
+                {% include 'partials/chests.html' %}
+            </div>
+
+            
 
 
 
