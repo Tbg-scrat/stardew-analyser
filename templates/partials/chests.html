@@ -1,27 +1,48 @@
 <section class="chests-section">
-    <h2>Chests Inventory</h2>
+    <div class="chests-header-summary">
+        <h2>Chests Inventory</h2>
+        <span class="chests-count-badge">Total Chests: {{ farm.chests.total_chests }} | Total Stored Items: {{ farm.chests.total_items }}</span>
+    </div>
 
     {% if farm.chests and farm.chests.chests %}
         <div class="locations-grid">
             {% for chest in farm.chests.chests %}
-                <div class="chest-card">
+                <div class="chest-card" {% if chest.chest_color %}style="border-top: 4px solid {{ chest.chest_color }};"{% endif %}>
                     <div class="chest-header">
-                        <span class="chest-title">{{ chest.chest_name }}</span>
-                        <span class="chest-location">{{ chest.location }}</span>
+                        <span class="chest-title">
+                            {% if chest.is_big_chest %}{% else %}{% endif %} {{ chest.chest_name }}
+                        </span>
+                        <span class="chest-location">{{ chest.location }} ({{ chest.tile_location.x }}, {{ chest.tile_location.y }})</span>
                     </div>
 
-                    {% if chest.chest_items %}
-                        <ul class="chest-items-list">
-                            {% for item in chest.chest_items %}
-                                <li class="item-row">
-                                    <span class="item-name">{{ item.name }}</span>
-                                    <span class="item-stack">x{{ item.stack }}</span>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        <p class="empty-chest">Chest is empty</p>
-                    {% endif %}
+                    <div class="in-game-chest-grid">
+                        {% for item in chest.chest_items %}
+                            {% if item.is_empty %}
+                                <div class="item-slot empty-slot"></div>
+                            {% else %}
+                                <div class="item-slot" title="{{ item.name }} (x{{ item.stack }})">
+                                   <img src="static/img/items/{{ item.sprite_key }}.png" 
+                                             alt="{{ item.name }}" 
+                                             class="item-sprite"
+                                             onerror="this.onerror=null; this.src='https://stardewvalleywiki.com/Special:Redirect/file/' + encodeURIComponent('{{ item.name }}'.replace(/ /g, '_')) + '.png';">
+
+                                    
+                                    <!-- Quality Star Badges -->
+                                    {% if item.quality == 1 %}
+                                        <img src="static/img/badges/silver_star.png" class="quality-badge" alt="Silver Quality">
+                                    {% elif item.quality == 2 %}
+                                        <img src="static/img/badges/gold_star.png" class="quality-badge" alt="Gold Quality">
+                                    {% elif item.quality == 4 %}
+                                        <img src="static/img/badges/iridium_star.png" class="quality-badge" alt="Iridium Quality">
+                                    {% endif %}
+
+                                    {% if item.stack > 1 %}
+                                        <span class="slot-stack">{{ item.stack }}</span>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                 </div>
             {% endfor %}
         </div>

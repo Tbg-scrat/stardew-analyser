@@ -2,7 +2,7 @@
 
 from parsers.chests import parse_chests
 from src.modules.chests_processor import process_chest_data
-
+import traceback
 
 import os
 import time
@@ -219,22 +219,23 @@ def generate_dashboard_html(all_saves_data):
 
 
 if __name__ == "__main__":
-    print("[INFO] Loading game item reference map...")
-    object_map = load_object_map()
+  print("[INFO] Loading game item reference map...")
+  object_map = load_object_map()
 
-    print(f"[INFO] Scanning directory: {SAVE_DIR.resolve()}")
-    saves = find_all_saves(SAVE_DIR)
-    print(f"[INFO] Discovered {len(saves)} save candidate(s).")
+  print(f"[INFO] Scanning directory: {SAVE_DIR.resolve()}")
+  saves = find_all_saves(SAVE_DIR)
+  print(f"[INFO] Discovered {len(saves)} save candidate(s).")
 
-    all_saves_data = {}
-    for save_id, save_path in saves:
-        try:
-            print(f"[INFO] Processing save file: {save_id}")
-            all_saves_data[save_id] = analyze_save(save_path, object_map)
-        except Exception as e:
-            print(f"[WARN] Failed to parse save '{save_id}': {e}")
+  all_saves_data = {}
+  for save_id, save_path in saves:
+    try:
+      print(f"[INFO] Processing save file: {save_id}")
+      all_saves_data[save_id] = analyze_save(save_path, object_map)
+    except Exception as e:
+      print(f"[ERROR] Detailed traceback for save '{save_id}':")
+      traceback.print_exc()  # <-- ADD THIS TO PRINT THE FULL STACK TRACE
 
-    if all_saves_data:
-        generate_dashboard_html(all_saves_data)
-    else:
-        print(f"[WARN] No valid save games were parsed in {SAVE_DIR.resolve()}")
+  if all_saves_data:
+    generate_dashboard_html(all_saves_data)
+  else:
+    print(f"[WARN] No valid save games were parsed in {SAVE_DIR.resolve()}")
