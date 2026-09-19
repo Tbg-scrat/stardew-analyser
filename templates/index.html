@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stardew Valley Save Analyzer</title>
-       <style>
+    <style>
         :root {
             --bg-primary: #0b0f19;
             --bg-card: #151e32;
@@ -98,27 +97,8 @@
         .status-badge.unlocked { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3); }
         .status-badge.locked { background: rgba(100, 116, 139, 0.2); color: var(--text-muted); border: 1px solid var(--border-color); }
 
-        /* Chests Module Layout */
-        .chests-header-summary { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
-        .chests-count-badge { font-size: 0.8rem; color: #34d399; background: var(--bg-surface); padding: 0.35rem 0.75rem; border-radius: 6px; border: 1px solid var(--border-color); font-weight: 600; }
-        .locations-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 1.25rem; }
-        .chest-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); min-width: 0; }
-        .chest-header { display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: #ffffff; font-size: 0.95rem; }
-        .chest-location { font-size: 0.775rem; color: var(--accent-blue); font-weight: 500; }
-
-        /* Fluid 12-Column Grid prevents bounds overflow */
-        .in-game-chest-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 3px; background-color: var(--bg-subtle); padding: 6px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; box-sizing: border-box; }
-        .item-slot { position: relative; aspect-ratio: 1 / 1; width: 100%; background-color: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 4px; display: flex; align-items: center; justify-content: center; transition: transform 0.15s ease, border-color 0.15s ease, background-color 0.15s ease; cursor: pointer; min-width: 0; }
-        .item-slot.empty-slot { background-color: rgba(15, 23, 42, 0.4); border-color: rgba(39, 53, 83, 0.5); cursor: default; }
-        .item-slot:not(.empty-slot):hover { border-color: var(--accent-blue); background-color: var(--bg-card-hover); transform: scale(1.15); z-index: 10; }
-        .item-sprite { width: 80%; height: 80%; object-fit: contain; image-rendering: pixelated; }
-        .slot-stack { position: absolute; bottom: 1px; right: 2px; font-size: 0.65rem; font-weight: 800; color: #ffffff; text-shadow: 1px 1px 2px #000, -1px -1px 2px #000; pointer-events: none; }
-        
-        /* Quality Star Badges */
-        .quality-badge { position: absolute; bottom: 1px; left: 1px; width: 10px; height: 10px; object-fit: contain; image-rendering: pixelated; pointer-events: none; }
-
         .villager-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 0.85rem; }
-        .villager-card { background: var(--bg-subtle); border: 1px solid var(--border-color); border-radius: 9px; padding: 0.95rem 1.1rem; display: flex; flex-direction: column; gap: 0.55rem; }
+        .villager-card { background: var(--bg-subtle); border: 1px solid var(--border-color); border-radius: 99px; padding: 0.95rem 1.1rem; display: flex; flex-direction: column; gap: 0.55rem; }
         .v-header-layout { display: flex; align-items: center; gap: 0.75rem; }
         .v-portrait-box { width: 42px; height: 42px; min-width: 42px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .v-portrait-img { width: 38px; height: 38px; object-fit: contain; image-rendering: pixelated; }
@@ -144,13 +124,12 @@
         .v-gift-icon { width: 16px; height: 16px; object-fit: contain; image-rendering: pixelated; }
         footer { margin-top: 3rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem; display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); }
     </style>
-
 </head>
 <body>
     <div class="container">
         <header>
             <div class="header-title">
-                <span class="logo-icon"></span>
+                <span class="logo-icon">🌾</span>
                 <div>
                     <h1>Stardew Valley Save Analyzer</h1>
                     <div class="header-subtitle">Multi-Farm Save Monitoring & Collections Tracker</div>
@@ -180,9 +159,10 @@
         </section>
         {% for farm in farms %}
         <div class="farm-pane {% if loop.first %}active{% endif %}" id="farm-pane-{{ farm.farm_id }}">
-            <div class="overview-cards-container">
+        
+                   <div class="overview-cards-container">
                 <div class="overview-card">
-                    <div class="overview-card-title"> Today's Conditions</div>
+                    <div class="overview-card-title">📅 Today's Conditions</div>
                     <div class="stats-subgrid-2">
                         <div class="stat-box">
                             <div class="stat-label">Today's Weather</div>
@@ -202,7 +182,7 @@
                 </div>
 
                 <div class="overview-card">
-                    <div class="overview-card-title"> Forecast &amp; Upcoming</div>
+                    <div class="overview-card-title">🔮 Forecast &amp; Upcoming</div>
                     <div class="stats-subgrid-3">
                         <div class="stat-box">
                             <div class="stat-label">Tomorrow</div>
@@ -211,7 +191,7 @@
                             </div>
                             {% if farm.weather.island %}
                             <div class="subtext-detail">
-                                 Island: {{ farm.weather.island.icon }} {{ farm.weather.island.name }}
+                                🏝️ Island: {{ farm.weather.island.icon }} {{ farm.weather.island.name }}
                             </div>
                             {% endif %}
                         </div>
@@ -254,7 +234,7 @@
                 </div>
             </div>
 
-             <div class="module-nav-bar">
+            <div class="module-nav-bar">
                 <button class="module-nav-btn active" data-module="shipping" onclick="switchModule('{{ farm.farm_id }}', 'shipping')">📦 Shipping <span class="module-badge">{{ farm.shipped_items|selectattr('is_unlocked')|list|length }}/{{ farm.shipped_items|length }}</span></button>
                 <button class="module-nav-btn" data-module="fishing" onclick="switchModule('{{ farm.farm_id }}', 'fishing')">🎣 Fishing <span class="module-badge">{{ farm.fish_caught|selectattr('is_unlocked')|list|length }}/{{ farm.fish_caught|length }}</span></button>
                 <button class="module-nav-btn" data-module="museum" onclick="switchModule('{{ farm.farm_id }}', 'museum')">🏛️ Museum <span class="module-badge">{{ farm.museum_pieces|selectattr('is_unlocked')|list|length }}/{{ farm.museum_pieces|length }}</span></button>
@@ -264,47 +244,44 @@
                 <button class="module-nav-btn" data-module="chests" onclick="switchModule('{{ farm.farm_id }}', 'chests')">🧰 Chests <span class="module-badge">{{ farm.chests.total_chests if farm.chests else 0 }}</span></button>
             </div>
 
-
             <div class="module-pane active" id="module-{{ farm.farm_id }}-shipping">
-    <div class="radar-controls">
-        <div class="filter-group">
-            <button class="filter-btn active" onclick="setCatalogFilter(this, 'all')">All</button>
-            <button class="filter-btn" onclick="setCatalogFilter(this, 'shipped')">Shipped</button>
-            <button class="filter-btn" onclick="setCatalogFilter(this, 'not_shipped')">Not Shipped</button>
-            <button class="filter-btn" onclick="setCatalogFilter(this, 'achievement_fs_shipped')">🏆 Full Shipment Done</button>
-            <button class="filter-btn" onclick="setCatalogFilter(this, 'achievement_fs_not_shipped')">🏆 Full Shipment Needed</button>
-            <button class="filter-btn" onclick="setCatalogFilter(this, 'polyculture_shipped')">🌾 Polyculture Done</button>
-            <button class="filter-btn" onclick="setCatalogFilter(this, 'polyculture_needed')">🌾 Polyculture Needed</button>
-        </div>
-
-        <input type="text" class="search-box" placeholder="Search shipping items..." onkeyup="filterItems(this)">
-    </div>
-    <div class="items-grid">
-        {% for item in farm.shipped_items %}
-        <div class="item-card status-{{ item.status }}" 
-             data-name="{{ item.name|lower }}" 
-             data-status="{{ item.status }}" 
-             data-achievement="{{ 'true' if item.achievement_required else 'false' }}"
-             data-polyculture="{{ 'true' if item.is_polyculture else 'false' }}"
-             data-shipped-count="{{ item.count }}">
-            <div class="item-sprite-box">
-                {% if item.image %}
-                <img src="data:image/png;base64,{{ item.image }}" class="item-sprite" alt="{{ item.name }}">
-                {% else %}
-                <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ item.wiki_icon }}.png" class="item-sprite" alt="{{ item.name }}" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='inline';">
-                <span style="display:none; font-size: 1.2rem;"></span>
-                {% endif %}
+                <div class="radar-controls">
+                    <div class="filter-group">
+                        <button class="filter-btn active" onclick="setCatalogFilter(this, 'all')">All</button>
+                        <button class="filter-btn" onclick="setCatalogFilter(this, 'shipped')">Shipped</button>
+                        <button class="filter-btn" onclick="setCatalogFilter(this, 'not_shipped')">Not Shipped</button>
+                        <button class="filter-btn" onclick="setCatalogFilter(this, 'achievement_fs_shipped')">🏆 Full Shipment Done</button>
+                        <button class="filter-btn" onclick="setCatalogFilter(this, 'achievement_fs_not_shipped')">🏆 Full Shipment Needed</button>
+                        <button class="filter-btn" onclick="setCatalogFilter(this, 'polyculture_shipped')">🌾 Polyculture Done</button>
+                        <button class="filter-btn" onclick="setCatalogFilter(this, 'polyculture_needed')">🌾 Polyculture Needed</button>
+                    </div>
+                    <input type="text" class="search-box" placeholder="Search shipping items..." onkeyup="filterItems(this)">
+                </div>
+                <div class="items-grid">
+                    {% for item in farm.shipped_items %}
+                    <div class="item-card status-{{ item.status }}" 
+                         data-name="{{ item.name|lower }}" 
+                         data-status="{{ item.status }}" 
+                         data-achievement="{{ 'true' if item.achievement_required else 'false' }}"
+                         data-polyculture="{{ 'true' if item.is_polyculture else 'false' }}"
+                         data-shipped-count="{{ item.count }}">
+                        <div class="item-sprite-box">
+                            {% if item.image %}
+                            <img src="data:image/png;base64,{{ item.image }}" class="item-sprite" alt="{{ item.name }}">
+                            {% else %}
+                            <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ item.wiki_icon }}.png" class="item-sprite" alt="{{ item.name }}" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                            <span style="display:none; font-size: 1.2rem;">📦</span>
+                            {% endif %}
+                        </div>
+                        <div class="item-info">
+                            <div class="item-name">{{ item.name }}</div>
+                            <div class="item-meta">Shipped: <b>{{ item.count }}</b></div>
+                            <span class="status-badge {{ 'unlocked' if item.is_unlocked else 'locked' }}">{{ item.status|replace('_', ' ') }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
-            <div class="item-info">
-                <div class="item-name">{{ item.name }}</div>
-                <div class="item-meta">Shipped: <b>{{ item.count }}</b></div>
-                <span class="status-badge {{ 'unlocked' if item.is_unlocked else 'locked' }}">{{ item.status|replace('_', ' ') }}</span>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-</div>
-
 
             <div class="module-pane" id="module-{{ farm.farm_id }}-fishing">
                 <div class="radar-controls">
@@ -325,7 +302,7 @@
                             <img src="data:image/png;base64,{{ item.image }}" class="item-sprite" alt="{{ item.name }}">
                             {% else %}
                             <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ item.wiki_icon }}.png" class="item-sprite" alt="{{ item.name }}" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='inline';">
-                            <span style="display:none; font-size: 1.2rem;"></span>
+                            <span style="display:none; font-size: 1.2rem;">🎣</span>
                             {% endif %}
                         </div>
                         <div class="item-info">
@@ -337,6 +314,7 @@
                     {% endfor %}
                 </div>
             </div>
+
             <div class="module-pane" id="module-{{ farm.farm_id }}-museum">
                 <div class="radar-controls">
                     <div class="filter-group">
@@ -356,7 +334,7 @@
                             <img src="data:image/png;base64,{{ item.image }}" class="item-sprite" alt="{{ item.name }}">
                             {% else %}
                             <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ item.wiki_icon }}.png" class="item-sprite" alt="{{ item.name }}" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='inline';">
-                            <span style="display:none; font-size: 1.2rem;"></span>
+                            <span style="display:none; font-size: 1.2rem;">🏛️</span>
                             {% endif %}
                         </div>
                         <div class="item-info">
@@ -369,7 +347,6 @@
                 </div>
             </div>
 
-            <!-- COOKING MODULE PANE -->
             <div class="module-pane" id="module-{{ farm.farm_id }}-cooking">
                 <div class="radar-controls">
                     <div class="filter-group">
@@ -402,7 +379,6 @@
                 </div>
             </div>
 
-            <!-- ACHIEVEMENTS MODULE PANE -->
             <div class="module-pane" id="module-{{ farm.farm_id }}-achievements">
                 <div class="radar-controls">
                     <div class="filter-group">
@@ -460,12 +436,7 @@
                     {% endfor %}
                 </div>
             </div>
-
-
-            
-
-            <!-- SOCIAL MODULE PANE -->
-            <div class="module-pane" id="module-{{ farm.farm_id }}-social">
+                        <div class="module-pane" id="module-{{ farm.farm_id }}-social">
                 <div class="radar-controls">
                     <div class="filter-group">
                         <button class="filter-btn active" onclick="setCatalogFilter(this, 'all')">All</button>
@@ -507,7 +478,6 @@
                             </div>
                         </div>
 
-                        <!-- Single Clean Status Badge -->
                         <div class="v-status-row">
                             {% if villager.gifts_this_week >= 2 %}
                             <span class="v-chip muted" style="color: #64748b; background: rgba(100, 116, 139, 0.15);">Gifts: 2/2 (Maxed)</span>
@@ -516,7 +486,6 @@
                             {% endif %}
                         </div>
 
-                        <!-- Loved Gifts Section -->
                         {% if villager.loved_gifts %}
                         <div class="v-loved-gifts-section">
                             <div class="v-loved-gifts-title">💛 Loved Gifts</div>
@@ -534,15 +503,11 @@
                     {% endfor %}
                 </div>
             </div>
-            
-                        <!-- CHESTS MODULE PANE -->
+
+            <!-- CHESTS MODULE PANE -->
             <div class="module-pane" id="module-{{ farm.farm_id }}-chests">
                 {% include 'partials/chests.html' %}
             </div>
-
-            
-
-
 
         </div>
         {% endfor %}
@@ -555,7 +520,7 @@
         </footer>
     </div>
 
-<script>
+    <script>
         function switchFarm(farmId) {
             document.querySelectorAll('.farm-tab-card').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.farm-pane').forEach(pane => pane.classList.remove('active'));
@@ -598,7 +563,6 @@
             if (!targetPane) return;
 
             if (filterState) {
-                // Finds matching filter button by onclick attribute value or button text
                 const buttons = Array.from(targetPane.querySelectorAll('.filter-btn'));
                 const filterBtn = buttons.find(btn => {
                     const onclickAttr = btn.getAttribute('onclick') || '';
@@ -705,7 +669,8 @@
             });
         }
     </script>
-        <!-- Automatic Reload on Save Update -->
+
+    <!-- Automatic Reload on Save Update -->
     <script>
         (function() {
             const currentBuildTime = "{{ build_timestamp }}";
@@ -732,8 +697,5 @@
             }, CHECK_INTERVAL_MS);
         })();
     </script>
-
-
-
 </body>
 </html>

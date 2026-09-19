@@ -1,52 +1,200 @@
+<style>
+    /* Chests Module Header & Summary */
+    .chests-header-summary { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
+    .chests-count-badge { font-size: 0.8rem; color: #34d399; background: var(--bg-surface); padding: 0.35rem 0.75rem; border-radius: 6px; border: 1px solid var(--border-color); font-weight: 600; }
+
+    /* Sub-tab Navigation Buttons */
+    .chest-subtabs { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+    .subtab-btn { background: var(--bg-surface); border: 1px solid var(--border-color); color: var(--text-muted, #94a3b8); padding: 0.5rem 0.85rem; border-radius: 8px; font-weight: 600; font-size: 0.825rem; cursor: pointer; transition: all 0.15s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 80px; }
+    .subtab-btn:hover { color: #ffffff; border-color: var(--accent-blue); }
+    .subtab-btn.active { background: var(--accent-blue); color: #ffffff; border-color: var(--accent-blue); }
+
+    /* Sub-tab Content Panels */
+    .chest-tab-content { display: none; }
+    .chest-tab-content.active { display: block; }
+
+    /* Search Toolbar */
+    .chest-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+    .chest-search-input { width: 100%; max-width: 450px; background: var(--bg-surface); border: 1px solid var(--border-color); color: #ffffff; padding: 0.55rem 0.85rem; border-radius: 6px; font-size: 0.85rem; outline: none; transition: border-color 0.15s ease; }
+    .chest-search-input:focus { border-color: var(--accent-blue); }
+    .totals-count-indicator { font-size: 0.8rem; color: #94a3b8; font-weight: 600; white-space: nowrap; }
+
+    /* Spatial Grids Layout */
+    .locations-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 1.25rem; }
+    .chest-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); min-width: 0; }
+    .chest-header { display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: #ffffff; font-size: 0.95rem; }
+    .chest-location { font-size: 0.775rem; color: var(--accent-blue); font-weight: 500; }
+
+    /* Fluid 12-Column Grid */
+    .in-game-chest-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 3px; background-color: var(--bg-subtle); padding: 6px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; box-sizing: border-box; }
+    .in-game-chest-grid .item-slot { position: relative; aspect-ratio: 1 / 1; width: 100%; background-color: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 4px; display: flex; align-items: center; justify-content: center; transition: transform 0.15s ease, border-color 0.15s ease, opacity 0.15s ease; cursor: pointer; min-width: 0; }
+    .in-game-chest-grid .item-slot.empty-slot { background-color: rgba(15, 23, 42, 0.4); border-color: rgba(39, 53, 83, 0.5); cursor: default; }
+    .in-game-chest-grid .item-slot:not(.empty-slot):hover { border-color: var(--accent-blue); background-color: var(--bg-card-hover); transform: scale(1.15); z-index: 10; }
+    .in-game-chest-grid .item-sprite { width: 80%; height: 80%; object-fit: contain; image-rendering: pixelated; }
+    .in-game-chest-grid .slot-stack { position: absolute; bottom: 1px; right: 2px; font-size: 0.65rem; font-weight: 800; color: #ffffff; text-shadow: 1px 1px 2px #000, -1px -1px 2px #000; pointer-events: none; }
+    .in-game-chest-grid .quality-badge { position: absolute; bottom: 1px; left: 1px; width: 10px; height: 10px; object-fit: contain; image-rendering: pixelated; pointer-events: none; }
+
+    /* Dimming & Highlighting */
+    .in-game-chest-grid .item-slot.dimmed { opacity: 0.15; filter: grayscale(80%); }
+    .in-game-chest-grid .item-slot.highlighted { border-color: #38bdf8; box-shadow: 0 0 6px rgba(56, 189, 248, 0.6); z-index: 5; }
+
+    /* Compact Material Totals Cards */
+    .materials-totals-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 0.75rem; }
+    .material-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 0.6rem 0.75rem; display: flex; align-items: center; gap: 0.75rem; transition: transform 0.12s ease, border-color 0.12s ease; }
+    .material-card:hover { border-color: var(--accent-blue); transform: translateY(-2px); }
+    .material-sprite-box { width: 36px; height: 36px; min-width: 36px; background-color: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+    .material-info { display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+    .material-name { font-size: 0.825rem; font-weight: 600; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .material-count-pill { font-size: 0.75rem; font-weight: 700; color: #38bdf8; margin-top: 2px; }
+</style>
+
 <section class="chests-section">
     <div class="chests-header-summary">
-        <h2>Chests Inventory</h2>
+        <div>
+            <h2>Chests & Storage</h2>
+            <div class="chest-subtabs">
+                <button class="subtab-btn active" onclick="switchChestTab(this, 'grids')"> Chest Grids</button>
+                <button class="subtab-btn" onclick="switchChestTab(this, 'totals')"> Material Totals</button>
+            </div>
+        </div>
         <span class="chests-count-badge">Total Chests: {{ farm.chests.total_chests }} | Total Stored Items: {{ farm.chests.total_items }}</span>
     </div>
 
     {% if farm.chests and farm.chests.chests %}
-        <div class="locations-grid">
-            {% for chest in farm.chests.chests %}
-                <div class="chest-card" {% if chest.chest_color %}style="border-top: 4px solid {{ chest.chest_color }};"{% endif %}>
-                    <div class="chest-header">
-                        <span class="chest-title">
-                            {% if chest.is_big_chest %}{% else %}{% endif %} {{ chest.chest_name }}
-                        </span>
-                        <span class="chest-location">{{ chest.location }} ({{ chest.tile_location.x }}, {{ chest.tile_location.y }})</span>
-                    </div>
+        <!-- SUBTAB 1: Visual Spatial Grids -->
+        <div id="chest-tab-grids" class="chest-tab-content active">
+            <div class="chest-toolbar">
+                <input type="text" 
+                       class="chest-search-input" 
+                       placeholder="Filter slots by item name (e.g., Coal, Iridium)..." 
+                       oninput="filterChestGrids(this, this.value)">
+            </div>
 
-                    <div class="in-game-chest-grid">
-                        {% for item in chest.chest_items %}
-                            {% if item.is_empty %}
-                                <div class="item-slot empty-slot"></div>
-                            {% else %}
-                                <div class="item-slot" title="{{ item.name }} (x{{ item.stack }})">
-                                   <img src="static/img/items/{{ item.sprite_key }}.png" 
+            <div class="locations-grid">
+                {% for chest in farm.chests.chests %}
+                    <div class="chest-card" {% if chest.chest_color %}style="border-top: 4px solid {{ chest.chest_color }};"{% endif %}>
+                        <div class="chest-header">
+                            <span class="chest-title">
+                                {% if chest.is_big_chest %}{% else %}{% endif %} {{ chest.chest_name }}
+                            </span>
+                            <span class="chest-location">{{ chest.location }} ({{ chest.tile_location.x }}, {{ chest.tile_location.y }})</span>
+                        </div>
+
+                        <div class="in-game-chest-grid">
+                            {% for item in chest.chest_items %}
+                                {% if item.is_empty %}
+                                    <div class="item-slot empty-slot"></div>
+                                {% else %}
+                                    <div class="item-slot" 
+                                         data-item-name="{{ item.name | lower }}" 
+                                         title="{{ item.name }} (x{{ item.stack }})">
+                                        <img src="static/img/items/{{ item.sprite_key }}.png" 
                                              alt="{{ item.name }}" 
                                              class="item-sprite"
                                              onerror="this.onerror=null; this.src='https://stardewvalleywiki.com/Special:Redirect/file/' + encodeURIComponent('{{ item.name }}'.replace(/ /g, '_')) + '.png';">
+                                        
+                                        {% if item.quality == 1 %}
+                                            <img src="static/img/badges/silver_star.png" class="quality-badge" alt="Silver Quality">
+                                        {% elif item.quality == 2 %}
+                                            <img src="static/img/badges/gold_star.png" class="quality-badge" alt="Gold Quality">
+                                        {% elif item.quality == 4 %}
+                                            <img src="static/img/badges/iridium_star.png" class="quality-badge" alt="Iridium Quality">
+                                        {% endif %}
 
-                                    
-                                    <!-- Quality Star Badges -->
-                                    {% if item.quality == 1 %}
-                                        <img src="static/img/badges/silver_star.png" class="quality-badge" alt="Silver Quality">
-                                    {% elif item.quality == 2 %}
-                                        <img src="static/img/badges/gold_star.png" class="quality-badge" alt="Gold Quality">
-                                    {% elif item.quality == 4 %}
-                                        <img src="static/img/badges/iridium_star.png" class="quality-badge" alt="Iridium Quality">
-                                    {% endif %}
-
-                                    {% if item.stack > 1 %}
-                                        <span class="slot-stack">{{ item.stack }}</span>
-                                    {% endif %}
-                                </div>
-                            {% endif %}
-                        {% endfor %}
+                                        {% if item.stack > 1 %}
+                                            <span class="slot-stack">{{ item.stack }}</span>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- SUBTAB 2: Aggregated Material Totals -->
+        <div id="chest-tab-totals" class="chest-tab-content">
+            <div class="chest-toolbar">
+                <input type="text" 
+                       class="chest-search-input" 
+                       placeholder="Search accumulated materials..." 
+                       oninput="filterMaterialTotals(this, this.value)">
+                <span class="totals-count-indicator">{{ farm.chests.material_totals | length }} Unique Items</span>
+            </div>
+
+            <div class="materials-totals-grid">
+                {% for mat in farm.chests.material_totals %}
+                    <div class="material-card" data-item-name="{{ mat.name | lower }}">
+                        <div class="material-sprite-box">
+                            <img src="static/img/items/{{ mat.sprite_key }}.png" 
+                                 alt="{{ mat.name }}" 
+                                 class="item-sprite"
+                                 onerror="this.onerror=null; this.src='https://stardewvalleywiki.com/Special:Redirect/file/' + encodeURIComponent('{{ mat.name }}'.replace(/ /g, '_')) + '.png';">
+                        </div>
+                        <div class="material-info">
+                            <div class="material-name" title="{{ mat.name }}">{{ mat.name }}</div>
+                            <div class="material-count-pill">x{{ mat.count }}</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     {% else %}
         <p class="no-chests">No chests found in this save file.</p>
     {% endif %}
 </section>
+
+<script>
+    function switchChestTab(btnEl, tabName) {
+        const section = btnEl.closest('.chests-section');
+        if (!section) return;
+
+        section.querySelectorAll('.subtab-btn').forEach(btn => btn.classList.remove('active'));
+        section.querySelectorAll('.chest-tab-content').forEach(content => content.classList.remove('active'));
+
+        btnEl.classList.add('active');
+        const targetContent = section.querySelector('#chest-tab-' + tabName);
+        if (targetContent) {
+            targetContent.classList.add('active');
+        }
+    }
+
+    function filterChestGrids(inputEl, query) {
+        const section = inputEl.closest('#chest-tab-grids');
+        if (!section) return;
+
+        const cleanQuery = query.trim().toLowerCase();
+        const slots = section.querySelectorAll('.item-slot:not(.empty-slot)');
+
+        slots.forEach(slot => {
+            const name = slot.getAttribute('data-item-name') || '';
+            if (!cleanQuery) {
+                slot.classList.remove('dimmed', 'highlighted');
+            } else if (name.includes(cleanQuery)) {
+                slot.classList.remove('dimmed');
+                slot.classList.add('highlighted');
+            } else {
+                slot.classList.add('dimmed');
+                slot.classList.remove('highlighted');
+            }
+        });
+    }
+
+    function filterMaterialTotals(inputEl, query) {
+        const section = inputEl.closest('#chest-tab-totals');
+        if (!section) return;
+
+        const cleanQuery = query.trim().toLowerCase();
+        const cards = section.querySelectorAll('.material-card');
+
+        cards.forEach(card => {
+            const name = card.getAttribute('data-item-name') || '';
+            if (!cleanQuery || name.includes(cleanQuery)) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+</script>
