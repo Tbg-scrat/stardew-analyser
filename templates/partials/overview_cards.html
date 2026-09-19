@@ -1,0 +1,279 @@
+<style>
+    /* Collapsible Overview & Forecast Container */
+    .overview-section {
+        margin-bottom: 1.25rem;
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    .overview-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        user-select: none;
+        gap: 0.75rem;
+    }
+
+    .overview-summary-strip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        flex-wrap: wrap;
+    }
+
+    .overview-summary-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        background: var(--bg-surface);
+        border: 1px solid var(--border-color);
+        padding: 0.2rem 0.55rem;
+        border-radius: 6px;
+        font-size: 0.775rem;
+        color: var(--text-secondary);
+    }
+
+    .overview-summary-pill b {
+        color: var(--text-primary);
+    }
+
+    .overview-toggle-btn {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-color);
+        color: var(--text-secondary);
+        padding: 0.35rem 0.75rem;
+        border-radius: 6px;
+        font-size: 0.775rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        white-space: nowrap;
+    }
+
+    .overview-toggle-btn:hover {
+        background: var(--bg-card-hover);
+        color: #ffffff;
+        border-color: var(--accent-blue);
+    }
+
+    .overview-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.25rem;
+        margin-top: 0.75rem;
+        padding-top: 0.75rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .overview-cards-grid.collapsed {
+        display: none;
+    }
+
+    /* Inner Card Styles */
+    .overview-card { 
+        background: var(--bg-card); 
+        border: 1px solid var(--border-color); 
+        border-radius: 12px; 
+        padding: 1.25rem 1.5rem; 
+        display: flex; 
+        flex-direction: column; 
+        gap: 1rem; 
+    }
+
+    .overview-card-title { 
+        font-size: 0.85rem; 
+        font-weight: 700; 
+        text-transform: uppercase; 
+        color: var(--text-muted); 
+        letter-spacing: 0.05em; 
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06); 
+        padding-bottom: 0.5rem; 
+    }
+
+    .stats-subgrid-2 { 
+        display: grid; 
+        grid-template-columns: 1fr 1fr; 
+        gap: 1rem; 
+    }
+
+    .stats-subgrid-3 { 
+        display: grid; 
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); 
+        gap: 1rem; 
+    }
+
+    .stat-box { 
+        display: flex; 
+        flex-direction: column; 
+        justify-content: flex-start; 
+    }
+
+    .stat-label { 
+        font-size: 0.725rem; 
+        text-transform: uppercase; 
+        color: var(--text-muted); 
+        font-weight: 600; 
+        margin-bottom: 0.2rem; 
+    }
+
+    .stat-value { 
+        font-size: 1.1rem; 
+        font-weight: 700; 
+        color: #ffffff; 
+        display: flex; 
+        align-items: center; 
+        gap: 0.35rem; 
+    }
+
+    .subtext-detail { 
+        font-size: 0.775rem; 
+        font-weight: 500; 
+        color: var(--text-secondary); 
+        margin-top: 0.2rem; 
+    }
+    .bday-portrait-mini { width: 22px; height: 22px; object-fit: contain; image-rendering: pixelated; vertical-align: middle; }
+.bday-gifts-mini { display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: 0.4rem; }
+.bday-gift-pill { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 4px; padding: 0.1rem 0.35rem; display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.675rem; color: var(--text-secondary); }
+.bday-gift-icon { width: 14px; height: 14px; object-fit: contain; image-rendering: pixelated; }
+
+</style>
+
+<div class="overview-section">
+    <!-- Compact Summary Strip (Visible when collapsed or expanded) -->
+    <div class="overview-header" onclick="toggleOverview('{{ farm.farm_id }}')">
+        <div class="overview-summary-strip">
+            <span class="overview-summary-pill">
+                📅 <b>{{ farm.festivals.season }} {{ farm.festivals.day }}</b>
+            </span>
+            <span class="overview-summary-pill">
+                {{ farm.weather.today.icon }} {{ farm.weather.today.name }}
+            </span>
+            <span class="overview-summary-pill">
+                {{ farm.daily_luck.icon }} {{ farm.daily_luck.label }}
+            </span>
+            <span class="overview-summary-pill">
+                🔮 Tomorrow: {{ farm.weather.valley.icon }} {{ farm.weather.valley.name }}
+            </span>
+            {% if farm.birthdays.next_birthday %}
+            <span class="overview-summary-pill">
+                🎂 {{ farm.birthdays.next_birthday.name }} ({{ farm.birthdays.status_text }})
+            </span>
+            {% endif %}
+        </div>
+        <button class="overview-toggle-btn" type="button">
+            <span>Overview & Forecast</span>
+            <span id="overview-arrow-icon-{{ farm.farm_id }}">▾</span>
+        </button>
+    </div>
+
+    <!-- Detailed Overview Cards Grid -->
+    <div class="overview-cards-grid collapsed" id="overview-grid-{{ farm.farm_id }}">
+        <div class="overview-card">
+            <div class="overview-card-title">📅 Today's Conditions</div>
+            <div class="stats-subgrid-2">
+                <div class="stat-box">
+                    <div class="stat-label">Today's Weather</div>
+                    <div class="stat-value">
+                        {{ farm.weather.today.icon }} {{ farm.weather.today.name }}
+                    </div>
+                    <div class="subtext-detail">{{ farm.festivals.season }} {{ farm.festivals.day }}</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Daily Luck</div>
+                    <div class="stat-value">
+                        {{ farm.daily_luck.icon }} {{ farm.daily_luck.label }}
+                    </div>
+                    <div class="subtext-detail">Modifier: {{ farm.daily_luck.value }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="overview-card">
+            <div class="overview-card-title">🔮 Forecast &amp; Upcoming</div>
+            <div class="stats-subgrid-3">
+                <div class="stat-box">
+                    <div class="stat-label">Tomorrow</div>
+                    <div class="stat-value">
+                        {{ farm.weather.valley.icon }} {{ farm.weather.valley.name }}
+                    </div>
+                    {% if farm.weather.island %}
+                    <div class="subtext-detail">
+                        🏝️ Island: {{ farm.weather.island.icon }} {{ farm.weather.island.name }}
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Next Festival</div>
+                    {% if farm.festivals.next_festival %}
+                    <div class="stat-value">
+                        {{ farm.festivals.next_festival.icon }} {{ farm.festivals.next_festival.name }}
+                    </div>
+                    <div class="subtext-detail">{{ farm.festivals.status_text }}</div>
+                    {% else %}
+                    <div class="stat-value" style="font-size: 0.95rem; color: var(--text-muted);">None</div>
+                    <div class="subtext-detail">End of Season</div>
+                    {% endif %}
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Next Birthday</div>
+                    {% if farm.birthdays.next_birthday %}
+                    <div class="stat-value">
+                        <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ farm.birthdays.next_birthday.name }}.png" class="bday-portrait-mini" alt="{{ farm.birthdays.next_birthday.name }}" onerror="this.onerror=null; this.style.display='none';">
+                        {{ farm.birthdays.next_birthday.name }}
+                    </div>
+                    <div class="subtext-detail">{{ farm.birthdays.status_text }}</div>
+                    {% if farm.birthdays.next_birthday.loved_gifts %}
+                    <div class="bday-gifts-mini">
+                        {% for gift in farm.birthdays.next_birthday.loved_gifts[:3] %}
+                        <span class="bday-gift-pill" title="{{ gift.name }}">
+                            <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ gift.wiki_icon }}.png" class="bday-gift-icon" alt="{{ gift.name }}" onerror="this.onerror=null; this.style.display='none';">
+                            {{ gift.name }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    {% else %}
+                    <div class="stat-value" style="font-size: 0.95rem; color: var(--text-muted);">None</div>
+                    <div class="subtext-detail">End of Season</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleOverview(farmId) {
+        const grid = document.getElementById('overview-grid-' + farmId);
+        const icon = document.getElementById('overview-arrow-icon-' + farmId);
+        if (!grid) return;
+
+        const isCollapsed = grid.classList.toggle('collapsed');
+        if (icon) {
+            icon.textContent = isCollapsed ? '▾' : '▴';
+        }
+        localStorage.setItem('stardew_overview_collapsed', isCollapsed ? 'true' : 'false');
+    }
+
+    // Restore state from localStorage on page load
+    (function restoreOverviewState() {
+        const savedCollapsed = localStorage.getItem('stardew_overview_collapsed');
+        const grid = document.getElementById('overview-grid-{{ farm.farm_id }}');
+        const icon = document.getElementById('overview-arrow-icon-{{ farm.farm_id }}');
+
+        if (savedCollapsed === 'false' && grid) {
+            grid.classList.remove('collapsed');
+            if (icon) icon.textContent = '▴';
+        }
+    })();
+</script>
