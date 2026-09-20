@@ -6,12 +6,12 @@
         margin-bottom: 1.25rem;
     }
 
-    /* COLLAPSED BANDS (Touch-friendly multi-line layout) */
+    /* COLLAPSED BANDS (Fluid & Responsive) */
     .overview-band-collapsed {
         background: var(--bg-card);
         border: 1px solid var(--border-color);
         border-radius: 12px;
-        padding: 0.75rem 1rem;
+        padding: 0.65rem 1rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -26,32 +26,30 @@
         border-color: #3b507a;
     }
 
-    .overview-band-content {
-        display: flex;
-        flex-direction: column;
-        gap: 0.35rem;
-        width: 100%;
-        min-width: 0;
-    }
-
-    .overview-line {
+    .overview-fluid-row {
         display: flex;
         align-items: center;
-        gap: 0.65rem;
+        flex-wrap: wrap;
+        gap: 0.35rem 0.65rem;
         font-size: 0.825rem;
         color: var(--text-secondary);
+        width: 100%;
+    }
+
+    .overview-subline {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.65rem;
         white-space: nowrap;
-        overflow-x: auto;
-        scrollbar-width: none; /* Firefox */
-        -ms-overflow-style: none; /* IE/Edge */
     }
 
-    .overview-line::-webkit-scrollbar {
-        display: none; /* Chrome/Safari */
-    }
-
-    .overview-line b {
+    .overview-fluid-row b {
         color: var(--text-primary);
+    }
+
+    .overview-dot-separator {
+        color: var(--text-muted);
+        opacity: 0.6;
     }
 
     .overview-indicator-arrow {
@@ -142,22 +140,32 @@
     .bday-gift-pill { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 4px; padding: 0.1rem 0.35rem; display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.675rem; color: var(--text-secondary); }
     .bday-gift-icon { width: 14px; height: 14px; object-fit: contain; image-rendering: pixelated; }
 
-    /* Utility state class */
     .hidden { display: none !important; }
+
+    @media (max-width: 600px) {
+        .overview-dot-separator.desktop-only {
+            display: none;
+        }
+        .overview-subline.break-on-mobile {
+            width: 100%;
+        }
+    }
 </style>
 
 <div class="overview-bands-wrapper">
-    <!-- BAND 1: TODAY'S CONDITIONS (2 Lines) -->
+    <!-- BAND 1: TODAY'S CONDITIONS -->
     <div class="overview-band-container">
-        <!-- Collapsed 2-line bar -->
         <div class="overview-band-collapsed" id="today-bar-{{ farm.farm_id }}" onclick="toggleTodayState('{{ farm.farm_id }}', true)">
-            <div class="overview-band-content">
-                <div class="overview-line">
+            <div class="overview-fluid-row">
+                <div class="overview-subline">
                     <span> <b>{{ farm.festivals.season }} {{ farm.festivals.day }}</b></span>
-                    <span>•</span>
+                    <span class="overview-dot-separator">&bull;</span>
                     <span>{{ farm.weather.today.icon }} {{ farm.weather.today.name }}</span>
                 </div>
-                <div class="overview-line">
+
+                <span class="overview-dot-separator desktop-only">&bull;</span>
+
+                <div class="overview-subline break-on-mobile">
                     <span>{{ farm.daily_luck.icon }} {{ farm.daily_luck.label }}</span>
                 </div>
             </div>
@@ -189,33 +197,31 @@
         </div>
     </div>
 
-    <!-- BAND 2: FORECAST & UPCOMING (3 Lines) -->
+    <!-- BAND 2: FORECAST & UPCOMING -->
     <div class="overview-band-container">
-        <!-- Collapsed 3-line bar -->
         <div class="overview-band-collapsed" id="forecast-bar-{{ farm.farm_id }}" onclick="toggleForecastState('{{ farm.farm_id }}', true)">
-            <div class="overview-band-content">
-                <!-- Line 1: Tomorrow Weather -->
-                <div class="overview-line">
+            <div class="overview-fluid-row">
+                <div class="overview-subline break-on-mobile">
                     <span> Tomorrow: {{ farm.weather.valley.icon }} {{ farm.weather.valley.name }}</span>
                 </div>
 
-                <!-- Line 2: Next Festival (if present) -->
                 {% if farm.festivals.next_festival %}
-                <div class="overview-line">
+                <span class="overview-dot-separator desktop-only">&bull;</span>
+                <div class="overview-subline break-on-mobile">
                     <span> {{ farm.festivals.next_festival.name }} ({{ farm.festivals.status_text }})</span>
                 </div>
                 {% endif %}
 
-                <!-- Line 3: Next Birthday (if present) -->
                 {% if farm.birthdays.next_birthday %}
-                <div class="overview-line">
+                <span class="overview-dot-separator desktop-only">&bull;</span>
+                <div class="overview-subline break-on-mobile">
                     <span> {{ farm.birthdays.next_birthday.name }} ({{ farm.birthdays.status_text }})</span>
                 </div>
                 {% endif %}
 
-                <!-- Fallback if no festival or birthday -->
                 {% if not farm.festivals.next_festival and not farm.birthdays.next_birthday %}
-                <div class="overview-line">
+                <span class="overview-dot-separator desktop-only">&bull;</span>
+                <div class="overview-subline break-on-mobile">
                     <span> No upcoming events this season</span>
                 </div>
                 {% endif %}
