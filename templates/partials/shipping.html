@@ -1,0 +1,60 @@
+<style>
+    .radar-controls { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem; }
+    .filter-group { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .filter-btn { background: var(--bg-surface); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 0.35rem 0.75rem; border-radius: 6px; font-size: 0.775rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+    .filter-btn:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+    .filter-btn.active { background: #2563eb; border-color: #3b82f6; color: #ffffff; }
+    .search-box { background: var(--bg-surface); border: 1px solid var(--border-color); color: #ffffff; padding: 0.45rem 0.85rem; border-radius: 6px; font-size: 0.8rem; width: 240px; outline: none; }
+    .search-box:focus { border-color: var(--accent-blue); }
+
+    .items-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.85rem; }
+    .item-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.9rem 1rem; display: flex; align-items: center; gap: 0.85rem; transition: border-color 0.15s, opacity 0.2s; }
+    .item-card:hover { border-color: #3b507a; }
+    .item-card.status-not_shipped { opacity: 0.45; filter: grayscale(70%); }
+
+    .item-sprite-box { width: 44px; height: 44px; min-width: 44px; background: var(--bg-subtle); border: 1px solid var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+    .item-sprite { width: 32px; height: 32px; object-fit: contain; image-rendering: pixelated; }
+    .item-info { display: flex; flex-direction: column; gap: 0.2rem; flex: 1; min-width: 0; }
+    .item-name { font-size: 0.95rem; font-weight: 700; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .item-meta { font-size: 0.75rem; color: var(--text-secondary); }
+    .status-badge { display: inline-block; font-size: 0.675rem; padding: 0.1rem 0.4rem; border-radius: 4px; font-weight: 600; text-transform: capitalize; width: fit-content; margin-top: 0.1rem; }
+    .status-badge.unlocked { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3); }
+    .status-badge.locked { background: rgba(100, 116, 139, 0.2); color: var(--text-muted); border: 1px solid var(--border-color); }
+</style>
+
+<div class="radar-controls">
+    <div class="filter-group">
+        <button class="filter-btn active" onclick="setCatalogFilter(this, 'all')">All</button>
+        <button class="filter-btn" onclick="setCatalogFilter(this, 'shipped')">Shipped</button>
+        <button class="filter-btn" onclick="setCatalogFilter(this, 'not_shipped')">Not Shipped</button>
+        <button class="filter-btn" onclick="setCatalogFilter(this, 'achievement_fs_shipped')">🏆 Full Shipment Done</button>
+        <button class="filter-btn" onclick="setCatalogFilter(this, 'achievement_fs_not_shipped')">🏆 Full Shipment Needed</button>
+        <button class="filter-btn" onclick="setCatalogFilter(this, 'polyculture_shipped')">🌾 Polyculture Done</button>
+        <button class="filter-btn" onclick="setCatalogFilter(this, 'polyculture_needed')">🌾 Polyculture Needed</button>
+    </div>
+    <input type="text" class="search-box" placeholder="Search shipping items..." onkeyup="filterItems(this)">
+</div>
+<div class="items-grid">
+    {% for item in farm.shipped_items %}
+    <div class="item-card status-{{ item.status }}" 
+         data-name="{{ item.name|lower }}" 
+         data-status="{{ item.status }}" 
+         data-achievement="{{ 'true' if item.achievement_required else 'false' }}"
+         data-polyculture="{{ 'true' if item.is_polyculture else 'false' }}"
+         data-shipped-count="{{ item.count }}">
+        <div class="item-sprite-box">
+            {% if item.image %}
+            <img src="data:image/png;base64,{{ item.image }}" class="item-sprite" alt="{{ item.name }}">
+            {% else %}
+            <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ item.wiki_icon }}.png" class="item-sprite" alt="{{ item.name }}" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='inline';">
+            <span style="display:none; font-size: 1.2rem;">📦</span>
+            {% endif %}
+        </div>
+        <div class="item-info">
+            <div class="item-name">{{ item.name }}</div>
+            <div class="item-meta">Shipped: <b>{{ item.count }}</b></div>
+            <span class="status-badge {{ 'unlocked' if item.is_unlocked else 'locked' }}">{{ item.status|replace('_', ' ') }}</span>
+        </div>
+    </div>
+    {% endfor %}
+</div>
