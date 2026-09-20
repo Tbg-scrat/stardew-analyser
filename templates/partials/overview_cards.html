@@ -1,114 +1,109 @@
 <style>
-    /* Collapsible Overview & Forecast Container */
-    .overview-section {
+    .overview-bands-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
         margin-bottom: 1.25rem;
+    }
+
+    /* COLLAPSED BANDS (Touch-friendly multi-line layout) */
+    .overview-band-collapsed {
         background: var(--bg-card);
         border: 1px solid var(--border-color);
         border-radius: 12px;
         padding: 0.75rem 1rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
-    }
-
-    .overview-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         cursor: pointer;
         user-select: none;
-        gap: 0.75rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+        transition: background 0.15s ease, border-color 0.15s ease;
     }
 
-    .overview-summary-strip {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: var(--text-primary);
-        flex-wrap: wrap;
+    .overview-band-collapsed:hover {
+        background: var(--bg-card-hover);
+        border-color: #3b507a;
     }
 
-    .overview-summary-pill {
-        display: inline-flex;
-        align-items: center;
+    .overview-band-content {
+        display: flex;
+        flex-direction: column;
         gap: 0.35rem;
-        background: var(--bg-surface);
-        border: 1px solid var(--border-color);
-        padding: 0.2rem 0.55rem;
-        border-radius: 6px;
-        font-size: 0.775rem;
-        color: var(--text-secondary);
+        width: 100%;
+        min-width: 0;
     }
 
-    .overview-summary-pill b {
-        color: var(--text-primary);
-    }
-
-    .overview-toggle-btn {
-        background: var(--bg-surface);
-        border: 1px solid var(--border-color);
-        color: var(--text-secondary);
-        padding: 0.35rem 0.75rem;
-        border-radius: 6px;
-        font-size: 0.775rem;
-        font-weight: 600;
+    .overview-line {
         display: flex;
         align-items: center;
-        gap: 0.4rem;
-        cursor: pointer;
-        transition: all 0.15s ease;
+        gap: 0.65rem;
+        font-size: 0.825rem;
+        color: var(--text-secondary);
         white-space: nowrap;
+        overflow-x: auto;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE/Edge */
     }
 
-    .overview-toggle-btn:hover {
-        background: var(--bg-card-hover);
-        color: #ffffff;
-        border-color: var(--accent-blue);
+    .overview-line::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
     }
 
-    .overview-cards-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 1.25rem;
-        margin-top: 0.75rem;
-        padding-top: 0.75rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
+    .overview-line b {
+        color: var(--text-primary);
     }
 
-    .overview-cards-grid.collapsed {
-        display: none;
+    .overview-indicator-arrow {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-left: 0.5rem;
+        flex-shrink: 0;
     }
 
-    /* Inner Card Styles */
-    .overview-card { 
-        background: var(--bg-card); 
-        border: 1px solid var(--border-color); 
-        border-radius: 12px; 
-        padding: 1.25rem 1.5rem; 
-        display: flex; 
-        flex-direction: column; 
-        gap: 1rem; 
+    /* EXPANDED CARDS DISPLAY */
+    .overview-card-expanded {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1rem 1.25rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
     }
 
-    .overview-card-title { 
-        font-size: 0.85rem; 
-        font-weight: 700; 
-        text-transform: uppercase; 
-        color: var(--text-muted); 
-        letter-spacing: 0.05em; 
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06); 
-        padding-bottom: 0.5rem; 
+    .overview-expanded-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 0.75rem;
+        margin-bottom: 0.85rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        cursor: pointer;
+        user-select: none;
     }
 
+    .overview-expanded-header:hover .overview-expanded-title {
+        color: var(--text-primary);
+    }
+
+    .overview-expanded-title {
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        letter-spacing: 0.05em;
+        transition: color 0.15s ease;
+    }
+
+    /* Inner Card Subgrids */
     .stats-subgrid-2 { 
         display: grid; 
-        grid-template-columns: 1fr 1fr; 
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); 
         gap: 1rem; 
     }
 
     .stats-subgrid-3 { 
         display: grid; 
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); 
+        grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); 
         gap: 1rem; 
     }
 
@@ -127,7 +122,7 @@
     }
 
     .stat-value { 
-        font-size: 1.1rem; 
+        font-size: 1.05rem; 
         font-weight: 700; 
         color: #ffffff; 
         display: flex; 
@@ -141,45 +136,40 @@
         color: var(--text-secondary); 
         margin-top: 0.2rem; 
     }
-    .bday-portrait-mini { width: 22px; height: 22px; object-fit: contain; image-rendering: pixelated; vertical-align: middle; }
-.bday-gifts-mini { display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: 0.4rem; }
-.bday-gift-pill { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 4px; padding: 0.1rem 0.35rem; display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.675rem; color: var(--text-secondary); }
-.bday-gift-icon { width: 14px; height: 14px; object-fit: contain; image-rendering: pixelated; }
 
+    .bday-portrait-mini { width: 22px; height: 22px; object-fit: contain; image-rendering: pixelated; vertical-align: middle; }
+    .bday-gifts-mini { display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: 0.4rem; }
+    .bday-gift-pill { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 4px; padding: 0.1rem 0.35rem; display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.675rem; color: var(--text-secondary); }
+    .bday-gift-icon { width: 14px; height: 14px; object-fit: contain; image-rendering: pixelated; }
+
+    /* Utility state class */
+    .hidden { display: none !important; }
 </style>
 
-<div class="overview-section">
-    <!-- Compact Summary Strip (Visible when collapsed or expanded) -->
-    <div class="overview-header" onclick="toggleOverview('{{ farm.farm_id }}')">
-        <div class="overview-summary-strip">
-            <span class="overview-summary-pill">
-                📅 <b>{{ farm.festivals.season }} {{ farm.festivals.day }}</b>
-            </span>
-            <span class="overview-summary-pill">
-                {{ farm.weather.today.icon }} {{ farm.weather.today.name }}
-            </span>
-            <span class="overview-summary-pill">
-                {{ farm.daily_luck.icon }} {{ farm.daily_luck.label }}
-            </span>
-            <span class="overview-summary-pill">
-                🔮 Tomorrow: {{ farm.weather.valley.icon }} {{ farm.weather.valley.name }}
-            </span>
-            {% if farm.birthdays.next_birthday %}
-            <span class="overview-summary-pill">
-                🎂 {{ farm.birthdays.next_birthday.name }} ({{ farm.birthdays.status_text }})
-            </span>
-            {% endif %}
+<div class="overview-bands-wrapper">
+    <!-- BAND 1: TODAY'S CONDITIONS (2 Lines) -->
+    <div class="overview-band-container">
+        <!-- Collapsed 2-line bar -->
+        <div class="overview-band-collapsed" id="today-bar-{{ farm.farm_id }}" onclick="toggleTodayState('{{ farm.farm_id }}', true)">
+            <div class="overview-band-content">
+                <div class="overview-line">
+                    <span> <b>{{ farm.festivals.season }} {{ farm.festivals.day }}</b></span>
+                    <span>•</span>
+                    <span>{{ farm.weather.today.icon }} {{ farm.weather.today.name }}</span>
+                </div>
+                <div class="overview-line">
+                    <span>{{ farm.daily_luck.icon }} {{ farm.daily_luck.label }}</span>
+                </div>
+            </div>
+            <span class="overview-indicator-arrow"></span>
         </div>
-        <button class="overview-toggle-btn" type="button">
-            <span>Overview & Forecast</span>
-            <span id="overview-arrow-icon-{{ farm.farm_id }}">▾</span>
-        </button>
-    </div>
 
-    <!-- Detailed Overview Cards Grid -->
-    <div class="overview-cards-grid collapsed" id="overview-grid-{{ farm.farm_id }}">
-        <div class="overview-card">
-            <div class="overview-card-title">📅 Today's Conditions</div>
+        <!-- Expanded Card -->
+        <div class="overview-card-expanded hidden" id="today-details-{{ farm.farm_id }}">
+            <div class="overview-expanded-header" onclick="toggleTodayState('{{ farm.farm_id }}', false)">
+                <span class="overview-expanded-title"> Today's Conditions</span>
+                <span class="overview-indicator-arrow"></span>
+            </div>
             <div class="stats-subgrid-2">
                 <div class="stat-box">
                     <div class="stat-label">Today's Weather</div>
@@ -197,9 +187,48 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="overview-card">
-            <div class="overview-card-title">🔮 Forecast &amp; Upcoming</div>
+    <!-- BAND 2: FORECAST & UPCOMING (3 Lines) -->
+    <div class="overview-band-container">
+        <!-- Collapsed 3-line bar -->
+        <div class="overview-band-collapsed" id="forecast-bar-{{ farm.farm_id }}" onclick="toggleForecastState('{{ farm.farm_id }}', true)">
+            <div class="overview-band-content">
+                <!-- Line 1: Tomorrow Weather -->
+                <div class="overview-line">
+                    <span> Tomorrow: {{ farm.weather.valley.icon }} {{ farm.weather.valley.name }}</span>
+                </div>
+
+                <!-- Line 2: Next Festival (if present) -->
+                {% if farm.festivals.next_festival %}
+                <div class="overview-line">
+                    <span> {{ farm.festivals.next_festival.name }} ({{ farm.festivals.status_text }})</span>
+                </div>
+                {% endif %}
+
+                <!-- Line 3: Next Birthday (if present) -->
+                {% if farm.birthdays.next_birthday %}
+                <div class="overview-line">
+                    <span> {{ farm.birthdays.next_birthday.name }} ({{ farm.birthdays.status_text }})</span>
+                </div>
+                {% endif %}
+
+                <!-- Fallback if no festival or birthday -->
+                {% if not farm.festivals.next_festival and not farm.birthdays.next_birthday %}
+                <div class="overview-line">
+                    <span> No upcoming events this season</span>
+                </div>
+                {% endif %}
+            </div>
+            <span class="overview-indicator-arrow"></span>
+        </div>
+
+        <!-- Expanded Card -->
+        <div class="overview-card-expanded hidden" id="forecast-details-{{ farm.farm_id }}">
+            <div class="overview-expanded-header" onclick="toggleForecastState('{{ farm.farm_id }}', false)">
+                <span class="overview-expanded-title"> Forecast &amp; Upcoming</span>
+                <span class="overview-indicator-arrow"></span>
+            </div>
             <div class="stats-subgrid-3">
                 <div class="stat-box">
                     <div class="stat-label">Tomorrow</div>
@@ -208,7 +237,7 @@
                     </div>
                     {% if farm.weather.island %}
                     <div class="subtext-detail">
-                        🏝️ Island: {{ farm.weather.island.icon }} {{ farm.weather.island.name }}
+                         Island: {{ farm.weather.island.icon }} {{ farm.weather.island.name }}
                     </div>
                     {% endif %}
                 </div>
@@ -253,27 +282,47 @@
 </div>
 
 <script>
-    function toggleOverview(farmId) {
-        const grid = document.getElementById('overview-grid-' + farmId);
-        const icon = document.getElementById('overview-arrow-icon-' + farmId);
-        if (!grid) return;
+    function toggleTodayState(farmId, expand) {
+        const bar = document.getElementById('today-bar-' + farmId);
+        const details = document.getElementById('today-details-' + farmId);
+        if (!bar || !details) return;
 
-        const isCollapsed = grid.classList.toggle('collapsed');
-        if (icon) {
-            icon.textContent = isCollapsed ? '▾' : '▴';
+        if (expand) {
+            bar.classList.add('hidden');
+            details.classList.remove('hidden');
+            localStorage.setItem('stardew_today_expanded', 'true');
+        } else {
+            details.classList.add('hidden');
+            bar.classList.remove('hidden');
+            localStorage.setItem('stardew_today_expanded', 'false');
         }
-        localStorage.setItem('stardew_overview_collapsed', isCollapsed ? 'true' : 'false');
     }
 
-    // Restore state from localStorage on page load
-    (function restoreOverviewState() {
-        const savedCollapsed = localStorage.getItem('stardew_overview_collapsed');
-        const grid = document.getElementById('overview-grid-{{ farm.farm_id }}');
-        const icon = document.getElementById('overview-arrow-icon-{{ farm.farm_id }}');
+    function toggleForecastState(farmId, expand) {
+        const bar = document.getElementById('forecast-bar-' + farmId);
+        const details = document.getElementById('forecast-details-' + farmId);
+        if (!bar || !details) return;
 
-        if (savedCollapsed === 'false' && grid) {
-            grid.classList.remove('collapsed');
-            if (icon) icon.textContent = '▴';
+        if (expand) {
+            bar.classList.add('hidden');
+            details.classList.remove('hidden');
+            localStorage.setItem('stardew_forecast_expanded', 'true');
+        } else {
+            details.classList.add('hidden');
+            bar.classList.remove('hidden');
+            localStorage.setItem('stardew_forecast_expanded', 'false');
+        }
+    }
+
+    (function restoreOverviewBandsState() {
+        const savedToday = localStorage.getItem('stardew_today_expanded');
+        if (savedToday === 'true') {
+            toggleTodayState('{{ farm.farm_id }}', true);
+        }
+
+        const savedForecast = localStorage.getItem('stardew_forecast_expanded');
+        if (savedForecast === 'true') {
+            toggleForecastState('{{ farm.farm_id }}', true);
         }
     })();
 </script>
