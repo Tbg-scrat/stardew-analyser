@@ -66,32 +66,6 @@
         .status-badge { display: inline-block; font-size: 0.675rem; padding: 0.1rem 0.4rem; border-radius: 4px; font-weight: 600; text-transform: capitalize; width: fit-content; margin-top: 0.1rem; }
         .status-badge.unlocked { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3); }
         .status-badge.locked { background: rgba(100, 116, 139, 0.2); color: var(--text-muted); border: 1px solid var(--border-color); }
-
-        .villager-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 0.85rem; }
-        .villager-card { background: var(--bg-subtle); border: 1px solid var(--border-color); border-radius: 12px; padding: 0.95rem 1.1rem; display: flex; flex-direction: column; gap: 0.55rem; }
-        .v-header-layout { display: flex; align-items: center; gap: 0.75rem; }
-        .v-portrait-box { width: 42px; height: 42px; min-width: 42px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .v-portrait-img { width: 38px; height: 38px; object-fit: contain; image-rendering: pixelated; }
-        .v-header-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.2rem; }
-        .v-top-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-        .v-name { font-size: 1rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 0.35rem; }
-
-        .v-badge-spouse { font-size: 0.675rem; padding: 0.1rem 0.45rem; border-radius: 4px; background: var(--accent-pink-bg); color: var(--accent-pink); border: 1px solid rgba(244, 114, 182, 0.4); font-weight: 700; }
-        .v-badge-datable { font-size: 0.675rem; padding: 0.1rem 0.45rem; border-radius: 4px; background: var(--accent-purple-bg); color: var(--accent-purple); border: 1px solid rgba(192, 132, 252, 0.3); font-weight: 600; }
-
-        .v-hearts-row { display: flex; flex-direction: column; gap: 0.15rem; margin-top: 0.1rem; }
-        .v-hearts-icons { display: flex; flex-wrap: wrap; gap: 1px; font-size: 0.775rem; line-height: 1.1; }
-        .v-pts-label { font-size: 0.725rem; color: var(--text-muted); font-weight: 500; }
-
-        .v-status-row { display: flex; gap: 0.4rem; align-items: center; font-size: 0.725rem; }
-        .v-chip { padding: 0.15rem 0.5rem; border-radius: 4px; font-weight: 600; display: inline-flex; align-items: center; gap: 0.25rem; }
-        .v-chip.green { background: rgba(16, 185, 129, 0.16); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.4); }
-        .v-chip.muted { background: var(--bg-surface); color: var(--text-muted); border: 1px solid var(--border-color); }
-        .v-loved-gifts-section { font-size: 0.725rem; border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: 0.4rem; margin-top: 0.1rem; }
-        .v-loved-gifts-title { font-weight: 600; color: var(--text-muted); text-transform: uppercase; font-size: 0.65rem; margin-bottom: 0.3rem; }
-        .v-gifts-row { display: flex; flex-wrap: wrap; gap: 0.35rem; }
-        .v-gift-badge { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 5px; padding: 0.15rem 0.45rem; display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.725rem; color: var(--text-secondary); }
-        .v-gift-icon { width: 16px; height: 16px; object-fit: contain; image-rendering: pixelated; }
         footer { margin-top: 3rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem; display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); }
     </style>
 </head>
@@ -319,71 +293,7 @@
             </div>
 
             <div class="module-pane" id="module-{{ farm.farm_id }}-social">
-                <div class="radar-controls">
-                    <div class="filter-group">
-                        <button class="filter-btn active" onclick="setCatalogFilter(this, 'all')">All</button>
-                        <button class="filter-btn" onclick="setCatalogFilter(this, 'can_gift')">🎁 Can Gift (&lt;2)</button>
-                        <button class="filter-btn" onclick="setCatalogFilter(this, 'gifts_maxed')">✅ Gifts Done (2/2)</button>
-                        <button class="filter-btn" onclick="setCatalogFilter(this, 'needs_hearts')">❤️ Needs Hearts</button>
-                        <button class="filter-btn" onclick="setCatalogFilter(this, 'datable')">💍 Datable</button>
-                    </div>
-                    <input type="text" class="search-box" placeholder="Search villagers..." onkeyup="filterItems(this)">
-                </div>
-                <div class="villager-grid">
-                    {% for villager in farm.friendships %}
-                    <div class="villager-card" 
-                         data-name="{{ villager.name|lower }}"
-                         data-gifts="{{ villager.gifts_this_week }}"
-                         data-datable="{{ 'true' if villager.datable else 'false' }}"
-                         data-maxed-hearts="{{ 'true' if villager.hearts >= villager.max_hearts else 'false' }}">
-                        <div class="v-header-layout">
-                            <div class="v-portrait-box">
-                                <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ villager.name }}.png" class="v-portrait-img" alt="{{ villager.name }}" onerror="this.onerror=null; this.style.display='none';">
-                            </div>
-                            <div class="v-header-info">
-                                <div class="v-top-row">
-                                    <span class="v-name">
-                                        {{ villager.name }}
-                                        {% if villager.is_spouse %}
-                                        <span class="v-badge-spouse">💍 Spouse</span>
-                                        {% elif villager.datable %}
-                                        <span class="v-badge-datable">Datable</span>
-                                        {% endif %}
-                                    </span>
-                                </div>
-                                <div class="v-hearts-row">
-                                    <div class="v-hearts-icons" style="font-size: 0.85rem; line-height: 1.4; display: block; margin-top: 2px;">
-                                        {% for i in range(villager.max_hearts) %}{% if i < villager.hearts %}❤️{% else %}🤍{% endif %}{% endfor %}
-                                    </div>
-                                    <span class="v-pts-label">{{ villager.hearts }}/{{ villager.max_hearts }} ({{ villager.points }} pts)</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="v-status-row">
-                            {% if villager.gifts_this_week >= 2 %}
-                            <span class="v-chip muted" style="color: #64748b; background: rgba(100, 116, 139, 0.15);">Gifts: 2/2 (Maxed)</span>
-                            {% else %}
-                            <span class="v-chip green">Gifts: {{ villager.gifts_this_week }}/2</span>
-                            {% endif %}
-                        </div>
-
-                        {% if villager.loved_gifts %}
-                        <div class="v-loved-gifts-section">
-                            <div class="v-loved-gifts-title">💛 Loved Gifts</div>
-                            <div class="v-gifts-row">
-                                {% for gift in villager.loved_gifts %}
-                                <span class="v-gift-badge">
-                                    <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ gift.wiki_icon }}.png" class="v-gift-icon" alt="{{ gift.name }}" onerror="this.onerror=null; this.style.display='none';">
-                                    {{ gift.name }}
-                                </span>
-                                {% endfor %}
-                            </div>
-                        </div>
-                        {% endif %}
-                    </div>
-                    {% endfor %}
-                </div>
+                    {% include 'partials/social.html' %}
             </div>
 
             <!-- CHESTS MODULE PANE -->
