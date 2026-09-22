@@ -24,9 +24,9 @@
 
 <div class="radar-controls">
     <div class="filter-group">
-        <button class="filter-btn active" onclick="setCatalogFilter(this, 'all')">All</button>
-        <button class="filter-btn" onclick="setCatalogFilter(this, 'caught')">Caught</button>
-        <button class="filter-btn" onclick="setCatalogFilter(this, 'not_caught')">Not Caught</button>
+        <button class="filter-btn active" data-filter-key="status" data-filter-val="all" onclick="setCatalogFilter(this)">All</button>
+        <button class="filter-btn" data-filter-key="status" data-filter-val="caught" onclick="setCatalogFilter(this)">Caught</button>
+        <button class="filter-btn" data-filter-key="status" data-filter-val="not_caught" onclick="setCatalogFilter(this)">Not Caught</button>
     </div>
     <input type="text" class="search-box" placeholder="Search fish..." onkeyup="filterItems(this)">
 </div>
@@ -40,7 +40,7 @@
             <img src="data:image/png;base64,{{ item.image }}" class="item-sprite" alt="{{ item.name }}">
             {% else %}
             <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ item.wiki_icon }}.png" class="item-sprite" alt="{{ item.name }}" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='inline';">
-            <span style="display:none; font-size: 1.2rem;">🎣</span>
+            <span style="display:none; font-size: 1.2rem;"></span>
             {% endif %}
         </div>
         <div class="item-info">

@@ -184,11 +184,11 @@
 
 <div class="radar-controls">
     <div class="filter-group">
-        <button class="filter-btn active" onclick="setCatalogFilter(this, 'all')">All</button>
-        <button class="filter-btn" onclick="setCatalogFilter(this, 'can_gift')">🎁 Can Gift (&lt;2)</button>
-        <button class="filter-btn" onclick="setCatalogFilter(this, 'gifts_maxed')">✅ Gifts Done (2/2)</button>
-        <button class="filter-btn" onclick="setCatalogFilter(this, 'needs_hearts')">❤️ Needs Hearts</button>
-        <button class="filter-btn" onclick="setCatalogFilter(this, 'datable')">💍 Datable</button>
+        <button class="filter-btn active" data-filter-key="giftStatus" data-filter-val="all" onclick="setCatalogFilter(this)">All</button>
+        <button class="filter-btn" data-filter-key="giftStatus" data-filter-val="can_gift" onclick="setCatalogFilter(this)">🎁 Can Gift (&lt;2)</button>
+        <button class="filter-btn" data-filter-key="giftStatus" data-filter-val="gifts_maxed" onclick="setCatalogFilter(this)">✅ Gifts Done (2/2)</button>
+        <button class="filter-btn" data-filter-key="heartStatus" data-filter-val="needs_hearts" onclick="setCatalogFilter(this)">❤️ Needs Hearts</button>
+        <button class="filter-btn" data-filter-key="datable" data-filter-val="true" onclick="setCatalogFilter(this)">💍 Datable</button>
     </div>
     <input type="text" class="search-box" placeholder="Search villagers..." onkeyup="filterItems(this)">
 </div>
@@ -197,9 +197,9 @@
     {% for villager in farm.friendships %}
     <div class="villager-card" 
          data-name="{{ villager.name|lower }}"
-         data-gifts="{{ villager.gifts_this_week }}"
-         data-datable="{{ 'true' if villager.datable else 'false' }}"
-         data-maxed-hearts="{{ 'true' if villager.hearts >= villager.max_hearts else 'false' }}">
+         data-gift-status="{{ 'gifts_maxed' if villager.gifts_this_week >= 2 else 'can_gift' }}"
+         data-heart-status="{{ 'maxed' if villager.hearts >= villager.max_hearts else 'needs_hearts' }}"
+         data-datable="{{ 'true' if villager.datable else 'false' }}">
         <div class="v-header-layout">
             <div class="v-portrait-box">
                 <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ villager.name }}.png" class="v-portrait-img" alt="{{ villager.name }}" onerror="this.onerror=null; this.style.display='none';">

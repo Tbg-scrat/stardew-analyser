@@ -126,14 +126,13 @@
             if (activePane) activePane.classList.add('active');
         }
 
-        function setCatalogFilter(btn, filterValue) {
+        function setCatalogFilter(btn) {
             const filterGroup = btn.closest('.filter-group');
             filterGroup.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
             const modulePane = btn.closest('.module-pane');
-            const searchBox = modulePane.querySelector('.search-box');
-            applyCombinedFilters(modulePane, filterValue, searchBox ? searchBox.value : '');
+            applyCombinedFilters(modulePane);
         }
 
         function navigateToModule(farmId, moduleName, filterState) {
@@ -145,13 +144,13 @@
             if (filterState) {
                 const buttons = Array.from(targetPane.querySelectorAll('.filter-btn'));
                 const filterBtn = buttons.find(btn => {
-                    const onclickAttr = btn.getAttribute('onclick') || '';
-                    const btnText = btn.textContent.trim().toLowerCase();
-                    return onclickAttr.includes(`'${filterState}'`) || btnText.includes(filterState.replace('_', ' '));
+                    const key = btn.getAttribute('data-filter-key');
+                    const val = btn.getAttribute('data-filter-val');
+                    return val === filterState || key === filterState;
                 });
 
                 if (filterBtn) {
-                    setCatalogFilter(filterBtn, filterState);
+                    setCatalogFilter(filterBtn);
                 }
             }
 
@@ -160,92 +159,31 @@
 
         function filterItems(searchInput) {
             const modulePane = searchInput.closest('.module-pane');
-            const activeFilterBtn = modulePane.querySelector('.filter-btn.active');
-            const filterText = activeFilterBtn ? activeFilterBtn.textContent.trim().toLowerCase() : 'all';
-            
-            let targetFilter = 'all';
-
-            if (filterText.includes('full shipment shipped')) {
-                targetFilter = 'achievement_fs_shipped';
-            } else if (filterText.includes('full shipment needed')) {
-                targetFilter = 'achievement_fs_not_shipped';
-            } else if (filterText.includes('polyculture done')) {
-                targetFilter = 'polyculture_shipped';
-            } else if (filterText.includes('polyculture needed')) {
-                targetFilter = 'polyculture_needed';
-            } else if (filterText.includes('can gift')) {
-                targetFilter = 'can_gift';
-            } else if (filterText.includes('gifts done')) {
-                targetFilter = 'gifts_maxed';
-            } else if (filterText.includes('needs hearts')) {
-                targetFilter = 'needs_hearts';
-            } else if (filterText.includes('datable')) {
-                targetFilter = 'datable';
-            } else if (filterText.includes('shipped') && !filterText.includes('not')) {
-                targetFilter = 'shipped';
-            } else if (filterText.includes('not shipped')) {
-                targetFilter = 'not_shipped';
-            } else if (filterText.includes('caught') && !filterText.includes('not')) {
-                targetFilter = 'caught';
-            } else if (filterText.includes('not caught')) {
-                targetFilter = 'not_caught';
-            } else if (filterText.includes('donated')) {
-                targetFilter = 'found';
-            } else if (filterText.includes('missing')) {
-                targetFilter = 'not_found';
-            } else if (filterText.includes('cooked') && !filterText.includes('not')) {
-                targetFilter = 'cooked';
-            } else if (filterText.includes('not cooked')) {
-                targetFilter = 'not_cooked'; 
-            }
-
-            applyCombinedFilters(modulePane, targetFilter, searchInput.value);
+            applyCombinedFilters(modulePane);
         }
 
-        function applyCombinedFilters(modulePane, statusFilter, searchQuery) {
-            const query = searchQuery.toLowerCase().trim();
+        function applyCombinedFilters(modulePane) {
+            const searchInput = modulePane.querySelector('.search-box');
+            const query = (searchInput ? searchInput.value : '').toLowerCase().trim();
+            const activeBtn = modulePane.querySelector('.filter-btn.active');
+
+            const filterKey = activeBtn ? activeBtn.getAttribute('data-filter-key') : null;
+            const filterVal = activeBtn ? activeBtn.getAttribute('data-filter-val') : 'all';
+
             const cards = modulePane.querySelectorAll('.item-card, .villager-card');
 
             cards.forEach(card => {
-                const name = card.getAttribute('data-name') || '';
-                const status = card.getAttribute('data-status') || '';
-                const isAchievement = card.getAttribute('data-achievement') === 'true';
-                const isPolyculture = card.getAttribute('data-polyculture') === 'true';
-                const shippedCount = parseInt(card.getAttribute('data-shipped-count') || '0', 10);
-                
-                const gifts = parseInt(card.getAttribute('data-gifts') || '0', 10);
-                const isDatable = card.getAttribute('data-datable') === 'true';
-                const isMaxedHearts = card.getAttribute('data-maxed-hearts') === 'true';
+                const name = (card.getAttribute('data-name') || '').toLowerCase();
+                const matchesSearch = !query || name.includes(query);
 
-                let matchesStatus = true;
-
-                if (statusFilter === 'achievement_fs_shipped') {
-                    matchesStatus = isAchievement && (status === 'shipped');
-                } else if (statusFilter === 'achievement_fs_not_shipped') {
-                    matchesStatus = isAchievement && (status === 'not_shipped');
-                } else if (statusFilter === 'polyculture_shipped') {
-                    matchesStatus = isPolyculture && (shippedCount >= 15);
-                } else if (statusFilter === 'polyculture_needed') {
-                    matchesStatus = isPolyculture && (shippedCount < 15);
-                } else if (statusFilter === 'can_gift') {
-                    matchesStatus = gifts < 2;
-                } else if (statusFilter === 'gifts_maxed') {
-                    matchesStatus = gifts >= 2;
-                } else if (statusFilter === 'needs_hearts') {
-                    matchesStatus = !isMaxedHearts;
-                } else if (statusFilter === 'datable') {
-                    matchesStatus = isDatable;
-                } else if (statusFilter !== 'all') {
-                    matchesStatus = (status === statusFilter);
+                let matchesFilter = true;
+                if (filterKey && filterVal !== 'all') {
+                    const attrName = 'data-' + filterKey.replace(/([A-Z])/g, '-$1').toLowerCase();
+                    const cardVal = card.getAttribute(attrName);
+                    matchesFilter = (cardVal === filterVal);
                 }
 
-                let matchesSearch = !query || name.includes(query);
-
-                if (matchesStatus && matchesSearch) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
+                card.style.display = (matchesSearch && matchesFilter) ? 'flex' : 'none';
             });
         }
     </script>

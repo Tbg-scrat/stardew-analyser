@@ -30,9 +30,9 @@
 
 <div class="radar-controls">
     <div class="filter-group">
-        <button class="filter-btn active" onclick="setCatalogFilter(this, 'all')">All</button>
-        <button class="filter-btn" onclick="setCatalogFilter(this, 'unlocked')">Unlocked</button>
-        <button class="filter-btn" onclick="setCatalogFilter(this, 'locked')">Locked</button>
+        <button class="filter-btn active" data-filter-key="status" data-filter-val="all" onclick="setCatalogFilter(this)">All</button>
+        <button class="filter-btn" data-filter-key="status" data-filter-val="unlocked" onclick="setCatalogFilter(this)">Unlocked</button>
+        <button class="filter-btn" data-filter-key="status" data-filter-val="locked" onclick="setCatalogFilter(this)">Locked</button>
     </div>
     <input type="text" class="search-box" placeholder="Search achievements..." onkeyup="filterItems(this)">
 </div>
@@ -46,7 +46,7 @@
                  class="item-sprite {% if not item.unlocked %}grayscale{% endif %}" 
                  alt="{{ item.name }}"
                  onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='inline';">
-            <span style="display:none; font-size: 1.2rem;">🏆</span>
+            <span style="display:none; font-size: 1.2rem;"></span>
         </div>
         <div class="item-info">
             <div class="item-name">{{ item.name }}</div>
@@ -61,14 +61,14 @@
             {% if not item.unlocked %}
                 {% if item.tip %}
                 <div class="item-tip">
-                    💡 <i>{{ item.tip }}</i>
+                     <i>{{ item.tip }}</i>
                 </div>
                 {% endif %}
                 
                 {% if item.link_module %}
                 <div class="item-action-link">
                     <a href="#" onclick="navigateToModule('{{ farm.farm_id }}', '{{ item.link_module }}', '{{ item.link_filter }}'); return false;">
-                        View missing in {{ item.link_module|capitalize }} →
+                        View missing in {{ item.link_module|capitalize }} 
                     </a>
                 </div>
                 {% endif %}

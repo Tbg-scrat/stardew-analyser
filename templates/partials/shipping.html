@@ -24,13 +24,13 @@
 
 <div class="radar-controls">
     <div class="filter-group">
-        <button class="filter-btn active" onclick="setCatalogFilter(this, 'all')">All</button>
-        <button class="filter-btn" onclick="setCatalogFilter(this, 'shipped')">Shipped</button>
-        <button class="filter-btn" onclick="setCatalogFilter(this, 'not_shipped')">Not Shipped</button>
-        <button class="filter-btn" onclick="setCatalogFilter(this, 'achievement_fs_shipped')">🏆 Full Shipment Done</button>
-        <button class="filter-btn" onclick="setCatalogFilter(this, 'achievement_fs_not_shipped')">🏆 Full Shipment Needed</button>
-        <button class="filter-btn" onclick="setCatalogFilter(this, 'polyculture_shipped')">🌾 Polyculture Done</button>
-        <button class="filter-btn" onclick="setCatalogFilter(this, 'polyculture_needed')">🌾 Polyculture Needed</button>
+        <button class="filter-btn active" data-filter-key="status" data-filter-val="all" onclick="setCatalogFilter(this)">All</button>
+        <button class="filter-btn" data-filter-key="status" data-filter-val="shipped" onclick="setCatalogFilter(this)">Shipped</button>
+        <button class="filter-btn" data-filter-key="status" data-filter-val="not_shipped" onclick="setCatalogFilter(this)">Not Shipped</button>
+        <button class="filter-btn" data-filter-key="achievement" data-filter-val="shipped" onclick="setCatalogFilter(this)">🏆 Full Shipment Done</button>
+        <button class="filter-btn" data-filter-key="achievement" data-filter-val="not_shipped" onclick="setCatalogFilter(this)">🏆 Full Shipment Needed</button>
+        <button class="filter-btn" data-filter-key="polyculture" data-filter-val="done" onclick="setCatalogFilter(this)">🌾 Polyculture Done</button>
+        <button class="filter-btn" data-filter-key="polyculture" data-filter-val="needed" onclick="setCatalogFilter(this)">🌾 Polyculture Needed</button>
     </div>
     <input type="text" class="search-box" placeholder="Search shipping items..." onkeyup="filterItems(this)">
 </div>
@@ -39,9 +39,8 @@
     <div class="item-card status-{{ item.status }}" 
          data-name="{{ item.name|lower }}" 
          data-status="{{ item.status }}" 
-         data-achievement="{{ 'true' if item.achievement_required else 'false' }}"
-         data-polyculture="{{ 'true' if item.is_polyculture else 'false' }}"
-         data-shipped-count="{{ item.count }}">
+         data-achievement="{% if item.achievement_required %}{{ 'shipped' if item.status == 'shipped' else 'not_shipped' }}{% else %}none{% endif %}"
+         data-polyculture="{% if item.is_polyculture %}{{ 'done' if item.count >= 15 else 'needed' }}{% else %}none{% endif %}">
         <div class="item-sprite-box">
             {% if item.image %}
             <img src="data:image/png;base64,{{ item.image }}" class="item-sprite" alt="{{ item.name }}">
