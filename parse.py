@@ -18,7 +18,7 @@ from src.modules.luck import parse_luck
 from src.modules.festivals import parse_festivals
 from src.modules.birthdays import parse_birthdays
 from src.modules.achievements import parse_achievements
-from src.modules.artisan.casks import parse_all_casks_from_save
+from src.modules.artisan import parse_all_artisan_goods
 from src.modules.chests import parse_chests
 
 SAVE_DIR = Path(os.getenv("SAVE_DIR", "/saves"))
@@ -49,19 +49,13 @@ def analyze_save(file_path):
     data["festivals"] = parse_festivals(root)
     data["birthdays"] = parse_birthdays(root)
 
-    # 1. SHIPPING CATALOG MERGING
+    # Catalog-backed feature modules
     data["shipped_items"] = get_formatted_shipping(player)
-
-    # 2. FISHING CATALOG MERGING
     data["fish_caught"] = get_formatted_fishing(player)
-
-    # 3. MUSEUM CATALOG MERGING
     data["museum_pieces"] = get_formatted_museum(root)
-
-    # 4. COOKING CATALOG MERGING
     data["recipes_cooked"] = get_formatted_cooking(player)
 
-    # 5. ACHIEVEMENTS MODULE MERGING
+    # Achievements
     data["achievements"] = parse_achievements(
         player, shipped_items=data["shipped_items"]
     )
@@ -69,15 +63,19 @@ def analyze_save(file_path):
     data["friendships"] = parse_social(player)
     data["daily_intel"] = None
 
-    # 6. CASKS MODULE
-    cask_data = parse_all_casks_from_save(root, player)
-    print(
-        f"[DEBUG parse.py] Casks parsed: {cask_data['total_casks']} total "
-        f"({cask_data['ready_today']} ready today, {cask_data['ready_tomorrow']} ready tomorrow)"
-    )
-    data["casks"] = cask_data
+    # ARTISAN MODULE AGGREGATOR
+    artisan_data = parse_all_artisan_goods(root, player)
+    data["artisan"] = artisan_data
+    # Backwards compatibility key for cellar cask overview
+    data["casks"] = artisan_data["casks"]
 
-    # 7. CHESTS MODULE
+    print(
+        f"[DEBUG parse.py] Artisan machines parsed: {artisan_data['summary']['total_machines']} total "
+        f"({artisan_data['summary']['ready_today']} ready today, "
+        f"{artisan_data['summary']['ready_tomorrow']} ready tomorrow)"
+    )
+
+    # Chests Module
     chest_summary = parse_chests(root)
     print(f"[DEBUG parse.py] Material types aggregated: {len(chest_summary['material_totals'])}")
     data["chests"] = chest_summary
