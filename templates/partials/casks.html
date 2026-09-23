@@ -1,0 +1,314 @@
+<style>
+    .casks-summary-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .cask-stat-pill {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 0.5rem 0.85rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.825rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+    }
+
+    .cask-stat-pill b {
+        color: #ffffff;
+        font-size: 0.95rem;
+    }
+
+    .cask-stat-pill.ready-today {
+        border-color: rgba(52, 211, 153, 0.4);
+        background: rgba(16, 185, 129, 0.1);
+        color: #34d399;
+    }
+
+    .cask-stat-pill.ready-tomorrow {
+        border-color: rgba(245, 158, 11, 0.4);
+        background: rgba(245, 158, 11, 0.1);
+        color: var(--color-gold);
+    }
+
+    .radar-controls { 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        flex-wrap: wrap; 
+        gap: 0.75rem; 
+        margin-bottom: 1rem; 
+    }
+
+    .filter-group { 
+        display: flex; 
+        gap: 0.4rem; 
+        flex-wrap: wrap; 
+    }
+
+    .filter-btn { 
+        background: var(--bg-surface); 
+        border: 1px solid var(--border-color); 
+        color: var(--text-secondary); 
+        padding: 0.35rem 0.75rem; 
+        border-radius: 6px; 
+        font-size: 0.775rem; 
+        font-weight: 600; 
+        cursor: pointer; 
+        transition: all 0.15s; 
+    }
+
+    .filter-btn:hover { 
+        background: var(--bg-card-hover); 
+        color: var(--text-primary); 
+    }
+
+    .filter-btn.active { 
+        background: #2563eb; 
+        border-color: #3b82f6; 
+        color: #ffffff; 
+    }
+
+    .search-box { 
+        background: var(--bg-surface); 
+        border: 1px solid var(--border-color); 
+        color: #ffffff; 
+        padding: 0.45rem 0.85rem; 
+        border-radius: 6px; 
+        font-size: 0.8rem; 
+        width: 240px; 
+        outline: none; 
+    }
+
+    .search-box:focus { 
+        border-color: var(--accent-blue); 
+    }
+
+    .items-grid { 
+        display: grid; 
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); 
+        gap: 0.85rem; 
+    }
+
+    .item-card { 
+        background: var(--bg-card); 
+        border: 1px solid var(--border-color); 
+        border-radius: 10px; 
+        padding: 0.9rem 1rem; 
+        display: flex; 
+        align-items: center; 
+        gap: 0.85rem; 
+        transition: border-color 0.15s, opacity 0.2s; 
+    }
+
+    .item-card:hover { 
+        border-color: #3b507a; 
+    }
+
+    .item-card.status-aging { 
+        opacity: 0.85; 
+    }
+
+    .item-sprite-box { 
+        position: relative; 
+        width: 44px; 
+        height: 44px; 
+        min-width: 44px; 
+        background: var(--bg-subtle); 
+        border: 1px solid var(--border-color); 
+        border-radius: 8px; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+    }
+
+    .item-sprite { 
+        width: 32px; 
+        height: 32px; 
+        object-fit: contain; 
+        image-rendering: pixelated; 
+    }
+
+    .item-info { 
+        display: flex; 
+        flex-direction: column; 
+        gap: 0.2rem; 
+        flex: 1; 
+        min-width: 0; 
+    }
+
+    .item-name { 
+        font-size: 0.95rem; 
+        font-weight: 700; 
+        color: #ffffff; 
+        white-space: nowrap; 
+        overflow: hidden; 
+        text-overflow: ellipsis; 
+    }
+
+    .item-meta { 
+        font-size: 0.75rem; 
+        color: var(--text-secondary); 
+    }
+
+    .status-badge { 
+        display: inline-block; 
+        font-size: 0.675rem; 
+        padding: 0.1rem 0.4rem; 
+        border-radius: 4px; 
+        font-weight: 600; 
+        text-transform: capitalize; 
+        width: fit-content; 
+        margin-top: 0.1rem; 
+    }
+
+    .status-badge.ready { 
+        background: rgba(16, 185, 129, 0.15); 
+        color: #34d399; 
+        border: 1px solid rgba(52, 211, 153, 0.3); 
+    }
+
+    .status-badge.tomorrow { 
+        background: rgba(245, 158, 11, 0.15); 
+        color: var(--color-gold); 
+        border: 1px solid rgba(245, 158, 11, 0.3); 
+    }
+
+    .status-badge.aging { 
+        background: rgba(100, 116, 139, 0.2); 
+        color: var(--text-muted); 
+        border: 1px solid var(--border-color); 
+    }
+
+    .batch-count-pill { 
+        font-size: 0.725rem; 
+        font-weight: 700; 
+        color: var(--accent-blue); 
+        background: rgba(56, 189, 248, 0.12); 
+        padding: 0.05rem 0.4rem; 
+        border-radius: 4px; 
+        margin-left: 0.35rem; 
+    }
+
+    .cask-star-badge { 
+        position: absolute; 
+        bottom: 2px; 
+        left: 2px; 
+        width: 12px; 
+        height: 12px; 
+        object-fit: contain; 
+        image-rendering: pixelated; 
+    }
+
+    .empty-casks-notice {
+        background: var(--bg-card);
+        border: 1px dashed var(--border-color);
+        border-radius: 10px;
+        padding: 2rem;
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+</style>
+
+{% if farm.casks and farm.casks.total_casks > 0 %}
+
+<div class="casks-summary-bar">
+    <div class="cask-stat-pill">
+        🍷 Total Casks: <b>{{ farm.casks.total_casks }}</b>
+    </div>
+    {% if farm.casks.ready_today > 0 %}
+    <div class="cask-stat-pill ready-today">
+        ✨ Ready Today: <b>{{ farm.casks.ready_today }}</b>
+    </div>
+    {% endif %}
+    {% if farm.casks.ready_tomorrow > 0 %}
+    <div class="cask-stat-pill ready-tomorrow">
+        ⏳ Ready Tomorrow: <b>{{ farm.casks.ready_tomorrow }}</b>
+    </div>
+    {% endif %}
+    <div class="cask-stat-pill">
+        🍇 Aging: <b>{{ farm.casks.aging_count }}</b>
+    </div>
+    {% if farm.casks.empty_casks > 0 %}
+    <div class="cask-stat-pill">
+        🪹 Empty Casks: <b>{{ farm.casks.empty_casks }}</b>
+    </div>
+    {% endif %}
+</div>
+
+<div class="radar-controls">
+    <div class="filter-group">
+        <button class="filter-btn active" data-filter-key="status" data-filter-val="all" onclick="setCatalogFilter(this)">All Batches</button>
+        <button class="filter-btn" data-filter-key="status" data-filter-val="ready_today" onclick="setCatalogFilter(this)">✨ Ready Today</button>
+        <button class="filter-btn" data-filter-key="status" data-filter-val="ready_tomorrow" onclick="setCatalogFilter(this)">⏳ Ready Tomorrow</button>
+        <button class="filter-btn" data-filter-key="status" data-filter-val="aging" onclick="setCatalogFilter(this)">🍇 Aging</button>
+    </div>
+    <input type="text" class="search-box" placeholder="Search aging goods..." onkeyup="filterItems(this)">
+</div>
+
+{% if farm.casks.batches %}
+<div class="items-grid">
+    {% for batch in farm.casks.batches %}
+    {% set status_code = 'ready_today' if batch.is_ready else ('ready_tomorrow' if batch.days_remaining == 1 else 'aging') %}
+    <div class="item-card status-{{ status_code }}" 
+         data-name="{{ batch.name|lower }}" 
+         data-status="{{ status_code }}">
+        <div class="item-sprite-box">
+            {% if batch.wiki_icon.endswith('.png') %}
+            <!-- Local custom/colored sprite -->
+            <img src="static/img/items/{{ batch.wiki_icon }}" 
+                 class="item-sprite" 
+                 alt="{{ batch.name }}" 
+                 onerror="this.onerror=null; this.src='https://stardewvalleywiki.com/Special:Redirect/file/Wine.png';">
+            {% else %}
+            <!-- Standard Stardew Valley Wiki redirect -->
+            <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ batch.wiki_icon }}.png" 
+                 class="item-sprite" 
+                 alt="{{ batch.name }}" 
+                 onerror="this.onerror=null; this.src='https://stardewvalleywiki.com/Special:Redirect/file/Wine.png';">
+            {% endif %}
+
+            {% if batch.quality == 1 %}
+            <img src="static/img/badges/silver_star.png" class="cask-star-badge" alt="Silver Quality">
+            {% elif batch.quality == 2 %}
+            <img src="static/img/badges/gold_star.png" class="cask-star-badge" alt="Gold Quality">
+            {% elif batch.quality == 4 %}
+            <img src="static/img/badges/iridium_star.png" class="cask-star-badge" alt="Iridium Quality">
+            {% endif %}
+        </div>
+        <div class="item-info">
+            <div class="item-name">
+                {{ batch.name }}
+                <span class="batch-count-pill">x{{ batch.count }}</span>
+            </div>
+            <div class="item-meta">
+                Quality: <b>{{ batch.quality_name }}</b>
+            </div>
+            {% if batch.is_ready %}
+            <span class="status-badge ready">Ready Today!</span>
+            {% elif batch.days_remaining == 1 %}
+            <span class="status-badge tomorrow">1 Day Left</span>
+            {% else %}
+            <span class="status-badge aging">{{ batch.days_remaining }} Days Left</span>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-casks-notice">
+    🍷 All {{ farm.casks.total_casks }} casks in the cellar are currently empty.
+</div>
+{% endif %}
+
+{% else %}
+<div class="empty-casks-notice">
+    🏚️ No Cellar upgrade built yet. Upgrade your Farmhouse to Level 3 at Robin's Carpenter Shop to unlock Cask aging.
+</div>
+{% endif %}
