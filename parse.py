@@ -18,9 +18,9 @@ from data.data_loader import (
 
 from src.modules.player import parse_player
 from src.modules.shipping import get_formatted_shipping
-from src.modules.fishing import parse_fishing
-from src.modules.museum import parse_museum
-from src.modules.cooking import parse_cooking
+from src.modules.fishing import get_formatted_fishing
+from src.modules.museum import get_formatted_museum
+from src.modules.cooking import get_formatted_cooking
 from src.modules.social import parse_social
 from src.modules.weather import parse_weather
 from src.modules.luck import parse_luck
@@ -48,11 +48,6 @@ def find_all_saves(saves_dir):
     return sorted(save_files, key=lambda x: x[0])
 
 
-def format_wiki_filename(name):
-    """Clean item names into Stardew Valley Wiki image file conventions."""
-    return name.replace(" ", "_").replace("'", "%27")
-
-
 def analyze_save(file_path, object_map):
     root, player = get_player_node(file_path)
 
@@ -68,69 +63,13 @@ def analyze_save(file_path, object_map):
     data["shipped_items"] = get_formatted_shipping(player, SHIPPING_CATALOG)
 
     # 2. FISHING CATALOG MERGING
-    raw_fish = parse_fishing(player)
-    fish_save_map = {str(k).replace("(O)", ""): v for k, v in raw_fish.items()}
-
-    fish_mapped = []
-    for item_id, catalog_item in FISH_CATALOG.items():
-        stats = fish_save_map.get(item_id)
-        is_caught = stats is not None
-        fish_mapped.append(
-            {
-                "id": item_id,
-                "name": catalog_item.get("name", f"Fish {item_id}"),
-                "count": stats["count"] if is_caught else 0,
-                "length": stats["length"] if is_caught else 0,
-                "status": "caught" if is_caught else "not_caught",
-                "is_unlocked": is_caught,
-                "image": catalog_item.get("image", ""),
-                "wiki_icon": format_wiki_filename(catalog_item.get("name", "")),
-            }
-        )
-    data["fish_caught"] = sorted(fish_mapped, key=lambda x: x["name"])
+    data["fish_caught"] = get_formatted_fishing(player, FISH_CATALOG)
 
     # 3. MUSEUM CATALOG MERGING
-    raw_museum = parse_museum(root)
-    donated_set = {str(item_id).replace("(O)", "") for item_id in raw_museum}
-
-    museum_mapped = []
-    for item_id, catalog_item in MUSEUM_CATALOG.items():
-        is_donated = item_id in donated_set
-        museum_mapped.append(
-            {
-                "id": item_id,
-                "name": catalog_item.get("name", f"Artifact/Mineral {item_id}"),
-                "type": catalog_item.get("type", "Artifact"),
-                "status": "found" if is_donated else "not_found",
-                "is_unlocked": is_donated,
-                "image": catalog_item.get("image", ""),
-                "wiki_icon": format_wiki_filename(catalog_item.get("name", "")),
-            }
-        )
-    data["museum_pieces"] = sorted(museum_mapped, key=lambda x: x["name"])
+    data["museum_pieces"] = get_formatted_museum(root, MUSEUM_CATALOG)
 
     # 4. COOKING CATALOG MERGING
-    raw_cooking = parse_cooking(player)
-    cooking_save_map = {str(k).replace("(O)", ""): v for k, v in raw_cooking.items()}
-
-    cooking_mapped = []
-    for item_id, catalog_item in COOKING_CATALOG.items():
-        count = cooking_save_map.get(str(item_id), 0)
-        is_cooked = count > 0
-        cooking_mapped.append(
-            {
-                "id": item_id,
-                "name": catalog_item.get("name", f"Recipe {item_id}"),
-                "count": count,
-                "status": "cooked" if is_cooked else "not_cooked",
-                "is_unlocked": is_cooked,
-                "image": catalog_item.get("image", ""),
-                "wiki_icon": catalog_item.get(
-                    "wiki_icon", format_wiki_filename(catalog_item.get("name", ""))
-                ),
-            }
-        )
-    data["recipes_cooked"] = sorted(cooking_mapped, key=lambda x: x["name"])
+    data["recipes_cooked"] = get_formatted_cooking(player, COOKING_CATALOG)
 
     # 5. ACHIEVEMENTS MODULE MERGING
     data["achievements"] = parse_achievements(

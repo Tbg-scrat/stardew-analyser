@@ -1,3 +1,13 @@
+# src/modules/museum.py
+
+
+def format_wiki_filename(name):
+    """Clean item names into Stardew Valley Wiki image file conventions."""
+    if not name:
+        return ""
+    return name.replace(" ", "_").replace("'", "%27")
+
+
 def parse_museum(root_node):
     """Extract LibraryMuseum donated pieces."""
     museum_pieces = {}
@@ -13,3 +23,35 @@ def parse_museum(root_node):
                         if item_id:
                             museum_pieces[str(item_id)] = True
     return list(museum_pieces.keys())
+
+
+def get_formatted_museum(root_node, catalog):
+    """
+    Parses museum save data and merges it against MUSEUM_CATALOG,
+    returning a sorted list of museum piece dictionaries ready for the UI.
+    """
+    raw_museum = parse_museum(root_node)
+    donated_set = {str(item_id).replace("(O)", "") for item_id in raw_museum}
+
+    museum_mapped = []
+    catalog_items = catalog.items() if isinstance(catalog, dict) else []
+
+    for item_id, catalog_item in catalog_items:
+        if not isinstance(catalog_item, dict):
+            continue
+
+        is_donated = str(item_id) in donated_set
+        item_name = catalog_item.get("name", f"Artifact/Mineral {item_id}")
+
+        museum_mapped.append({
+            "id": item_id,
+            "name": item_name,
+            "type": catalog_item.get("type", "Artifact"),
+            "status": "found" if is_donated else "not_found",
+            "is_unlocked": is_donated,
+            "image": catalog_item.get("image", ""),
+            "wiki_icon": format_wiki_filename(item_name),
+        })
+
+    return sorted(museum_mapped, key=lambda x: x["name"])
+    
