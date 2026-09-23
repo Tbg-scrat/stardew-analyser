@@ -6,13 +6,6 @@ from pathlib import Path
 
 from src.core.xml_reader import get_player_node
 from src.core.renderer import generate_dashboard_html
-from data.data_loader import (
-    FISH_CATALOG,
-    MUSEUM_CATALOG,
-    SHIPPING_CATALOG,
-    COOKING_CATALOG,
-    ACHIEVEMENTS_CATALOG,
-)
 
 from src.modules.player import parse_player
 from src.modules.shipping import get_formatted_shipping
@@ -57,20 +50,20 @@ def analyze_save(file_path):
     data["birthdays"] = parse_birthdays(root)
 
     # 1. SHIPPING CATALOG MERGING
-    data["shipped_items"] = get_formatted_shipping(player, SHIPPING_CATALOG)
+    data["shipped_items"] = get_formatted_shipping(player)
 
     # 2. FISHING CATALOG MERGING
-    data["fish_caught"] = get_formatted_fishing(player, FISH_CATALOG)
+    data["fish_caught"] = get_formatted_fishing(player)
 
     # 3. MUSEUM CATALOG MERGING
-    data["museum_pieces"] = get_formatted_museum(root, MUSEUM_CATALOG)
+    data["museum_pieces"] = get_formatted_museum(root)
 
     # 4. COOKING CATALOG MERGING
-    data["recipes_cooked"] = get_formatted_cooking(player, COOKING_CATALOG)
+    data["recipes_cooked"] = get_formatted_cooking(player)
 
     # 5. ACHIEVEMENTS MODULE MERGING
     data["achievements"] = parse_achievements(
-        player, ACHIEVEMENTS_CATALOG, shipped_items=data["shipped_items"]
+        player, shipped_items=data["shipped_items"]
     )
 
     data["friendships"] = parse_social(player)

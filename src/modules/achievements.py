@@ -1,16 +1,6 @@
-import json
-from pathlib import Path
+# src/modules/achievements.py
 
-# Load catalog metadata relative to project root
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
-CATALOG_PATH = BASE_DIR / "data" / "achievements.json"
-
-
-def load_achievements_catalog():
-    if not CATALOG_PATH.exists():
-        return []
-    with open(CATALOG_PATH, "r", encoding="utf-8") as f:
-        return json.load(f)
+from data.data_loader import ACHIEVEMENTS_CATALOG
 
 
 def parse_achievements(player_node, catalog=None, shipped_items=None):
@@ -18,9 +8,8 @@ def parse_achievements(player_node, catalog=None, shipped_items=None):
     Parses unlocked achievements from player XML, merges with catalog metadata,
     and calculates progress for special achievements like Monoculture.
     """
-    achievements_catalog = catalog if catalog is not None else load_achievements_catalog()
+    achievements_catalog = catalog if catalog is not None else ACHIEVEMENTS_CATALOG
     
-    # Parse unlocked achievement IDs from player XML
     unlocked_ids = set()
     achievements_node = player_node.find("achievements")
     if achievements_node is not None:
@@ -28,7 +17,6 @@ def parse_achievements(player_node, catalog=None, shipped_items=None):
             if node.text and node.text.isdigit():
                 unlocked_ids.add(int(node.text))
 
-    # Calculate Monoculture progress if shipped_items are provided
     monoculture_count = 0
     if shipped_items:
         monoculture_items = [item for item in shipped_items if item.get("is_monoculture")]
@@ -58,7 +46,6 @@ def parse_achievements(player_node, catalog=None, shipped_items=None):
             "link_filter": catalog_item.get("link_filter")
         }
 
-        # Calculate progress for Monoculture achievement
         if name == "Monoculture":
             item_dict["progress_current"] = min(monoculture_count, 300)
             item_dict["target"] = 300
@@ -68,7 +55,6 @@ def parse_achievements(player_node, catalog=None, shipped_items=None):
 
         processed_achievements.append(item_dict)
 
-    # Summary statistics
     total_count = len(processed_achievements)
     unlocked_count = sum(1 for a in processed_achievements if a["unlocked"])
 

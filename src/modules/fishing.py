@@ -1,6 +1,7 @@
 # src/modules/fishing.py
 
 from src.core.xml_reader import get_key_value
+from data.data_loader import FISH_CATALOG
 
 
 def format_wiki_filename(name):
@@ -39,11 +40,14 @@ def parse_fishing(player_node):
     return fish_caught
 
 
-def get_formatted_fishing(player_node, catalog):
+def get_formatted_fishing(player_node, catalog=None):
     """
     Parses fishing save data and merges it against FISH_CATALOG,
     returning a sorted list of fish item dictionaries ready for the UI.
     """
+    if catalog is None:
+        catalog = FISH_CATALOG
+
     raw_fish = parse_fishing(player_node)
     fish_save_map = {str(k).replace("(O)", ""): v for k, v in raw_fish.items()}
 

@@ -5,6 +5,8 @@ Extracts cooked recipe counts keyed by item ID string from <recipesCooked>
 and formats catalog data for UI rendering.
 """
 
+from data.data_loader import COOKING_CATALOG
+
 
 def format_wiki_filename(name):
     """Clean item names into Stardew Valley Wiki image file conventions."""
@@ -49,11 +51,14 @@ def parse_cooking(player):
     return cooked_counts
 
 
-def get_formatted_cooking(player, catalog):
+def get_formatted_cooking(player, catalog=None):
     """
     Parses cooking save data and merges it against COOKING_CATALOG,
     returning a sorted list of cooking recipe dictionaries ready for the UI.
     """
+    if catalog is None:
+        catalog = COOKING_CATALOG
+
     raw_cooking = parse_cooking(player)
     cooking_save_map = {str(k).replace("(O)", ""): v for k, v in raw_cooking.items()}
 

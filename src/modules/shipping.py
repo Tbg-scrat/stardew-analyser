@@ -1,6 +1,7 @@
 # src/modules/shipping.py
 
 from src.core.xml_reader import get_key_value
+from data.data_loader import SHIPPING_CATALOG
 
 
 def format_wiki_filename(name):
@@ -23,18 +24,18 @@ def parse_shipping(player_node):
     return shipped_items
 
 
-def get_formatted_shipping(player_node, catalog):
+def get_formatted_shipping(player_node, catalog=None):
     """
-    Parses shipping save data and merges it against the SHIPPING_CATALOG,
+    Parses shipping save data and merges it against SHIPPING_CATALOG,
     returning a sorted list of shipping item dictionaries ready for the UI.
     """
+    if catalog is None:
+        catalog = SHIPPING_CATALOG
+
     raw_shipped = parse_shipping(player_node)
-    # Normalize keys from save file (strip "(O)" prefix if present)
     shipped_save_map = {str(k).replace("(O)", ""): v for k, v in raw_shipped.items()}
 
     shipped_mapped = []
-    
-    # Handle dict catalog format
     catalog_items = catalog.items() if isinstance(catalog, dict) else []
 
     for item_id, catalog_item in catalog_items:

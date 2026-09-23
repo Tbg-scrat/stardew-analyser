@@ -1,5 +1,7 @@
 # src/modules/museum.py
 
+from data.data_loader import MUSEUM_CATALOG
+
 
 def format_wiki_filename(name):
     """Clean item names into Stardew Valley Wiki image file conventions."""
@@ -25,11 +27,14 @@ def parse_museum(root_node):
     return list(museum_pieces.keys())
 
 
-def get_formatted_museum(root_node, catalog):
+def get_formatted_museum(root_node, catalog=None):
     """
     Parses museum save data and merges it against MUSEUM_CATALOG,
     returning a sorted list of museum piece dictionaries ready for the UI.
     """
+    if catalog is None:
+        catalog = MUSEUM_CATALOG
+
     raw_museum = parse_museum(root_node)
     donated_set = {str(item_id).replace("(O)", "") for item_id in raw_museum}
 
