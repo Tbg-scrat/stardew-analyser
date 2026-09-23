@@ -13,8 +13,12 @@ def load_achievements_catalog():
         return json.load(f)
 
 
-def parse_achievements(player_node, *args, **kwargs):
-    achievements_catalog = load_achievements_catalog()
+def parse_achievements(player_node, catalog=None, shipped_items=None):
+    """
+    Parses unlocked achievements from player XML, merges with catalog metadata,
+    and calculates progress for special achievements like Monoculture.
+    """
+    achievements_catalog = catalog if catalog is not None else load_achievements_catalog()
     
     # Parse unlocked achievement IDs from player XML
     unlocked_ids = set()
@@ -24,15 +28,26 @@ def parse_achievements(player_node, *args, **kwargs):
             if node.text and node.text.isdigit():
                 unlocked_ids.add(int(node.text))
 
+    # Calculate Monoculture progress if shipped_items are provided
+    monoculture_count = 0
+    if shipped_items:
+        monoculture_items = [item for item in shipped_items if item.get("is_monoculture")]
+        monoculture_count = (
+            max([item.get("count", 0) for item in monoculture_items], default=0)
+            if monoculture_items
+            else 0
+        )
+
     processed_achievements = []
     
     for catalog_item in achievements_catalog:
         item_id = catalog_item.get("id")
         is_unlocked = item_id in unlocked_ids
+        name = catalog_item.get("name")
 
-        processed_achievements.append({
+        item_dict = {
             "id": item_id,
-            "name": catalog_item.get("name"),
+            "name": name,
             "description": catalog_item.get("description"),
             "category": catalog_item.get("category"),
             "icon": catalog_item.get("icon"),
@@ -41,7 +56,17 @@ def parse_achievements(player_node, *args, **kwargs):
             "unlocked": is_unlocked,
             "link_module": catalog_item.get("link_module"),
             "link_filter": catalog_item.get("link_filter")
-        })
+        }
+
+        # Calculate progress for Monoculture achievement
+        if name == "Monoculture":
+            item_dict["progress_current"] = min(monoculture_count, 300)
+            item_dict["target"] = 300
+            item_dict["unlocked"] = is_unlocked or (monoculture_count >= 300)
+            item_dict["link_module"] = None
+            item_dict["link_filter"] = None
+
+        processed_achievements.append(item_dict)
 
     # Summary statistics
     total_count = len(processed_achievements)

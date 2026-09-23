@@ -17,7 +17,7 @@ from data.data_loader import (
 )
 
 from src.modules.player import parse_player
-from src.modules.shipping import parse_shipping
+from src.modules.shipping import get_formatted_shipping
 from src.modules.fishing import parse_fishing
 from src.modules.museum import parse_museum
 from src.modules.cooking import parse_cooking
@@ -65,28 +65,7 @@ def analyze_save(file_path, object_map):
     data["birthdays"] = parse_birthdays(root)
 
     # 1. SHIPPING CATALOG MERGING
-    raw_shipped = parse_shipping(player)
-    shipped_save_map = {str(k).replace("(O)", ""): v for k, v in raw_shipped.items()}
-
-    shipped_mapped = []
-    for item_id, catalog_item in SHIPPING_CATALOG.items():
-        count = shipped_save_map.get(str(item_id), 0)
-        is_shipped = count > 0
-        shipped_mapped.append(
-            {
-                "id": item_id,
-                "name": catalog_item.get("name", f"Item {item_id}"),
-                "count": count,
-                "status": "shipped" if is_shipped else "not_shipped",
-                "is_unlocked": is_shipped,
-                "achievement_required": catalog_item.get("achievement_required", False),
-                "is_polyculture": catalog_item.get("is_polyculture", False),
-                "is_monoculture": catalog_item.get("is_monoculture", False),
-                "image": catalog_item.get("image", ""),
-                "wiki_icon": format_wiki_filename(catalog_item.get("name", "")),
-            }
-        )
-    data["shipped_items"] = sorted(shipped_mapped, key=lambda x: x["name"])
+    data["shipped_items"] = get_formatted_shipping(player, SHIPPING_CATALOG)
 
     # 2. FISHING CATALOG MERGING
     raw_fish = parse_fishing(player)
@@ -154,23 +133,9 @@ def analyze_save(file_path, object_map):
     data["recipes_cooked"] = sorted(cooking_mapped, key=lambda x: x["name"])
 
     # 5. ACHIEVEMENTS MODULE MERGING
-    achievements_data = parse_achievements(player, ACHIEVEMENTS_CATALOG)
-    data["achievements"] = achievements_data
-
-    monoculture_items = [item for item in shipped_mapped if item.get("is_monoculture")]
-    max_monoculture_count = (
-        max([item["count"] for item in monoculture_items], default=0)
-        if monoculture_items
-        else 0
+    data["achievements"] = parse_achievements(
+        player, ACHIEVEMENTS_CATALOG, shipped_items=data["shipped_items"]
     )
-
-    for ach in achievements_data.get("list", []):
-        if ach.get("name") == "Monoculture":
-            ach["progress_current"] = min(max_monoculture_count, 300)
-            ach["target"] = 300
-            ach["unlocked"] = max_monoculture_count >= 300
-            ach["link_module"] = None
-            ach["link_filter"] = None
 
     data["friendships"] = parse_social(player)
     data["daily_intel"] = None

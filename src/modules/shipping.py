@@ -1,4 +1,13 @@
+# src/modules/shipping.py
+
 from src.core.xml_reader import get_key_value
+
+
+def format_wiki_filename(name):
+    """Clean item names into Stardew Valley Wiki image file conventions."""
+    if not name:
+        return ""
+    return name.replace(" ", "_").replace("'", "%27")
 
 
 def parse_shipping(player_node):
@@ -15,39 +24,40 @@ def parse_shipping(player_node):
 
 
 def get_formatted_shipping(player_node, catalog):
-    """Parses save data and maps it against shipping catalog metadata for the UI."""
-    raw_shipped_data = parse_shipping(player_node)
-    formatted_items = []
+    """
+    Parses shipping save data and merges it against the SHIPPING_CATALOG,
+    returning a sorted list of shipping item dictionaries ready for the UI.
+    """
+    raw_shipped = parse_shipping(player_node)
+    # Normalize keys from save file (strip "(O)" prefix if present)
+    shipped_save_map = {str(k).replace("(O)", ""): v for k, v in raw_shipped.items()}
 
-    # If catalog is a list, convert to dict keyed by ID or item name
-    if isinstance(catalog, list):
-        catalog_dict = {
-            str(item.get("id")): item for item in catalog if isinstance(item, dict)
-        }
-    elif isinstance(catalog, dict):
-        catalog_dict = catalog
-    else:
-        catalog_dict = {}
+    shipped_mapped = []
+    
+    # Handle dict catalog format
+    catalog_items = catalog.items() if isinstance(catalog, dict) else []
 
-    for item_id, catalog_item in catalog_dict.items():
+    for item_id, catalog_item in catalog_items:
         if not isinstance(catalog_item, dict):
             continue
 
-        shipped_count = raw_shipped_data.get(str(item_id), 0)
-        status = "shipped" if shipped_count > 0 else "not_shipped"
+        count = shipped_save_map.get(str(item_id), 0)
+        is_shipped = count > 0
 
-        formatted_items.append({
+        item_name = catalog_item.get("name", f"Item {item_id}")
+
+        shipped_mapped.append({
             "id": item_id,
-            "name": catalog_item.get("name", f"Item {item_id}"),
-            "status": status,
-            "count": shipped_count,
-            "achievement_required": catalog_item.get(
-                "achievement_required", False
-            ),
+            "name": item_name,
+            "count": count,
+            "status": "shipped" if is_shipped else "not_shipped",
+            "is_unlocked": is_shipped,
+            "achievement_required": catalog_item.get("achievement_required", False),
             "is_polyculture": catalog_item.get("is_polyculture", False),
-            "wiki_icon": catalog_item.get("icon", ""),
-            "image": catalog_item.get("image", None),
+            "is_monoculture": catalog_item.get("is_monoculture", False),
+            "image": catalog_item.get("image", ""),
+            "wiki_icon": format_wiki_filename(item_name),
         })
 
-    return formatted_items
+    return sorted(shipped_mapped, key=lambda x: x["name"])
     
