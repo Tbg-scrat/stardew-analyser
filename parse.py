@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from parsers.chests import parse_chests
-from src.modules.chests_processor import process_chest_data
 import traceback
-
 import os
 import time
 from pathlib import Path
@@ -30,6 +27,8 @@ from src.modules.luck import parse_luck
 from src.modules.festivals import parse_festivals
 from src.modules.birthdays import parse_birthdays
 from src.modules.achievements import parse_achievements
+from src.modules.artisan.casks import parse_all_casks_from_save
+from src.modules.chests import parse_chests
 
 SAVE_DIR = Path(os.getenv("SAVE_DIR", "/saves"))
 OUTPUT_HTML = Path("index.html")
@@ -67,7 +66,6 @@ def analyze_save(file_path, object_map):
 
     # 1. SHIPPING CATALOG MERGING
     raw_shipped = parse_shipping(player)
-    # Normalize keys from save file (strip "(O)" if present)
     shipped_save_map = {str(k).replace("(O)", ""): v for k, v in raw_shipped.items()}
 
     shipped_mapped = []
@@ -159,7 +157,6 @@ def analyze_save(file_path, object_map):
     achievements_data = parse_achievements(player, ACHIEVEMENTS_CATALOG)
     data["achievements"] = achievements_data
 
-    # Calculate Monoculture progress (highest count among 33 qualified crops)
     monoculture_items = [item for item in shipped_mapped if item.get("is_monoculture")]
     max_monoculture_count = (
         max([item["count"] for item in monoculture_items], default=0)
@@ -167,7 +164,6 @@ def analyze_save(file_path, object_map):
         else 0
     )
 
-    # Safely iterate over the "list" array inside achievements_data
     for ach in achievements_data.get("list", []):
         if ach.get("name") == "Monoculture":
             ach["progress_current"] = min(max_monoculture_count, 300)
@@ -176,17 +172,20 @@ def analyze_save(file_path, object_map):
             ach["link_module"] = None
             ach["link_filter"] = None
 
-    # Social remains standard
     data["friendships"] = parse_social(player)
     data["daily_intel"] = None
-   
-    # Raw XML extraction -> Module processing
-    raw_chests = parse_chests(root)
-    chest_summary = process_chest_data(raw_chests)
 
+    # 6. CASKS MODULE
+    cask_data = parse_all_casks_from_save(root, player)
+    print(
+        f"[DEBUG parse.py] Casks parsed: {cask_data['total_casks']} total "
+        f"({cask_data['ready_today']} ready today, {cask_data['ready_tomorrow']} ready tomorrow)"
+    )
+    data["casks"] = cask_data
+
+    # 7. CHESTS MODULE
+    chest_summary = parse_chests(root, object_map)
     print(f"[DEBUG parse.py] Material types aggregated: {len(chest_summary['material_totals'])}")
-
-    # Attach chest data directly to the save data dictionary
     data["chests"] = chest_summary
 
     return data
@@ -203,11 +202,10 @@ def generate_dashboard_html(all_saves_data):
         data["farm_name"] = data.get("farm", "Farm")
         farms_context.append(data)
 
-    # Generate unix timestamp for auto-reload detection
     build_time = int(time.time())
 
     rendered_html = template.render(
-        farms=farms_context, build_timestamp=build_time  # <-- ADD THIS PARAMETER
+        farms=farms_context, build_timestamp=build_time
     )
 
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
@@ -219,23 +217,24 @@ def generate_dashboard_html(all_saves_data):
 
 
 if __name__ == "__main__":
-  print("[INFO] Loading game item reference map...")
-  object_map = load_object_map()
+    print("[INFO] Loading game item reference map...")
+    object_map = load_object_map()
 
-  print(f"[INFO] Scanning directory: {SAVE_DIR.resolve()}")
-  saves = find_all_saves(SAVE_DIR)
-  print(f"[INFO] Discovered {len(saves)} save candidate(s).")
+    print(f"[INFO] Scanning directory: {SAVE_DIR.resolve()}")
+    saves = find_all_saves(SAVE_DIR)
+    print(f"[INFO] Discovered {len(saves)} save candidate(s).")
 
-  all_saves_data = {}
-  for save_id, save_path in saves:
-    try:
-      print(f"[INFO] Processing save file: {save_id}")
-      all_saves_data[save_id] = analyze_save(save_path, object_map)
-    except Exception as e:
-      print(f"[ERROR] Detailed traceback for save '{save_id}':")
-      traceback.print_exc()  # <-- ADD THIS TO PRINT THE FULL STACK TRACE
+    all_saves_data = {}
+    for save_id, save_path in saves:
+        try:
+            print(f"[INFO] Processing save file: {save_id}")
+            all_saves_data[save_id] = analyze_save(save_path, object_map)
+        except Exception as e:
+            print(f"[ERROR] Detailed traceback for save '{save_id}':")
+            traceback.print_exc()
 
-  if all_saves_data:
-    generate_dashboard_html(all_saves_data)
-  else:
-    print(f"[WARN] No valid save games were parsed in {SAVE_DIR.resolve()}")
+    if all_saves_data:
+        generate_dashboard_html(all_saves_data)
+    else:
+        print(f"[WARN] No valid save games were parsed in {SAVE_DIR.resolve()}")
+        
