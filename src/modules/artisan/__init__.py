@@ -4,6 +4,8 @@ import logging
 from src.modules.artisan.casks import parse_all_casks_from_save
 from src.modules.artisan.kegs import parse_all_kegs_from_save
 from src.modules.artisan.jars import parse_all_jars_from_save
+from src.modules.artisan.dehydrators import parse_all_dehydrators_from_save
+from src.modules.artisan.bee_houses import parse_all_bee_houses_from_save
 
 logger = logging.getLogger(__name__)
 
@@ -23,25 +25,11 @@ def parse_all_artisan_goods(root, player=None):
     # 3. Parse Preserves Jars
     jars_data = parse_all_jars_from_save(root)
 
-    # Placeholders for Milestone 3 sub-modules
-    dehydrators_data = {
-        "total": 0,
-        "ready_today": 0,
-        "ready_tomorrow": 0,
-        "processing": 0,
-        "idle": 0,
-        "idle_locations": {},
-        "batches": [],
-    }
-    bee_houses_data = {
-        "total": 0,
-        "ready_today": 0,
-        "ready_tomorrow": 0,
-        "processing": 0,
-        "idle": 0,
-        "idle_locations": {},
-        "batches": [],
-    }
+    # 4. Parse Dehydrators
+    dehydrators_data = parse_all_dehydrators_from_save(root)
+
+    # 5. Parse Bee Houses
+    bee_houses_data = parse_all_bee_houses_from_save(root)
 
     # Aggregate Top-Level Statistics
     total_machines = (
@@ -76,12 +64,15 @@ def parse_all_artisan_goods(root, player=None):
         + bee_houses_data["idle"]
     )
 
+    total_hibernating = bee_houses_data.get("hibernating", 0)
+
     return {
         "summary": {
             "total_machines": total_machines,
             "ready_today": total_ready_today,
             "ready_tomorrow": total_ready_tomorrow,
             "idle_machines": total_idle,
+            "hibernating_machines": total_hibernating,
         },
         "casks": casks_data,
         "kegs": kegs_data,
