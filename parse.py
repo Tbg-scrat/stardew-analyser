@@ -2,12 +2,10 @@
 
 import traceback
 import os
-import time
 from pathlib import Path
-from jinja2 import Environment, FileSystemLoader
 
 from src.core.xml_reader import get_player_node
-from src.core.reference_data import load_object_map
+from src.core.renderer import generate_dashboard_html
 from data.data_loader import (
     FISH_CATALOG,
     MUSEUM_CATALOG,
@@ -31,7 +29,6 @@ from src.modules.artisan.casks import parse_all_casks_from_save
 from src.modules.chests import parse_chests
 
 SAVE_DIR = Path(os.getenv("SAVE_DIR", "/saves"))
-OUTPUT_HTML = Path("index.html")
 
 
 def find_all_saves(saves_dir):
@@ -48,7 +45,7 @@ def find_all_saves(saves_dir):
     return sorted(save_files, key=lambda x: x[0])
 
 
-def analyze_save(file_path, object_map):
+def analyze_save(file_path):
     root, player = get_player_node(file_path)
 
     data = parse_player(player)
@@ -88,42 +85,14 @@ def analyze_save(file_path, object_map):
     data["casks"] = cask_data
 
     # 7. CHESTS MODULE
-    chest_summary = parse_chests(root, object_map)
+    chest_summary = parse_chests(root)
     print(f"[DEBUG parse.py] Material types aggregated: {len(chest_summary['material_totals'])}")
     data["chests"] = chest_summary
 
     return data
 
 
-def generate_dashboard_html(all_saves_data):
-    env = Environment(loader=FileSystemLoader("templates", encoding="utf-8"))
-    template = env.get_template("index.html")
-
-    farms_context = []
-    for save_id, data in all_saves_data.items():
-        data["farm_id"] = save_id
-        data["farmer_name"] = data.get("farmer", "Farmer")
-        data["farm_name"] = data.get("farm", "Farm")
-        farms_context.append(data)
-
-    build_time = int(time.time())
-
-    rendered_html = template.render(
-        farms=farms_context, build_timestamp=build_time
-    )
-
-    with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
-        f.write(rendered_html)
-    print(
-        f"[OK] Generated static dashboard for {len(all_saves_data)} save game(s)"
-        f" -> {OUTPUT_HTML.resolve()}"
-    )
-
-
 if __name__ == "__main__":
-    print("[INFO] Loading game item reference map...")
-    object_map = load_object_map()
-
     print(f"[INFO] Scanning directory: {SAVE_DIR.resolve()}")
     saves = find_all_saves(SAVE_DIR)
     print(f"[INFO] Discovered {len(saves)} save candidate(s).")
@@ -132,7 +101,7 @@ if __name__ == "__main__":
     for save_id, save_path in saves:
         try:
             print(f"[INFO] Processing save file: {save_id}")
-            all_saves_data[save_id] = analyze_save(save_path, object_map)
+            all_saves_data[save_id] = analyze_save(save_path)
         except Exception as e:
             print(f"[ERROR] Detailed traceback for save '{save_id}':")
             traceback.print_exc()

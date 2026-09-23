@@ -1,6 +1,7 @@
 # src/modules/chests.py
 
 import xml.etree.ElementTree as ET
+from src.core.reference_data import load_object_map
 
 
 def _parse_item_node(item_node, object_map=None):
@@ -159,8 +160,11 @@ def _extract_raw_chests(root, object_map=None):
 def parse_chests(root, object_map=None):
     """
     Main entry point for parsing chest data from save XML.
-    Extracts chests and aggregates material totals into a unified dictionary.
+    Auto-loads object map if not explicitly passed.
     """
+    if object_map is None:
+        object_map = load_object_map()
+
     raw_chests = _extract_raw_chests(root, object_map)
     material_totals = {}
 
