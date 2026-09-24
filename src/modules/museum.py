@@ -1,6 +1,9 @@
 # src/modules/museum.py
 
+import logging
 from data.data_loader import MUSEUM_CATALOG
+
+logger = logging.getLogger(__name__)
 
 
 def format_wiki_filename(name):
@@ -12,6 +15,10 @@ def format_wiki_filename(name):
 
 def parse_museum(root_node):
     """Extract LibraryMuseum donated pieces."""
+    if root_node is None:
+        logger.warning("SaveGame root_node is None. Returning empty museum collection.")
+        return []
+
     museum_pieces = {}
     locations = root_node.find("locations")
     if locations is not None:
@@ -24,7 +31,10 @@ def parse_museum(root_node):
                         item_id = val_node.findtext("string") or val_node.findtext("int")
                         if item_id:
                             museum_pieces[str(item_id)] = True
-    return list(museum_pieces.keys())
+
+    donated_list = list(museum_pieces.keys())
+    logger.debug(f"Extracted {len(donated_list)} donated pieces from LibraryMuseum XML")
+    return donated_list
 
 
 def get_formatted_museum(root_node, catalog=None):
@@ -33,6 +43,7 @@ def get_formatted_museum(root_node, catalog=None):
     returning a sorted list of museum piece dictionaries ready for the UI.
     """
     if catalog is None:
+        logger.debug("Using default MUSEUM_CATALOG")
         catalog = MUSEUM_CATALOG
 
     raw_museum = parse_museum(root_node)
@@ -57,6 +68,10 @@ def get_formatted_museum(root_node, catalog=None):
             "image": catalog_item.get("image", ""),
             "wiki_icon": format_wiki_filename(item_name),
         })
+
+    donated_total = sum(1 for m in museum_mapped if m["is_unlocked"])
+    catalog_total = len(museum_mapped)
+    logger.debug(f"Museum progress: {donated_total}/{catalog_total} items donated")
 
     return sorted(museum_mapped, key=lambda x: x["name"])
     

@@ -1,8 +1,13 @@
+# src/modules/weather.py
 # -*- coding: utf-8 -*-
 """
 Weather module for Stardew Valley save file parsing.
 Extracts today's live weather conditions and tomorrow's forecast.
 """
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 WEATHER_MAP = {
     "Sun": {"name": "Sunny", "icon": "\u2600\ufe0f", "css_class": "weather-sunny"},
@@ -13,6 +18,7 @@ WEATHER_MAP = {
     "Snow": {"name": "Snowy", "icon": "\u2744\ufe0f", "css_class": "weather-snowy"},
 }
 
+
 def parse_weather(root):
     """
     Parses today's live weather and tomorrow's forecast from the save XML root.
@@ -21,6 +27,7 @@ def parse_weather(root):
     :return: dict containing today's weather and tomorrow's valley/island forecasts
     """
     if root is None:
+        logger.warning("SaveGame root is None. Defaulting weather conditions to Unknown.")
         unknown = {"id": "Unknown", "name": "Unknown", "icon": "\u2753", "css_class": "weather-unknown"}
         return {"today": unknown, "valley": unknown, "island": None}
 
@@ -70,6 +77,11 @@ def parse_weather(root):
             "css_class": mapped_island["css_class"]
         }
 
+    island_str = f" | Tomorrow Island: {island_data['name']}" if island_data else ""
+    logger.debug(
+        f"Weather parsed -> Today: {today_data['name']} | Tomorrow Valley: {valley_data['name']}{island_str}"
+    )
+
     return {
         "today": {
             "id": today_key,
@@ -85,3 +97,4 @@ def parse_weather(root):
         },
         "island": island_data
     }
+    

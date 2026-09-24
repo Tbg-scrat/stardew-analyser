@@ -1,7 +1,10 @@
 # src/modules/shipping.py
 
+import logging
 from src.core.xml_reader import get_key_value
 from data.data_loader import SHIPPING_CATALOG
+
+logger = logging.getLogger(__name__)
 
 
 def format_wiki_filename(name):
@@ -13,6 +16,10 @@ def format_wiki_filename(name):
 
 def parse_shipping(player_node):
     """Extract basicShipped item counts from the player XML node."""
+    if player_node is None:
+        logger.warning("Player node is None. Returning empty basicShipped dictionary.")
+        return {}
+
     shipped_items = {}
     basic_shipped = player_node.find("basicShipped")
     if basic_shipped is not None:
@@ -20,7 +27,13 @@ def parse_shipping(player_node):
             item_id, val_node = get_key_value(item)
             if item_id and val_node is not None:
                 count = val_node.findtext("int", "0")
-                shipped_items[str(item_id)] = int(count)
+                try:
+                    count_int = int(count)
+                except ValueError:
+                    count_int = 0
+                shipped_items[str(item_id)] = count_int
+
+    logger.debug(f"Extracted {len(shipped_items)} shipped items from basicShipped XML")
     return shipped_items
 
 
@@ -30,6 +43,7 @@ def get_formatted_shipping(player_node, catalog=None):
     returning a sorted list of shipping item dictionaries ready for the UI.
     """
     if catalog is None:
+        logger.debug("Using default SHIPPING_CATALOG")
         catalog = SHIPPING_CATALOG
 
     raw_shipped = parse_shipping(player_node)
@@ -59,6 +73,10 @@ def get_formatted_shipping(player_node, catalog=None):
             "image": catalog_item.get("image", ""),
             "wiki_icon": format_wiki_filename(item_name),
         })
+
+    shipped_total = sum(1 for s in shipped_mapped if s["is_unlocked"])
+    catalog_total = len(shipped_mapped)
+    logger.debug(f"Shipping progress: {shipped_total}/{catalog_total} items shipped")
 
     return sorted(shipped_mapped, key=lambda x: x["name"])
     

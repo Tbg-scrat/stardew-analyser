@@ -107,6 +107,12 @@ def parse_all_artisan_goods(root, player=None):
     for loc, count in bee_houses_data.get("idle_locations", {}).items():
         _add_idle(loc, "bee_houses", count)
 
+    logger.debug(
+        f"Aggregated {total_machines} artisan machines across save: "
+        f"{total_processing} processing, {total_idle} idle, {total_hibernating} hibernating, "
+        f"{total_ready_today} ready today, {total_ready_tomorrow} ready tomorrow"
+    )
+
     return {
         "summary": {
             "total_machines": total_machines,

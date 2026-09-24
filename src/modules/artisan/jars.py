@@ -174,8 +174,8 @@ def parse_all_jars_from_save(root):
                 "ready": loc_ready,
                 "processing": loc_proc,
             }
-            print(
-                f"[DEBUG jars.py] {loc_name}: {loc_total} Preserves Jars "
+            logger.debug(
+                f"{loc_name}: {loc_total} Preserves Jars "
                 f"({loc_proc} processing, {loc_idle} idle, {loc_ready} ready)"
             )
 

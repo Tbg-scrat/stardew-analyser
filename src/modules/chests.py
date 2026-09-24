@@ -1,7 +1,10 @@
 # src/modules/chests.py
 
+import logging
 import xml.etree.ElementTree as ET
 from src.core.reference_data import load_object_map
+
+logger = logging.getLogger(__name__)
 
 
 def _parse_item_node(item_node, object_map=None):
@@ -150,6 +153,7 @@ def _extract_raw_chests(root, object_map=None):
                 "chest_items": chest_items,
             })
 
+    logger.debug(f"Extracted {total_chests} chests containing {total_items} total item units across all locations")
     return {
         "total_chests": total_chests,
         "total_items": total_items,
@@ -163,6 +167,7 @@ def parse_chests(root, object_map=None):
     Auto-loads object map if not explicitly passed.
     """
     if object_map is None:
+        logger.debug("Loading reference object map")
         object_map = load_object_map()
 
     raw_chests = _extract_raw_chests(root, object_map)
@@ -189,6 +194,8 @@ def parse_chests(root, object_map=None):
     sorted_materials = sorted(
         material_totals.values(), key=lambda x: x["count"], reverse=True
     )
+
+    logger.debug(f"Aggregated {len(sorted_materials)} unique material types from chests")
 
     return {
         "total_chests": raw_chests.get("total_chests", 0),

@@ -1,3 +1,4 @@
+# src/modules/social.py
 # -*- coding: utf-8 -*-
 """
 Social module for Stardew Valley save file parsing.
@@ -5,12 +6,16 @@ Extracts villager friendships, heart levels, daily interaction statuses, loved g
 and handles sorting by friendship points and marital status.
 """
 
+import logging
 from src.core.gift_data import get_loved_gifts
+
+logger = logging.getLogger(__name__)
 
 DATABLE_VILLAGERS = {
     "Abigail", "Alex", "Elliott", "Emily", "Haley", "Harvey",
     "Leah", "Maru", "Penny", "Sam", "Sebastian", "Shane"
 }
+
 
 def parse_social(player):
     """
@@ -20,6 +25,7 @@ def parse_social(player):
     :return: list of villager dictionaries sorted descending by friendship points
     """
     if player is None:
+        logger.warning("Player node is None. Returning empty friendship list.")
         return []
 
     friendships_list = []
@@ -76,7 +82,10 @@ def parse_social(player):
                     "loved_gifts": get_loved_gifts(npc_name)
                 })
 
+    logger.debug(f"Extracted {len(friendships_list)} villager friendship records")
+
     # Sort list descending by friendship points (highest points first)
     friendships_list.sort(key=lambda x: x["points"], reverse=True)
     
     return friendships_list
+    

@@ -1,7 +1,10 @@
 # src/modules/fishing.py
 
+import logging
 from src.core.xml_reader import get_key_value
 from data.data_loader import FISH_CATALOG
+
+logger = logging.getLogger(__name__)
 
 
 def format_wiki_filename(name):
@@ -13,6 +16,10 @@ def format_wiki_filename(name):
 
 def parse_fishing(player_node):
     """Extract fishCaught records with quantity and max length."""
+    if player_node is None:
+        logger.warning("Player node is None. Returning empty fishCaught record.")
+        return {}
+
     fish_caught = {}
     fish_node = player_node.find("fishCaught")
     if fish_node is not None:
@@ -37,6 +44,8 @@ def parse_fishing(player_node):
                         count = int(int_val)
 
                 fish_caught[str(item_id)] = {"count": count, "length": length}
+
+    logger.debug(f"Extracted {len(fish_caught)} caught fish entries from player XML")
     return fish_caught
 
 
@@ -46,6 +55,7 @@ def get_formatted_fishing(player_node, catalog=None):
     returning a sorted list of fish item dictionaries ready for the UI.
     """
     if catalog is None:
+        logger.debug("Using default FISH_CATALOG")
         catalog = FISH_CATALOG
 
     raw_fish = parse_fishing(player_node)
@@ -72,6 +82,10 @@ def get_formatted_fishing(player_node, catalog=None):
             "image": catalog_item.get("image", ""),
             "wiki_icon": format_wiki_filename(item_name),
         })
+
+    caught_total = sum(1 for f in fish_mapped if f["is_unlocked"])
+    catalog_total = len(fish_mapped)
+    logger.debug(f"Fishing progress: {caught_total}/{catalog_total} fish species caught")
 
     return sorted(fish_mapped, key=lambda x: x["name"])
     

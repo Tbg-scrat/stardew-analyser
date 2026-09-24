@@ -1,3 +1,4 @@
+# src/modules/cooking.py
 # -*- coding: utf-8 -*-
 """
 Cooking module for Stardew Valley save file parsing.
@@ -5,7 +6,10 @@ Extracts cooked recipe counts keyed by item ID string from <recipesCooked>
 and formats catalog data for UI rendering.
 """
 
+import logging
 from data.data_loader import COOKING_CATALOG
+
+logger = logging.getLogger(__name__)
 
 
 def format_wiki_filename(name):
@@ -23,6 +27,7 @@ def parse_cooking(player):
     :return: dict mapping item IDs (e.g. "194", "253") to cooked counts
     """
     if player is None:
+        logger.warning("Player node is None. Returning empty cooking counts.")
         return {}
 
     cooked_counts = {}
@@ -48,6 +53,7 @@ def parse_cooking(player):
                 if raw_key:
                     cooked_counts[raw_key] = count
 
+    logger.debug(f"Extracted {len(cooked_counts)} cooked recipe entries from player XML")
     return cooked_counts
 
 
@@ -57,6 +63,7 @@ def get_formatted_cooking(player, catalog=None):
     returning a sorted list of cooking recipe dictionaries ready for the UI.
     """
     if catalog is None:
+        logger.debug("Using default COOKING_CATALOG")
         catalog = COOKING_CATALOG
 
     raw_cooking = parse_cooking(player)
@@ -86,6 +93,10 @@ def get_formatted_cooking(player, catalog=None):
                 ),
             }
         )
+
+    cooked_total = sum(1 for c in cooking_mapped if c["is_unlocked"])
+    catalog_total = len(cooking_mapped)
+    logger.debug(f"Cooking progress: {cooked_total}/{catalog_total} recipes cooked")
 
     return sorted(cooking_mapped, key=lambda x: x["name"])
     

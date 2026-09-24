@@ -173,8 +173,8 @@ def parse_all_dehydrators_from_save(root):
                 "ready": loc_ready,
                 "processing": loc_proc,
             }
-            print(
-                f"[DEBUG dehydrators.py] {loc_name}: {loc_total} Dehydrators "
+            logger.debug(
+                f"{loc_name}: {loc_total} Dehydrators "
                 f"({loc_proc} processing, {loc_idle} idle, {loc_ready} ready)"
             )
 
@@ -193,3 +193,4 @@ def parse_all_dehydrators_from_save(root):
         "location_stats": location_stats,
         "batches": sorted_batches,
     }
+    

@@ -1,8 +1,11 @@
 # src/core/renderer.py
 
+import logging
 import time
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
+
+logger = logging.getLogger(__name__)
 
 OUTPUT_HTML = Path("index.html")
 
@@ -30,8 +33,8 @@ def generate_dashboard_html(all_saves_data, output_path=OUTPUT_HTML):
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(rendered_html)
 
-    print(
-        f"[OK] Generated static dashboard for {len(all_saves_data)} save game(s)"
+    logger.info(
+        f"Generated static dashboard for {len(all_saves_data)} save game(s)"
         f" -> {Path(output_path).resolve()}"
     )
     

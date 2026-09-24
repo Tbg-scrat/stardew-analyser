@@ -186,8 +186,8 @@ def parse_all_bee_houses_from_save(root):
                 "ready": loc_ready,
                 "processing": loc_proc,
             }
-            print(
-                f"[DEBUG bee_houses.py] {loc_name}: {loc_total} Bee Houses "
+            logger.debug(
+                f"{loc_name}: {loc_total} Bee Houses "
                 f"({loc_proc} processing, {loc_idle} idle, {loc_hibernating} hibernating, {loc_ready} ready)"
             )
 

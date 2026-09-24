@@ -1,8 +1,13 @@
+# src/modules/festivals.py
 # -*- coding: utf-8 -*-
 """
 Festivals module for Stardew Valley save file parsing.
 Determines the current date and calculates upcoming seasonal festivals.
 """
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 FESTIVAL_CALENDAR = {
     "spring": [
@@ -30,6 +35,7 @@ FESTIVAL_CALENDAR = {
     ]
 }
 
+
 def parse_festivals(root):
     """
     Parses current date and identifies the next upcoming festival in the season.
@@ -38,6 +44,7 @@ def parse_festivals(root):
     :return: dict containing current date info and next festival details
     """
     if root is None:
+        logger.warning("SaveGame root is None. Defaulting to Spring Day 1 festival status.")
         return {"current_day": 1, "season": "spring", "next_festival": None}
 
     season_node = root.find("currentSeason")
@@ -58,9 +65,11 @@ def parse_festivals(root):
         next_event = upcoming[0]
         days_away = next_event["day"] - day
         status_text = "Today!" if days_away == 0 else f"In {days_away} day{'s' if days_away > 1 else ''} (Day {next_event['day']})"
+        logger.debug(f"Next festival: {next_event['name']} on {season.capitalize()} {next_event['day']} ({status_text})")
     else:
         next_event = None
         status_text = "None remaining this season"
+        logger.debug(f"No remaining festivals in {season.capitalize()} after day {day}")
 
     return {
         "season": season.capitalize(),
@@ -68,3 +77,4 @@ def parse_festivals(root):
         "next_festival": next_event,
         "status_text": status_text
     }
+    

@@ -1,7 +1,8 @@
+# src/modules/artisan/casks.py
 # -*- coding: utf-8 -*-
+
 import json
 import logging
-import xml.etree.ElementTree as ET
 from pathlib import Path
 
 logger = logging.getLogger(__name__)
@@ -167,7 +168,7 @@ def parse_all_casks_from_save(root, player=None):
             house_level = 0
 
     if house_level < 3:
-        logger.debug("[casks.py] Primary player houseUpgradeLevel < 3. Cellar is not built.")
+        logger.debug("Primary player houseUpgradeLevel < 3. Cellar is not built.")
         return aggregated_result
 
     locations_node = root.find("locations")
@@ -202,6 +203,12 @@ def parse_all_casks_from_save(root, player=None):
     aggregated_result["batches"] = sorted(
         list(final_batch_map.values()),
         key=lambda b: (b["days_remaining"], b["name"])
+    )
+
+    logger.debug(
+        f"Cellar: {aggregated_result['total_casks']} Casks "
+        f"({aggregated_result['aging_count']} aging, {aggregated_result['empty_casks']} empty, "
+        f"{aggregated_result['ready_today']} ready)"
     )
 
     return aggregated_result

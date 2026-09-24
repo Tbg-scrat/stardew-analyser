@@ -1,10 +1,14 @@
+# src/modules/birthdays.py
 # -*- coding: utf-8 -*-
 """
 Birthdays module for Stardew Valley save file parsing.
 Tracks villager birthdays, identifies the next upcoming birthday, and attaches loved gifts.
 """
 
+import logging
 from src.core.gift_data import get_loved_gifts
+
+logger = logging.getLogger(__name__)
 
 VILLAGER_BIRTHDAYS = {
     "spring": [
@@ -50,6 +54,7 @@ VILLAGER_BIRTHDAYS = {
     ]
 }
 
+
 def parse_birthdays(root):
     """
     Parses current date, identifies the next upcoming birthday in the season,
@@ -59,6 +64,7 @@ def parse_birthdays(root):
     :return: dict containing next birthday details, status text, and loved gifts
     """
     if root is None:
+        logger.warning("SaveGame root is None. Defaulting to no upcoming birthday.")
         return {"next_birthday": None, "status_text": "None"}
 
     season_node = root.find("currentSeason")
@@ -78,11 +84,14 @@ def parse_birthdays(root):
         days_away = next_bday["day"] - day
         status_text = "Today!" if days_away == 0 else f"In {days_away} day{'s' if days_away > 1 else ''} (Day {next_bday['day']})"
         next_bday["loved_gifts"] = get_loved_gifts(next_bday["name"])
+        logger.debug(f"Next birthday: {next_bday['name']} on {season.capitalize()} {next_bday['day']} ({status_text})")
     else:
         next_bday = None
         status_text = "None remaining this season"
+        logger.debug(f"No remaining birthdays in {season.capitalize()} after day {day}")
 
     return {
         "next_birthday": next_bday,
         "status_text": status_text
     }
+    

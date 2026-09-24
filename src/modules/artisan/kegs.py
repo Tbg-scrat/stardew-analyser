@@ -178,8 +178,8 @@ def parse_all_kegs_from_save(root):
                 "ready": loc_ready,
                 "processing": loc_proc,
             }
-            print(
-                f"[DEBUG kegs.py] {loc_name}: {loc_total} Kegs "
+            logger.debug(
+                f"{loc_name}: {loc_total} Kegs "
                 f"({loc_proc} processing, {loc_idle} idle, {loc_ready} ready)"
             )
 

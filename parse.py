@@ -1,8 +1,15 @@
+# parse.py
 # -*- coding: utf-8 -*-
 
-import traceback
+import logging
 import os
 from pathlib import Path
+
+from src.core.logger import setup_logging
+
+# Initialize central logging configuration
+setup_logging()
+logger = logging.getLogger("parse")
 
 from src.core.xml_reader import get_player_node
 from src.core.renderer import generate_dashboard_html
@@ -27,7 +34,7 @@ SAVE_DIR = Path(os.getenv("SAVE_DIR", "/saves"))
 def find_all_saves(saves_dir):
     save_files = []
     if not saves_dir.exists():
-        print(f"[WARN] Save directory '{saves_dir.resolve()}' does not exist.")
+        logger.warning(f"Save directory '{saves_dir.resolve()}' does not exist.")
         return save_files
 
     for item in saves_dir.iterdir():
@@ -42,6 +49,19 @@ def analyze_save(file_path):
     root, player = get_player_node(file_path)
 
     data = parse_player(player)
+
+    # Extract calendar date from root save node
+    try:
+        data["day_of_month"] = int(root.findtext("dayOfMonth", "1"))
+    except ValueError:
+        data["day_of_month"] = 1
+
+    data["season"] = root.findtext("currentSeason", "spring")
+
+    try:
+        data["year"] = int(root.findtext("year", "1"))
+    except ValueError:
+        data["year"] = 1
 
     # Base overview modules
     data["weather"] = parse_weather(root)
@@ -63,42 +83,69 @@ def analyze_save(file_path):
     data["friendships"] = parse_social(player)
     data["daily_intel"] = None
 
-    # ARTISAN MODULE AGGREGATOR
+    # Artisan Module
     artisan_data = parse_all_artisan_goods(root, player)
     data["artisan"] = artisan_data
-    # Backwards compatibility key for cellar cask overview
     data["casks"] = artisan_data["casks"]
-
-    print(
-        f"[DEBUG parse.py] Artisan machines parsed: {artisan_data['summary']['total_machines']} total "
-        f"({artisan_data['summary']['ready_today']} ready today, "
-        f"{artisan_data['summary']['ready_tomorrow']} ready tomorrow)"
-    )
 
     # Chests Module
     chest_summary = parse_chests(root)
-    print(f"[DEBUG parse.py] Material types aggregated: {len(chest_summary['material_totals'])}")
     data["chests"] = chest_summary
 
     return data
 
 
+
+def log_save_summary(save_id, data):
+    """Logs a single-line INFO summary confirming successful extraction across all modules."""
+    farmer = data.get("farmer", "Farmer")
+    farm = data.get("farm", "Farm")
+    day = data.get("day_of_month", 1)
+    season = (data.get("season") or "spring").capitalize()
+    year = data.get("year", 1)
+
+    ach_unlocked = data.get("achievements", {}).get("unlocked_count", 0)
+    ach_total = data.get("achievements", {}).get("total", 0)
+
+    shipped_unlocked = len([i for i in data.get("shipped_items", []) if i.get("is_unlocked")])
+    shipped_total = len(data.get("shipped_items", []))
+
+    fish_unlocked = len([i for i in data.get("fish_caught", []) if i.get("is_unlocked")])
+    fish_total = len(data.get("fish_caught", []))
+
+    museum_unlocked = len([i for i in data.get("museum_pieces", []) if i.get("is_unlocked")])
+    museum_total = len(data.get("museum_pieces", []))
+
+    artisan_machines = data.get("artisan", {}).get("summary", {}).get("total_machines", 0)
+    chests_count = data.get("chests", {}).get("total_chests", 0)
+
+    logger.info(
+        f"Parsed '{save_id}' ({farmer} @ {farm} Farm | Y{year} {season} {day}) -> "
+        f"Achievements: {ach_unlocked}/{ach_total} | "
+        f"Shipped: {shipped_unlocked}/{shipped_total} | "
+        f"Fish: {fish_unlocked}/{fish_total} | "
+        f"Museum: {museum_unlocked}/{museum_total} | "
+        f"Artisan: {artisan_machines} machines | "
+        f"Chests: {chests_count}"
+    )
+
+
 if __name__ == "__main__":
-    print(f"[INFO] Scanning directory: {SAVE_DIR.resolve()}")
+    logger.info(f"Scanning directory: {SAVE_DIR.resolve()}")
     saves = find_all_saves(SAVE_DIR)
-    print(f"[INFO] Discovered {len(saves)} save candidate(s).")
+    logger.info(f"Discovered {len(saves)} save candidate(s).")
 
     all_saves_data = {}
     for save_id, save_path in saves:
         try:
-            print(f"[INFO] Processing save file: {save_id}")
-            all_saves_data[save_id] = analyze_save(save_path)
+            data = analyze_save(save_path)
+            all_saves_data[save_id] = data
+            log_save_summary(save_id, data)
         except Exception as e:
-            print(f"[ERROR] Detailed traceback for save '{save_id}':")
-            traceback.print_exc()
+            logger.exception(f"Error processing save '{save_id}': {e}")
 
     if all_saves_data:
         generate_dashboard_html(all_saves_data)
     else:
-        print(f"[WARN] No valid save games were parsed in {SAVE_DIR.resolve()}")
+        logger.warning(f"No valid save games were parsed in {SAVE_DIR.resolve()}")
         
