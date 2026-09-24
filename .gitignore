@@ -11,3 +11,4 @@ Thumbs.db
 .idea/
 docker-compose.override.yml
 /saves
+.venv/
