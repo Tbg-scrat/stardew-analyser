@@ -28,7 +28,7 @@ def resolve_item_icon(item_name):
     name_lower = item_name.lower().strip()
     if name_lower in ARTISAN_COLORS:
         return ARTISAN_COLORS[name_lower]
-    return item_name.replace(" ", "_").replace("'", "%27")
+    return item_name.replace(" ", "_").replace("'", "%27") + ".png"
 
 
 def _get_all_locations(root):
@@ -59,7 +59,8 @@ def _get_all_locations(root):
 
 def parse_all_kegs_from_save(root):
     """
-    Parses all Keg objects across all locations and building interiors in the save.
+    Parses all Keg objects across all locations in the save.
+    Keg QualifiedItemId: (BC)12 or name=="Keg" or parentSheetIndex=="12".
     """
     total = 0
     idle = 0
@@ -92,10 +93,15 @@ def parse_all_kegs_from_save(root):
             q_id = obj.findtext("QualifiedItemId", "")
             is_big_craftable = obj.findtext("bigCraftable", "").lower() == "true"
 
+            # Explicitly exclude Furnaces and non-keg machinery
+            if obj_name in ["Furnace", "Heavy Furnace"] or q_id in ["(BC)13", "(BC)HeavyFurnace"]:
+                continue
+
+            # Keg Identification: (BC)12 or name == "Keg"
             is_keg = (
                 obj_name == "Keg"
-                or q_id == "(BC)13"
-                or (is_big_craftable and parent_index == "13")
+                or q_id in ["(BC)12", "(BC)Keg"]
+                or (is_big_craftable and parent_index == "12")
             )
 
             if not is_keg:

@@ -28,7 +28,7 @@ def resolve_item_icon(item_name):
     name_lower = item_name.lower().strip()
     if name_lower in ARTISAN_COLORS:
         return ARTISAN_COLORS[name_lower]
-    return item_name.replace(" ", "_").replace("'", "%27")
+    return item_name.replace(" ", "_").replace("'", "%27") + ".png"
 
 
 def _get_all_locations(root):
@@ -59,7 +59,8 @@ def _get_all_locations(root):
 
 def parse_all_jars_from_save(root):
     """
-    Parses all Preserves Jar objects across all locations and building interiors in the save.
+    Parses all Preserves Jar objects across all locations in the save.
+    Preserves Jar QualifiedItemId: (BC)15 or name=="Preserves Jar" or parentSheetIndex=="15".
     """
     total = 0
     idle = 0
@@ -92,9 +93,10 @@ def parse_all_jars_from_save(root):
             q_id = obj.findtext("QualifiedItemId", "")
             is_big_craftable = obj.findtext("bigCraftable", "").lower() == "true"
 
+            # Preserves Jar Identification: (BC)15 or name == "Preserves Jar"
             is_jar = (
                 obj_name == "Preserves Jar"
-                or q_id == "(BC)15"
+                or q_id in ["(BC)15", "(BC)PreservesJar"]
                 or (is_big_craftable and parent_index == "15")
             )
 

@@ -69,7 +69,7 @@
                 <button class="module-nav-btn" data-module="cooking" onclick="switchModule('{{ farm.farm_id }}', 'cooking')">🍳 Cooking <span class="module-badge">{{ farm.recipes_cooked|selectattr('is_unlocked')|list|length }}/{{ farm.recipes_cooked|length }}</span></button>
                 <button class="module-nav-btn" data-module="achievements" onclick="switchModule('{{ farm.farm_id }}', 'achievements')">🏆 Achievements <span class="module-badge">{{ farm.achievements.unlocked_count }}/{{ farm.achievements.total }}</span></button>
                 <button class="module-nav-btn" data-module="social" onclick="switchModule('{{ farm.farm_id }}', 'social')">👥 Social <span class="module-badge">{{ farm.friendships|length }}</span></button>
-                <button class="module-nav-btn" data-module="casks" onclick="switchModule('{{ farm.farm_id }}', 'casks')">🍷 Casks <span class="module-badge">{{ farm.casks.ready_today if farm.casks else 0 }}/{{ farm.casks.total_casks if farm.casks else 0 }}</span></button>
+                <button class="module-nav-btn" data-module="artisan" onclick="switchModule('{{ farm.farm_id }}', 'artisan')">🏺 Artisan Goods <span class="module-badge">{{ farm.artisan.summary.ready_today if farm.artisan else 0 }}/{{ farm.artisan.summary.total_machines if farm.artisan else 0 }}</span></button>
                 <button class="module-nav-btn" data-module="chests" onclick="switchModule('{{ farm.farm_id }}', 'chests')">🧰 Chests <span class="module-badge">{{ farm.chests.total_chests if farm.chests else 0 }}</span></button>
             </div>
 
@@ -97,8 +97,8 @@
                 {% include 'partials/social.html' %}
             </div>
 
-            <div class="module-pane" id="module-{{ farm.farm_id }}-casks">
-                {% include 'partials/casks.html' %}
+            <div class="module-pane" id="module-{{ farm.farm_id }}-artisan">
+                {% include 'partials/artisan.html' %}
             </div>
 
             <div class="module-pane" id="module-{{ farm.farm_id }}-chests">

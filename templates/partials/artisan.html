@@ -1,0 +1,340 @@
+<!-- templates/partials/artisan.html -->
+
+<style>
+    .artisan-summary-bar {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 0.85rem;
+        margin-bottom: 1.5rem;
+    }
+    .artisan-stat-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1rem;
+        text-align: center;
+    }
+    .artisan-stat-val {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #ffffff;
+    }
+    .artisan-stat-label {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-top: 0.25rem;
+    }
+    .artisan-stat-val.ready { color: #4ade80; }
+    .artisan-stat-val.tomorrow { color: #38bdf8; }
+    .artisan-stat-val.idle { color: #f97316; }
+    .artisan-stat-val.hibernating { color: #a855f7; }
+
+    .idle-alert-banner {
+        background: rgba(249, 115, 22, 0.1);
+        border: 1px solid rgba(249, 115, 22, 0.3);
+        border-radius: 10px;
+        padding: 1rem 1.25rem;
+        margin-bottom: 1.5rem;
+        color: #fdba74;
+        font-size: 0.875rem;
+    }
+    .idle-alert-title {
+        font-weight: 700;
+        margin-bottom: 0.35rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .idle-alert-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 0.5rem;
+    }
+    .idle-alert-tag {
+        background: rgba(249, 115, 22, 0.2);
+        padding: 0.2rem 0.6rem;
+        border-radius: 6px;
+        font-size: 0.8rem;
+    }
+
+    .artisan-section-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 1.5rem 0 0.85rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .artisan-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 0.85rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .artisan-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 0.85rem;
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+    .artisan-card:hover {
+        transform: translateY(-2px);
+        border-color: var(--bg-card-hover);
+    }
+
+    .artisan-icon-wrapper {
+        position: relative;
+        width: 48px;
+        height: 48px;
+        background: var(--bg-subtle);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .artisan-icon-wrapper img {
+        width: 36px;
+        height: 36px;
+        object-fit: contain;
+    }
+    .artisan-badge-count {
+        position: absolute;
+        bottom: -4px;
+        right: -4px;
+        background: #2563eb;
+        color: #ffffff;
+        font-size: 0.7rem;
+        font-weight: 700;
+        padding: 0.05rem 0.35rem;
+        border-radius: 9999px;
+    }
+
+    .artisan-info {
+        flex-grow: 1;
+        min-width: 0;
+    }
+    .artisan-item-name {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #ffffff;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .artisan-item-meta {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        margin-top: 0.15rem;
+    }
+    .status-pill {
+        display: inline-block;
+        font-size: 0.7rem;
+        font-weight: 700;
+        padding: 0.1rem 0.45rem;
+        border-radius: 4px;
+        margin-top: 0.35rem;
+    }
+    .status-pill.ready { background: rgba(74, 222, 128, 0.2); color: #4ade80; }
+    .status-pill.tomorrow { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
+    .status-pill.processing { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+</style>
+
+<!-- Top Metric Bar -->
+<div class="artisan-summary-bar">
+    <div class="artisan-stat-card">
+        <div class="artisan-stat-val">{{ farm.artisan.summary.total_machines }}</div>
+        <div class="artisan-stat-label">Total Machines</div>
+    </div>
+    <div class="artisan-stat-card">
+        <div class="artisan-stat-val ready">{{ farm.artisan.summary.ready_today }}</div>
+        <div class="artisan-stat-label">Ready Today</div>
+    </div>
+    <div class="artisan-stat-card">
+        <div class="artisan-stat-val tomorrow">{{ farm.artisan.summary.ready_tomorrow }}</div>
+        <div class="artisan-stat-label">Ready Tomorrow</div>
+    </div>
+    <div class="artisan-stat-card">
+        <div class="artisan-stat-val">{{ farm.artisan.summary.processing_machines }}</div>
+        <div class="artisan-stat-label">Processing</div>
+    </div>
+    <div class="artisan-stat-card">
+        <div class="artisan-stat-val idle">{{ farm.artisan.summary.idle_machines }}</div>
+        <div class="artisan-stat-label">Idle</div>
+    </div>
+    {% if farm.artisan.summary.hibernating_machines > 0 %}
+    <div class="artisan-stat-card">
+        <div class="artisan-stat-val hibernating">{{ farm.artisan.summary.hibernating_machines }}</div>
+        <div class="artisan-stat-label">Hibernating (Winter)</div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Idle Machine Alert Banner -->
+{% if farm.artisan.idle_summary %}
+<div class="idle-alert-banner">
+    <div class="idle-alert-title">⚠️ Idle Machines Requiring Refill</div>
+    <div class="idle-alert-list">
+        {% for location, machines in farm.artisan.idle_summary.items() %}
+            {% for m_type, count in machines.items() %}
+                <span class="idle-alert-tag">📍 {{ location }}: {{ count }} {{ m_type|capitalize }}</span>
+            {% endfor %}
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<!-- Search & Filter Controls -->
+<div style="display: flex; gap: 0.75rem; margin-bottom: 1.25rem; flex-wrap: wrap;">
+    <input type="text" class="search-box" placeholder="Search artisan goods..." onkeyup="filterItems(this)" style="background: var(--bg-surface); border: 1px solid var(--border-color); color: var(--text-primary); padding: 0.5rem 0.85rem; border-radius: 8px; font-size: 0.85rem; width: 100%; max-width: 300px;">
+</div>
+
+<!-- 1. CASKS -->
+{% if farm.artisan.casks and farm.artisan.casks.batches %}
+<div class="artisan-section-title">🍷 Casks (Cellar)</div>
+<div class="artisan-grid">
+    {% for batch in farm.artisan.casks.batches %}
+    <div class="artisan-card item-card" data-name="{{ batch.name }}">
+        <div class="artisan-icon-wrapper">
+            <img src="/static/img/items/{{ batch.wiki_icon }}" 
+                 onerror="this.onerror=null; this.src='/static/img/items/Wine.png';" 
+                 alt="{{ batch.name }}">
+            <span class="artisan-badge-count">{{ batch.count }}</span>
+        </div>
+        <div class="artisan-info">
+            <div class="artisan-item-name">{{ batch.name }}</div>
+            <div class="artisan-item-meta">Quality: {{ batch.quality_name }}</div>
+            {% if batch.is_ready %}
+                <span class="status-pill ready">Ready Today</span>
+            {% elif batch.days_remaining == 1 %}
+                <span class="status-pill tomorrow">Ready Tomorrow</span>
+            {% else %}
+                <span class="status-pill processing">{{ batch.days_remaining }} Days Remaining</span>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- 2. KEGS -->
+{% if farm.artisan.kegs and farm.artisan.kegs.batches %}
+<div class="artisan-section-title">🍺 Kegs</div>
+<div class="artisan-grid">
+    {% for batch in farm.artisan.kegs.batches %}
+    <div class="artisan-card item-card" data-name="{{ batch.name }}">
+        <div class="artisan-icon-wrapper">
+            <img src="/static/img/items/{{ batch.wiki_icon }}" 
+                 onerror="this.onerror=null; this.src='/static/img/items/Wine.png';" 
+                 alt="{{ batch.name }}">
+            <span class="artisan-badge-count">{{ batch.count }}</span>
+        </div>
+        <div class="artisan-info">
+            <div class="artisan-item-name">{{ batch.name }}</div>
+            <div class="artisan-item-meta">Quality: {{ batch.quality_name }}</div>
+            {% if batch.is_ready %}
+                <span class="status-pill ready">Ready Today</span>
+            {% elif batch.days_remaining == 1 %}
+                <span class="status-pill tomorrow">Ready Tomorrow</span>
+            {% else %}
+                <span class="status-pill processing">{{ batch.days_remaining }} Days Remaining</span>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- 3. PRESERVES JARS -->
+{% if farm.artisan.jars and farm.artisan.jars.batches %}
+<div class="artisan-section-title">🫙 Preserves Jars</div>
+<div class="artisan-grid">
+    {% for batch in farm.artisan.jars.batches %}
+    <div class="artisan-card item-card" data-name="{{ batch.name }}">
+        <div class="artisan-icon-wrapper">
+            <img src="/static/img/items/{{ batch.wiki_icon }}" 
+                 onerror="this.onerror=null; this.src='/static/img/items/Jelly.png';" 
+                 alt="{{ batch.name }}">
+            <span class="artisan-badge-count">{{ batch.count }}</span>
+        </div>
+        <div class="artisan-info">
+            <div class="artisan-item-name">{{ batch.name }}</div>
+            <div class="artisan-item-meta">Quality: {{ batch.quality_name }}</div>
+            {% if batch.is_ready %}
+                <span class="status-pill ready">Ready Today</span>
+            {% elif batch.days_remaining == 1 %}
+                <span class="status-pill tomorrow">Ready Tomorrow</span>
+            {% else %}
+                <span class="status-pill processing">{{ batch.days_remaining }} Days Remaining</span>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- 4. DEHYDRATORS -->
+{% if farm.artisan.dehydrators and farm.artisan.dehydrators.batches %}
+<div class="artisan-section-title">🍄 Dehydrators</div>
+<div class="artisan-grid">
+    {% for batch in farm.artisan.dehydrators.batches %}
+    <div class="artisan-card item-card" data-name="{{ batch.name }}">
+        <div class="artisan-icon-wrapper">
+            <img src="/static/img/items/{{ batch.wiki_icon }}" 
+                 onerror="this.onerror=null; this.src='/static/img/items/Dried_Fruit.png';" 
+                 alt="{{ batch.name }}">
+            <span class="artisan-badge-count">{{ batch.count }}</span>
+        </div>
+        <div class="artisan-info">
+            <div class="artisan-item-name">{{ batch.name }}</div>
+            <div class="artisan-item-meta">Quality: {{ batch.quality_name }}</div>
+            {% if batch.is_ready %}
+                <span class="status-pill ready">Ready Today</span>
+            {% elif batch.days_remaining == 1 %}
+                <span class="status-pill tomorrow">Ready Tomorrow</span>
+            {% else %}
+                <span class="status-pill processing">{{ batch.days_remaining }} Days Remaining</span>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- 5. BEE HOUSES -->
+{% if farm.artisan.bee_houses and farm.artisan.bee_houses.batches %}
+<div class="artisan-section-title">🐝 Bee Houses</div>
+<div class="artisan-grid">
+    {% for batch in farm.artisan.bee_houses.batches %}
+    <div class="artisan-card item-card" data-name="{{ batch.name }}">
+        <div class="artisan-icon-wrapper">
+            <img src="/static/img/items/{{ batch.wiki_icon }}" 
+                 onerror="this.onerror=null; this.src='/static/img/items/Honey.png';" 
+                 alt="{{ batch.name }}">
+            <span class="artisan-badge-count">{{ batch.count }}</span>
+        </div>
+        <div class="artisan-info">
+            <div class="artisan-item-name">{{ batch.name }}</div>
+            <div class="artisan-item-meta">Quality: {{ batch.quality_name }}</div>
+            {% if batch.is_ready %}
+                <span class="status-pill ready">Ready Today</span>
+            {% elif batch.days_remaining == 1 %}
+                <span class="status-pill tomorrow">Ready Tomorrow</span>
+            {% else %}
+                <span class="status-pill processing">{{ batch.days_remaining }} Days Remaining</span>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
