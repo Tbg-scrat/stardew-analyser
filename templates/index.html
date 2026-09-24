@@ -61,6 +61,7 @@
         <div class="farm-pane {% if loop.first %}active{% endif %}" id="farm-pane-{{ farm.farm_id }}">
             
             {% include 'partials/overview_cards.html' %}
+            {% include 'partials/next_harvest.html' %}
 
             <div class="module-nav-bar">
                 <button class="module-nav-btn active" data-module="shipping" onclick="switchModule('{{ farm.farm_id }}', 'shipping')">📦 Shipping <span class="module-badge">{{ farm.shipped_items|selectattr('is_unlocked')|list|length }}/{{ farm.shipped_items|length }}</span></button>
