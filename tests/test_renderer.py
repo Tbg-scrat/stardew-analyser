@@ -99,6 +99,19 @@ def sample_render_data():
             "total_items": 16149,
             "material_totals": [{"name": "Wood", "count": 999}],
         },
+        "hay": {
+            "current_hay": 350,
+            "silos_built": 2,
+            "max_capacity": 480,
+            "total_animals": 16,
+            "daily_consumption": 16,
+            "required_winter_hay": 448,
+            "deficit_amount": 98,
+            "capacity_shortfall": 0,
+            "days_of_feed_left": 21,
+            "has_deficit_warning": True,
+            "has_capacity_warning": False,
+        },
     }
 
 
@@ -138,7 +151,7 @@ def test_html_navigation_and_sections(tmp_path, sample_render_data):
     assert soup.find("body") is not None
 
     all_text = soup.get_text().lower()
-    for section_kw in ["achievements", "shipped", "fish", "artisan", "chests"]:
+    for section_kw in ["achievements", "shipped", "fish", "artisan", "chests", "hay"]:
         assert section_kw in all_text, f"Expected '{section_kw}' content in rendered HTML"
 
 
@@ -163,3 +176,29 @@ def test_html_multi_save_rendering(tmp_path, sample_render_data):
     assert "Friisen" in page_text
     assert "Amalia" in page_text
     assert "Amali" in page_text
+
+
+def test_html_hay_warning_banners_rendering(tmp_path, sample_render_data):
+    """Verifies that hay warning banners render conditionally in HTML DOM."""
+    # 1. Deficit Warning active, Capacity Warning inactive
+    sample_render_data["hay"]["has_deficit_warning"] = True
+    sample_render_data["hay"]["has_capacity_warning"] = False
+
+    output_file = tmp_path / "index_deficit.html"
+    generate_dashboard_html({"save1": sample_render_data}, output_path=str(output_file))
+
+    soup = BeautifulSoup(output_file.read_text(encoding="utf-8"), "html.parser")
+    assert soup.find("div", class_="alert-warning") is not None
+    assert soup.find("div", class_="alert-capacity") is None
+
+    # 2. Capacity Warning active, Deficit Warning inactive
+    sample_render_data["hay"]["has_deficit_warning"] = False
+    sample_render_data["hay"]["has_capacity_warning"] = True
+
+    output_file_cap = tmp_path / "index_capacity.html"
+    generate_dashboard_html({"save1": sample_render_data}, output_path=str(output_file_cap))
+
+    soup_cap = BeautifulSoup(output_file_cap.read_text(encoding="utf-8"), "html.parser")
+    assert soup_cap.find("div", class_="alert-warning") is None
+    assert soup_cap.find("div", class_="alert-capacity") is not None
+    

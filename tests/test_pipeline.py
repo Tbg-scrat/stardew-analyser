@@ -48,6 +48,7 @@ def test_analyze_save_schema_contract():
         "friendships",
         "artisan",
         "chests",
+        "hay",
     ]
 
     for key in expected_keys:
@@ -68,6 +69,7 @@ def test_log_save_summary_formatting(caplog):
         "museum_pieces": [{"is_unlocked": True}] * 60,
         "artisan": {"summary": {"total_machines": 150}},
         "chests": {"total_chests": 12},
+        "hay": {"current_hay": 350, "max_capacity": 480, "total_animals": 16},
     }
 
     with caplog.at_level("INFO"):

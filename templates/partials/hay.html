@@ -1,0 +1,103 @@
+<!-- templates/partials/hay.html -->
+
+<style>
+    .hay-summary-bar {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 0.85rem;
+        margin-bottom: 1.5rem;
+    }
+    .hay-stat-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1rem;
+        text-align: center;
+    }
+    .hay-stat-val {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #ffffff;
+    }
+    .hay-stat-label {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-top: 0.25rem;
+    }
+    .hay-stat-val.ok { color: #4ade80; }
+    .hay-stat-val.warn { color: #fbbf24; }
+    .hay-stat-val.danger { color: #f87171; }
+
+    .hay-progress-box {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1.25rem;
+        margin-bottom: 1.5rem;
+    }
+    .hay-progress-title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+    }
+    .hay-bar-bg {
+        width: 100%;
+        height: 16px;
+        background: var(--bg-subtle);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    .hay-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #eab308, #ca8a04);
+        transition: width 0.3s ease;
+    }
+    .hay-bar-fill.danger {
+        background: linear-gradient(90deg, #f87171, #dc2626);
+    }
+</style>
+
+{% if farm.hay %}
+<div class="hay-summary-bar">
+    <div class="hay-stat-card">
+        <div class="hay-stat-val {{ 'danger' if farm.hay.has_deficit_warning else 'ok' }}">
+            {{ farm.hay.current_hay }} / {{ farm.hay.max_capacity }}
+        </div>
+        <div class="hay-stat-label">Silo Hay Stored</div>
+    </div>
+    <div class="hay-stat-card">
+        <div class="hay-stat-val">{{ farm.hay.silos_built }}</div>
+        <div class="hay-stat-label">Silos Built</div>
+    </div>
+    <div class="hay-stat-card">
+        <div class="hay-stat-val">{{ farm.hay.total_animals }}</div>
+        <div class="hay-stat-label">Total Livestock</div>
+    </div>
+    <div class="hay-stat-card">
+        <div class="hay-stat-val">{{ farm.hay.required_winter_hay }}</div>
+        <div class="hay-stat-label">Winter Hay Needed</div>
+    </div>
+    <div class="hay-stat-card">
+        <div class="hay-stat-val {{ 'danger' if farm.hay.days_of_feed_left < 28 else 'ok' }}">
+            {{ farm.hay.days_of_feed_left }} days
+        </div>
+        <div class="hay-stat-label">Days of Feed Left</div>
+    </div>
+</div>
+
+<div class="hay-progress-box">
+    <div class="hay-progress-title">
+        <span>Silo Fill Gauge</span>
+        <span>{% if farm.hay.max_capacity > 0 %}{{ ((farm.hay.current_hay / farm.hay.max_capacity) * 100) | round(1) }}{% else %}0{% endif %}%</span>
+    </div>
+    <div class="hay-bar-bg">
+        <div class="hay-bar-fill {{ 'danger' if farm.hay.has_deficit_warning else '' }}" 
+             style="width: {% if farm.hay.max_capacity > 0 %}{{ [((farm.hay.current_hay / farm.hay.max_capacity) * 100), 100] | min }}{% else %}0{% endif %}%;">
+        </div>
+    </div>
+</div>
+{% endif %}

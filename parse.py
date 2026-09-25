@@ -27,6 +27,7 @@ from src.modules.birthdays import parse_birthdays
 from src.modules.achievements import parse_achievements
 from src.modules.artisan import parse_all_artisan_goods
 from src.modules.chests import parse_chests
+from src.modules.hay import parse_hay_data
 
 SAVE_DIR = Path(os.getenv("SAVE_DIR", "/saves"))
 
@@ -92,8 +93,11 @@ def analyze_save(file_path):
     chest_summary = parse_chests(root)
     data["chests"] = chest_summary
 
-    return data
+    # Hay Tracker Module
+    hay_summary = parse_hay_data(root)
+    data["hay"] = hay_summary
 
+    return data
 
 
 def log_save_summary(save_id, data):
@@ -119,6 +123,10 @@ def log_save_summary(save_id, data):
     artisan_machines = data.get("artisan", {}).get("summary", {}).get("total_machines", 0)
     chests_count = data.get("chests", {}).get("total_chests", 0)
 
+    hay_current = data.get("hay", {}).get("current_hay", 0)
+    hay_max = data.get("hay", {}).get("max_capacity", 0)
+    hay_animals = data.get("hay", {}).get("total_animals", 0)
+
     logger.info(
         f"Parsed '{save_id}' ({farmer} @ {farm} Farm | Y{year} {season} {day}) -> "
         f"Achievements: {ach_unlocked}/{ach_total} | "
@@ -126,7 +134,8 @@ def log_save_summary(save_id, data):
         f"Fish: {fish_unlocked}/{fish_total} | "
         f"Museum: {museum_unlocked}/{museum_total} | "
         f"Artisan: {artisan_machines} machines | "
-        f"Chests: {chests_count}"
+        f"Chests: {chests_count} | "
+        f"Hay: {hay_current}/{hay_max} ({hay_animals} animals)"
     )
 
 

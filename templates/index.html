@@ -61,6 +61,33 @@
         <div class="farm-pane {% if loop.first %}active{% endif %}" id="farm-pane-{{ farm.farm_id }}">
             
             {% include 'partials/overview_cards.html' %}
+
+            {# 1. Immediate Stored Hay Deficit Warning #}
+            {% if farm.hay and farm.hay.has_deficit_warning %}
+            <div class="alert-banner alert-warning" style="background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1.25rem; color: #fca5a5; display: flex; align-items: flex-start; gap: 0.85rem;">
+                <div style="font-size: 1.5rem; line-height: 1;">⚠️</div>
+                <div>
+                    <strong style="color: #f87171; font-size: 0.95rem; display: block; margin-bottom: 0.25rem;">Winter Hay Deficit Warning</strong>
+                    <p style="margin: 0; font-size: 0.85rem; color: #fca5a5;">
+                        You currently have <strong>{{ farm.hay.current_hay }}</strong> stored hay for <strong>{{ farm.hay.total_animals }}</strong> animals. You need <strong>{{ farm.hay.deficit_amount }}</strong> more hay to survive the {{ 'remaining' if farm.season == 'winter' else 'next' }} winter!
+                    </p>
+                </div>
+            </div>
+            {% endif %}
+
+            {# 2. Insufficient Silo Capacity Warning #}
+            {% if farm.hay and farm.hay.has_capacity_warning %}
+            <div class="alert-banner alert-capacity" style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35); border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1.25rem; color: #fde047; display: flex; align-items: flex-start; gap: 0.85rem;">
+                <div style="font-size: 1.5rem; line-height: 1;">🏗️</div>
+                <div>
+                    <strong style="color: #fbbf24; font-size: 0.95rem; display: block; margin-bottom: 0.25rem;">Insufficient Silo Storage Capacity</strong>
+                    <p style="margin: 0; font-size: 0.85rem; color: #fde047;">
+                        Your <strong>{{ farm.hay.silos_built }}</strong> Silo(s) hold a max of <strong>{{ farm.hay.max_capacity }}</strong> hay, but your <strong>{{ farm.hay.total_animals }}</strong> animals require <strong>{{ farm.hay.required_winter_hay }}</strong> hay for winter. Build at least <strong>{{ ((farm.hay.capacity_shortfall) / 240) | round(0, 'ceil') | int }}</strong> more Silo(s) or store extra hay in chests!
+                    </p>
+                </div>
+            </div>
+            {% endif %}
+
             {% include 'partials/next_harvest.html' %}
 
             <div class="module-nav-bar">
@@ -72,6 +99,7 @@
                 <button class="module-nav-btn" data-module="social" onclick="switchModule('{{ farm.farm_id }}', 'social')">👥 Social <span class="module-badge">{{ farm.friendships|length }}</span></button>
                 <button class="module-nav-btn" data-module="artisan" onclick="switchModule('{{ farm.farm_id }}', 'artisan')">🏺 Artisan Goods <span class="module-badge">{{ farm.artisan.summary.ready_today if farm.artisan else 0 }}/{{ farm.artisan.summary.total_machines if farm.artisan else 0 }}</span></button>
                 <button class="module-nav-btn" data-module="chests" onclick="switchModule('{{ farm.farm_id }}', 'chests')">🧰 Chests <span class="module-badge">{{ farm.chests.total_chests if farm.chests else 0 }}</span></button>
+                <button class="module-nav-btn" data-module="hay" onclick="switchModule('{{ farm.farm_id }}', 'hay')">🌾 Hay &amp; Livestock <span class="module-badge">{{ farm.hay.current_hay if farm.hay else 0 }}/{{ farm.hay.max_capacity if farm.hay else 0 }}</span></button>
             </div>
 
             <div class="module-pane active" id="module-{{ farm.farm_id }}-shipping">
@@ -104,6 +132,10 @@
 
             <div class="module-pane" id="module-{{ farm.farm_id }}-chests">
                 {% include 'partials/chests.html' %}
+            </div>
+
+            <div class="module-pane" id="module-{{ farm.farm_id }}-hay">
+                {% include 'partials/hay.html' %}
             </div>
 
         </div>
