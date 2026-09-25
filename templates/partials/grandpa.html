@@ -1,0 +1,215 @@
+<!-- templates/partials/grandpa.html -->
+<style>
+    .grandpa-banner {
+        background: linear-gradient(135deg, #1e1b4b 0%, #151e32 100%);
+        border: 1px solid #3730a3;
+        border-radius: 12px;
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .grandpa-banner.statue-unlocked {
+        border-color: #f59e0b;
+        background: linear-gradient(135deg, #2e1065 0%, #151e32 100%);
+    }
+    .grandpa-score-summary {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    .candle-display {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    .candle-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-secondary);
+        font-weight: 600;
+    }
+    .candles {
+        display: flex;
+        gap: 0.4rem;
+        font-size: 1.75rem;
+    }
+    .candle-dimmed {
+        opacity: 0.25;
+        filter: grayscale(100%);
+    }
+    .score-badge-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.25rem;
+    }
+    .score-main {
+        font-size: 1.85rem;
+        font-weight: 800;
+        color: #ffffff;
+    }
+    .score-max {
+        font-size: 1rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+    .status-badge {
+        font-size: 0.8rem;
+        font-weight: 600;
+        padding: 0.25rem 0.65rem;
+        border-radius: 9999px;
+    }
+    .status-badge.unlocked {
+        background: rgba(245, 158, 11, 0.2);
+        color: #fbbf24;
+        border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+    .status-badge.pending {
+        background: rgba(148, 163, 184, 0.15);
+        color: var(--text-secondary);
+        border: 1px solid var(--border-color);
+    }
+    .grandpa-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 1.25rem;
+    }
+    .category-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1.25rem;
+    }
+    .category-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.75rem;
+    }
+    .category-header h3 {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text-primary);
+    }
+    .category-score {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--color-gold);
+    }
+    .progress-bar-bg {
+        background: var(--bg-surface);
+        border-radius: 9999px;
+        height: 6px;
+        overflow: hidden;
+        margin-bottom: 1rem;
+    }
+    .progress-bar-fill {
+        background: #3b82f6;
+        height: 100%;
+        border-radius: 9999px;
+        transition: width 0.3s ease;
+    }
+    .criteria-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .criteria-item {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-size: 0.825rem;
+        padding: 0.4rem 0.6rem;
+        border-radius: 6px;
+        background: var(--bg-subtle);
+    }
+    .criteria-item.completed {
+        color: var(--text-primary);
+    }
+    .criteria-item.incomplete {
+        color: var(--text-muted);
+        opacity: 0.7;
+    }
+    .status-icon {
+        font-weight: bold;
+        width: 1.1rem;
+    }
+    .criteria-item.completed .status-icon {
+        color: #22c55e;
+    }
+    .criteria-item.incomplete .status-icon {
+        color: #ef4444;
+    }
+    .criteria-label {
+        flex: 1;
+    }
+    .pts-badge {
+        font-size: 0.725rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        background: var(--bg-surface);
+        padding: 0.1rem 0.4rem;
+        border-radius: 4px;
+    }
+</style>
+
+<div class="grandpa-container">
+    {% if farm.grandpa %}
+    <!-- Candle Evaluation Status Banner -->
+    <div class="grandpa-banner {{ 'statue-unlocked' if farm.grandpa.statue_unlocked else '' }}">
+        <div class="grandpa-score-summary">
+            <div class="candle-display">
+                <span class="candle-label">Grandpa's Evaluation</span>
+                <div class="candles">
+                    {% for _ in range(farm.grandpa.candles) %}
+                        <span class="candle-icon"></span>
+                    {% endfor %}
+                    {% for _ in range(4 - farm.grandpa.candles) %}
+                        <span class="candle-icon candle-dimmed"></span>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="score-badge-container">
+                <div class="score-main">{{ farm.grandpa.total_score }} <span class="score-max">/ {{ farm.grandpa.max_score }} Pts</span></div>
+                {% if farm.grandpa.statue_unlocked %}
+                    <span class="status-badge unlocked"> Statue of Perfection Unlocked</span>
+                {% else %}
+                    <span class="status-badge pending"> Need {{ 12 - farm.grandpa.total_score }} more pts for 4 Candles</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Category Breakdown Grid -->
+    <div class="grandpa-grid">
+        {% for category in farm.grandpa.categories %}
+            <div class="category-card">
+                <div class="category-header">
+                    <h3>{{ category.name }}</h3>
+                    <span class="category-score">{{ category.score }} / {{ category.max_score }} Pts</span>
+                </div>
+
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: {{ (category.score / category.max_score * 100)|round }}%;"></div>
+                </div>
+
+                <ul class="criteria-list">
+                    {% for item in category['items'] %}
+                        <li class="criteria-item {{ 'completed' if item.completed else 'incomplete' }}">
+                            <span class="status-icon">{{ '' if item.completed else '' }}</span>
+                            <span class="criteria-label">{{ item.label }}</span>
+                            <span class="pts-badge">+{{ item.points }} pt</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p>No evaluation data available.</p>
+    {% endif %}
+</div>

@@ -28,6 +28,7 @@ from src.modules.achievements import parse_achievements
 from src.modules.artisan import parse_all_artisan_goods
 from src.modules.chests import parse_chests
 from src.modules.hay import parse_hay_data
+from src.modules.grandpa import parse_grandpa_data
 
 SAVE_DIR = Path(os.getenv("SAVE_DIR", "/saves"))
 
@@ -97,6 +98,17 @@ def analyze_save(file_path):
     hay_summary = parse_hay_data(root)
     data["hay"] = hay_summary
 
+    # Grandpa's Evaluation Module
+    grandpa_summary = parse_grandpa_data(
+        root,
+        player,
+        shipped_items=data["shipped_items"],
+        fish_caught=data["fish_caught"],
+        museum_pieces=data["museum_pieces"],
+        friendships=data["friendships"],
+    )
+    data["grandpa"] = grandpa_summary
+
     return data
 
 
@@ -127,6 +139,10 @@ def log_save_summary(save_id, data):
     hay_max = data.get("hay", {}).get("max_capacity", 0)
     hay_animals = data.get("hay", {}).get("total_animals", 0)
 
+    grandpa_score = data.get("grandpa", {}).get("total_score", 0)
+    grandpa_max = data.get("grandpa", {}).get("max_score", 21)
+    grandpa_candles = data.get("grandpa", {}).get("candles", 1)
+
     logger.info(
         f"Parsed '{save_id}' ({farmer} @ {farm} Farm | Y{year} {season} {day}) -> "
         f"Achievements: {ach_unlocked}/{ach_total} | "
@@ -135,7 +151,8 @@ def log_save_summary(save_id, data):
         f"Museum: {museum_unlocked}/{museum_total} | "
         f"Artisan: {artisan_machines} machines | "
         f"Chests: {chests_count} | "
-        f"Hay: {hay_current}/{hay_max} ({hay_animals} animals)"
+        f"Hay: {hay_current}/{hay_max} ({hay_animals} animals) | "
+        f"Grandpa: {grandpa_score}/{grandpa_max} pts ({grandpa_candles} Candles)"
     )
 
 

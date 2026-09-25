@@ -112,6 +112,28 @@ def sample_render_data():
             "has_deficit_warning": True,
             "has_capacity_warning": False,
         },
+        "grandpa": {
+            "total_score": 14,
+            "max_score": 21,
+            "candles": 4,
+            "statue_unlocked": True,
+            "categories": [
+                {
+                    "id": "earnings",
+                    "name": "Farm Earnings",
+                    "score": 7,
+                    "max_score": 7,
+                    "items": [{"label": "1,000,000g Earned", "points": 1, "completed": True}],
+                },
+                {
+                    "id": "skills",
+                    "name": "Player Skills",
+                    "score": 2,
+                    "max_score": 2,
+                    "items": [{"label": "Total Skill Levels = 50", "points": 1, "completed": True}],
+                },
+            ],
+        },
     }
 
 
@@ -151,7 +173,7 @@ def test_html_navigation_and_sections(tmp_path, sample_render_data):
     assert soup.find("body") is not None
 
     all_text = soup.get_text().lower()
-    for section_kw in ["achievements", "shipped", "fish", "artisan", "chests", "hay"]:
+    for section_kw in ["achievements", "shipped", "fish", "artisan", "chests", "hay", "grandpa"]:
         assert section_kw in all_text, f"Expected '{section_kw}' content in rendered HTML"
 
 
@@ -201,4 +223,22 @@ def test_html_hay_warning_banners_rendering(tmp_path, sample_render_data):
     soup_cap = BeautifulSoup(output_file_cap.read_text(encoding="utf-8"), "html.parser")
     assert soup_cap.find("div", class_="alert-warning") is None
     assert soup_cap.find("div", class_="alert-capacity") is not None
+
+
+def test_html_grandpa_evaluation_rendering(tmp_path, sample_render_data):
+    """Verifies that Grandpa's Evaluation banner and categories render cleanly in HTML DOM."""
+    output_file = tmp_path / "index_grandpa.html"
+    generate_dashboard_html({"save1": sample_render_data}, output_path=str(output_file))
+
+    soup = BeautifulSoup(output_file.read_text(encoding="utf-8"), "html.parser")
+    
+    banner = soup.find("div", class_="grandpa-banner")
+    assert banner is not None, "Grandpa banner container missing from DOM"
+    assert "statue-unlocked" in banner.get("class", []), "Expected 'statue-unlocked' CSS class on banner"
+
+    page_text = soup.get_text()
+    assert "Grandpa's Evaluation" in page_text
+    assert "Statue of Perfection Unlocked" in page_text
+    assert "Farm Earnings" in page_text
+    assert "Player Skills" in page_text
     

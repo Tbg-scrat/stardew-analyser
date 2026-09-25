@@ -49,6 +49,7 @@ def test_analyze_save_schema_contract():
         "artisan",
         "chests",
         "hay",
+        "grandpa",
     ]
 
     for key in expected_keys:
@@ -70,6 +71,7 @@ def test_log_save_summary_formatting(caplog):
         "artisan": {"summary": {"total_machines": 150}},
         "chests": {"total_chests": 12},
         "hay": {"current_hay": 350, "max_capacity": 480, "total_animals": 16},
+        "grandpa": {"total_score": 14, "max_score": 21, "candles": 4},
     }
 
     with caplog.at_level("INFO"):
@@ -77,3 +79,5 @@ def test_log_save_summary_formatting(caplog):
 
     assert "Parsed 'Friisen_12345' (Nils @ Friisen Farm | Y3 Fall 20)" in caplog.text
     assert "Achievements: 22/39" in caplog.text
+    assert "Grandpa: 14/21 pts (4 Candles)" in caplog.text
+    
