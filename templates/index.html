@@ -101,6 +101,7 @@
                 <button class="module-nav-btn" data-module="chests" onclick="switchModule('{{ farm.farm_id }}', 'chests')">🧰 Chests <span class="module-badge">{{ farm.chests.total_chests if farm.chests else 0 }}</span></button>
                 <button class="module-nav-btn" data-module="hay" onclick="switchModule('{{ farm.farm_id }}', 'hay')">🌾 Hay &amp; Livestock <span class="module-badge">{{ farm.hay.current_hay if farm.hay else 0 }}/{{ farm.hay.max_capacity if farm.hay else 0 }}</span></button>
                 <button class="module-nav-btn" data-module="grandpa" onclick="switchModule('{{ farm.farm_id }}', 'grandpa')">🕯️ Grandpa's Evaluation <span class="module-badge">{{ farm.grandpa.candles if farm.grandpa else 1 }} 🕯️</span></button>
+                <button class="module-nav-btn" data-module="community_center" onclick="switchModule('{{ farm.farm_id }}', 'community_center')">🏛️ Community Center <span class="module-badge">{{ farm.community_center.completed_bundles if farm.community_center else 0 }}/{{ farm.community_center.total_bundles if farm.community_center else 30 }}</span></button>
             </div>
 
             <div class="module-pane active" id="module-{{ farm.farm_id }}-shipping">
@@ -141,6 +142,10 @@
 
             <div class="module-pane" id="module-{{ farm.farm_id }}-grandpa">
                 {% include 'partials/grandpa.html' %}
+            </div>
+
+            <div class="module-pane" id="module-{{ farm.farm_id }}-community_center">
+                {% include 'partials/community_center.html' %}
             </div>
 
         </div>

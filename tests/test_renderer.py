@@ -134,6 +134,31 @@ def sample_render_data():
                 },
             ],
         },
+        "community_center": {
+            "route": "junimo",
+            "route_label": "Community Center (Junimo)",
+            "is_complete": False,
+            "movie_theater": False,
+            "completed_bundles": 2,
+            "total_bundles": 30,
+            "rooms": [
+                {
+                    "id": 0,
+                    "name": "Pantry",
+                    "is_complete": False,
+                    "bundles": [
+                        {
+                            "id": 0,
+                            "name": "Spring Crops",
+                            "color": "green",
+                            "is_complete": True,
+                            "filled_slots": 4,
+                            "total_slots": 4,
+                        }
+                    ],
+                }
+            ],
+        },
     }
 
 
@@ -173,7 +198,7 @@ def test_html_navigation_and_sections(tmp_path, sample_render_data):
     assert soup.find("body") is not None
 
     all_text = soup.get_text().lower()
-    for section_kw in ["achievements", "shipped", "fish", "artisan", "chests", "hay", "grandpa"]:
+    for section_kw in ["achievements", "shipped", "fish", "artisan", "chests", "hay", "grandpa", "community"]:
         assert section_kw in all_text, f"Expected '{section_kw}' content in rendered HTML"
 
 
@@ -231,7 +256,7 @@ def test_html_grandpa_evaluation_rendering(tmp_path, sample_render_data):
     generate_dashboard_html({"save1": sample_render_data}, output_path=str(output_file))
 
     soup = BeautifulSoup(output_file.read_text(encoding="utf-8"), "html.parser")
-    
+
     banner = soup.find("div", class_="grandpa-banner")
     assert banner is not None, "Grandpa banner container missing from DOM"
     assert "statue-unlocked" in banner.get("class", []), "Expected 'statue-unlocked' CSS class on banner"
@@ -241,4 +266,17 @@ def test_html_grandpa_evaluation_rendering(tmp_path, sample_render_data):
     assert "Statue of Perfection Unlocked" in page_text
     assert "Farm Earnings" in page_text
     assert "Player Skills" in page_text
+
+
+def test_html_community_center_rendering(tmp_path, sample_render_data):
+    """Verifies that Community Center status and rooms render in HTML DOM."""
+    output_file = tmp_path / "index_cc.html"
+    generate_dashboard_html({"save1": sample_render_data}, output_path=str(output_file))
+
+    soup = BeautifulSoup(output_file.read_text(encoding="utf-8"), "html.parser")
+    page_text = soup.get_text()
+
+    assert "Community Center (Junimo)" in page_text
+    assert "Pantry" in page_text
+    assert "Spring Crops" in page_text
     

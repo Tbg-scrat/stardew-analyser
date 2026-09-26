@@ -1,0 +1,246 @@
+<!-- templates/partials/community_center.html -->
+<style>
+    .cc-banner {
+        background: linear-gradient(135deg, #064e3b 0%, #151e32 100%);
+        border: 1px solid #059669;
+        border-radius: 12px;
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .cc-banner.joja-route {
+        background: linear-gradient(135deg, #1e3a8a 0%, #151e32 100%);
+        border-color: #2563eb;
+    }
+    .cc-summary-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    .cc-route-title {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+    }
+    .cc-route-icon {
+        font-size: 2rem;
+    }
+    .cc-title-text h2 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #ffffff;
+    }
+    .cc-title-text span {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+    }
+    .cc-score-display {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.25rem;
+    }
+    .cc-main-count {
+        font-size: 1.85rem;
+        font-weight: 800;
+        color: #ffffff;
+    }
+    .cc-max-count {
+        font-size: 1rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    .cc-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 1.25rem;
+    }
+    .room-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1.25rem;
+    }
+    .room-card.completed {
+        border-color: #059669;
+    }
+    .room-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.75rem;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 0.5rem;
+    }
+    .room-header h3 {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text-primary);
+    }
+    .room-status-badge {
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 0.15rem 0.5rem;
+        border-radius: 9999px;
+    }
+    .room-status-badge.done {
+        background: rgba(16, 185, 129, 0.2);
+        color: #34d399;
+        border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+    .room-status-badge.pending {
+        background: rgba(148, 163, 184, 0.15);
+        color: var(--text-secondary);
+    }
+
+    .bundle-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .bundle-item {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-size: 0.825rem;
+        padding: 0.45rem 0.65rem;
+        border-radius: 6px;
+        background: var(--bg-subtle);
+    }
+    .bundle-item.completed {
+        color: var(--text-primary);
+    }
+    .bundle-item.incomplete {
+        color: var(--text-muted);
+    }
+
+    .bundle-color-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        flex-shrink: 0;
+    }
+    .bundle-dot-green { background-color: #22c55e; box-shadow: 0 0 6px rgba(34, 197, 94, 0.6); }
+    .bundle-dot-yellow { background-color: #eab308; box-shadow: 0 0 6px rgba(234, 179, 8, 0.6); }
+    .bundle-dot-orange { background-color: #f97316; box-shadow: 0 0 6px rgba(249, 115, 22, 0.6); }
+    .bundle-dot-red { background-color: #ef4444; box-shadow: 0 0 6px rgba(239, 68, 68, 0.6); }
+    .bundle-dot-purple { background-color: #a855f7; box-shadow: 0 0 6px rgba(168, 85, 247, 0.6); }
+    .bundle-dot-teal { background-color: #14b8a6; box-shadow: 0 0 6px rgba(20, 184, 166, 0.6); }
+    .bundle-dot-blue { background-color: #3b82f6; box-shadow: 0 0 6px rgba(59, 130, 246, 0.6); }
+    .bundle-dot-cyan { background-color: #06b6d4; box-shadow: 0 0 6px rgba(6, 182, 212, 0.6); }
+
+    .bundle-name {
+        flex: 1;
+        font-weight: 600;
+    }
+    .bundle-progress {
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 0.1rem 0.4rem;
+        border-radius: 4px;
+        background: var(--bg-surface);
+        color: var(--text-secondary);
+    }
+    .bundle-item.completed .bundle-progress {
+        color: #34d399;
+        background: rgba(16, 185, 129, 0.15);
+    }
+</style>
+
+<div class="cc-container">
+    {% if farm.community_center %}
+    <!-- Route Status Banner -->
+    <div class="cc-banner {{ "joja-route" if farm.community_center.route == "joja" else "" }}">
+        <div class="cc-summary-header">
+            <div class="cc-route-title">
+                <span class="cc-route-icon">{{ "&#127970;" if farm.community_center.route == "joja" else "&#127811;" }}</span>
+                <div class="cc-title-text">
+                    <h2>{{ farm.community_center.route_label }}</h2>
+                    <span>{{ "Restoration Progress" if farm.community_center.route == "junimo" else "Development Projects" }}</span>
+                </div>
+            </div>
+
+            <div class="cc-score-display">
+                <div class="cc-main-count">
+                    {{ farm.community_center.completed_bundles }}
+                    <span class="cc-max-count">/ {{ farm.community_center.total_bundles }} {{ "Projects" if farm.community_center.route == "joja" else "Bundles" }}</span>
+                </div>
+                {% if farm.community_center.is_complete %}
+                    <span class="status-badge unlocked">&#10024; Restored</span>
+                {% else %}
+                    <span class="status-badge pending">&#128274; {{ farm.community_center.total_bundles - farm.community_center.completed_bundles }} Remaining</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% if farm.community_center.route == "junimo" %}
+        <!-- Junimo Community Center Rooms Grid -->
+        <div class="cc-grid">
+            {% for room in farm.community_center.rooms %}
+                <div class="room-card {{ "completed" if room.is_complete else "" }}">
+                    <div class="room-header">
+                        <h3>{{ room.name }}</h3>
+                        {% if room.is_complete %}
+                            <span class="room-status-badge done">&#10003; Room Complete</span>
+                        {% else %}
+                            <span class="room-status-badge pending">In Progress</span>
+                        {% endif %}
+                    </div>
+
+                    <ul class="bundle-list">
+                        {% for bundle in room["bundles"] %}
+                            <li class="bundle-item {{ "completed" if bundle.is_complete else "incomplete" }}">
+                                <span class="bundle-color-dot bundle-dot-{{ bundle.color }}"></span>
+                                <span class="bundle-name">{{ bundle.name }}</span>
+                                <span class="bundle-progress">
+                                    {% if bundle.is_complete %}
+                                        &#10003; Complete
+                                    {% elif bundle.filled_slots is not none and bundle.total_slots is not none %}
+                                        {{ bundle.filled_slots }} / {{ bundle.total_slots }}
+                                    {% else %}
+                                        In Progress
+                                    {% endif %}
+                                </span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <!-- Joja Warehouse Projects List -->
+        <div class="cc-grid">
+            <div class="room-card">
+                <div class="room-header">
+                    <h3>Joja Community Development Form</h3>
+                    <span class="room-status-badge {{ "done" if farm.community_center.is_complete else "pending" }}">
+                        {{ "Fully Funded" if farm.community_center.is_complete else "In Progress" }}
+                    </span>
+                </div>
+                <ul class="bundle-list">
+                    {% for proj in farm.community_center.projects %}
+                        <li class="bundle-item {{ "completed" if proj.is_complete else "incomplete" }}">
+                            <span class="bundle-name">{{ proj.name }}</span>
+                            <span class="bundle-progress">
+                                {% if proj.is_complete %}
+                                    &#10003; Purchased
+                                {% else %}
+                                    {{ proj.cost }}g
+                                {% endif %}
+                            </span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+
+    {% else %}
+        <p>No Community Center data available.</p>
+    {% endif %}
+</div>

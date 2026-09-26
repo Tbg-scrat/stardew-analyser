@@ -29,6 +29,7 @@ from src.modules.artisan import parse_all_artisan_goods
 from src.modules.chests import parse_chests
 from src.modules.hay import parse_hay_data
 from src.modules.grandpa import parse_grandpa_data
+from src.modules.community_center import parse_community_center_data
 
 SAVE_DIR = Path(os.getenv("SAVE_DIR", "/saves"))
 
@@ -109,6 +110,10 @@ def analyze_save(file_path):
     )
     data["grandpa"] = grandpa_summary
 
+    # Community Center / Joja Module
+    cc_summary = parse_community_center_data(root, player)
+    data["community_center"] = cc_summary
+
     return data
 
 
@@ -143,6 +148,10 @@ def log_save_summary(save_id, data):
     grandpa_max = data.get("grandpa", {}).get("max_score", 21)
     grandpa_candles = data.get("grandpa", {}).get("candles", 1)
 
+    cc_bundles = data.get("community_center", {}).get("completed_bundles", 0)
+    cc_total = data.get("community_center", {}).get("total_bundles", 30)
+    cc_route = data.get("community_center", {}).get("route_label", "Community Center")
+
     logger.info(
         f"Parsed '{save_id}' ({farmer} @ {farm} Farm | Y{year} {season} {day}) -> "
         f"Achievements: {ach_unlocked}/{ach_total} | "
@@ -152,7 +161,8 @@ def log_save_summary(save_id, data):
         f"Artisan: {artisan_machines} machines | "
         f"Chests: {chests_count} | "
         f"Hay: {hay_current}/{hay_max} ({hay_animals} animals) | "
-        f"Grandpa: {grandpa_score}/{grandpa_max} pts ({grandpa_candles} Candles)"
+        f"Grandpa: {grandpa_score}/{grandpa_max} pts ({grandpa_candles} Candles) | "
+        f"CC: {cc_bundles}/{cc_total} Bundles ({cc_route})"
     )
 
 
