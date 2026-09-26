@@ -105,7 +105,7 @@ def parse_grandpa_data(root, player, shipped_items=None, fish_caught=None, museu
 
     # 4. Social & Family (Max 4 points)
     house_upgrade_level = _safe_int_child(player, "houseUpgradeLevel")
-    spouse_name = player.findtext("spouse", "").strip()
+    spouse_name = (player.findtext("spouse", "") or "").strip()
     is_married_and_upgraded = house_upgrade_level >= 2 and bool(spouse_name)
 
     villagers_8_plus = len([f for f in friendships if f.get("points", 0) >= 2000])
@@ -136,9 +136,7 @@ def parse_grandpa_data(root, player, shipped_items=None, fish_caught=None, museu
     })
 
     # 5. Keys & Milestones (Max 5 points)
-    has_rusty_key = player.findtext("hasRustyKey", "false").lower() == "true"
-    has_skull_key = player.findtext("hasSkullKey", "false").lower() == "true"
-
+    has_rusty_key, has_skull_key = _check_keys_status(player)
     cc_complete, cc_ceremony = _check_community_center_progress(root, player)
 
     milestones_score = (
@@ -211,11 +209,62 @@ def _extract_pet_friendship(root):
     return 0
 
 
+def _check_keys_status(player):
+    """
+    Robust key lookup compatible with SDV 1.5 & 1.6+.
+    Checks legacy boolean tags, 1.6 <stats> dictionary, mail flags, and events seen.
+    """
+    mail_received = {m.text.lower() for m in player.findall(".//mailReceived/string") if m.text}
+    events_seen = {e.text for e in player.findall(".//eventsSeen/string") if e.text}
+
+    # 1. Rusty Key Check
+    rusty_node = (player.findtext("hasRustyKey") or "").lower() == "true"
+    rusty_event = "67" in events_seen
+    rusty_mail = any(k in mail_received for k in ["hasrustykey", "sewerkey", "gunthersewer"])
+
+    has_rusty_key = rusty_node or rusty_event or rusty_mail
+
+    # 2. Skull Key Check
+    skull_node = (player.findtext("hasSkullKey") or "").lower() == "true"
+    skull_mail = any(k in mail_received for k in ["hasskullkey", "skullkey", "openedskullcavern"])
+    skull_event = bool({"901802", "120"} & events_seen)
+
+    # Mine progression check (supporting SDV 1.6 <stats> dictionary)
+    deepest_mine = 0
+    mine_direct = player.findtext("deepestMineLevel")
+    if mine_direct and mine_direct.isdigit():
+        deepest_mine = int(mine_direct)
+
+    # SDV 1.6 stores stats inside <stats><stat_dictionary>
+    for item in player.findall(".//stats/stat_dictionary/item"):
+        key_name = item.findtext("key/string", "")
+        if key_name in ("deepestMineLevel", "minesExplored"):
+            val = item.findtext("value/int", "0")
+            if val.isdigit():
+                deepest_mine = max(deepest_mine, int(val))
+
+    skull_mine_progress = deepest_mine >= 120
+
+    has_skull_key = skull_node or skull_mail or skull_event or skull_mine_progress
+
+    return has_rusty_key, has_skull_key
+
+
 def _check_community_center_progress(root, player):
-    """Checks completion of Community Center or Joja Warehouse milestones."""
+    """Robust Community Center and ceremony lookup across all mail and event flags."""
     mail_received = {m.text for m in player.findall(".//mailReceived/string") if m.text}
-    cc_is_complete = "ccIsComplete" in mail_received or "JojaMember" in mail_received
-    cc_ceremony = "ccGrandReopening" in mail_received or "JojaMember" in mail_received
+    events_seen = {e.text for e in player.findall(".//eventsSeen/string") if e.text}
+
+    # Community Center / Joja Completion
+    cc_is_complete = bool(
+        {"ccIsComplete", "JojaMember", "ccComplete", "ccMovieTheater"} & mail_received
+    )
+
+    # Re-opening ceremony seen / triggered (Event 191393/191392 or mail flags)
+    cc_ceremony = bool(
+        {"ccGrandReopening", "ccDoorUnlock", "ccGathering", "JojaMember", "ccIsComplete"} & mail_received
+        or {"191393", "191392"} & events_seen
+    )
 
     return cc_is_complete, cc_ceremony
 
@@ -228,3 +277,4 @@ def _empty_grandpa_summary():
         "statue_unlocked": False,
         "categories": [],
     }
+    
