@@ -216,6 +216,9 @@ def _check_keys_status(player):
     """
     mail_received = {m.text.lower() for m in player.findall(".//mailReceived/string") if m.text}
     events_seen = {e.text for e in player.findall(".//eventsSeen/string") if e.text}
+    for e in player.findall(".//eventsSeen/int"):
+        if e.text:
+            events_seen.add(e.text)
 
     # 1. Rusty Key Check
     rusty_node = (player.findtext("hasRustyKey") or "").lower() == "true"
@@ -253,20 +256,47 @@ def _check_keys_status(player):
 def _check_community_center_progress(root, player):
     """Robust Community Center and ceremony lookup across all mail and event flags."""
     mail_received = {m.text for m in player.findall(".//mailReceived/string") if m.text}
-    events_seen = {e.text for e in player.findall(".//eventsSeen/string") if e.text}
+    
+    events_seen = set()
+    for e in player.findall(".//eventsSeen/string"):
+        if e.text:
+            events_seen.add(e.text)
+    for e in player.findall(".//eventsSeen/int"):
+        if e.text:
+            events_seen.add(e.text)
 
-    # Community Center / Joja Completion
-    cc_is_complete = bool(
-        {"ccIsComplete", "JojaMember", "ccComplete", "ccMovieTheater"} & mail_received
-    )
+    # 1. Community Center completion check (all 6 areas complete or mail flag)
+    areas_completed = False
+    cc_node = root.find(".//locations/GameLocation[@xsi:type='CommunityCenter']", namespaces={"xsi": "http://www.w3.org/2001/XMLSchema-instance"})
+    if cc_node is None:
+        cc_node = root.find(".//GameLocation[name='CommunityCenter']")
 
-    # Re-opening ceremony seen / triggered (Event 191393/191392 or mail flags)
-    cc_ceremony = bool(
-        {"ccGrandReopening", "ccDoorUnlock", "ccGathering", "JojaMember", "ccIsComplete"} & mail_received
-        or {"191393", "191392"} & events_seen
-    )
+    if cc_node is not None:
+        areas_node = cc_node.find("areasComplete")
+        if areas_node is not None:
+            booleans = [b.text.lower() == "true" for b in areas_node.findall("boolean")]
+            if len(booleans) >= 6 and all(booleans[:6]):
+                areas_completed = True
 
-    return cc_is_complete, cc_ceremony
+    # 2. Joja Warehouse completion check (all 5 projects funded)
+    joja_projects = {"jojaGreenhouse", "jojaMinecart", "jojaBridge", "jojaPaniere", "jojaBoulder"}
+    is_joja_member = "JojaMember" in mail_received or "jojaMember" in mail_received
+    joja_complete = is_joja_member and joja_projects.issubset(mail_received)
+
+    cc_complete = "ccIsComplete" in mail_received or "ccComplete" in mail_received or areas_completed or joja_complete
+
+    # 3. Re-opening ceremony cutscene check
+    # Event 191393/191392 = Community Center Ceremony; Event 502261 = Joja Ceremony
+    ceremony_events = {"191393", "191392", "502261"}
+    ceremony_mail = {"ccGrandReopening", "ccCeremony", "jojaCeremony"}
+
+    cc_ceremony = bool((ceremony_mail & mail_received) or (ceremony_events & events_seen))
+
+    # Guard clause: Ceremony cannot have occurred if Community Center / Joja isn't completed yet
+    if not cc_complete:
+        cc_ceremony = False
+
+    return cc_complete, cc_ceremony
 
 
 def _empty_grandpa_summary():
