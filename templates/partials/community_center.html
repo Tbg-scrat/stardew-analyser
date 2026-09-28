@@ -56,6 +56,7 @@
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
         gap: 1.25rem;
+        align-items: start;
     }
     .room-card {
         background: var(--bg-card);
@@ -66,19 +67,47 @@
     .room-card.completed {
         border-color: #059669;
     }
-    .room-header {
+
+    /* Collapsible summary header styling */
+    summary.room-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        cursor: pointer;
+        user-select: none;
+        list-style: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+    summary.room-header::-webkit-details-marker {
+        display: none;
+    }
+    details[open] summary.room-header {
         margin-bottom: 0.75rem;
         border-bottom: 1px solid var(--border-color);
         padding-bottom: 0.5rem;
     }
-    .room-header h3 {
+
+    .room-title-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .room-title-wrapper h3 {
         font-size: 1rem;
         font-weight: 700;
         color: var(--text-primary);
+        margin: 0;
     }
+    .collapse-icon {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        transition: transform 0.2s ease;
+    }
+    details[open] .collapse-icon {
+        transform: rotate(90deg);
+    }
+
     .room-status-badge {
         font-size: 0.75rem;
         font-weight: 600;
@@ -100,6 +129,8 @@
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
+        margin: 0;
+        padding: 0;
     }
     .bundle-item {
         display: flex;
@@ -182,15 +213,18 @@
         <!-- Junimo Community Center Rooms Grid -->
         <div class="cc-grid">
             {% for room in farm.community_center.rooms %}
-                <div class="room-card {{ "completed" if room.is_complete else "" }}">
-                    <div class="room-header">
-                        <h3>{{ room.name }}</h3>
+                <details class="room-card {{ "completed" if room.is_complete else "" }}" {{ "" if room.is_complete else "open" }}>
+                    <summary class="room-header">
+                        <div class="room-title-wrapper">
+                            <span class="collapse-icon">&#9654;</span>
+                            <h3>{{ room.name }}</h3>
+                        </div>
                         {% if room.is_complete %}
                             <span class="room-status-badge done">&#10003; Room Complete</span>
                         {% else %}
                             <span class="room-status-badge pending">In Progress</span>
                         {% endif %}
-                    </div>
+                    </summary>
 
                     <ul class="bundle-list">
                         {% for bundle in room["bundles"] %}
@@ -209,19 +243,22 @@
                             </li>
                         {% endfor %}
                     </ul>
-                </div>
+                </details>
             {% endfor %}
         </div>
     {% else %}
         <!-- Joja Warehouse Projects List -->
         <div class="cc-grid">
-            <div class="room-card">
-                <div class="room-header">
-                    <h3>Joja Community Development Form</h3>
+            <details class="room-card {{ "completed" if farm.community_center.is_complete else "" }}" {{ "" if farm.community_center.is_complete else "open" }}>
+                <summary class="room-header">
+                    <div class="room-title-wrapper">
+                        <span class="collapse-icon">&#9654;</span>
+                        <h3>Joja Community Development Form</h3>
+                    </div>
                     <span class="room-status-badge {{ "done" if farm.community_center.is_complete else "pending" }}">
                         {{ "Fully Funded" if farm.community_center.is_complete else "In Progress" }}
                     </span>
-                </div>
+                </summary>
                 <ul class="bundle-list">
                     {% for proj in farm.community_center.projects %}
                         <li class="bundle-item {{ "completed" if proj.is_complete else "incomplete" }}">
@@ -236,7 +273,7 @@
                         </li>
                     {% endfor %}
                 </ul>
-            </div>
+            </details>
         </div>
     {% endif %}
 
