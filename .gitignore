@@ -1,14 +1,38 @@
+# Byte-compiled / optimized files
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Virtual Environments & Testing
 .venv/
 venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local Generated Files
 index.html
+
+# Local Personal Saves (keeps folder structure, ignores save files)
+/saves/*
+!/saves/.gitkeep
+
+# PyInstaller & Windows Build Artifacts
+build/
+dist/
+*.manifest
+*.spec
+Output/
+*.exe
+
+# Environment Overrides & Logs
+docker-compose.override.yml
 *.log
+
+# System & IDE Metadata
 .DS_Store
 Thumbs.db
+ehthumbs.db
+Desktop.ini
 .vscode/
 .idea/
-docker-compose.override.yml
-/saves
-.venv/

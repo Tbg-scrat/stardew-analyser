@@ -1,0 +1,46 @@
+# Git & CI/CD
+.git/
+.github/
+
+# Development & Test Suites
+assets/
+scripts/
+tests/
+pytest.ini
+.pytest_cache/
+
+# Local Save Data (mounted dynamically at runtime via volumes)
+saves/
+
+# Python Virtual Environments & Bytecode
+**/__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+
+# Docker & Compose Configurations (not needed inside the image)
+Dockerfile
+.dockerignore
+docker-compose.yml
+docker-compose.override.yml
+
+# Windows Build Artifacts (PyInstaller & Inno Setup)
+build/
+dist/
+*.spec
+Output/
+*.exe
+
+# Generated Local Output & Documentation
+index.html
+README.md
+LICENSE
+
+# OS & Editor Metadata
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
