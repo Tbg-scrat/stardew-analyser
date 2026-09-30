@@ -33,13 +33,15 @@ jobs:
           pytest
 
       # --- PYINSTALLER BUILDS ---
+      # 1. Directory build for Inno Setup (creates dist/StardewAnalyser/StardewAnalyser.exe)
       - name: Build directory executable for Inno Setup
         run: |
-          pyinstaller --noconfirm --onedir --windowed --name "StardewAnalyser_Folder" --add-data "src;src" app_desktop.py
+          pyinstaller --noconfirm --onedir --windowed --name "StardewAnalyser" --add-data "data;data" --add-data "static;static" --add-data "templates;templates" --add-data "src;src" app_desktop.py
 
+      # 2. Portable single-file executable (creates dist/StardewAnalyser-Portable.exe)
       - name: Build portable executable
         run: |
-          pyinstaller --noconfirm --onefile --windowed --name "StardewAnalyser-Portable" --add-data "src;src" app_desktop.py
+          pyinstaller --noconfirm --onefile --windowed --name "StardewAnalyser-Portable" --add-data "data;data" --add-data "static;static" --add-data "templates;templates" --add-data "src;src" app_desktop.py
 
       # --- INNO SETUP COMPILATION ---
       - name: Compile Inno Setup installer
@@ -58,3 +60,4 @@ jobs:
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
