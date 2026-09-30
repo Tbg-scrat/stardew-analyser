@@ -1,0 +1,166 @@
+<style>
+  .crop-location-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+  }
+  .crop-details-summary {
+    padding: 0.95rem 1.1rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+  }
+  .crop-details-summary:hover {
+    background: var(--bg-card-hover);
+  }
+  .crop-header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .crop-header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .crop-table-wrapper {
+    background: var(--bg-surface);
+    border-top: 1px solid var(--border-color);
+    padding: 0.25rem 0.5rem;
+    overflow-x: auto;
+  }
+  .crop-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+  }
+  .crop-table th, .crop-table td {
+    padding: 0.65rem 0.85rem;
+    border-bottom: 1px solid var(--border-color);
+    text-align: left;
+  }
+  .crop-table tr:last-child td {
+    border-bottom: none;
+  }
+  .crop-table th {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .crop-item-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+  .crop-icon {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    flex-shrink: 0;
+  }
+  .badge-status {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    font-weight: 600;
+    white-space: nowrap;
+    display: inline-block;
+  }
+  .badge-ready { background: rgba(74, 222, 128, 0.2); color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.4); }
+  .badge-waiting { background: rgba(245, 158, 11, 0.2); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.4); }
+  .badge-tomorrow { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); }
+  .badge-wither { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); }
+</style>
+
+<div class="crops-module-container">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+    <h2 style="font-size: 1.25rem; font-weight: 700; color: #fff;">🌾 Crop Tracker</h2>
+    {% if farm.crops and farm.crops.summary.ready_today > 0 %}
+      <span class="badge-status badge-ready">🌾 {{ farm.crops.summary.ready_today }} Ready Today</span>
+    {% endif %}
+  </div>
+
+  {% if farm.crops and farm.crops.locations %}
+    {% for loc_key, loc_title in [('farm', 'Main Farm'), ('greenhouse', 'Greenhouse'), ('ginger_island', 'Ginger Island')] %}
+      {% set loc_data = farm.crops.locations[loc_key] %}
+      {% if loc_data and loc_data.total_crops > 0 %}
+        <details class="crop-location-card" open>
+          <summary class="crop-details-summary">
+            <div class="crop-header-left">
+              <strong style="color: var(--text-primary); font-size: 0.95rem;">{{ loc_title }}</strong>
+              <span style="font-size: 0.8rem; color: var(--text-muted);">({{ loc_data.total_crops }} crops planted)</span>
+            </div>
+            <div class="crop-header-right">
+              {% if loc_data.ready_today > 0 %}
+                <span class="badge-status badge-ready">🌾 {{ loc_data.ready_today }} Ready Today</span>
+              {% endif %}
+              <span class="badge-status badge-waiting">
+                Next Harvest: 
+                {% if loc_data.next_harvest_days == 0 %}
+                  Today
+                {% elif loc_data.next_harvest_days is not none %}
+                  In {{ loc_data.next_harvest_days }} Day{% if loc_data.next_harvest_days > 1 %}s{% endif %}
+                {% else %}
+                  None
+                {% endif %}
+              </span>
+            </div>
+          </summary>
+
+          <div class="crop-table-wrapper">
+            <table class="crop-table">
+              <thead>
+                <tr>
+                  <th>Crop Name</th>
+                  <th style="text-align: center;">Quantity</th>
+                  <th style="text-align: right;">Status / Days Left</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in loc_data['items'] %}
+                  <tr>
+                    <td>
+                      <div class="crop-item-cell">
+                        <img src="{{ item.icon }}" 
+                             alt="{{ item.name }}" 
+                             class="crop-icon" 
+                             onerror="this.onerror=null; this.src='/static/img/items/O_{{ item.name.replace(' ', '_') }}.png'; this.onerror=function(){ this.src='{{ item.wiki_icon }}'; };">
+                        <span style="color: var(--text-primary); font-weight: 600;">{{ item.name }}</span>
+                        {% if item.will_wither %}
+                          <span class="badge-status badge-wither" title="Crop will not mature before season ends!">⚠️ Will Wither</span>
+                        {% endif %}
+                      </div>
+                    </td>
+                    <td style="text-align: center; font-weight: 700; color: var(--text-primary);">{{ item.count }}x</td>
+                    <td style="text-align: right;">
+                      {% if item.days_to_harvest == 0 %}
+                        <span class="badge-status badge-ready">Ready Today</span>
+                      {% elif item.days_to_harvest == 1 %}
+                        <span class="badge-status badge-tomorrow">Tomorrow</span>
+                      {% else %}
+                        <span class="badge-status badge-waiting">In {{ item.days_to_harvest }} Days</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </details>
+      {% endif %}
+    {% endfor %}
+  {% else %}
+    <p style="color: var(--text-muted); font-size: 0.875rem;">No crops planted across any location.</p>
+  {% endif %}
+</div>

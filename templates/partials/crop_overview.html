@@ -1,0 +1,137 @@
+<!-- templates/partials/crop_overview.html -->
+
+<style>
+    .harvest-tracker-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1.25rem;
+        margin-bottom: 1.5rem;
+    }
+    .harvest-tracker-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .harvest-tracker-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .harvest-today-badge {
+        background: rgba(74, 222, 128, 0.15);
+        color: #4ade80;
+        border: 1px solid rgba(74, 222, 128, 0.3);
+        padding: 0.25rem 0.65rem;
+        border-radius: 9999px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+    .harvest-ticker-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 0.85rem;
+    }
+    .harvest-ticker-item {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+    .harvest-ticker-icon {
+        width: 36px;
+        height: 36px;
+        object-fit: contain;
+        flex-shrink: 0;
+        image-rendering: pixelated;
+    }
+    .harvest-ticker-info {
+        flex-grow: 1;
+        min-width: 0;
+    }
+    .harvest-machine-label {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    .harvest-item-name {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #ffffff;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .harvest-countdown-badge {
+        font-size: 0.7rem;
+        font-weight: 700;
+        padding: 0.15rem 0.45rem;
+        border-radius: 4px;
+        margin-top: 0.2rem;
+        display: inline-block;
+    }
+    .harvest-countdown-badge.ready { background: rgba(74, 222, 128, 0.2); color: #4ade80; }
+    .harvest-countdown-badge.tomorrow { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
+    .harvest-countdown-badge.later { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+</style>
+
+{% if farm.crops and farm.crops.summary.total_crops > 0 %}
+<div class="harvest-tracker-card">
+    <div class="harvest-tracker-header">
+        <div class="harvest-tracker-title">
+            <span>🌾 Crop &amp; Harvest Forecast</span>
+        </div>
+        {% if farm.crops.summary.ready_today > 0 %}
+        <div class="harvest-today-badge">
+            ✅ {{ farm.crops.summary.ready_today }} Ready to Harvest Today
+        </div>
+        {% else %}
+        <div style="font-size: 0.8rem; color: var(--text-muted);">
+            No crops ready today ({{ farm.crops.summary.total_crops }} total growing)
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="harvest-ticker-grid">
+        {% for loc_key, loc_title, loc_icon in [('farm', 'Main Farm', '🏡'), ('greenhouse', 'Greenhouse', '🌿'), ('ginger_island', 'Ginger Island', '🏝️')] %}
+            {% set loc_data = farm.crops.locations[loc_key] %}
+            {% if loc_data and loc_data.total_crops > 0 and loc_data['items'] %}
+                {% set next_crop = loc_data['items'][0] %}
+                <div class="harvest-ticker-item">
+                    <img class="harvest-ticker-icon" src="{{ next_crop.icon }}" onerror="this.onerror=null; this.src='/static/img/items/placeholder.png';" alt="{{ next_crop.name }}">
+                    <div class="harvest-ticker-info">
+                        <div class="harvest-machine-label">{{ loc_icon }} {{ loc_title }}</div>
+                        <div class="harvest-item-name">{{ next_crop.name }} (x{{ next_crop.count }})</div>
+                        {% if loc_data.next_harvest_days == 0 %}
+                            <span class="harvest-countdown-badge ready">Ready Today</span>
+                        {% elif loc_data.next_harvest_days == 1 %}
+                            <span class="harvest-countdown-badge tomorrow">Tomorrow</span>
+                        {% elif loc_data.next_harvest_days is not none %}
+                            <span class="harvest-countdown-badge later">In {{ loc_data.next_harvest_days }} days</span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% else %}
+                <div class="harvest-ticker-item" style="opacity: 0.6;">
+                    <img class="harvest-ticker-icon" src="/static/img/items/placeholder.png" alt="Empty">
+                    <div class="harvest-ticker-info">
+                        <div class="harvest-machine-label">{{ loc_icon }} {{ loc_title }}</div>
+                        <div class="harvest-item-name" style="color: var(--text-muted);">Empty</div>
+                        <span class="harvest-countdown-badge" style="background: rgba(255, 255, 255, 0.05); color: var(--text-muted);">No Crops</span>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endif %}

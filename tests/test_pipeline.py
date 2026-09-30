@@ -48,6 +48,7 @@ def test_analyze_save_schema_contract():
         "friendships",
         "artisan",
         "chests",
+        "crops",
         "hay",
         "grandpa",
         "community_center",
@@ -71,6 +72,7 @@ def test_log_save_summary_formatting(caplog):
         "museum_pieces": [{"is_unlocked": True}] * 60,
         "artisan": {"summary": {"total_machines": 150}},
         "chests": {"total_chests": 12},
+        "crops": {"summary": {"total_crops": 384, "ready_today": 84}},
         "hay": {"current_hay": 350, "max_capacity": 480, "total_animals": 16},
         "grandpa": {"total_score": 14, "max_score": 21, "candles": 4},
         "community_center": {"completed_bundles": 28, "total_bundles": 30, "route_label": "Community Center (Junimo)"},
@@ -81,6 +83,7 @@ def test_log_save_summary_formatting(caplog):
 
     assert "Parsed 'Friisen_12345' (Nils @ Friisen Farm | Y3 Fall 20)" in caplog.text
     assert "Achievements: 22/39" in caplog.text
+    assert "Crops: 384 total (84 ready)" in caplog.text
     assert "Grandpa: 14/21 pts (4 Candles)" in caplog.text
     assert "CC: 28/30 Bundles (Community Center (Junimo))" in caplog.text
     

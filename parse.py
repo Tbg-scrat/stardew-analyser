@@ -27,6 +27,7 @@ from src.modules.birthdays import parse_birthdays
 from src.modules.achievements import parse_achievements
 from src.modules.artisan import parse_all_artisan_goods
 from src.modules.chests import parse_chests
+from src.modules.crops import parse_all_crops_from_save
 from src.modules.hay import parse_hay_data
 from src.modules.grandpa import parse_grandpa_data
 from src.modules.community_center import parse_community_center_data
@@ -95,6 +96,10 @@ def analyze_save(file_path):
     chest_summary = parse_chests(root)
     data["chests"] = chest_summary
 
+    # Crops Module
+    crops_summary = parse_all_crops_from_save(root, current_day=data["day_of_month"])
+    data["crops"] = crops_summary
+
     # Hay Tracker Module
     hay_summary = parse_hay_data(root)
     data["hay"] = hay_summary
@@ -140,6 +145,9 @@ def log_save_summary(save_id, data):
     artisan_machines = data.get("artisan", {}).get("summary", {}).get("total_machines", 0)
     chests_count = data.get("chests", {}).get("total_chests", 0)
 
+    crops_total = data.get("crops", {}).get("summary", {}).get("total_crops", 0)
+    crops_ready = data.get("crops", {}).get("summary", {}).get("ready_today", 0)
+
     hay_current = data.get("hay", {}).get("current_hay", 0)
     hay_max = data.get("hay", {}).get("max_capacity", 0)
     hay_animals = data.get("hay", {}).get("total_animals", 0)
@@ -160,6 +168,7 @@ def log_save_summary(save_id, data):
         f"Museum: {museum_unlocked}/{museum_total} | "
         f"Artisan: {artisan_machines} machines | "
         f"Chests: {chests_count} | "
+        f"Crops: {crops_total} total ({crops_ready} ready) | "
         f"Hay: {hay_current}/{hay_max} ({hay_animals} animals) | "
         f"Grandpa: {grandpa_score}/{grandpa_max} pts ({grandpa_candles} Candles) | "
         f"CC: {cc_bundles}/{cc_total} Bundles ({cc_route})"

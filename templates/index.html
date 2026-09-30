@@ -66,7 +66,7 @@
             {# 1. Immediate Stored Hay Deficit Warning #}
             {% if farm.hay and farm.hay.has_deficit_warning %}
             <div class="alert-banner alert-warning" style="background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1.25rem; color: #fca5a5; display: flex; align-items: flex-start; gap: 0.85rem;">
-                <div style="font-size: 1.5rem; line-height: 1;">⚠️</div>
+                <div style="font-size: 1.5rem; line-height: 1;">⚠️️</div>
                 <div>
                     <strong style="color: #f87171; font-size: 0.95rem; display: block; margin-bottom: 0.25rem;">Winter Hay Deficit Warning</strong>
                     <p style="margin: 0; font-size: 0.85rem; color: #fca5a5;">
@@ -89,6 +89,7 @@
             </div>
             {% endif %}
 
+            {% include 'partials/crop_overview.html' %}
             {% include 'partials/next_harvest.html' %}
 
             <div class="module-nav-bar">
@@ -99,6 +100,7 @@
                 <button class="module-nav-btn" data-module="achievements" onclick="switchModule('{{ farm.farm_id }}', 'achievements')">🏆 Achievements <span class="module-badge">{{ farm.achievements.unlocked_count }}/{{ farm.achievements.total }}</span></button>
                 <button class="module-nav-btn" data-module="social" onclick="switchModule('{{ farm.farm_id }}', 'social')">👥 Social <span class="module-badge">{{ farm.friendships|length }}</span></button>
                 <button class="module-nav-btn" data-module="artisan" onclick="switchModule('{{ farm.farm_id }}', 'artisan')">🏺 Artisan Goods <span class="module-badge">{{ farm.artisan.summary.ready_today if farm.artisan else 0 }}/{{ farm.artisan.summary.total_machines if farm.artisan else 0 }}</span></button>
+                <button class="module-nav-btn" data-module="crops" onclick="switchModule('{{ farm.farm_id }}', 'crops')">🌾 Crops <span class="module-badge">{{ farm.crops.summary.ready_today if farm.crops else 0 }}/{{ farm.crops.summary.total_crops if farm.crops else 0 }}</span></button>
                 <button class="module-nav-btn" data-module="chests" onclick="switchModule('{{ farm.farm_id }}', 'chests')">🧰 Chests <span class="module-badge">{{ farm.chests.total_chests if farm.chests else 0 }}</span></button>
                 <button class="module-nav-btn" data-module="hay" onclick="switchModule('{{ farm.farm_id }}', 'hay')">🌾 Hay &amp; Livestock <span class="module-badge">{{ farm.hay.current_hay if farm.hay else 0 }}/{{ farm.hay.max_capacity if farm.hay else 0 }}</span></button>
                 <button class="module-nav-btn" data-module="grandpa" onclick="switchModule('{{ farm.farm_id }}', 'grandpa')">🕯️ Grandpa's Evaluation <span class="module-badge">{{ farm.grandpa.candles if farm.grandpa else 1 }} 🕯️</span></button>
@@ -131,6 +133,10 @@
 
             <div class="module-pane" id="module-{{ farm.farm_id }}-artisan">
                 {% include 'partials/artisan.html' %}
+            </div>
+
+            <div class="module-pane" id="module-{{ farm.farm_id }}-crops">
+                {% include 'partials/crops.html' %}
             </div>
 
             <div class="module-pane" id="module-{{ farm.farm_id }}-chests">

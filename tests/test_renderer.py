@@ -99,6 +99,31 @@ def sample_render_data():
             "total_items": 16149,
             "material_totals": [{"name": "Wood", "count": 999}],
         },
+        "crops": {
+            "summary": {"total_crops": 384, "ready_today": 84},
+            "locations": {
+                "farm": {
+                    "total_crops": 384,
+                    "ready_today": 0,
+                    "next_harvest_days": 1,
+                    "items": [
+                        {
+                            "harvest_id": "Powdermelon",
+                            "name": "Powdermelon",
+                            "icon": "/static/img/items/Powdermelon.png",
+                            "price": 60,
+                            "count": 167,
+                            "days_to_harvest": 1,
+                            "is_recurring": False,
+                            "will_wither": False,
+                            "total_value": 10020,
+                        }
+                    ],
+                },
+                "greenhouse": {"total_crops": 0, "ready_today": 0, "next_harvest_days": None, "items": []},
+                "ginger_island": {"total_crops": 0, "ready_today": 0, "next_harvest_days": None, "items": []},
+            },
+        },
         "hay": {
             "current_hay": 350,
             "silos_built": 2,
@@ -198,7 +223,7 @@ def test_html_navigation_and_sections(tmp_path, sample_render_data):
     assert soup.find("body") is not None
 
     all_text = soup.get_text().lower()
-    for section_kw in ["achievements", "shipped", "fish", "artisan", "chests", "hay", "grandpa", "community"]:
+    for section_kw in ["achievements", "shipped", "fish", "artisan", "crops", "chests", "hay", "grandpa", "community"]:
         assert section_kw in all_text, f"Expected '{section_kw}' content in rendered HTML"
 
 
@@ -223,6 +248,19 @@ def test_html_multi_save_rendering(tmp_path, sample_render_data):
     assert "Friisen" in page_text
     assert "Amalia" in page_text
     assert "Amali" in page_text
+
+
+def test_html_crops_rendering(tmp_path, sample_render_data):
+    """Verifies that Crop Tracker tab and crop entries render in HTML DOM."""
+    output_file = tmp_path / "index_crops.html"
+    generate_dashboard_html({"save1": sample_render_data}, output_path=str(output_file))
+
+    soup = BeautifulSoup(output_file.read_text(encoding="utf-8"), "html.parser")
+    page_text = soup.get_text()
+
+    assert "Crop Tracker" in page_text or "Crops" in page_text
+    assert "Powdermelon" in page_text
+    assert "167x" in page_text
 
 
 def test_html_hay_warning_banners_rendering(tmp_path, sample_render_data):
