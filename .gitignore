@@ -10,6 +10,9 @@ venv/
 .coverage
 htmlcov/
 
+# Developer & Internal Utility Scripts
+/scripts/
+
 # Local Generated Files
 index.html
 
