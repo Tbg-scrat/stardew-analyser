@@ -1,6 +1,6 @@
 #define MyAppName "Stardew Valley Save Analyzer"
 #define MyAppVersion "1.6.0"
-#define MyAppPublisher "Nils"
+#define MyAppPublisher "Tbg-scrat"
 #define MyAppURL "https://github.com/Tbg-scrat/stardew-analyser"
 #define MyAppExeName "StardewAnalyser.exe"
 #define MyAppID "{8F2C4A10-99E3-4E83-A112-D019284FCE01}"
