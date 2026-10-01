@@ -37,17 +37,11 @@ def build_app():
     output_html = os.path.join(tempfile.gettempdir(), "stardew_analyzer_index.html")
 
     try:
-        from parse import run_pipeline
-        run_pipeline(save_dir=save_dir, output_path=output_html)
+        from parse import analyze_save
+        analyze_save(save_dir=save_dir, output_path=output_html)
     except Exception as e:
-        print(f"[WARN] Pipeline execution failed: {e}")
+        print(f"[ERROR] Failed to run save analysis: {e}")
         traceback.print_exc()
-
-        from src.core.renderer import generate_dashboard_html as render_dashboard
-        from src.core.xml_reader import load_and_parse_save
-
-        save_data = load_and_parse_save(save_dir)
-        render_dashboard(save_data, output_path=output_html)
 
     return output_html
 
