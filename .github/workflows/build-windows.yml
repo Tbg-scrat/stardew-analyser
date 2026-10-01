@@ -43,10 +43,12 @@ jobs:
           pyinstaller --noconfirm --onefile --windowed --name "StardewAnalyser-Portable" --add-data "data;data" --add-data "static;static" --add-data "templates;templates" --add-data "src;src" app_desktop.py
 
       # --- INNO SETUP COMPILATION ---
+      - name: Install Inno Setup
+        run: choco install innosetup -y
+
       - name: Compile Inno Setup installer
-        uses: joncloud/innosetup-action@v1
-        with:
-          filepath: setup.iss
+        run: |
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" setup.iss
 
       # --- GITHUB RELEASE ---
       - name: Create GitHub release
