@@ -39,7 +39,7 @@ def build_app():
         from parse import run_pipeline
         run_pipeline(save_dir=save_dir, output_path=output_html)
     except Exception:
-        from src.core.renderer import render_dashboard_html
+        from src.core.renderer import generate_dashboard_html
         from src.core.xml_reader import load_and_parse_save
 
         save_data = load_and_parse_save(save_dir)
