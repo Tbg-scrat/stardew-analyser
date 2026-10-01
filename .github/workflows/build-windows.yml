@@ -48,10 +48,11 @@ jobs:
         run: |
           & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" setup.iss
 
-      # --- GITHUB RELEASE ---
+       # --- GITHUB RELEASE ---
       - name: Create GitHub release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ github.ref_name == 'main' && 'v1.6.0' || github.ref_name }}
           files: |
             dist/StardewAnalyser-Portable.exe
             StardewAnalyser-Setup.exe
