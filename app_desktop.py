@@ -2,7 +2,6 @@ import os
 import sys
 import tempfile
 import traceback
-import xml.etree.ElementTree as ET
 from pathlib import Path
 import webview
 
@@ -31,54 +30,51 @@ def get_default_save_dir() -> str:
     return local_saves
 
 
-def is_valid_xml_save(file_path: str) -> bool:
-    """Check if the path is a non-empty file and valid XML."""
-    try:
-        # Strictly ensure it is a file, not a directory
-        if not os.path.isfile(file_path) or os.path.getsize(file_path) == 0:
-            return False
-
-        # Quick header check for XML opening tag
-        with open(file_path, "rb") as f:
-            first_bytes = f.read(100).strip()
-            if not (first_bytes.startswith(b"<?xml") or first_bytes.startswith(b"<")):
-                return False
-
-        return True
-    except Exception:
-        return False
-
-
 def find_latest_save_file(saves_dir: str) -> str:
-    """Find the most recently modified valid Stardew Valley save XML file within the saves directory."""
+    """Find the most recently modified valid Stardew Valley save file within the saves directory."""
     if not os.path.exists(saves_dir):
         return ""
 
     if os.path.isfile(saves_dir):
-        return saves_dir if is_valid_xml_save(saves_dir) else ""
+        return saves_dir
 
     candidate_files = []
 
-    for root, _, files in os.walk(saves_dir):
-        for file in files:
-            # Skip helper, backup, and system files
-            if (
-                file.endswith("_SaveGameInfo")
-                or file.endswith(".old")
-                or file.endswith(".bak")
-                or file.endswith(".tmp")
-                or file.startswith(".")
-            ):
-                continue
+    # Iterate over subdirectories inside the Saves folder
+    try:
+        for entry in os.scandir(saves_dir):
+            if entry.is_dir():
+                folder_name = entry.name
+                # The main Stardew Valley save file has the same name as its parent folder
+                save_file_path = os.path.join(entry.path, folder_name)
 
-            full_path = os.path.join(root, file)
-            if is_valid_xml_save(full_path):
-                candidate_files.append((full_path, os.path.getmtime(full_path)))
+                if os.path.isfile(save_file_path) and os.path.getsize(save_file_path) > 0:
+                    candidate_files.append((save_file_path, os.path.getmtime(save_file_path)))
+    except Exception as e:
+        print(f"[WARN] Error scanning save directories: {e}")
+
+    # Fallback to general search if no exact match folder/filename match was found
+    if not candidate_files:
+        for root, _, files in os.walk(saves_dir):
+            for file in files:
+                if (
+                    file.endswith("_SaveGameInfo")
+                    or file.endswith(".old")
+                    or file.endswith(".bak")
+                    or file.endswith(".tmp")
+                    or file.startswith(".")
+                    or file.endswith(".vdf")
+                ):
+                    continue
+
+                full_path = os.path.join(root, file)
+                if os.path.isfile(full_path) and os.path.getsize(full_path) > 0:
+                    candidate_files.append((full_path, os.path.getmtime(full_path)))
 
     if not candidate_files:
         return ""
 
-    # Sort by last modified timestamp descending
+    # Sort by last modified timestamp descending to pick the latest save
     candidate_files.sort(key=lambda x: x[1], reverse=True)
     return candidate_files[0][0]
 
