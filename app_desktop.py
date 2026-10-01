@@ -62,12 +62,26 @@ def build_app() -> str:
         sys.path.insert(0, base_dir)
 
     save_dir = get_default_save_dir()
-    output_html = os.path.join(tempfile.gettempdir(), "stardew_analyzer_index.html")
+    temp_dir = tempfile.gettempdir()
+    output_html = os.path.join(temp_dir, "stardew_analyzer_index.html")
 
     try:
         from parse import analyze_save
-        # Pass parameters positionally
-        analyze_save(save_dir, output_html)
+        # Call analyze_save with only 1 argument (save_dir)
+        result = analyze_save(save_dir)
+
+        # If analyze_save returns a filepath or html string, handle it:
+        if isinstance(result, str) and os.path.exists(result):
+            output_html = result
+        elif isinstance(result, str) and result.strip().startswith("<"):
+            with open(output_html, "w", encoding="utf-8") as f:
+                f.write(result)
+
+        # Check standard fallback locations if default output file wasn't generated
+        if not os.path.exists(output_html):
+            default_index = os.path.join(os.getcwd(), "stardew_analyzer_index.html")
+            if os.path.exists(default_index):
+                output_html = default_index
 
         if not os.path.exists(output_html):
             create_error_html(
@@ -83,7 +97,6 @@ def build_app() -> str:
 
 
 def main():
-    # Safely build the app URL or catch setup failures so the window always opens
     try:
         file_url = build_app()
     except Exception as e:
