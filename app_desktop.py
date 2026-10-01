@@ -2,6 +2,7 @@ import os
 import sys
 import tempfile
 import traceback
+from pathlib import Path
 import webview
 
 
@@ -26,8 +27,8 @@ def get_default_save_dir() -> str:
     return local_saves
 
 
-def build_app():
-    """Parse saves and generate temporary HTML output for PyWebView."""
+def build_app() -> str:
+    """Parse saves and generate temporary HTML output, returning a valid file:// URI."""
     base_dir = get_base_dir()
 
     if base_dir not in sys.path:
@@ -43,15 +44,16 @@ def build_app():
         print(f"[ERROR] Failed to run save analysis: {e}")
         traceback.print_exc()
 
-    return output_html
+    # Convert filesystem path to file:// URI for pywebview
+    return Path(output_html).as_uri()
 
 
 def main():
-    html_path = build_app()
+    file_url = build_app()
 
     webview.create_window(
         title="Stardew Valley Save Analyzer",
-        url=html_path,
+        url=file_url,
         width=1280,
         height=800,
         resizable=True,
