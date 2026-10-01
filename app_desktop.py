@@ -30,64 +30,104 @@ def get_default_save_dir() -> str:
     return local_saves
 
 
-def find_latest_save_file(saves_dir: str) -> str:
-    """Find the most recently modified main Stardew Valley save file within the saves directory."""
+def debug_find_save_file(saves_dir: str) -> tuple[str, list[str]]:
+    """Scan directory and return selected save path alongside detailed scan logs."""
+    logs = [f"Scanning root directory: {saves_dir}"]
+
     if not os.path.exists(saves_dir):
-        return ""
+        logs.append("ERROR: Saves directory does not exist on disk!")
+        return "", logs
 
     if os.path.isfile(saves_dir):
-        return saves_dir
+        logs.append(f"Target is a single file: {saves_dir}")
+        return saves_dir, logs
 
     candidate_files = []
 
-    for root, _, files in os.walk(saves_dir):
-        for file in files:
-            # Stardew Valley save files usually match their parent folder name and have no extension.
-            # Skip known non-save files, backups, and metadata.
-            if (
-                file.endswith("_SaveGameInfo")
-                or file.endswith(".old")
-                or file.endswith(".bak")
-                or file.endswith(".tmp")
-                or file.endswith(".vdf")
-                or file.endswith(".png")
-                or file.startswith(".")
-            ):
-                continue
+    try:
+        entries = list(os.scandir(saves_dir))
+        logs.append(f"Found {len(entries)} item(s) inside root folder:")
 
-            full_path = os.path.join(root, file)
-            try:
-                if os.path.isfile(full_path) and os.path.getsize(full_path) > 0:
-                    candidate_files.append((full_path, os.path.getmtime(full_path)))
-            except Exception:
-                continue
+        for entry in entries:
+            logs.append(f"  - [{ 'DIR' if entry.is_dir() else 'FILE' }] {entry.name}")
+
+            if entry.is_dir():
+                folder_path = entry.path
+                # Check for file matching folder name (Stardew convention)
+                expected_save = os.path.join(folder_path, entry.name)
+                if os.path.isfile(expected_save):
+                    mtime = os.path.getmtime(expected_save)
+                    size = os.path.getsize(expected_save)
+                    candidate_files.append((expected_save, mtime))
+                    logs.append(f"    -> MATCHED SAVE FILE: {entry.name} ({size} bytes, mtime: {mtime})")
+                else:
+                    logs.append(f"    -> Expected save file missing: {expected_save}")
+                    # List contents of subfolder for troubleshooting
+                    try:
+                        sub_files = os.listdir(folder_path)
+                        logs.append(f"       Subfolder contents: {sub_files}")
+                    except Exception as sub_err:
+                        logs.append(f"       Failed to read subfolder: {sub_err}")
+
+    except Exception as e:
+        logs.append(f"ERROR during folder scan: {e}\n{traceback.format_exc()}")
 
     if not candidate_files:
-        return ""
+        logs.append("No matches found via folder name convention. Running fallback recursive walk...")
+        for root, _, files in os.walk(saves_dir):
+            for file in files:
+                if (
+                    file.endswith("_SaveGameInfo")
+                    or file.endswith(".old")
+                    or file.endswith(".bak")
+                    or file.endswith(".tmp")
+                    or file.endswith(".vdf")
+                    or file.endswith(".png")
+                    or file.startswith(".")
+                ):
+                    continue
+                full_path = os.path.join(root, file)
+                try:
+                    if os.path.isfile(full_path) and os.path.getsize(full_path) > 0:
+                        candidate_files.append((full_path, os.path.getmtime(full_path)))
+                        logs.append(f"  -> Fallback matched file: {full_path}")
+                except Exception:
+                    continue
 
-    # Sort by last modified timestamp descending
+    if not candidate_files:
+        logs.append("ERROR: Zero candidate files found after full scan.")
+        return "", logs
+
     candidate_files.sort(key=lambda x: x[1], reverse=True)
-    return candidate_files[0][0]
+    selected = candidate_files[0][0]
+    logs.append(f"\nSELECTED LATEST SAVE: {selected}")
+    return selected, logs
 
 
-def create_error_html(output_path: str, message: str, detail: str = ""):
-    """Write a fallback HTML page so pywebview always has a valid file to render."""
+def create_error_html(output_path: str, title: str, message: str, logs: list[str] = None):
+    """Render a detailed diagnostic HTML screen."""
+    log_block = ""
+    if logs:
+        log_text = "\n".join(logs)
+        log_block = f'<h3>Diagnostic Output:</h3><pre>{log_text}</pre>'
+
     error_content = f"""<!DOCTYPE html>
 <html>
 <head>
     <style>
-        body {{ font-family: sans-serif; background: #2c2c2c; color: #fff; padding: 40px; text-align: center; }}
-        .card {{ background: #3a3a3a; padding: 25px; border-radius: 8px; max-width: 700px; margin: 0 auto; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }}
-        h1 {{ color: #e74c3c; margin-top: 0; }}
-        p {{ line-height: 1.5; color: #ddd; }}
-        pre {{ text-align: left; background: #1e1e1e; padding: 15px; border-radius: 4px; overflow-x: auto; color: #ff8b8b; font-size: 13px; }}
+        body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #1e1e1e; color: #fff; padding: 30px; margin: 0; }}
+        .card {{ background: #2d2d2d; padding: 25px; border-radius: 8px; max-width: 900px; margin: 0 auto; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }}
+        h1 {{ color: #e74c3c; margin-top: 0; font-size: 24px; }}
+        h3 {{ color: #3498db; margin-bottom: 5px; }}
+        p {{ line-height: 1.5; color: #ccc; }}
+        pre {{ text-align: left; background: #111; padding: 15px; border-radius: 6px; overflow-x: auto; color: #a6e22e; font-family: monospace; font-size: 12px; line-height: 1.4; white-space: pre-wrap; word-wrap: break-word; }}
     </style>
 </head>
 <body>
     <div class="card">
-        <h1>Stardew Save Analyzer</h1>
+        <h1>{title}</h1>
         <p><strong>{message}</strong></p>
-        {f'<pre>{detail}</pre>' if detail else ''}
+        {log_block}
     </div>
 </body>
 </html>"""
@@ -103,7 +143,7 @@ def build_app() -> str:
         sys.path.insert(0, base_dir)
 
     saves_root = get_default_save_dir()
-    save_file = find_latest_save_file(saves_root)
+    save_file, scan_logs = debug_find_save_file(saves_root)
 
     temp_dir = tempfile.gettempdir()
     output_html = os.path.join(temp_dir, "stardew_analyzer_index.html")
@@ -111,20 +151,17 @@ def build_app() -> str:
     if not save_file:
         create_error_html(
             output_html,
-            "Kein Spielstand gefunden",
-            f"Es konnte keine gültige Stardew Valley Speicherdatei in folgendem Ordner gefunden werden:\n{saves_root}\n\nBitte stelle sicher, dass mindestens ein Spielstand existiert."
+            "No Save File Identified",
+            f"Directory inspected: {saves_root}",
+            scan_logs,
         )
         return Path(output_html).as_uri()
 
     try:
         from parse import analyze_save
-        
-        # Versuche zuerst die konkrete Speicherdatei zu übergeben
-        try:
-            result = analyze_save(save_file)
-        except Exception:
-            # Fallback: Falls parse.py den Ordner statt der Datei erwartet
-            result = analyze_save(saves_root)
+
+        scan_logs.append(f"Calling analyze_save('{save_file}')...")
+        result = analyze_save(save_file)
 
         if isinstance(result, str) and os.path.exists(result):
             output_html = result
@@ -138,14 +175,21 @@ def build_app() -> str:
                 output_html = default_index
 
         if not os.path.exists(output_html):
+            scan_logs.append("ERROR: parse.py ran but stardew_analyzer_index.html was not written to disk.")
             create_error_html(
                 output_html,
-                "Analyse fehlgeschlagen",
-                f"Die Analyse für die Datei '{save_file}' konnte keine HTML-Ausgabe erzeugen."
+                "Analysis Failed to Render Output",
+                f"Target File: {save_file}",
+                scan_logs,
             )
     except Exception as e:
-        err_msg = traceback.format_exc()
-        create_error_html(output_html, f"Fehler beim Parsen des Spielstands: {e}", err_msg)
+        scan_logs.append(f"\nEXCEPTION DURING PARSING:\n{traceback.format_exc()}")
+        create_error_html(
+            output_html,
+            f"Parsing Error: {e}",
+            f"Target File: {save_file}",
+            scan_logs,
+        )
 
     return Path(output_html).as_uri()
 
@@ -155,11 +199,11 @@ def main():
         file_url = build_app()
     except Exception as e:
         output_html = os.path.join(tempfile.gettempdir(), "stardew_analyzer_index.html")
-        create_error_html(output_html, "Startfehler", traceback.format_exc())
+        create_error_html(output_html, "Startup Exception", str(e), [traceback.format_exc()])
         file_url = Path(output_html).as_uri()
 
     webview.create_window(
-        title="Stardew Valley Save Analyzer",
+        title="Stardew Valley Save Analyzer - Diagnostics",
         url=file_url,
         width=1280,
         height=800,
