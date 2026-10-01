@@ -32,19 +32,18 @@ def get_default_save_dir() -> str:
 
 
 def is_valid_xml_save(file_path: str) -> bool:
-    """Check if the file exists, is non-empty, and is valid XML."""
+    """Check if the path is a non-empty file and valid XML."""
     try:
+        # Strictly ensure it is a file, not a directory
         if not os.path.isfile(file_path) or os.path.getsize(file_path) == 0:
             return False
 
-        # Quick header check for XML declaration or root element opening bracket
+        # Quick header check for XML opening tag
         with open(file_path, "rb") as f:
             first_bytes = f.read(100).strip()
             if not (first_bytes.startswith(b"<?xml") or first_bytes.startswith(b"<")):
                 return False
 
-        # Verify ElementTree can parse the root header without throwing ParseError
-        ET.parse(file_path)
         return True
     except Exception:
         return False
@@ -53,16 +52,16 @@ def is_valid_xml_save(file_path: str) -> bool:
 def find_latest_save_file(saves_dir: str) -> str:
     """Find the most recently modified valid Stardew Valley save XML file within the saves directory."""
     if not os.path.exists(saves_dir):
-        return saves_dir
+        return ""
 
     if os.path.isfile(saves_dir):
-        return saves_dir if is_valid_xml_save(saves_dir) else saves_dir
+        return saves_dir if is_valid_xml_save(saves_dir) else ""
 
     candidate_files = []
 
     for root, _, files in os.walk(saves_dir):
         for file in files:
-            # Skip non-save / helper / backup files
+            # Skip helper, backup, and system files
             if (
                 file.endswith("_SaveGameInfo")
                 or file.endswith(".old")
@@ -77,7 +76,7 @@ def find_latest_save_file(saves_dir: str) -> str:
                 candidate_files.append((full_path, os.path.getmtime(full_path)))
 
     if not candidate_files:
-        return saves_dir
+        return ""
 
     # Sort by last modified timestamp descending
     candidate_files.sort(key=lambda x: x[1], reverse=True)
@@ -120,6 +119,14 @@ def build_app() -> str:
 
     temp_dir = tempfile.gettempdir()
     output_html = os.path.join(temp_dir, "stardew_analyzer_index.html")
+
+    if not save_file:
+        create_error_html(
+            output_html,
+            "No Save File Found",
+            f"Could not locate a valid Stardew Valley save file inside:\n{saves_root}\n\nPlease ensure you have at least one saved game."
+        )
+        return Path(output_html).as_uri()
 
     try:
         from parse import analyze_save
