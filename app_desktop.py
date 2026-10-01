@@ -2,6 +2,7 @@ import os
 import sys
 import tempfile
 import traceback
+import time
 from pathlib import Path
 import webview
 
@@ -53,7 +54,6 @@ def debug_find_save_file(saves_dir: str) -> tuple[str, list[str]]:
 
             if entry.is_dir():
                 folder_path = entry.path
-                # Check for file matching folder name (Stardew convention)
                 expected_save = os.path.join(folder_path, entry.name)
                 if os.path.isfile(expected_save):
                     mtime = os.path.getmtime(expected_save)
@@ -62,7 +62,6 @@ def debug_find_save_file(saves_dir: str) -> tuple[str, list[str]]:
                     logs.append(f"    -> MATCHED SAVE FILE: {entry.name} ({size} bytes, mtime: {mtime})")
                 else:
                     logs.append(f"    -> Expected save file missing: {expected_save}")
-                    # List contents of subfolder for troubleshooting
                     try:
                         sub_files = os.listdir(folder_path)
                         logs.append(f"       Subfolder contents: {sub_files}")
@@ -109,18 +108,19 @@ def create_error_html(output_path: str, title: str, message: str, logs: list[str
     log_block = ""
     if logs:
         log_text = "\n".join(logs)
-        log_block = f'<h3>Diagnostic Output:</h3><pre>{log_text}</pre>'
+        log_block = f'<h3>Diagnostic Output Log:</h3><pre>{log_text}</pre>'
 
     error_content = f"""<!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
     <style>
-        body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #1e1e1e; color: #fff; padding: 30px; margin: 0; }}
-        .card {{ background: #2d2d2d; padding: 25px; border-radius: 8px; max-width: 900px; margin: 0 auto; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }}
+        body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #111; color: #fff; padding: 30px; margin: 0; }}
+        .card {{ background: #222; padding: 25px; border-radius: 8px; max-width: 950px; margin: 0 auto; border: 1px solid #333; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }}
         h1 {{ color: #e74c3c; margin-top: 0; font-size: 24px; }}
         h3 {{ color: #3498db; margin-bottom: 5px; }}
         p {{ line-height: 1.5; color: #ccc; }}
-        pre {{ text-align: left; background: #111; padding: 15px; border-radius: 6px; overflow-x: auto; color: #a6e22e; font-family: monospace; font-size: 12px; line-height: 1.4; white-space: pre-wrap; word-wrap: break-word; }}
+        pre {{ text-align: left; background: #000; padding: 15px; border-radius: 6px; overflow-x: auto; color: #00ff66; font-family: "Consolas", "Courier New", monospace; font-size: 13px; line-height: 1.4; white-space: pre-wrap; word-wrap: break-word; border: 1px solid #333; }}
     </style>
 </head>
 <body>
@@ -131,8 +131,17 @@ def create_error_html(output_path: str, title: str, message: str, logs: list[str
     </div>
 </body>
 </html>"""
+
+    # Remove existing file to prevent stale cache reading
+    if os.path.exists(output_path):
+        try:
+            os.remove(output_path)
+        except Exception:
+            pass
+
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(error_content)
+        f.flush()
 
 
 def build_app() -> str:
@@ -145,8 +154,9 @@ def build_app() -> str:
     saves_root = get_default_save_dir()
     save_file, scan_logs = debug_find_save_file(saves_root)
 
+    # Use a unique timestamped debug file path to bypass browser caching
     temp_dir = tempfile.gettempdir()
-    output_html = os.path.join(temp_dir, "stardew_analyzer_index.html")
+    output_html = os.path.join(temp_dir, f"stardew_diag_{int(time.time())}.html")
 
     if not save_file:
         create_error_html(
@@ -170,12 +180,7 @@ def build_app() -> str:
                 f.write(result)
 
         if not os.path.exists(output_html):
-            default_index = os.path.join(os.getcwd(), "stardew_analyzer_index.html")
-            if os.path.exists(default_index):
-                output_html = default_index
-
-        if not os.path.exists(output_html):
-            scan_logs.append("ERROR: parse.py ran but stardew_analyzer_index.html was not written to disk.")
+            scan_logs.append("ERROR: parse.py ran but output HTML was not written to disk.")
             create_error_html(
                 output_html,
                 "Analysis Failed to Render Output",
@@ -198,7 +203,7 @@ def main():
     try:
         file_url = build_app()
     except Exception as e:
-        output_html = os.path.join(tempfile.gettempdir(), "stardew_analyzer_index.html")
+        output_html = os.path.join(tempfile.gettempdir(), f"stardew_diag_{int(time.time())}.html")
         create_error_html(output_html, "Startup Exception", str(e), [traceback.format_exc()])
         file_url = Path(output_html).as_uri()
 
