@@ -24,7 +24,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pyinstaller pytest pywebview
+          pip install pyinstaller pytest pywebview jinja2 beautifulsoup4 lxml pillow
 
       # --- QUALITY GATE ---
       - name: Run Pytest suite
@@ -32,12 +32,10 @@ jobs:
           pytest
 
       # --- PYINSTALLER BUILDS ---
-      # 1. Directory build for Inno Setup (creates dist/StardewAnalyser/StardewAnalyser.exe)
       - name: Build directory executable for Inno Setup
         run: |
           pyinstaller --noconfirm --onedir --windowed --name "StardewAnalyser" --add-data "data;data" --add-data "static;static" --add-data "templates;templates" --add-data "src;src" app_desktop.py
 
-      # 2. Portable single-file executable (creates dist/StardewAnalyser-Portable.exe)
       - name: Build portable executable
         run: |
           pyinstaller --noconfirm --onefile --windowed --name "StardewAnalyser-Portable" --add-data "data;data" --add-data "static;static" --add-data "templates;templates" --add-data "src;src" app_desktop.py
