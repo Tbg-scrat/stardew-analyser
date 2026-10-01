@@ -2,6 +2,7 @@ import os
 import sys
 import tempfile
 import traceback
+import xml.etree.ElementTree as ET
 from pathlib import Path
 import webview
 
@@ -30,31 +31,55 @@ def get_default_save_dir() -> str:
     return local_saves
 
 
+def is_valid_xml_save(file_path: str) -> bool:
+    """Check if the file exists, is non-empty, and is valid XML."""
+    try:
+        if not os.path.isfile(file_path) or os.path.getsize(file_path) == 0:
+            return False
+
+        # Quick header check for XML declaration or root element opening bracket
+        with open(file_path, "rb") as f:
+            first_bytes = f.read(100).strip()
+            if not (first_bytes.startswith(b"<?xml") or first_bytes.startswith(b"<")):
+                return False
+
+        # Verify ElementTree can parse the root header without throwing ParseError
+        ET.parse(file_path)
+        return True
+    except Exception:
+        return False
+
+
 def find_latest_save_file(saves_dir: str) -> str:
-    """Find the most recently modified Stardew Valley save XML file within the saves directory."""
+    """Find the most recently modified valid Stardew Valley save XML file within the saves directory."""
     if not os.path.exists(saves_dir):
         return saves_dir
 
-    # If saves_dir is already a file, return it directly
     if os.path.isfile(saves_dir):
-        return saves_dir
+        return saves_dir if is_valid_xml_save(saves_dir) else saves_dir
 
     candidate_files = []
-    
-    # Iterate through subfolders in the Saves directory
+
     for root, _, files in os.walk(saves_dir):
         for file in files:
-            # Stardew save files do not have an extension, or end with _SaveGameInfo
-            # Ignore SaveGameInfo files and system/hidden files
-            if not file.endswith("_SaveGameInfo") and not file.startswith("."):
-                full_path = os.path.join(root, file)
-                if os.path.isfile(full_path):
-                    candidate_files.append((full_path, os.path.getmtime(full_path)))
+            # Skip non-save / helper / backup files
+            if (
+                file.endswith("_SaveGameInfo")
+                or file.endswith(".old")
+                or file.endswith(".bak")
+                or file.endswith(".tmp")
+                or file.startswith(".")
+            ):
+                continue
+
+            full_path = os.path.join(root, file)
+            if is_valid_xml_save(full_path):
+                candidate_files.append((full_path, os.path.getmtime(full_path)))
 
     if not candidate_files:
         return saves_dir
 
-    # Return the path of the most recently modified save file
+    # Sort by last modified timestamp descending
     candidate_files.sort(key=lambda x: x[1], reverse=True)
     return candidate_files[0][0]
 
@@ -115,7 +140,7 @@ def build_app() -> str:
             create_error_html(
                 output_html,
                 "No save file analyzed",
-                f"No valid Stardew Valley save files were found in:\n{saves_root}"
+                f"No valid Stardew Valley XML save files were found in:\n{saves_root}"
             )
     except Exception as e:
         err_msg = traceback.format_exc()
