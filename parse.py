@@ -36,6 +36,7 @@ SAVE_DIR = Path(os.getenv("SAVE_DIR", "/saves"))
 
 
 def find_all_saves(saves_dir):
+    saves_dir = Path(saves_dir)
     save_files = []
     if not saves_dir.exists():
         logger.warning(f"Save directory '{saves_dir.resolve()}' does not exist.")
@@ -175,9 +176,15 @@ def log_save_summary(save_id, data):
     )
 
 
-if __name__ == "__main__":
-    logger.info(f"Scanning directory: {SAVE_DIR.resolve()}")
-    saves = find_all_saves(SAVE_DIR)
+def run_pipeline(save_dir=None, output_path=None):
+    """
+    Executes the full parsing pipeline for a given save directory (or default SAVE_DIR),
+    parsing all discovered farms and rendering the multi-farm dashboard HTML.
+    """
+    target_dir = Path(save_dir) if save_dir else SAVE_DIR
+    logger.info(f"Scanning directory: {target_dir.resolve()}")
+
+    saves = find_all_saves(target_dir)
     logger.info(f"Discovered {len(saves)} save candidate(s).")
 
     all_saves_data = {}
@@ -190,7 +197,15 @@ if __name__ == "__main__":
             logger.exception(f"Error processing save '{save_id}': {e}")
 
     if all_saves_data:
-        generate_dashboard_html(all_saves_data)
+        try:
+            return generate_dashboard_html(all_saves_data, output_path=output_path)
+        except TypeError:
+            # Fallback if generate_dashboard_html does not accept output_path kwarg
+            return generate_dashboard_html(all_saves_data)
     else:
-        logger.warning(f"No valid save games were parsed in {SAVE_DIR.resolve()}")
-        
+        logger.warning(f"No valid save games were parsed in {target_dir.resolve()}")
+        return None
+
+
+if __name__ == "__main__":
+    run_pipeline()
