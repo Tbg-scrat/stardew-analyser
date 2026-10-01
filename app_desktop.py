@@ -30,6 +30,35 @@ def get_default_save_dir() -> str:
     return local_saves
 
 
+def find_latest_save_file(saves_dir: str) -> str:
+    """Find the most recently modified Stardew Valley save XML file within the saves directory."""
+    if not os.path.exists(saves_dir):
+        return saves_dir
+
+    # If saves_dir is already a file, return it directly
+    if os.path.isfile(saves_dir):
+        return saves_dir
+
+    candidate_files = []
+    
+    # Iterate through subfolders in the Saves directory
+    for root, _, files in os.walk(saves_dir):
+        for file in files:
+            # Stardew save files do not have an extension, or end with _SaveGameInfo
+            # Ignore SaveGameInfo files and system/hidden files
+            if not file.endswith("_SaveGameInfo") and not file.startswith("."):
+                full_path = os.path.join(root, file)
+                if os.path.isfile(full_path):
+                    candidate_files.append((full_path, os.path.getmtime(full_path)))
+
+    if not candidate_files:
+        return saves_dir
+
+    # Return the path of the most recently modified save file
+    candidate_files.sort(key=lambda x: x[1], reverse=True)
+    return candidate_files[0][0]
+
+
 def create_error_html(output_path: str, message: str, detail: str = ""):
     """Write a fallback HTML page so pywebview always has a valid file to render."""
     error_content = f"""<!DOCTYPE html>
@@ -61,23 +90,22 @@ def build_app() -> str:
     if base_dir not in sys.path:
         sys.path.insert(0, base_dir)
 
-    save_dir = get_default_save_dir()
+    saves_root = get_default_save_dir()
+    save_file = find_latest_save_file(saves_root)
+
     temp_dir = tempfile.gettempdir()
     output_html = os.path.join(temp_dir, "stardew_analyzer_index.html")
 
     try:
         from parse import analyze_save
-        # Call analyze_save with only 1 argument (save_dir)
-        result = analyze_save(save_dir)
+        result = analyze_save(save_file)
 
-        # If analyze_save returns a filepath or html string, handle it:
         if isinstance(result, str) and os.path.exists(result):
             output_html = result
         elif isinstance(result, str) and result.strip().startswith("<"):
             with open(output_html, "w", encoding="utf-8") as f:
                 f.write(result)
 
-        # Check standard fallback locations if default output file wasn't generated
         if not os.path.exists(output_html):
             default_index = os.path.join(os.getcwd(), "stardew_analyzer_index.html")
             if os.path.exists(default_index):
@@ -87,7 +115,7 @@ def build_app() -> str:
             create_error_html(
                 output_html,
                 "No save file analyzed",
-                f"No valid Stardew Valley save files were found in:\n{save_dir}"
+                f"No valid Stardew Valley save files were found in:\n{saves_root}"
             )
     except Exception as e:
         err_msg = traceback.format_exc()
