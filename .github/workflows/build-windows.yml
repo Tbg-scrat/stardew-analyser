@@ -1,6 +1,7 @@
 name: Build Windows Release
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - 'v*'
@@ -23,7 +24,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pyinstaller pytest pywebview
+          pip install pyinstaller pytest pywebview jinja2 beautifulsoup4 lxml pillow
 
       # --- QUALITY GATE ---
       - name: Run Pytest suite
@@ -31,26 +32,27 @@ jobs:
           pytest
 
       # --- PYINSTALLER BUILDS ---
-      # 1. Directory build for Inno Setup (creates dist/StardewAnalyser/StardewAnalyser.exe)
       - name: Build directory executable for Inno Setup
         run: |
           pyinstaller --noconfirm --onedir --windowed --name "StardewAnalyser" --add-data "data;data" --add-data "static;static" --add-data "templates;templates" --add-data "src;src" app_desktop.py
 
-      # 2. Portable single-file executable (creates dist/StardewAnalyser-Portable.exe)
       - name: Build portable executable
         run: |
           pyinstaller --noconfirm --onefile --windowed --name "StardewAnalyser-Portable" --add-data "data;data" --add-data "static;static" --add-data "templates;templates" --add-data "src;src" app_desktop.py
 
       # --- INNO SETUP COMPILATION ---
-      - name: Compile Inno Setup installer
-        uses: joncloud/innosetup-action@v1
-        with:
-          filepath: setup.iss
+      - name: Install Inno Setup
+        run: choco install innosetup -y
 
-      # --- GITHUB RELEASE ---
+      - name: Compile Inno Setup installer
+        run: |
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" setup.iss
+
+       # --- GITHUB RELEASE ---
       - name: Create GitHub release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ github.ref_name == 'main' && 'v1.6.0' || github.ref_name }}
           files: |
             dist/StardewAnalyser-Portable.exe
             StardewAnalyser-Setup.exe
