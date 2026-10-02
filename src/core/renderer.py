@@ -1,6 +1,7 @@
 # src/core/renderer.py
 
 import logging
+import sys
 import time
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
@@ -10,11 +11,24 @@ logger = logging.getLogger(__name__)
 OUTPUT_HTML = Path("index.html")
 
 
+def get_resource_path(relative_path: str) -> Path:
+    """Resolve resource path for both development and PyInstaller bundled environments."""
+    if getattr(sys, "frozen", False):
+        base_path = Path(sys._MEIPASS)
+    else:
+        # Repo root is 2 levels up from src/core/renderer.py
+        base_path = Path(__file__).resolve().parent.parent.parent
+    return base_path / relative_path
+
+
 def generate_dashboard_html(all_saves_data, output_path=OUTPUT_HTML):
     """
     Renders Jinja2 HTML dashboard from parsed save data dictionaries.
     """
-    env = Environment(loader=FileSystemLoader("templates", encoding="utf-8"))
+    templates_dir = get_resource_path("templates")
+    logger.debug(f"Loading Jinja templates from: {templates_dir}")
+
+    env = Environment(loader=FileSystemLoader(templates_dir, encoding="utf-8"))
     template = env.get_template("index.html")
 
     farms_context = []
@@ -37,4 +51,5 @@ def generate_dashboard_html(all_saves_data, output_path=OUTPUT_HTML):
         f"Generated static dashboard for {len(all_saves_data)} save game(s)"
         f" -> {Path(output_path).resolve()}"
     )
+    return output_path
     
