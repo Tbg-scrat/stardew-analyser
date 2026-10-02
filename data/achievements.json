@@ -45,7 +45,7 @@
     "name": "Legend",
     "description": "Earn 10,000,000g",
     "category": "Money",
-    "icon": "Achievement_Star_05.png",
+    "icon": "Achievement_Star_04.png",
     "target": 10000000,
     "tip": "Fill the Greenhouse and Ginger Island farm with Ancient Fruit."
   },
