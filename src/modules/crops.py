@@ -20,34 +20,41 @@ def calculate_days_remaining(crop_node) -> dict:
     try:
         current_phase = int(crop_node.findtext("currentPhase", "0"))
         day_of_phase = int(crop_node.findtext("dayOfCurrentPhase", "0"))
-        fully_grown = crop_node.findtext("fullyGrown", "false").lower() == "true"
+
+        # Stardew Valley XML uses <fullGrown>, check both <fullGrown> and <fullyGrown>
+        full_grown = (
+            crop_node.findtext("fullGrown", "false").lower() == "true" or
+            crop_node.findtext("fullyGrown", "false").lower() == "true"
+        )
+
         regrow_after_harvest = int(crop_node.findtext("regrowAfterHarvest", "-1"))
-        is_recurring = regrow_after_harvest != -1
+        is_recurring = regrow_after_harvest != -1 or full_grown
 
         phase_days_nodes = crop_node.findall(".//phaseDays/int")
         phase_days = [int(p.text) for p in phase_days_nodes if p.text is not None]
 
-        # Case 1: Crop is fully grown and ready or in regrowth cycle
-        if fully_grown:
-            if is_recurring:
-                if day_of_phase == 0:
-                    return {"days_to_harvest": 0, "is_recurring": True, "fully_grown": True, "harvest_id": harvest_id}
-                else:
-                    remaining = max(0, regrow_after_harvest - day_of_phase)
-                    return {"days_to_harvest": remaining, "is_recurring": True, "fully_grown": True, "harvest_id": harvest_id}
-            return {"days_to_harvest": 0, "is_recurring": False, "fully_grown": True, "harvest_id": harvest_id}
+        # Case 1: Fully grown regrowing crop (day_of_phase is exact countdown to next harvest)
+        if full_grown:
+            return {
+                "days_to_harvest": day_of_phase,
+                "is_recurring": True,
+                "fully_grown": True,
+                "harvest_id": harvest_id,
+            }
 
-        # Case 2: Final growth phase reached (ready for harvest today)
+        # Case 2: Final growth phase reached during initial growth (ready to harvest today)
         if phase_days and current_phase >= len(phase_days) - 1:
-            return {"days_to_harvest": 0, "is_recurring": is_recurring, "fully_grown": False, "harvest_id": harvest_id}
+            return {
+                "days_to_harvest": 0,
+                "is_recurring": is_recurring,
+                "fully_grown": False,
+                "harvest_id": harvest_id,
+            }
 
-        # Case 3: In active growth phase
+        # Case 3: In active initial growth phase
         remaining_days = 0
         if phase_days and current_phase < len(phase_days) - 1:
-            # Remaining days in current phase
             remaining_days += max(0, phase_days[current_phase] - day_of_phase)
-
-            # Sum remaining phases up to final harvest phase
             for p_len in phase_days[current_phase + 1 : len(phase_days) - 1]:
                 remaining_days += p_len
 
@@ -61,7 +68,6 @@ def calculate_days_remaining(crop_node) -> dict:
     except Exception as e:
         logger.debug(f"Error calculating crop lifecycle: {e}")
         return {"days_to_harvest": 0, "is_recurring": False, "fully_grown": False, "harvest_id": harvest_id}
-
 
 # Export alias expected by unit tests
 parse_crop = calculate_days_remaining
