@@ -6,6 +6,7 @@ Extracts today's live weather conditions and tomorrow's forecast.
 """
 
 import logging
+import time
 
 logger = logging.getLogger(__name__)
 
@@ -26,6 +27,8 @@ def parse_weather(root):
     :param root: xml.etree.ElementTree Element representing <SaveGame>
     :return: dict containing today's weather and tomorrow's valley/island forecasts
     """
+    start_time = time.perf_counter()
+
     if root is None:
         logger.warning("SaveGame root is None. Defaulting weather conditions to Unknown.")
         unknown = {"id": "Unknown", "name": "Unknown", "icon": "\u2753", "css_class": "weather-unknown"}
@@ -78,8 +81,11 @@ def parse_weather(root):
         }
 
     island_str = f" | Tomorrow Island: {island_data['name']}" if island_data else ""
+    elapsed_ms = (time.perf_counter() - start_time) * 1000
+
     logger.debug(
-        f"Weather parsed -> Today: {today_data['name']} | Tomorrow Valley: {valley_data['name']}{island_str}"
+        f"Weather parsed in {elapsed_ms:.2f}ms -> Today: {today_data['name']} | "
+        f"Tomorrow Valley: {valley_data['name']}{island_str}"
     )
 
     return {

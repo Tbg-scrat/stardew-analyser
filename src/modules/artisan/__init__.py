@@ -1,6 +1,7 @@
 # src/modules/artisan/__init__.py
 
 import logging
+import time
 from src.modules.artisan.casks import parse_all_casks_from_save
 from src.modules.artisan.kegs import parse_all_kegs_from_save
 from src.modules.artisan.jars import parse_all_jars_from_save
@@ -16,6 +17,8 @@ def parse_all_artisan_goods(root, player=None):
     Consolidates casks, kegs, jars, dehydrators, and bee houses into a 
     standardized schema with aggregated summary metrics and idle alerts.
     """
+    start_time = time.perf_counter()
+
     # 1. Parse Sub-modules
     casks_data = parse_all_casks_from_save(root, player) or {
         "total_casks": 0, "empty_casks": 0, "ready_today": 0, "ready_tomorrow": 0, "aging_count": 0, "batches": []
@@ -107,8 +110,9 @@ def parse_all_artisan_goods(root, player=None):
     for loc, count in bee_houses_data.get("idle_locations", {}).items():
         _add_idle(loc, "bee_houses", count)
 
+    elapsed_ms = (time.perf_counter() - start_time) * 1000
     logger.debug(
-        f"Aggregated {total_machines} artisan machines across save: "
+        f"Aggregated {total_machines} artisan machines across save in {elapsed_ms:.2f}ms: "
         f"{total_processing} processing, {total_idle} idle, {total_hibernating} hibernating, "
         f"{total_ready_today} ready today, {total_ready_tomorrow} ready tomorrow"
     )

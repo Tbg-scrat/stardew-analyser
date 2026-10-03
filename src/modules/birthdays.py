@@ -6,6 +6,7 @@ Tracks villager birthdays, identifies the next upcoming birthday, and attaches l
 """
 
 import logging
+import time
 from src.core.gift_data import get_loved_gifts
 
 logger = logging.getLogger(__name__)
@@ -63,6 +64,8 @@ def parse_birthdays(root):
     :param root: xml.etree.ElementTree Element representing <SaveGame>
     :return: dict containing next birthday details, status text, and loved gifts
     """
+    start_time = time.perf_counter()
+
     if root is None:
         logger.warning("SaveGame root is None. Defaulting to no upcoming birthday.")
         return {"next_birthday": None, "status_text": "None"}
@@ -74,6 +77,7 @@ def parse_birthdays(root):
     try:
         day = int(day_node.text) if day_node is not None and day_node.text else 1
     except ValueError:
+        logger.debug(f"Invalid dayOfMonth text '{day_node.text if day_node is not None else None}'; defaulting to 1")
         day = 1
 
     seasonal_birthdays = VILLAGER_BIRTHDAYS.get(season, [])
@@ -89,6 +93,9 @@ def parse_birthdays(root):
         next_bday = None
         status_text = "None remaining this season"
         logger.debug(f"No remaining birthdays in {season.capitalize()} after day {day}")
+
+    elapsed_ms = (time.perf_counter() - start_time) * 1000
+    logger.debug(f"Birthdays module parsed in {elapsed_ms:.2f}ms")
 
     return {
         "next_birthday": next_bday,

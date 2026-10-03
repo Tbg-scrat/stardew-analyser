@@ -6,6 +6,7 @@ Determines the current date and calculates upcoming seasonal festivals.
 """
 
 import logging
+import time
 
 logger = logging.getLogger(__name__)
 
@@ -43,6 +44,8 @@ def parse_festivals(root):
     :param root: xml.etree.ElementTree Element representing <SaveGame>
     :return: dict containing current date info and next festival details
     """
+    start_time = time.perf_counter()
+
     if root is None:
         logger.warning("SaveGame root is None. Defaulting to Spring Day 1 festival status.")
         return {"current_day": 1, "season": "spring", "next_festival": None}
@@ -54,6 +57,7 @@ def parse_festivals(root):
     try:
         day = int(day_node.text) if day_node is not None and day_node.text else 1
     except ValueError:
+        logger.debug(f"Invalid dayOfMonth text '{day_node.text if day_node is not None else None}'; defaulting to 1")
         day = 1
 
     seasonal_festivals = FESTIVAL_CALENDAR.get(season, [])
@@ -70,6 +74,9 @@ def parse_festivals(root):
         next_event = None
         status_text = "None remaining this season"
         logger.debug(f"No remaining festivals in {season.capitalize()} after day {day}")
+
+    elapsed_ms = (time.perf_counter() - start_time) * 1000
+    logger.debug(f"Festivals module parsed in {elapsed_ms:.2f}ms")
 
     return {
         "season": season.capitalize(),

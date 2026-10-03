@@ -3,6 +3,7 @@
 import json
 import math
 import logging
+import time
 from pathlib import Path
 
 logger = logging.getLogger(__name__)
@@ -63,6 +64,8 @@ def parse_all_bee_houses_from_save(root):
     In Winter, outdoor farm Bee Houses enter hibernation.
     Ginger Island (IslandWest) produces year-round.
     """
+    start_time = time.perf_counter()
+
     current_season = (root.findtext("currentSeason") or "spring").lower().strip()
     is_winter = current_season == "winter"
 
@@ -77,7 +80,13 @@ def parse_all_bee_houses_from_save(root):
     idle_locations = {}
     location_stats = {}
 
-    for loc_name, loc_elem, is_outdoor in _get_all_locations(root):
+    all_locs = list(_get_all_locations(root))
+    logger.debug(
+        f"Scanning {len(all_locs)} location nodes for Bee Houses "
+        f"(Season: {current_season.capitalize()}, Winter Hibernation Active: {is_winter})"
+    )
+
+    for loc_name, loc_elem, is_outdoor in all_locs:
         objects_node = loc_elem.find("objects")
         if objects_node is None:
             continue
@@ -194,6 +203,12 @@ def parse_all_bee_houses_from_save(root):
     sorted_batches = sorted(
         list(batch_map.values()),
         key=lambda b: (b["days_remaining"], b["name"])
+    )
+
+    elapsed_ms = (time.perf_counter() - start_time) * 1000
+    logger.debug(
+        f"Bee Houses summary: {total} total Bee Houses parsed "
+        f"({hibernating} hibernating) across all locations in {elapsed_ms:.2f}ms"
     )
 
     return {

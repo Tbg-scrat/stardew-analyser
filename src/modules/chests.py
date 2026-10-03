@@ -1,6 +1,7 @@
 # src/modules/chests.py
 
 import logging
+import time
 import xml.etree.ElementTree as ET
 from src.core.reference_data import load_object_map
 
@@ -44,16 +45,19 @@ def _parse_item_node(item_node, object_map=None):
             name = map_entry
 
     if not name:
+        logger.debug(f"Missing item name for ID '{qualified_id}'; defaulting to 'Unknown Item'")
         name = "Unknown Item"
 
     try:
         stack = int(item_node.findtext("Stack") or item_node.findtext("stack") or 1)
     except ValueError:
+        logger.debug(f"Invalid stack value for '{qualified_id}'; defaulting to 1")
         stack = 1
 
     try:
         quality = int(item_node.findtext("quality") or item_node.findtext("Quality") or 0)
     except ValueError:
+        logger.debug(f"Invalid quality value for '{qualified_id}'; defaulting to 0")
         quality = 0
 
     quality_map = {0: "normal", 1: "silver", 2: "gold", 4: "iridium"}
@@ -83,8 +87,10 @@ def _extract_raw_chests(root, object_map=None):
     chests_data = []
     total_chests = 0
     total_items = 0
+    empty_slots = 0
 
     locations = root.findall(".//GameLocation")
+    logger.debug(f"Searching for chests across {len(locations)} GameLocation nodes")
 
     for loc in locations:
         loc_name = (
@@ -131,6 +137,7 @@ def _extract_raw_chests(root, object_map=None):
                 a = color_node.findtext("A") or "255"
                 if (r, g, b) != ("0", "0", "0"):
                     chest_color = f"rgba({r}, {g}, {b}, {int(a)/255})"
+                    logger.debug(f"Custom chest color parsed at {loc_name} ({tile_x},{tile_y}): {chest_color}")
 
             chest_items = []
             items_container = obj.find("items")
@@ -140,9 +147,12 @@ def _extract_raw_chests(root, object_map=None):
                     chest_items.append(parsed_item)
                     if not parsed_item.get("is_empty"):
                         total_items += parsed_item.get("stack", 1)
+                    else:
+                        empty_slots += 1
 
             while len(chest_items) < target_capacity:
                 chest_items.append({"is_empty": True})
+                empty_slots += 1
 
             chests_data.append({
                 "location": loc_name,
@@ -153,7 +163,10 @@ def _extract_raw_chests(root, object_map=None):
                 "chest_items": chest_items,
             })
 
-    logger.debug(f"Extracted {total_chests} chests containing {total_items} total item units across all locations")
+    logger.debug(
+        f"Extracted {total_chests} chests containing {total_items} total item units "
+        f"({empty_slots} empty slots) across {len(locations)} locations"
+    )
     return {
         "total_chests": total_chests,
         "total_items": total_items,
@@ -166,8 +179,9 @@ def parse_chests(root, object_map=None):
     Main entry point for parsing chest data from save XML.
     Auto-loads object map if not explicitly passed.
     """
+    start_time = time.perf_counter()
     if object_map is None:
-        logger.debug("Loading reference object map")
+        logger.debug("Loading reference object map for chests parser")
         object_map = load_object_map()
 
     raw_chests = _extract_raw_chests(root, object_map)
@@ -195,7 +209,11 @@ def parse_chests(root, object_map=None):
         material_totals.values(), key=lambda x: x["count"], reverse=True
     )
 
-    logger.debug(f"Aggregated {len(sorted_materials)} unique material types from chests")
+    elapsed_ms = (time.perf_counter() - start_time) * 1000
+    logger.debug(
+        f"Aggregated {len(sorted_materials)} unique material types from "
+        f"{raw_chests.get('total_chests', 0)} chests in {elapsed_ms:.2f}ms"
+    )
 
     return {
         "total_chests": raw_chests.get("total_chests", 0),

@@ -1,6 +1,7 @@
 # src/modules/achievements.py
 
 import logging
+import time
 from data.data_loader import ACHIEVEMENTS_CATALOG
 
 logger = logging.getLogger(__name__)
@@ -11,23 +12,30 @@ def parse_achievements(player_node, catalog=None, shipped_items=None):
     Parses unlocked achievements from player XML, merges with catalog metadata,
     and calculates progress for special achievements like Monoculture.
     """
+    start_time = time.perf_counter()
+
     achievements_catalog = catalog if catalog is not None else ACHIEVEMENTS_CATALOG
     if catalog is None:
         logger.debug("Using default ACHIEVEMENTS_CATALOG")
 
     unlocked_ids = set()
-    achievements_node = player_node.find("achievements")
-    
-    if achievements_node is None:
-        logger.warning("No <achievements> node found in player data.")
-    else:
-        for node in achievements_node.findall("int"):
-            if node.text and node.text.isdigit():
-                unlocked_ids.add(int(node.text))
-            elif node.text:
-                logger.warning(f"Ignored non-integer achievement ID: '{node.text}'")
 
-    logger.debug(f"Extracted {len(unlocked_ids)} unlocked achievement IDs from XML")
+    if player_node is None:
+        logger.warning("Player XML node is None. Returning default achievements data.")
+    else:
+        achievements_node = player_node.find("achievements")
+        if achievements_node is None:
+            logger.warning("No <achievements> node found in player XML.")
+        else:
+            raw_ids = achievements_node.findall("int")
+            logger.debug(f"Parsing <achievements> node containing {len(raw_ids)} raw achievement ID entries")
+            for node in raw_ids:
+                if node.text and node.text.isdigit():
+                    unlocked_ids.add(int(node.text))
+                elif node.text:
+                    logger.warning(f"Ignored non-integer achievement ID: '{node.text}'")
+
+    logger.debug(f"Extracted {len(unlocked_ids)} valid unlocked achievement IDs from XML")
 
     monoculture_count = 0
     if shipped_items:
@@ -75,7 +83,11 @@ def parse_achievements(player_node, catalog=None, shipped_items=None):
     unlocked_count = sum(1 for a in processed_achievements if a["unlocked"])
     pct = round((unlocked_count / total_count * 100), 1) if total_count > 0 else 0
 
-    logger.debug(f"Achievements summary: {unlocked_count}/{total_count} unlocked ({pct}%)")
+    elapsed_ms = (time.perf_counter() - start_time) * 1000
+    logger.debug(
+        f"Achievements summary: {unlocked_count}/{total_count} unlocked ({pct}%) "
+        f"parsed in {elapsed_ms:.2f}ms"
+    )
 
     return {
         "list": processed_achievements,

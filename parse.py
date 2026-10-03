@@ -3,6 +3,7 @@
 
 import logging
 import os
+import time
 from pathlib import Path
 
 from src.core.logger import setup_logging
@@ -51,7 +52,14 @@ def find_all_saves(saves_dir):
 
 
 def analyze_save(file_path):
+    # Milestone 1: XML Ingestion
+    t_xml_start = time.perf_counter()
     root, player = get_player_node(file_path)
+    xml_duration_ms = (time.perf_counter() - t_xml_start) * 1000
+    logger.info(f"XML ingestion completed in {xml_duration_ms:.2f}ms")
+
+    # Milestone 2: Feature Module Parsing
+    t_modules_start = time.perf_counter()
 
     data = parse_player(player)
 
@@ -120,6 +128,9 @@ def analyze_save(file_path):
     cc_summary = parse_community_center_data(root, player)
     data["community_center"] = cc_summary
 
+    modules_duration_ms = (time.perf_counter() - t_modules_start) * 1000
+    logger.info(f"All 14 feature modules parsed in {modules_duration_ms:.2f}ms")
+
     return data
 
 
@@ -142,6 +153,11 @@ def log_save_summary(save_id, data):
 
     museum_unlocked = len([i for i in data.get("museum_pieces", []) if i.get("is_unlocked")])
     museum_total = len(data.get("museum_pieces", []))
+
+    cooking_unlocked = len([r for r in data.get("recipes_cooked", []) if r.get("is_unlocked")])
+    cooking_total = len(data.get("recipes_cooked", []))
+
+    social_count = len(data.get("friendships", []))
 
     artisan_machines = data.get("artisan", {}).get("summary", {}).get("total_machines", 0)
     chests_count = data.get("chests", {}).get("total_chests", 0)
@@ -167,6 +183,8 @@ def log_save_summary(save_id, data):
         f"Shipped: {shipped_unlocked}/{shipped_total} | "
         f"Fish: {fish_unlocked}/{fish_total} | "
         f"Museum: {museum_unlocked}/{museum_total} | "
+        f"Cooking: {cooking_unlocked}/{cooking_total} | "
+        f"Social: {social_count} NPCs | "
         f"Artisan: {artisan_machines} machines | "
         f"Chests: {chests_count} | "
         f"Crops: {crops_total} total ({crops_ready} ready) | "
@@ -181,6 +199,8 @@ def run_pipeline(save_dir=None, output_path=None):
     Executes the full parsing pipeline for a given save directory (or default SAVE_DIR),
     parsing all discovered farms and rendering the multi-farm dashboard HTML.
     """
+    pipeline_start = time.perf_counter()
+
     target_dir = Path(save_dir) if save_dir else SAVE_DIR
     logger.info(f"Scanning directory: {target_dir.resolve()}")
 
@@ -198,10 +218,20 @@ def run_pipeline(save_dir=None, output_path=None):
 
     if all_saves_data:
         try:
-            return generate_dashboard_html(all_saves_data, output_path=output_path)
+            t_render_start = time.perf_counter()
+            result = generate_dashboard_html(all_saves_data, output_path=output_path)
+            render_duration_ms = (time.perf_counter() - t_render_start) * 1000
+            logger.info(f"Dashboard rendered in {render_duration_ms:.2f}ms")
         except TypeError:
             # Fallback if generate_dashboard_html does not accept output_path kwarg
-            return generate_dashboard_html(all_saves_data)
+            t_render_start = time.perf_counter()
+            result = generate_dashboard_html(all_saves_data)
+            render_duration_ms = (time.perf_counter() - t_render_start) * 1000
+            logger.info(f"Dashboard rendered in {render_duration_ms:.2f}ms")
+
+        total_duration_ms = (time.perf_counter() - pipeline_start) * 1000
+        logger.info(f"Pipeline completed in {total_duration_ms:.2f}ms")
+        return result
     else:
         logger.warning(f"No valid save games were parsed in {target_dir.resolve()}")
         return None
@@ -209,3 +239,4 @@ def run_pipeline(save_dir=None, output_path=None):
 
 if __name__ == "__main__":
     run_pipeline()
+    

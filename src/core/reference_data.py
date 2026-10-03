@@ -1,7 +1,13 @@
+# src/core/reference_data.py
 import json
+import logging
+import time
 from pathlib import Path
 
+logger = logging.getLogger(__name__)
+
 _OBJECT_LOOKUP_CACHE = None
+
 
 def _get_object_lookup():
     """Builds an in-memory index mapping string IDs, (O)IDs, and string names to object metadata."""
@@ -9,13 +15,18 @@ def _get_object_lookup():
     if _OBJECT_LOOKUP_CACHE is not None:
         return _OBJECT_LOOKUP_CACHE
 
+    start_time = time.perf_counter()
     from data.data_loader import OBJECTS_CATALOG
 
     lookup = {}
     catalog = OBJECTS_CATALOG if isinstance(OBJECTS_CATALOG, list) else []
 
+    logger.debug(f"Initializing object lookup cache from catalog ({len(catalog)} raw items)")
+
+    skipped_count = 0
     for item in catalog:
         if not isinstance(item, dict):
+            skipped_count += 1
             continue
 
         item_id = str(item.get("id", ""))
@@ -48,7 +59,12 @@ def _get_object_lookup():
             lookup[name] = info
             lookup[name.lower()] = info
 
+    elapsed_ms = (time.perf_counter() - start_time) * 1000
     _OBJECT_LOOKUP_CACHE = lookup
+    logger.debug(
+        f"Built object lookup cache with {len(lookup)} total index keys "
+        f"({skipped_count} invalid items skipped) in {elapsed_ms:.2f}ms"
+    )
     return lookup
 
 
@@ -58,6 +74,7 @@ def get_object_info(harvest_id: str) -> dict:
     by numeric ID ("412"), qualified ID ("(O)412"), or 1.6 string key ("Powdermelon").
     """
     if not harvest_id or str(harvest_id).strip() in ("None", "-1", ""):
+        logger.debug(f"Blank/invalid harvest_id '{harvest_id}' passed to get_object_info; returning Wild/Unknown default")
         return {
             "name": "Wild / Unknown",
             "icon": "/static/img/items/placeholder.png",
@@ -69,12 +86,15 @@ def get_object_info(harvest_id: str) -> dict:
     lookup = _get_object_lookup()
 
     if raw_key in lookup:
+        logger.debug(f"Direct catalog match for item key '{harvest_id}' -> Name: '{lookup[raw_key]['name']}'")
         return dict(lookup[raw_key])
 
     if raw_key.lower() in lookup:
+        logger.debug(f"Lowercase catalog match for item key '{harvest_id}' -> Name: '{lookup[raw_key.lower()]['name']}'")
         return dict(lookup[raw_key.lower()])
 
     formatted_name = raw_key.replace("_", " ")
+    logger.debug(f"Catalog miss for item key '{harvest_id}'. Falling back to formatted key '{formatted_name}'")
     return {
         "id": raw_key,
         "name": formatted_name,
@@ -89,6 +109,7 @@ def load_object_map(json_path="data/objects.json"):
     path = Path(json_path)
     object_map = {}
     if path.exists():
+        logger.debug(f"Loading object map JSON from '{path.resolve()}'")
         with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
             if isinstance(data, list):
@@ -99,5 +120,8 @@ def load_object_map(json_path="data/objects.json"):
                         name = names.get("data-en-US") or names.get("en-US") or "Unknown"
                         object_map[item_id] = name
                         object_map[f"(O){item_id}"] = name
+        logger.debug(f"Loaded {len(object_map)} object mappings from '{json_path}'")
+    else:
+        logger.warning(f"Object map file not found at '{path.resolve()}'")
     return object_map
     

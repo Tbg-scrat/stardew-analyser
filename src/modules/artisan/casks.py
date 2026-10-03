@@ -3,6 +3,7 @@
 
 import json
 import logging
+import time
 from pathlib import Path
 
 logger = logging.getLogger(__name__)
@@ -51,9 +52,13 @@ def parse_casks(location_elem):
 
     objects_node = location_elem.find("objects")
     if objects_node is None:
+        logger.debug("No <objects> node found inside Cellar location")
         return None
 
-    for item in objects_node.findall("item"):
+    items = objects_node.findall("item")
+    logger.debug(f"Parsing Cellar <objects> node containing {len(items)} raw item entries")
+
+    for item in items:
         val = item.find("value")
         if val is None:
             continue
@@ -84,6 +89,7 @@ def parse_casks(location_elem):
         try:
             quality_raw = int(held.findtext("quality", "0"))
         except ValueError:
+            logger.debug(f"Invalid quality value in Cask; defaulting to 0")
             quality_raw = 0
         quality_name = QUALITY_MAP.get(quality_raw, "Normal")
 
@@ -91,6 +97,7 @@ def parse_casks(location_elem):
             days_to_mature_raw = float(obj.findtext("daysToMature", "0"))
             days_remaining = max(0, int(round(days_to_mature_raw)))
         except ValueError:
+            logger.debug(f"Invalid daysToMature float for '{item_name}'; defaulting to 0")
             days_remaining = 0
 
         if days_remaining == 0 or quality_raw == 4:
@@ -113,6 +120,7 @@ def parse_casks(location_elem):
         })
 
     if total_casks == 0:
+        logger.debug("No valid Cask objects found inside Cellar")
         return None
 
     batch_map = {}
@@ -150,6 +158,7 @@ def parse_all_casks_from_save(root, player=None):
     Parses active Cellar casks for the main host player.
     Secondary template cellars (Cellar2..Cellar8) are disregarded.
     """
+    start_time = time.perf_counter()
     aggregated_result = {
         "total_casks": 0,
         "empty_casks": 0,
@@ -168,11 +177,12 @@ def parse_all_casks_from_save(root, player=None):
             house_level = 0
 
     if house_level < 3:
-        logger.debug("Primary player houseUpgradeLevel < 3. Cellar is not built.")
+        logger.debug(f"Primary player houseUpgradeLevel is {house_level} (< 3). Cellar is not built.")
         return aggregated_result
 
     locations_node = root.find("locations")
     if locations_node is None:
+        logger.debug("No <locations> node found in save root")
         return aggregated_result
 
     for loc in locations_node.findall("GameLocation"):
@@ -205,10 +215,11 @@ def parse_all_casks_from_save(root, player=None):
         key=lambda b: (b["days_remaining"], b["name"])
     )
 
+    elapsed_ms = (time.perf_counter() - start_time) * 1000
     logger.debug(
         f"Cellar: {aggregated_result['total_casks']} Casks "
         f"({aggregated_result['aging_count']} aging, {aggregated_result['empty_casks']} empty, "
-        f"{aggregated_result['ready_today']} ready)"
+        f"{aggregated_result['ready_today']} ready) parsed in {elapsed_ms:.2f}ms"
     )
 
     return aggregated_result
