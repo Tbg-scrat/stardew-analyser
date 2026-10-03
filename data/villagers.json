@@ -1,0 +1,179 @@
+{
+  "ignored_npcs": [
+    "Henchman",
+    "Granter",
+    "Horse",
+    "Pet",
+    "Cat",
+    "Dog",
+    "TrashBear",
+    "Parrot"
+  ],
+  "villagers": {
+    "Abigail": {
+      "datable": true,
+      "birthday": { "season": "fall", "day": 13 },
+      "loved_gifts": ["Amethyst", "Banana Pudding", "Blackberry Cobbler", "Chocolate Cake", "Pufferfish", "Pumpkin", "Spicy Eel"]
+    },
+    "Alex": {
+      "datable": true,
+      "birthday": { "season": "summer", "day": 13 },
+      "loved_gifts": ["Complete Breakfast", "Salmon Dinner"]
+    },
+    "Caroline": {
+      "datable": false,
+      "birthday": { "season": "winter", "day": 7 },
+      "loved_gifts": ["Fish Tacos", "Green Tea", "Summer Spangle", "Tropical Curry"]
+    },
+    "Clint": {
+      "datable": false,
+      "birthday": { "season": "winter", "day": 26 },
+      "loved_gifts": ["Amethyst", "Aquamarine", "Emerald", "Fiddlehead Risotto", "Gold Bar", "Iridium Bar", "Jade", "Omni Geode", "Ruby", "Topaz"]
+    },
+    "Demetrius": {
+      "datable": false,
+      "birthday": { "season": "summer", "day": 19 },
+      "loved_gifts": ["Bean Hotpot", "Ice Cream", "Rice Pudding", "Strawberry"]
+    },
+    "Elliott": {
+      "datable": true,
+      "birthday": { "season": "fall", "day": 5 },
+      "loved_gifts": ["Crab Cakes", "Duck Feather", "Lobster", "Pomegranate", "Squid Ink", "Tom Kha Soup"]
+    },
+    "Emily": {
+      "datable": true,
+      "birthday": { "season": "spring", "day": 27 },
+      "loved_gifts": ["Amethyst", "Aquamarine", "Cloth", "Emerald", "Jade", "Ruby", "Survival Burger", "Topaz", "Wool"]
+    },
+    "Evelyn": {
+      "datable": false,
+      "birthday": { "season": "winter", "day": 20 },
+      "loved_gifts": ["Beet", "Chocolate Cake", "Diamond", "Fairy Rose", "Stuffing", "Tulip"]
+    },
+    "George": {
+      "datable": false,
+      "birthday": { "season": "fall", "day": 24 },
+      "loved_gifts": ["Fried Mushroom", "Leek"]
+    },
+    "Gus": {
+      "datable": false,
+      "birthday": { "season": "summer", "day": 8 },
+      "loved_gifts": ["Diamond", "Escargot", "Fish Tacos", "Orange"]
+    },
+    "Haley": {
+      "datable": true,
+      "birthday": { "season": "spring", "day": 14 },
+      "loved_gifts": ["Coconut", "Fruit Salad", "Pink Cake", "Sunflower"]
+    },
+    "Harvey": {
+      "datable": true,
+      "birthday": { "season": "winter", "day": 14 },
+      "loved_gifts": ["Coffee", "Pickles", "Super Meal", "Truffle Oil", "Wine"]
+    },
+    "Jas": {
+      "datable": false,
+      "birthday": { "season": "summer", "day": 4 },
+      "loved_gifts": ["Fairy Rose", "Pink Cake", "Plum Pudding"]
+    },
+    "Jodi": {
+      "datable": false,
+      "birthday": { "season": "fall", "day": 11 },
+      "loved_gifts": ["Chocolate Cake", "Crispy Bass", "Eggplant Parmesan", "Fried Eel", "Pancakes", "Rhubarb Pie", "Vegetable Medley"]
+    },
+    "Kent": {
+      "datable": false,
+      "birthday": { "season": "spring", "day": 4 },
+      "loved_gifts": ["Fiddlehead Risotto", "Roasted Hazelnuts"]
+    },
+    "Krobus": {
+      "datable": false,
+      "birthday": { "season": "winter", "day": 1 },
+      "loved_gifts": ["Diamond", "Iridium Bar", "Monster Compendium", "Pumpkin", "Void Egg", "Void Mayonnaise", "Wild Horseradish"]
+    },
+    "Leah": {
+      "datable": true,
+      "birthday": { "season": "winter", "day": 23 },
+      "loved_gifts": ["Goat Cheese", "Poppyseed Muffin", "Salad", "Stir Fry", "Truffle", "Vegetable Medley", "Wine"]
+    },
+    "Leo": {
+      "datable": false,
+      "birthday": { "season": "summer", "day": 26 },
+      "loved_gifts": ["Duck Feather", "Mango", "Ostrich Egg", "Poi"]
+    },
+    "Lewis": {
+      "datable": false,
+      "birthday": { "season": "spring", "day": 7 },
+      "loved_gifts": ["Autumn's Bounty", "Glazed Yams", "Green Tea", "Hot Pepper", "Vegetable Medley"]
+    },
+    "Linus": {
+      "datable": false,
+      "birthday": { "season": "winter", "day": 3 },
+      "loved_gifts": ["Blueberry Tart", "Cactus Fruit", "Coconut", "Dish O' The Sea", "Yam"]
+    },
+    "Marnie": {
+      "datable": false,
+      "birthday": { "season": "fall", "day": 18 },
+      "loved_gifts": ["Farmer's Lunch", "Pink Cake", "Pumpkin Pie", "Diamond"]
+    },
+    "Maru": {
+      "datable": true,
+      "birthday": { "season": "summer", "day": 10 },
+      "loved_gifts": ["Battery Pack", "Cheese Cauliflower", "Diamond", "Gold Bar", "Iridium Bar", "Miner's Treat", "Pepper Poppers", "Radioactive Bar", "Rhubarb Pie", "Strawberry"]
+    },
+    "Pam": {
+      "datable": false,
+      "birthday": { "season": "spring", "day": 18 },
+      "loved_gifts": ["Beer", "Cactus Fruit", "Glazed Yams", "Mead", "Pale Ale", "Parsnip", "Parsnip Soup"]
+    },
+    "Penny": {
+      "datable": true,
+      "birthday": { "season": "fall", "day": 2 },
+      "loved_gifts": ["Diamond", "Emerald", "Melon", "Poppy", "Poppyseed Muffin", "Red Plate", "Roots Platter", "Sandfish", "Tom Kha Soup"]
+    },
+    "Pierre": {
+      "datable": false,
+      "birthday": { "season": "spring", "day": 26 },
+      "loved_gifts": ["Fried Squid"]
+    },
+    "Robin": {
+      "datable": false,
+      "birthday": { "season": "fall", "day": 21 },
+      "loved_gifts": ["Goat Cheese", "Peach", "Spaghetti"]
+    },
+    "Sam": {
+      "datable": true,
+      "birthday": { "season": "summer", "day": 17 },
+      "loved_gifts": ["Cactus Fruit", "Maple Bar", "Pizza", "Tigerseye"]
+    },
+    "Sandy": {
+      "datable": false,
+      "birthday": { "season": "fall", "day": 15 },
+      "loved_gifts": ["Cactus Fruit", "Daffodil", "Mango Sticky Rice", "Super Meal"]
+    },
+    "Sebastian": {
+      "datable": true,
+      "birthday": { "season": "winter", "day": 10 },
+      "loved_gifts": ["Frozen Tear", "Obsidian", "Pumpkin Soup", "Sashimi", "Void Egg"]
+    },
+    "Shane": {
+      "datable": true,
+      "birthday": { "season": "spring", "day": 20 },
+      "loved_gifts": ["Beer", "Hot Pepper", "Pepper Poppers", "Pizza"]
+    },
+    "Vincent": {
+      "datable": false,
+      "birthday": { "season": "spring", "day": 10 },
+      "loved_gifts": ["Cranberry Candy", "Ginger Ale", "Pink Cake", "Snail"]
+    },
+    "Willy": {
+      "datable": false,
+      "birthday": { "season": "summer", "day": 24 },
+      "loved_gifts": ["Catfish", "Diamond", "Iridium Bar", "Mead", "Octopus", "Pumpkin", "Sea Cucumber", "Sturgeon"]
+    },
+    "Wizard": {
+      "datable": false,
+      "birthday": { "season": "winter", "day": 17 },
+      "loved_gifts": ["Book of Mysteries", "Ectoplasm", "Frozen Tear", "Purple Mushroom", "Super Cucumber"]
+    }
+  }
+}

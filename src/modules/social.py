@@ -8,14 +8,10 @@ and handles sorting by friendship points and marital status.
 
 import logging
 import time
+from data.data_loader import VILLAGERS_CATALOG
 from src.core.gift_data import get_loved_gifts
 
 logger = logging.getLogger(__name__)
-
-DATABLE_VILLAGERS = {
-    "Abigail", "Alex", "Elliott", "Emily", "Haley", "Harvey",
-    "Leah", "Maru", "Penny", "Sam", "Sebastian", "Shane"
-}
 
 
 def parse_social(player):
@@ -41,6 +37,9 @@ def parse_social(player):
     items = friendship_data.findall("item")
     logger.debug(f"Parsing <friendshipData> node containing {len(items)} raw villager entries")
 
+    villagers_meta = VILLAGERS_CATALOG.get("villagers", {})
+    ignored_npcs = set(VILLAGERS_CATALOG.get("ignored_npcs", []))
+
     skipped_internal = 0
 
     for item in items:
@@ -51,7 +50,11 @@ def parse_social(player):
             npc_name = key.text
             
             # Filter out system/internal names
-            if npc_name.startswith("Henchman") or npc_name.startswith("Granter"):
+            if (
+                npc_name in ignored_npcs
+                or npc_name.startswith("Henchman")
+                or npc_name.startswith("Granter")
+            ):
                 skipped_internal += 1
                 continue
 
@@ -66,7 +69,9 @@ def parse_social(player):
             status_raw = status_node.text if status_node is not None else "Normal"
 
             hearts = points // 250
-            is_datable = npc_name in DATABLE_VILLAGERS
+            
+            # Check datable status from catalog
+            is_datable = villagers_meta.get(npc_name, {}).get("datable", False)
             is_spouse = status_raw == "Married"
             is_dating = status_raw == "Dating"
             

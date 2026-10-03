@@ -7,53 +7,27 @@ Tracks villager birthdays, identifies the next upcoming birthday, and attaches l
 
 import logging
 import time
+from data.data_loader import VILLAGERS_CATALOG
 from src.core.gift_data import get_loved_gifts
 
 logger = logging.getLogger(__name__)
 
-VILLAGER_BIRTHDAYS = {
-    "spring": [
-        {"day": 4, "name": "Kent", "icon": "\U0001F382"},
-        {"day": 7, "name": "Lewis", "icon": "\U0001F382"},
-        {"day": 10, "name": "Vincent", "icon": "\U0001F382"},
-        {"day": 14, "name": "Haley", "icon": "\U0001F382"},
-        {"day": 18, "name": "Pam", "icon": "\U0001F382"},
-        {"day": 20, "name": "Shane", "icon": "\U0001F382"},
-        {"day": 26, "name": "Pierre", "icon": "\U0001F382"},
-        {"day": 27, "name": "Emily", "icon": "\U0001F382"},
-    ],
-    "summer": [
-        {"day": 4, "name": "Jas", "icon": "\U0001F382"},
-        {"day": 8, "name": "Gus", "icon": "\U0001F382"},
-        {"day": 10, "name": "Maru", "icon": "\U0001F382"},
-        {"day": 13, "name": "Alex", "icon": "\U0001F382"},
-        {"day": 17, "name": "Sam", "icon": "\U0001F382"},
-        {"day": 19, "name": "Demetrius", "icon": "\U0001F382"},
-        {"day": 24, "name": "Willy", "icon": "\U0001F382"},
-        {"day": 26, "name": "Leo", "icon": "\U0001F382"},
-    ],
-    "fall": [
-        {"day": 2, "name": "Penny", "icon": "\U0001F382"},
-        {"day": 5, "name": "Elliott", "icon": "\U0001F382"},
-        {"day": 11, "name": "Jodi", "icon": "\U0001F382"},
-        {"day": 13, "name": "Abigail", "icon": "\U0001F382"},
-        {"day": 15, "name": "Sandy", "icon": "\U0001F382"},
-        {"day": 18, "name": "Marnie", "icon": "\U0001F382"},
-        {"day": 21, "name": "Robin", "icon": "\U0001F382"},
-        {"day": 24, "name": "George", "icon": "\U0001F382"},
-    ],
-    "winter": [
-        {"day": 1, "name": "Krobus", "icon": "\U0001F382"},
-        {"day": 3, "name": "Linus", "icon": "\U0001F382"},
-        {"day": 7, "name": "Caroline", "icon": "\U0001F382"},
-        {"day": 10, "name": "Sebastian", "icon": "\U0001F382"},
-        {"day": 14, "name": "Harvey", "icon": "\U0001F382"},
-        {"day": 17, "name": "Wizard", "icon": "\U0001F382"},
-        {"day": 20, "name": "Evelyn", "icon": "\U0001F382"},
-        {"day": 23, "name": "Leah", "icon": "\U0001F382"},
-        {"day": 26, "name": "Clint", "icon": "\U0001F382"},
-    ]
-}
+
+def get_seasonal_birthdays(season_name):
+    """Builds a sorted list of birthday dicts for a given season from VILLAGERS_CATALOG."""
+    villagers_map = VILLAGERS_CATALOG.get("villagers", {})
+    seasonal_list = []
+
+    for name, meta in villagers_map.items():
+        bday_info = meta.get("birthday")
+        if bday_info and bday_info.get("season") == season_name.lower():
+            seasonal_list.append({
+                "day": bday_info.get("day"),
+                "name": name,
+                "icon": "\U0001F382"
+            })
+
+    return sorted(seasonal_list, key=lambda b: b["day"])
 
 
 def parse_birthdays(root):
@@ -80,7 +54,7 @@ def parse_birthdays(root):
         logger.debug(f"Invalid dayOfMonth text '{day_node.text if day_node is not None else None}'; defaulting to 1")
         day = 1
 
-    seasonal_birthdays = VILLAGER_BIRTHDAYS.get(season, [])
+    seasonal_birthdays = get_seasonal_birthdays(season)
     upcoming = [b for b in seasonal_birthdays if b["day"] >= day]
 
     if upcoming:
