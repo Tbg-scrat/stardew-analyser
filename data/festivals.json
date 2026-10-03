@@ -1,0 +1,25 @@
+{
+  "spring": [
+    {"day": 13, "name": "Egg Festival", "location": "Pelican Town", "icon": "🥚"},
+    {"day": 24, "name": "Flower Dance", "location": "Cindersap Forest", "icon": "🌸"}
+  ],
+  "summer": [
+    {"day": 11, "name": "Luau", "location": "The Beach", "icon": "🍲"},
+    {"day": 20, "name": "Trout Derby (Day 1)", "location": "Cindersap Forest", "icon": "🎣"},
+    {"day": 21, "name": "Trout Derby (Day 2)", "location": "Cindersap Forest", "icon": "🎣"},
+    {"day": 28, "name": "Dance of the Moonlight Jellies", "location": "The Beach", "icon": "🦐"}
+  ],
+  "fall": [
+    {"day": 16, "name": "Stardew Valley Fair", "location": "Pelican Town", "icon": "🎪"},
+    {"day": 27, "name": "Spirits' Eve", "location": "Pelican Town", "icon": "🎃"}
+  ],
+  "winter": [
+    {"day": 8, "name": "Festival of Ice", "location": "Cindersap Forest", "icon": "🧊"},
+    {"day": 12, "name": "SquidFest (Day 1)", "location": "The Beach", "icon": "🦑"},
+    {"day": 13, "name": "SquidFest (Day 2)", "location": "The Beach", "icon": "🦑"},
+    {"day": 15, "name": "Night Market (Day 1)", "location": "The Beach", "icon": "🎪"},
+    {"day": 16, "name": "Night Market (Day 2)", "location": "The Beach", "icon": "🎪"},
+    {"day": 17, "name": "Night Market (Day 3)", "location": "The Beach", "icon": "🎪"},
+    {"day": 25, "name": "Feast of the Winter Star", "location": "Pelican Town", "icon": "🎄"}
+  ]
+}

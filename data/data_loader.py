@@ -19,3 +19,4 @@ ACHIEVEMENTS_CATALOG = load_json_catalog("achievements.json", default_factory=li
 OBJECTS_CATALOG = load_json_catalog("objects.json", default_factory=list)
 VILLAGERS_CATALOG = load_json_catalog("villagers.json")
 GRANDPA_CATALOG = load_json_catalog("grandpa_eval.json")
+FESTIVALS_CATALOG = load_json_catalog("festivals.json")

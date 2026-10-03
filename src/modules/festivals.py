@@ -2,53 +2,33 @@
 # -*- coding: utf-8 -*-
 """
 Festivals module for Stardew Valley save file parsing.
-Determines the current date and calculates upcoming seasonal festivals.
+Determines the current date and calculates upcoming seasonal festivals using FESTIVALS_CATALOG.
 """
 
 import logging
 import time
+from data.data_loader import FESTIVALS_CATALOG
 
 logger = logging.getLogger(__name__)
 
-FESTIVAL_CALENDAR = {
-    "spring": [
-        {"day": 13, "name": "Egg Festival", "location": "Pelican Town", "icon": "\U0001F95A"},
-        {"day": 24, "name": "Flower Dance", "location": "Cindersap Forest", "icon": "\U0001F338"},
-    ],
-    "summer": [
-        {"day": 11, "name": "Luau", "location": "The Beach", "icon": "\U0001F372"},
-        {"day": 20, "name": "Trout Derby (Day 1)", "location": "Cindersap Forest", "icon": "\U0001F801"},
-        {"day": 21, "name": "Trout Derby (Day 2)", "location": "Cindersap Forest", "icon": "\U0001F801"},
-        {"day": 28, "name": "Dance of the Moonlight Jellies", "location": "The Beach", "icon": "\U0001F988"},
-    ],
-    "fall": [
-        {"day": 16, "name": "Stardew Valley Fair", "location": "Pelican Town", "icon": "\U0001F3AA"},
-        {"day": 27, "name": "Spirits' Eve", "location": "Pelican Town", "icon": "\U0001F383"},
-    ],
-    "winter": [
-        {"day": 8, "name": "Festival of Ice", "location": "Cindersap Forest", "icon": "\U0001F9CA"},
-        {"day": 12, "name": "SquidFest (Day 1)", "location": "The Beach", "icon": "\U0001F991"},
-        {"day": 13, "name": "SquidFest (Day 2)", "location": "The Beach", "icon": "\U0001F991"},
-        {"day": 15, "name": "Night Market (Day 1)", "location": "The Beach", "icon": "\U0001F3D5\ufe0f"},
-        {"day": 16, "name": "Night Market (Day 2)", "location": "The Beach", "icon": "\U0001F3D5\ufe0f"},
-        {"day": 17, "name": "Night Market (Day 3)", "location": "The Beach", "icon": "\U0001F3D5\ufe0f"},
-        {"day": 25, "name": "Feast of the Winter Star", "location": "Pelican Town", "icon": "\U0001F384"},
-    ]
-}
 
-
-def parse_festivals(root):
+def parse_festivals(root, catalog=None):
     """
     Parses current date and identifies the next upcoming festival in the season.
 
     :param root: xml.etree.ElementTree Element representing <SaveGame>
+    :param catalog: dict optional override for FESTIVALS_CATALOG
     :return: dict containing current date info and next festival details
     """
     start_time = time.perf_counter()
 
+    festivals_catalog = catalog if catalog is not None else FESTIVALS_CATALOG
+    if catalog is None:
+        logger.debug("Using default FESTIVALS_CATALOG")
+
     if root is None:
         logger.warning("SaveGame root is None. Defaulting to Spring Day 1 festival status.")
-        return {"current_day": 1, "season": "spring", "next_festival": None}
+        return {"current_day": 1, "season": "spring", "next_festival": None, "status_text": "None"}
 
     season_node = root.find("currentSeason")
     day_node = root.find("dayOfMonth")
@@ -60,10 +40,10 @@ def parse_festivals(root):
         logger.debug(f"Invalid dayOfMonth text '{day_node.text if day_node is not None else None}'; defaulting to 1")
         day = 1
 
-    seasonal_festivals = FESTIVAL_CALENDAR.get(season, [])
+    seasonal_festivals = festivals_catalog.get(season, [])
     
     # Find next festival today or later in current season
-    upcoming = [f for f in seasonal_festivals if f["day"] >= day]
+    upcoming = [f for f in seasonal_festivals if f.get("day", 0) >= day]
 
     if upcoming:
         next_event = upcoming[0]
