@@ -3,6 +3,7 @@
 
 import logging
 import time
+from data.data_loader import GRANDPA_CATALOG
 
 logger = logging.getLogger("grandpa")
 
@@ -33,19 +34,13 @@ def parse_grandpa_data(root, player, shipped_items=None, fish_caught=None, museu
         logger.debug("Invalid non-integer totalMoneyEarned text; defaulting to 0")
         total_earned = 0
 
-    earnings_thresholds = [
-        (50_000, "50,000g Earned"),
-        (100_000, "100,000g Earned"),
-        (150_000, "150,000g Earned"),
-        (200_000, "200,000g Earned"),
-        (300_000, "300,000g Earned"),
-        (500_000, "500,000g Earned"),
-        (1_000_000, "1,000,000g Earned"),
-    ]
-
+    earnings_thresholds = GRANDPA_CATALOG.get("earnings_thresholds", [])
     earnings_items = []
     earnings_score = 0
-    for threshold, label in earnings_thresholds:
+
+    for item in earnings_thresholds:
+        threshold = item.get("amount", 0)
+        label = item.get("label", f"{threshold:,}g Earned")
         completed = total_earned >= threshold
         if completed:
             earnings_score += 1
@@ -57,7 +52,7 @@ def parse_grandpa_data(root, player, shipped_items=None, fish_caught=None, museu
         "id": "earnings",
         "name": "Farm Earnings",
         "score": earnings_score,
-        "max_score": 7,
+        "max_score": len(earnings_thresholds),
         "items": earnings_items,
     })
 
@@ -69,21 +64,26 @@ def parse_grandpa_data(root, player, shipped_items=None, fish_caught=None, museu
     fishing = _safe_int_child(player, "fishingLevel")
     total_skills = farming + mining + combat + foraging + fishing
 
-    skill_30 = total_skills >= 30
-    skill_50 = total_skills >= 50
+    skills_thresholds = GRANDPA_CATALOG.get("skills_thresholds", [])
+    skills_items = []
+    skills_score = 0
 
-    skills_score = (1 if skill_30 else 0) + (1 if skill_50 else 0)
+    for item in skills_thresholds:
+        min_lvl = item.get("min_level", 0)
+        completed = total_skills >= min_lvl
+        pts = item.get("points", 1)
+        if completed:
+            skills_score += pts
+        skills_items.append({"label": item.get("label", ""), "points": pts, "completed": completed})
+
     logger.debug(f"Grandpa Category 2 (Skills): {skills_score}/2 pts (Total Level: {total_skills}/50)")
 
     categories.append({
         "id": "skills",
         "name": "Player Skills",
         "score": skills_score,
-        "max_score": 2,
-        "items": [
-            {"label": "Total Skill Levels >= 30", "points": 1, "completed": skill_30},
-            {"label": "Total Skill Levels = 50 (All Maxed)", "points": 1, "completed": skill_50},
-        ],
+        "max_score": sum(i.get("points", 1) for i in skills_thresholds),
+        "items": skills_items,
     })
 
     # 3. Collections (Max 3 points)
@@ -99,7 +99,24 @@ def parse_grandpa_data(root, player, shipped_items=None, fish_caught=None, museu
     museum_total = len(museum_pieces)
     complete_museum = museum_unlocked > 0 and museum_unlocked >= museum_total
 
-    collections_score = (1 if complete_museum else 0) + (1 if master_angler else 0) + (1 if full_shipment else 0)
+    collections_status_map = {
+        "complete_museum": complete_museum,
+        "master_angler": master_angler,
+        "full_shipment": full_shipment,
+    }
+
+    collections_catalog = GRANDPA_CATALOG.get("collections_items", [])
+    collections_items = []
+    collections_score = 0
+
+    for item in collections_catalog:
+        key = item.get("key")
+        completed = collections_status_map.get(key, False)
+        pts = item.get("points", 1)
+        if completed:
+            collections_score += pts
+        collections_items.append({"label": item.get("label", ""), "points": pts, "completed": completed})
+
     logger.debug(
         f"Grandpa Category 3 (Collections): {collections_score}/3 pts "
         f"(Shipped: {full_shipment}, Fish: {master_angler}, Museum: {complete_museum})"
@@ -109,12 +126,8 @@ def parse_grandpa_data(root, player, shipped_items=None, fish_caught=None, museu
         "id": "collections",
         "name": "Museum & Collections",
         "score": collections_score,
-        "max_score": 3,
-        "items": [
-            {"label": "Complete Museum Collection", "points": 1, "completed": complete_museum},
-            {"label": "Catch Every Fish (Master Angler)", "points": 1, "completed": master_angler},
-            {"label": "Ship Every Item (Full Shipment)", "points": 1, "completed": full_shipment},
-        ],
+        "max_score": sum(i.get("points", 1) for i in collections_catalog),
+        "items": collections_items,
     })
 
     # 4. Social & Family (Max 4 points)
@@ -123,18 +136,54 @@ def parse_grandpa_data(root, player, shipped_items=None, fish_caught=None, museu
     is_married_and_upgraded = house_upgrade_level >= 2 and bool(spouse_name)
 
     villagers_8_plus = len([f for f in friendships if f.get("points", 0) >= 2000])
-    has_5_villagers_8_hearts = villagers_8_plus >= 5
-    has_10_villagers_8_hearts = villagers_8_plus >= 10
-
     pet_friendship = _extract_pet_friendship(root)
-    pet_loves_you = pet_friendship >= 1000
 
-    social_score = (
-        (1 if is_married_and_upgraded else 0)
-        + (1 if has_5_villagers_8_hearts else 0)
-        + (1 if has_10_villagers_8_hearts else 0)
-        + (1 if pet_loves_you else 0)
-    )
+    social_catalog = GRANDPA_CATALOG.get("social_items", {})
+    social_items = []
+    social_score = 0
+
+    # Marriage & House
+    m_info = social_catalog.get("marriage_and_house", {})
+    if is_married_and_upgraded:
+        social_score += m_info.get("points", 1)
+    social_items.append({
+        "label": m_info.get("label", "Married + House Upgraded (Nursery)"),
+        "points": m_info.get("points", 1),
+        "completed": is_married_and_upgraded,
+    })
+
+    # 5 Villagers at 8+ Hearts
+    v5_info = social_catalog.get("villagers_8_hearts_5", {})
+    v5_completed = villagers_8_plus >= v5_info.get("min_count", 5)
+    if v5_completed:
+        social_score += v5_info.get("points", 1)
+    social_items.append({
+        "label": v5_info.get("label", "5 Villagers at 8+ Hearts"),
+        "points": v5_info.get("points", 1),
+        "completed": v5_completed,
+    })
+
+    # 10 Villagers at 8+ Hearts
+    v10_info = social_catalog.get("villagers_8_hearts_10", {})
+    v10_completed = villagers_8_plus >= v10_info.get("min_count", 10)
+    if v10_completed:
+        social_score += v10_info.get("points", 1)
+    social_items.append({
+        "label": v10_info.get("label", "10 Villagers at 8+ Hearts"),
+        "points": v10_info.get("points", 1),
+        "completed": v10_completed,
+    })
+
+    # Pet Friendship
+    pet_info = social_catalog.get("pet_friendship", {})
+    pet_loves_you = pet_friendship >= pet_info.get("min_points", 1000)
+    if pet_loves_you:
+        social_score += pet_info.get("points", 1)
+    social_items.append({
+        "label": pet_info.get("label", "Pet Friendship >= 1,000 Points"),
+        "points": pet_info.get("points", 1),
+        "completed": pet_loves_you,
+    })
 
     logger.debug(
         f"Grandpa Category 4 (Social): {social_score}/4 pts "
@@ -146,24 +195,30 @@ def parse_grandpa_data(root, player, shipped_items=None, fish_caught=None, museu
         "name": "Social & Relationships",
         "score": social_score,
         "max_score": 4,
-        "items": [
-            {"label": "Married + House Upgraded (Nursery)", "points": 1, "completed": is_married_and_upgraded},
-            {"label": "5 Villagers at 8+ Hearts", "points": 1, "completed": has_5_villagers_8_hearts},
-            {"label": "10 Villagers at 8+ Hearts", "points": 1, "completed": has_10_villagers_8_hearts},
-            {"label": "Pet Friendship >= 1,000 Points", "points": 1, "completed": pet_loves_you},
-        ],
+        "items": social_items,
     })
 
     # 5. Keys & Milestones (Max 5 points)
     has_rusty_key, has_skull_key = _check_keys_status(player)
     cc_complete, cc_ceremony = _check_community_center_progress(root, player)
 
-    milestones_score = (
-        (1 if has_rusty_key else 0)
-        + (1 if has_skull_key else 0)
-        + (1 if cc_complete else 0)
-        + (2 if cc_ceremony else 0)
-    )
+    milestone_status_map = {
+        "rusty_key": has_rusty_key,
+        "skull_key": has_skull_key,
+        "cc_complete": cc_complete,
+        "cc_ceremony": cc_ceremony,
+    }
+
+    milestones_catalog = GRANDPA_CATALOG.get("milestones_items", {})
+    milestones_items = []
+    milestones_score = 0
+
+    for key, meta in milestones_catalog.items():
+        completed = milestone_status_map.get(key, False)
+        pts = meta.get("points", 1)
+        if completed:
+            milestones_score += pts
+        milestones_items.append({"label": meta.get("label", ""), "points": pts, "completed": completed})
 
     logger.debug(
         f"Grandpa Category 5 (Milestones): {milestones_score}/5 pts "
@@ -174,28 +229,24 @@ def parse_grandpa_data(root, player, shipped_items=None, fish_caught=None, museu
         "id": "milestones",
         "name": "Keys & Community Center",
         "score": milestones_score,
-        "max_score": 5,
-        "items": [
-            {"label": "Obtain Rusty Key (Sewer)", "points": 1, "completed": has_rusty_key},
-            {"label": "Obtain Skull Key (Mines)", "points": 1, "completed": has_skull_key},
-            {"label": "Complete Community Center / Joja Warehouse", "points": 1, "completed": cc_complete},
-            {"label": "Attend Community Center Re-opening Ceremony / Joja", "points": 2, "completed": cc_ceremony},
-        ],
+        "max_score": sum(m.get("points", 1) for m in milestones_catalog.values()),
+        "items": milestones_items,
     })
 
     total_score = sum(cat["score"] for cat in categories)
+    max_possible = GRANDPA_CATALOG.get("max_score", 21)
     candles = _calculate_candles(total_score)
     statue_unlocked = candles >= 4
 
     elapsed_ms = (time.perf_counter() - start_time) * 1000
     logger.debug(
-        f"Calculated Grandpa Evaluation: {total_score}/21 points -> {candles} Candles "
+        f"Calculated Grandpa Evaluation: {total_score}/{max_possible} points -> {candles} Candles "
         f"(Parsed in {elapsed_ms:.2f}ms)"
     )
 
     return {
         "total_score": total_score,
-        "max_score": 21,
+        "max_score": max_possible,
         "candles": candles,
         "statue_unlocked": statue_unlocked,
         "categories": categories,
@@ -203,12 +254,15 @@ def parse_grandpa_data(root, player, shipped_items=None, fish_caught=None, museu
 
 
 def _calculate_candles(score):
-    if score >= 12:
-        return 4
-    if score >= 8:
-        return 3
-    if score >= 4:
-        return 2
+    thresholds = GRANDPA_CATALOG.get("candle_thresholds", [
+        {"min_score": 12, "candles": 4},
+        {"min_score": 8, "candles": 3},
+        {"min_score": 4, "candles": 2},
+        {"min_score": 0, "candles": 1},
+    ])
+    for item in thresholds:
+        if score >= item.get("min_score", 0):
+            return item.get("candles", 1)
     return 1
 
 
@@ -340,4 +394,3 @@ def _empty_grandpa_summary():
         "statue_unlocked": False,
         "categories": [],
     }
-    

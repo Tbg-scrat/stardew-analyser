@@ -1,0 +1,39 @@
+{
+  "max_score": 21,
+  "candle_thresholds": [
+    { "min_score": 12, "candles": 4 },
+    { "min_score": 8, "candles": 3 },
+    { "min_score": 4, "candles": 2 },
+    { "min_score": 0, "candles": 1 }
+  ],
+  "earnings_thresholds": [
+    { "amount": 50000, "label": "50,000g Earned" },
+    { "amount": 100000, "label": "100,000g Earned" },
+    { "amount": 150000, "label": "150,000g Earned" },
+    { "amount": 200000, "label": "200,000g Earned" },
+    { "amount": 300000, "label": "300,000g Earned" },
+    { "amount": 500000, "label": "500,000g Earned" },
+    { "amount": 1000000, "label": "1,000,000g Earned" }
+  ],
+  "skills_thresholds": [
+    { "min_level": 30, "label": "Total Skill Levels >= 30", "points": 1 },
+    { "min_level": 50, "label": "Total Skill Levels = 50 (All Maxed)", "points": 1 }
+  ],
+  "collections_items": [
+    { "key": "complete_museum", "label": "Complete Museum Collection", "points": 1 },
+    { "key": "master_angler", "label": "Catch Every Fish (Master Angler)", "points": 1 },
+    { "key": "full_shipment", "label": "Ship Every Item (Full Shipment)", "points": 1 }
+  ],
+  "social_items": {
+    "marriage_and_house": { "label": "Married + House Upgraded (Nursery)", "points": 1 },
+    "villagers_8_hearts_5": { "min_count": 5, "label": "5 Villagers at 8+ Hearts", "points": 1 },
+    "villagers_8_hearts_10": { "min_count": 10, "label": "10 Villagers at 8+ Hearts", "points": 1 },
+    "pet_friendship": { "min_points": 1000, "label": "Pet Friendship >= 1,000 Points", "points": 1 }
+  },
+  "milestones_items": {
+    "rusty_key": { "label": "Obtain Rusty Key (Sewer)", "points": 1 },
+    "skull_key": { "label": "Obtain Skull Key (Mines)", "points": 1 },
+    "cc_complete": { "label": "Complete Community Center / Joja Warehouse", "points": 1 },
+    "cc_ceremony": { "label": "Attend Community Center Re-opening Ceremony / Joja", "points": 2 }
+  }
+}
