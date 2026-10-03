@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
+import time
 
 logger = logging.getLogger("grandpa")
 
@@ -11,7 +12,10 @@ def parse_grandpa_data(root, player, shipped_items=None, fish_caught=None, museu
     Calculates Grandpa's Evaluation score (max 21 points) and candles earned (1-4).
     Accepts pre-parsed catalog items and friendship records to avoid redundant XML parsing.
     """
+    start_time = time.perf_counter()
+
     if root is None or player is None:
+        logger.warning("Root or player XML node is None. Returning default Grandpa evaluation.")
         return _empty_grandpa_summary()
 
     # Default fallbacks for pre-parsed data
@@ -26,6 +30,7 @@ def parse_grandpa_data(root, player, shipped_items=None, fish_caught=None, museu
     try:
         total_earned = int(player.findtext("totalMoneyEarned", "0"))
     except ValueError:
+        logger.debug("Invalid non-integer totalMoneyEarned text; defaulting to 0")
         total_earned = 0
 
     earnings_thresholds = [
@@ -45,6 +50,8 @@ def parse_grandpa_data(root, player, shipped_items=None, fish_caught=None, museu
         if completed:
             earnings_score += 1
         earnings_items.append({"label": label, "points": 1, "completed": completed})
+
+    logger.debug(f"Grandpa Category 1 (Earnings): {earnings_score}/7 pts (Total Earned: {total_earned:,}g)")
 
     categories.append({
         "id": "earnings",
@@ -66,6 +73,8 @@ def parse_grandpa_data(root, player, shipped_items=None, fish_caught=None, museu
     skill_50 = total_skills >= 50
 
     skills_score = (1 if skill_30 else 0) + (1 if skill_50 else 0)
+    logger.debug(f"Grandpa Category 2 (Skills): {skills_score}/2 pts (Total Level: {total_skills}/50)")
+
     categories.append({
         "id": "skills",
         "name": "Player Skills",
@@ -91,6 +100,11 @@ def parse_grandpa_data(root, player, shipped_items=None, fish_caught=None, museu
     complete_museum = museum_unlocked > 0 and museum_unlocked >= museum_total
 
     collections_score = (1 if complete_museum else 0) + (1 if master_angler else 0) + (1 if full_shipment else 0)
+    logger.debug(
+        f"Grandpa Category 3 (Collections): {collections_score}/3 pts "
+        f"(Shipped: {full_shipment}, Fish: {master_angler}, Museum: {complete_museum})"
+    )
+
     categories.append({
         "id": "collections",
         "name": "Museum & Collections",
@@ -122,6 +136,11 @@ def parse_grandpa_data(root, player, shipped_items=None, fish_caught=None, museu
         + (1 if pet_loves_you else 0)
     )
 
+    logger.debug(
+        f"Grandpa Category 4 (Social): {social_score}/4 pts "
+        f"(House/Spouse: {is_married_and_upgraded}, 8-Heart Villagers: {villagers_8_plus}, Pet Friendship: {pet_friendship})"
+    )
+
     categories.append({
         "id": "social",
         "name": "Social & Relationships",
@@ -146,6 +165,11 @@ def parse_grandpa_data(root, player, shipped_items=None, fish_caught=None, museu
         + (2 if cc_ceremony else 0)
     )
 
+    logger.debug(
+        f"Grandpa Category 5 (Milestones): {milestones_score}/5 pts "
+        f"(Rusty Key: {has_rusty_key}, Skull Key: {has_skull_key}, CC Complete: {cc_complete}, Ceremony: {cc_ceremony})"
+    )
+
     categories.append({
         "id": "milestones",
         "name": "Keys & Community Center",
@@ -163,7 +187,11 @@ def parse_grandpa_data(root, player, shipped_items=None, fish_caught=None, museu
     candles = _calculate_candles(total_score)
     statue_unlocked = candles >= 4
 
-    logger.debug(f"Calculated Grandpa Evaluation: {total_score}/21 points -> {candles} Candles")
+    elapsed_ms = (time.perf_counter() - start_time) * 1000
+    logger.debug(
+        f"Calculated Grandpa Evaluation: {total_score}/21 points -> {candles} Candles "
+        f"(Parsed in {elapsed_ms:.2f}ms)"
+    )
 
     return {
         "total_score": total_score,
@@ -190,6 +218,7 @@ def _safe_int_child(element, child_name, default=0):
         try:
             return int(node.text)
         except ValueError:
+            logger.debug(f"Invalid integer string for '{child_name}': '{node.text}'")
             pass
     return default
 
@@ -203,9 +232,12 @@ def _extract_pet_friendship(root):
                 npc_type = npc.get("{http://www.w3.org/2001/XMLSchema-instance}type", "")
                 if npc_type in ("Cat", "Dog", "Pet") or npc.tag in ("Cat", "Dog", "Pet"):
                     try:
-                        return int(npc.findtext("friendshipTowardFarmer", "0"))
+                        val = int(npc.findtext("friendshipTowardFarmer", "0"))
+                        logger.debug(f"Found Pet ({npc_type or npc.tag}) friendship: {val}")
+                        return val
                     except ValueError:
                         return 0
+    logger.debug("No Pet NPC found in save file")
     return 0
 
 
@@ -249,6 +281,7 @@ def _check_keys_status(player):
     skull_mine_progress = deepest_mine >= 120
 
     has_skull_key = skull_node or skull_mail or skull_event or skull_mine_progress
+    logger.debug(f"Key status parsed -> Rusty Key: {has_rusty_key}, Skull Key: {has_skull_key} (Deepest Mine: {deepest_mine})")
 
     return has_rusty_key, has_skull_key
 

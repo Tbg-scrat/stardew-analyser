@@ -3,6 +3,7 @@
 import json
 import math
 import logging
+import time
 from pathlib import Path
 
 logger = logging.getLogger(__name__)
@@ -62,6 +63,8 @@ def parse_all_dehydrators_from_save(root):
     Parses all Dehydrator objects across all locations and building interiors in the save.
     Dehydrator QualifiedItemId: (BC)272 or (BC)Dehydrator or name=="Dehydrator".
     """
+    start_time = time.perf_counter()
+
     total = 0
     idle = 0
     ready_today = 0
@@ -72,7 +75,10 @@ def parse_all_dehydrators_from_save(root):
     idle_locations = {}
     location_stats = {}
 
-    for loc_name, loc_elem in _get_all_locations(root):
+    all_locs = list(_get_all_locations(root))
+    logger.debug(f"Scanning {len(all_locs)} location nodes (including building interiors) for Dehydrators")
+
+    for loc_name, loc_elem in all_locs:
         objects_node = loc_elem.find("objects")
         if objects_node is None:
             continue
@@ -182,6 +188,9 @@ def parse_all_dehydrators_from_save(root):
         list(batch_map.values()),
         key=lambda b: (b["days_remaining"], b["name"])
     )
+
+    elapsed_ms = (time.perf_counter() - start_time) * 1000
+    logger.debug(f"Dehydrators summary: {total} total Dehydrators parsed across all locations in {elapsed_ms:.2f}ms")
 
     return {
         "total": total,

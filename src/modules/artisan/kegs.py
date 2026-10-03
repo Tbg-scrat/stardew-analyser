@@ -3,6 +3,7 @@
 import json
 import math
 import logging
+import time
 from pathlib import Path
 
 logger = logging.getLogger(__name__)
@@ -62,6 +63,8 @@ def parse_all_kegs_from_save(root):
     Parses all Keg objects across all locations in the save.
     Keg QualifiedItemId: (BC)12 or name=="Keg" or parentSheetIndex=="12".
     """
+    start_time = time.perf_counter()
+
     total = 0
     idle = 0
     ready_today = 0
@@ -72,7 +75,10 @@ def parse_all_kegs_from_save(root):
     idle_locations = {}
     location_stats = {}
 
-    for loc_name, loc_elem in _get_all_locations(root):
+    all_locs = list(_get_all_locations(root))
+    logger.debug(f"Scanning {len(all_locs)} location nodes (including building interiors) for Kegs")
+
+    for loc_name, loc_elem in all_locs:
         objects_node = loc_elem.find("objects")
         if objects_node is None:
             continue
@@ -187,6 +193,9 @@ def parse_all_kegs_from_save(root):
         list(batch_map.values()),
         key=lambda b: (b["days_remaining"], b["name"])
     )
+
+    elapsed_ms = (time.perf_counter() - start_time) * 1000
+    logger.debug(f"Kegs summary: {total} total Kegs parsed across all locations in {elapsed_ms:.2f}ms")
 
     return {
         "total": total,

@@ -6,6 +6,7 @@ Extracts today's daily luck modifier from the save XML root and returns formatte
 """
 
 import logging
+import time
 
 logger = logging.getLogger(__name__)
 
@@ -18,6 +19,8 @@ def parse_luck(root):
     :param root: xml.etree.ElementTree Element representing <SaveGame>
     :return: dict containing luck value, qualitative description, emoji icon, and status class
     """
+    start_time = time.perf_counter()
+
     if root is None:
         logger.warning("SaveGame root is None. Defaulting daily luck to 0.0 (Neutral).")
         return {"value": 0.0, "label": "Neutral", "icon": "\U0001F610", "css_class": "luck-neutral"}
@@ -26,6 +29,7 @@ def parse_luck(root):
     try:
         luck_val = float(luck_node.text) if luck_node is not None and luck_node.text else 0.0
     except ValueError:
+        logger.debug(f"Invalid non-float dailyLuck text '{luck_node.text if luck_node is not None else None}'; defaulting to 0.0")
         luck_val = 0.0
 
     # Categorize luck thresholds based on Welwick's Oracle TV Channel
@@ -50,7 +54,8 @@ def parse_luck(root):
         icon = "\U0001F480"  # Skull
         css_class = "luck-worst"
 
-    logger.debug(f"Daily luck: {round(luck_val, 4)} ({label})")
+    elapsed_ms = (time.perf_counter() - start_time) * 1000
+    logger.debug(f"Daily luck: {round(luck_val, 4)} ({label}) parsed in {elapsed_ms:.2f}ms")
 
     return {
         "value": round(luck_val, 4),
