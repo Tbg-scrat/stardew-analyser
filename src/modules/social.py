@@ -9,9 +9,21 @@ and handles sorting by friendship points and marital status.
 import logging
 import time
 from data.data_loader import VILLAGERS_CATALOG
-from src.core.gift_data import get_loved_gifts
 
 logger = logging.getLogger(__name__)
+
+
+def format_wiki_filename(name):
+    """Clean item names into Stardew Valley Wiki image file conventions."""
+    return name.replace(" ", "_").replace("'", "%27")
+
+
+def get_loved_gifts(villager_name):
+    """Returns a list of dicts containing name and wiki_icon for a villager's loved gifts."""
+    villagers_map = VILLAGERS_CATALOG.get("villagers", {})
+    villager_data = villagers_map.get(villager_name, {})
+    gifts = villager_data.get("loved_gifts", [])
+    return [{"name": name, "wiki_icon": format_wiki_filename(name)} for name in gifts]
 
 
 def parse_social(player):

@@ -8,7 +8,8 @@ Tracks villager birthdays, identifies the next upcoming birthday, and attaches l
 import logging
 import time
 from data.data_loader import VILLAGERS_CATALOG
-from src.core.gift_data import get_loved_gifts
+from src.modules.social import get_loved_gifts
+
 
 logger = logging.getLogger(__name__)
 
