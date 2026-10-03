@@ -1,4 +1,5 @@
 # src/modules/achievements.py
+# -*- coding: utf-8 -*-
 
 import logging
 import time
@@ -45,7 +46,7 @@ def parse_achievements(player_node, catalog=None, shipped_items=None):
             if monoculture_items
             else 0
         )
-        logger.debug(f"Monoculture calculated max single crop shipped: {monoculture_count}/300")
+        logger.debug(f"Monoculture calculated max single crop shipped: {monoculture_count}")
 
     processed_achievements = []
     
@@ -53,6 +54,7 @@ def parse_achievements(player_node, catalog=None, shipped_items=None):
         item_id = catalog_item.get("id")
         is_unlocked = item_id in unlocked_ids
         name = catalog_item.get("name")
+        target = catalog_item.get("target")
 
         item_dict = {
             "id": item_id,
@@ -60,19 +62,21 @@ def parse_achievements(player_node, catalog=None, shipped_items=None):
             "description": catalog_item.get("description"),
             "category": catalog_item.get("category"),
             "icon": catalog_item.get("icon"),
-            "target": catalog_item.get("target"),
+            "target": target,
             "tip": catalog_item.get("tip"),
             "unlocked": is_unlocked,
             "link_module": catalog_item.get("link_module"),
             "link_filter": catalog_item.get("link_filter")
         }
 
+        # Handle Monoculture dynamic threshold calculation from catalog
         if name == "Monoculture":
-            override_unlock = is_unlocked or (monoculture_count >= 300)
+            target_val = target if isinstance(target, int) else 300
+            override_unlock = is_unlocked or (monoculture_count >= target_val)
             if override_unlock and not is_unlocked:
                 logger.debug("Monoculture achievement marked unlocked based on shipped items threshold")
-            item_dict["progress_current"] = min(monoculture_count, 300)
-            item_dict["target"] = 300
+            item_dict["progress_current"] = min(monoculture_count, target_val)
+            item_dict["target"] = target_val
             item_dict["unlocked"] = override_unlock
             item_dict["link_module"] = None
             item_dict["link_filter"] = None
