@@ -124,6 +124,145 @@ def sample_render_data():
                 "ginger_island": {"total_crops": 0, "ready_today": 0, "next_harvest_days": None, "items": []},
             },
         },
+        "tools": {
+            "upgradeable": [
+                {
+                    "key": "Axe",
+                    "display_name": "Axe",
+                    "current_level": 2,
+                    "max_level": 4,
+                    "status": "ready",
+                    "days_left": 0,
+                    "is_max": False,
+                    "current_tier": {
+                        "name": "Steel Axe",
+                        "perks": "Can chop large logs (Secret Woods entry).",
+                        "icon_url": "static/img/tools/steel_axe.png",
+                    },
+                    "next_tier": {
+                        "level": 3,
+                        "name": "Gold Axe",
+                        "gold_cost": 10000,
+                        "materials": "5x Gold Bar",
+                        "icon_url": "static/img/tools/gold_axe.png",
+                    },
+                },
+                {
+                    "key": "Pickaxe",
+                    "display_name": "Pickaxe",
+                    "current_level": 3,
+                    "max_level": 4,
+                    "status": "upgrading",
+                    "days_left": 1,
+                    "is_max": False,
+                    "current_tier": {
+                        "name": "Gold Pickaxe",
+                        "perks": "Breaks meteorites on the farm.",
+                        "icon_url": "static/img/tools/gold_pickaxe.png",
+                    },
+                    "next_tier": {
+                        "level": 4,
+                        "name": "Iridium Pickaxe",
+                        "gold_cost": 25000,
+                        "materials": "5x Iridium Bar",
+                        "icon_url": "static/img/tools/iridium_pickaxe.png",
+                    },
+                },
+                {
+                    "key": "Hoe",
+                    "display_name": "Hoe",
+                    "current_level": 2,
+                    "max_level": 4,
+                    "status": "ready",
+                    "days_left": 0,
+                    "is_max": False,
+                    "current_tier": {
+                        "name": "Steel Hoe",
+                        "perks": "Tills a 5x1 line when charged.",
+                        "icon_url": "static/img/tools/steel_hoe.png",
+                    },
+                    "next_tier": {
+                        "level": 3,
+                        "name": "Gold Hoe",
+                        "gold_cost": 10000,
+                        "materials": "5x Gold Bar",
+                        "icon_url": "static/img/tools/gold_hoe.png",
+                    },
+                },
+                {
+                    "key": "WateringCan",
+                    "display_name": "Watering Can",
+                    "current_level": 0,
+                    "max_level": 4,
+                    "status": "ready",
+                    "days_left": 0,
+                    "is_max": False,
+                    "current_tier": {
+                        "name": "Watering Can",
+                        "perks": "Capacity: 40. Waters 1 tile.",
+                        "icon_url": "static/img/tools/watering_can.png",
+                    },
+                    "next_tier": {
+                        "level": 1,
+                        "name": "Copper Watering Can",
+                        "gold_cost": 2000,
+                        "materials": "5x Copper Bar",
+                        "icon_url": "static/img/tools/copper_watering_can.png",
+                    },
+                },
+                {
+                    "key": "TrashCan",
+                    "display_name": "Trash Can",
+                    "current_level": 1,
+                    "max_level": 4,
+                    "status": "ready",
+                    "days_left": 0,
+                    "is_max": False,
+                    "current_tier": {
+                        "name": "Copper Trash Can",
+                        "perks": "Reclaims 15% of discarded item value.",
+                        "icon_url": "static/img/tools/copper_trash_can.png",
+                    },
+                    "next_tier": {
+                        "level": 2,
+                        "name": "Steel Trash Can",
+                        "gold_cost": 2500,
+                        "materials": "5x Iron Bar",
+                        "icon_url": "static/img/tools/steel_trash_can.png",
+                    },
+                },
+                {
+                    "key": "Pan",
+                    "display_name": "Pan",
+                    "current_level": 3,
+                    "max_level": 3,
+                    "status": "maxed",
+                    "days_left": 0,
+                    "is_max": True,
+                    "current_tier": {
+                        "name": "Iridium Pan",
+                        "perks": "Maximum panning yields and special rewards.",
+                        "icon_url": "static/img/tools/iridium_pan.png",
+                    },
+                    "next_tier": None,
+                },
+            ],
+            "scythe": {
+                "name": "Scythe",
+                "current_stage": {
+                    "name": "Golden Scythe",
+                    "tier": 1,
+                    "icon_url": "static/img/tools/golden_scythe.png",
+                    "hint": "Found at the end of the Quarry Mine statue.",
+                },
+                "is_max": False,
+                "next_stage": {
+                    "name": "Iridium Scythe",
+                    "icon_url": "static/img/tools/iridium_scythe.png",
+                    "hint": "Unlocked in the Mastery Cave upon achieving Farming Mastery.",
+                },
+            },
+        },
         "hay": {
             "current_hay": 350,
             "silos_built": 2,
@@ -223,7 +362,7 @@ def test_html_navigation_and_sections(tmp_path, sample_render_data):
     assert soup.find("body") is not None
 
     all_text = soup.get_text().lower()
-    for section_kw in ["achievements", "shipped", "fish", "artisan", "crops", "chests", "hay", "grandpa", "community"]:
+    for section_kw in ["achievements", "shipped", "fish", "artisan", "crops", "chests", "tools", "hay", "grandpa", "community"]:
         assert section_kw in all_text, f"Expected '{section_kw}' content in rendered HTML"
 
 
@@ -261,6 +400,22 @@ def test_html_crops_rendering(tmp_path, sample_render_data):
     assert "Crop Tracker" in page_text or "Crops" in page_text
     assert "Powdermelon" in page_text
     assert "167x" in page_text
+
+
+def test_html_tools_rendering(tmp_path, sample_render_data):
+    """Verifies that Tools module pane and tool tier entries render cleanly in HTML DOM."""
+    output_file = tmp_path / "index_tools.html"
+    generate_dashboard_html({"save1": sample_render_data}, output_path=str(output_file))
+
+    soup = BeautifulSoup(output_file.read_text(encoding="utf-8"), "html.parser")
+    page_text = soup.get_text()
+
+    assert "Tool Upgrades & Progression" in page_text or "Tools" in page_text
+    assert "Steel Axe" in page_text
+    assert "Gold Pickaxe" in page_text
+    assert "At Clint's (1d left)" in page_text
+    assert "Golden Scythe" in page_text
+    assert "Iridium Scythe" in page_text
 
 
 def test_html_hay_warning_banners_rendering(tmp_path, sample_render_data):

@@ -7,11 +7,16 @@ Builds an in-memory index over OBJECTS_CATALOG for fast item detail lookups.
 
 import logging
 import time
-from data.data_loader import OBJECTS_CATALOG
+from data.data_loader import OBJECTS_CATALOG, TOOLS_CATALOG
 
 logger = logging.getLogger(__name__)
 
 _OBJECT_LOOKUP_CACHE = None
+
+
+def get_tools_catalog() -> dict:
+    """Returns the static tools catalog loaded via data_loader."""
+    return TOOLS_CATALOG if isinstance(TOOLS_CATALOG, dict) else {"upgradeable_tools": {}, "special_tools": {}}
 
 
 def _get_object_lookup():

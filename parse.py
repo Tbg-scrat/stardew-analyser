@@ -29,6 +29,7 @@ from src.modules.achievements import parse_achievements
 from src.modules.artisan import parse_all_artisan_goods
 from src.modules.chests import parse_chests
 from src.modules.crops import parse_all_crops_from_save
+from src.modules.tools import parse_tools
 from src.modules.hay import parse_hay_data
 from src.modules.grandpa import parse_grandpa_data
 from src.modules.community_center import parse_community_center_data
@@ -109,6 +110,10 @@ def analyze_save(file_path):
     crops_summary = parse_all_crops_from_save(root, current_day=data["day_of_month"])
     data["crops"] = crops_summary
 
+    # Tools Module
+    tools_summary = parse_tools(root)
+    data["tools"] = tools_summary
+
     # Hay Tracker Module
     hay_summary = parse_hay_data(root)
     data["hay"] = hay_summary
@@ -129,7 +134,7 @@ def analyze_save(file_path):
     data["community_center"] = cc_summary
 
     modules_duration_ms = (time.perf_counter() - t_modules_start) * 1000
-    logger.info(f"All 14 feature modules parsed in {modules_duration_ms:.2f}ms")
+    logger.info(f"All 15 feature modules parsed in {modules_duration_ms:.2f}ms")
 
     return data
 
@@ -165,6 +170,10 @@ def log_save_summary(save_id, data):
     crops_total = data.get("crops", {}).get("summary", {}).get("total_crops", 0)
     crops_ready = data.get("crops", {}).get("summary", {}).get("ready_today", 0)
 
+    tools_maxed = sum(1 for t in data.get("tools", {}).get("upgradeable", []) if t.get("is_max"))
+    tools_total = len(data.get("tools", {}).get("upgradeable", []))
+    scythe_name = data.get("tools", {}).get("scythe", {}).get("current_stage", {}).get("name", "Scythe")
+
     hay_current = data.get("hay", {}).get("current_hay", 0)
     hay_max = data.get("hay", {}).get("max_capacity", 0)
     hay_animals = data.get("hay", {}).get("total_animals", 0)
@@ -188,6 +197,7 @@ def log_save_summary(save_id, data):
         f"Artisan: {artisan_machines} machines | "
         f"Chests: {chests_count} | "
         f"Crops: {crops_total} total ({crops_ready} ready) | "
+        f"Tools: {tools_maxed}/{tools_total} Maxed ({scythe_name}) | "
         f"Hay: {hay_current}/{hay_max} ({hay_animals} animals) | "
         f"Grandpa: {grandpa_score}/{grandpa_max} pts ({grandpa_candles} Candles) | "
         f"CC: {cc_bundles}/{cc_total} Bundles ({cc_route})"

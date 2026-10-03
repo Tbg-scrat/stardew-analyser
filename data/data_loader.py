@@ -1,3 +1,4 @@
+# data/data_loader.py
 # -*- coding: utf-8 -*-
 import json
 from pathlib import Path
@@ -20,3 +21,4 @@ OBJECTS_CATALOG = load_json_catalog("objects.json", default_factory=list)
 VILLAGERS_CATALOG = load_json_catalog("villagers.json")
 GRANDPA_CATALOG = load_json_catalog("grandpa_eval.json")
 FESTIVALS_CATALOG = load_json_catalog("festivals.json")
+TOOLS_CATALOG = load_json_catalog("tools.json")

@@ -1,0 +1,295 @@
+{
+  "upgradeable_tools": {
+    "Axe": {
+      "name": "Axe",
+      "tiers": [
+        {
+          "level": 0,
+          "name": "Axe",
+          "icon": "axe.png",
+          "gold_cost": 0,
+          "materials": null,
+          "perks": "Chops trees and small stumps."
+        },
+        {
+          "level": 1,
+          "name": "Copper Axe",
+          "icon": "copper_axe.png",
+          "gold_cost": 2000,
+          "materials": "5x Copper Bar",
+          "perks": "Can chop large stumps. Takes fewer hits for trees."
+        },
+        {
+          "level": 2,
+          "name": "Steel Axe",
+          "icon": "steel_axe.png",
+          "gold_cost": 5000,
+          "materials": "5x Iron Bar",
+          "perks": "Can chop large logs (Secret Woods entry)."
+        },
+        {
+          "level": 3,
+          "name": "Gold Axe",
+          "icon": "gold_axe.png",
+          "gold_cost": 10000,
+          "materials": "5x Gold Bar",
+          "perks": "Chops trees and logs significantly faster."
+        },
+        {
+          "level": 4,
+          "name": "Iridium Axe",
+          "icon": "iridium_axe.png",
+          "gold_cost": 25000,
+          "materials": "5x Iridium Bar",
+          "perks": "Maximum efficiency wood chopping."
+        }
+      ]
+    },
+    "Pickaxe": {
+      "name": "Pickaxe",
+      "tiers": [
+        {
+          "level": 0,
+          "name": "Pickaxe",
+          "icon": "pickaxe.png",
+          "gold_cost": 0,
+          "materials": null,
+          "perks": "Breaks small rocks."
+        },
+        {
+          "level": 1,
+          "name": "Copper Pickaxe",
+          "icon": "copper_pickaxe.png",
+          "gold_cost": 2000,
+          "materials": "5x Copper Bar",
+          "perks": "Breaks large rocks in the Mines."
+        },
+        {
+          "level": 2,
+          "name": "Steel Pickaxe",
+          "icon": "steel_pickaxe.png",
+          "gold_cost": 5000,
+          "materials": "5x Iron Bar",
+          "perks": "Breaks large boulders."
+        },
+        {
+          "level": 3,
+          "name": "Gold Pickaxe",
+          "icon": "gold_pickaxe.png",
+          "gold_cost": 10000,
+          "materials": "5x Gold Bar",
+          "perks": "Breaks meteorites on the farm."
+        },
+        {
+          "level": 4,
+          "name": "Iridium Pickaxe",
+          "icon": "iridium_pickaxe.png",
+          "gold_cost": 25000,
+          "materials": "5x Iridium Bar",
+          "perks": "Breaks almost all rocks in one hit."
+        }
+      ]
+    },
+    "Hoe": {
+      "name": "Hoe",
+      "tiers": [
+        {
+          "level": 0,
+          "name": "Hoe",
+          "icon": "hoe.png",
+          "gold_cost": 0,
+          "materials": null,
+          "perks": "Tills 1 tile."
+        },
+        {
+          "level": 1,
+          "name": "Copper Hoe",
+          "icon": "copper_hoe.png",
+          "gold_cost": 2000,
+          "materials": "5x Copper Bar",
+          "perks": "Tills a 3x1 line when charged."
+        },
+        {
+          "level": 2,
+          "name": "Steel Hoe",
+          "icon": "steel_hoe.png",
+          "gold_cost": 5000,
+          "materials": "5x Iron Bar",
+          "perks": "Tills a 5x1 line when charged."
+        },
+        {
+          "level": 3,
+          "name": "Gold Hoe",
+          "icon": "gold_hoe.png",
+          "gold_cost": 10000,
+          "materials": "5x Gold Bar",
+          "perks": "Tills a 3x3 area when charged."
+        },
+        {
+          "level": 4,
+          "name": "Iridium Hoe",
+          "icon": "iridium_hoe.png",
+          "gold_cost": 25000,
+          "materials": "5x Iridium Bar",
+          "perks": "Tills a 6x3 area (18 tiles) when charged."
+        }
+      ]
+    },
+    "WateringCan": {
+      "name": "Watering Can",
+      "tiers": [
+        {
+          "level": 0,
+          "name": "Watering Can",
+          "icon": "watering_can.png",
+          "gold_cost": 0,
+          "materials": null,
+          "perks": "Capacity: 40. Waters 1 tile."
+        },
+        {
+          "level": 1,
+          "name": "Copper Watering Can",
+          "icon": "copper_watering_can.png",
+          "gold_cost": 2000,
+          "materials": "5x Copper Bar",
+          "perks": "Capacity: 55. Waters a 3x1 line."
+        },
+        {
+          "level": 2,
+          "name": "Steel Watering Can",
+          "icon": "steel_watering_can.png",
+          "gold_cost": 5000,
+          "materials": "5x Iron Bar",
+          "perks": "Capacity: 70. Waters a 5x1 line."
+        },
+        {
+          "level": 3,
+          "name": "Gold Watering Can",
+          "icon": "gold_watering_can.png",
+          "gold_cost": 10000,
+          "materials": "5x Gold Bar",
+          "perks": "Capacity: 85. Waters a 3x3 area."
+        },
+        {
+          "level": 4,
+          "name": "Iridium Watering Can",
+          "icon": "iridium_watering_can.png",
+          "gold_cost": 25000,
+          "materials": "5x Iridium Bar",
+          "perks": "Capacity: 100. Waters a 6x3 area."
+        }
+      ]
+    },
+    "TrashCan": {
+      "name": "Trash Can",
+      "tiers": [
+        {
+          "level": 0,
+          "name": "Trash Can",
+          "icon": null,
+          "gold_cost": 0,
+          "materials": null,
+          "perks": "Reclaims 0% of discarded item value."
+        },
+        {
+          "level": 1,
+          "name": "Copper Trash Can",
+          "icon": "copper_trash_can.png",
+          "gold_cost": 1000,
+          "materials": "5x Copper Bar",
+          "perks": "Reclaims 15% of discarded item value."
+        },
+        {
+          "level": 2,
+          "name": "Steel Trash Can",
+          "icon": "steel_trash_can.png",
+          "gold_cost": 2500,
+          "materials": "5x Iron Bar",
+          "perks": "Reclaims 30% of discarded item value."
+        },
+        {
+          "level": 3,
+          "name": "Gold Trash Can",
+          "icon": "gold_trash_can.png",
+          "gold_cost": 5000,
+          "materials": "5x Gold Bar",
+          "perks": "Reclaims 45% of discarded item value."
+        },
+        {
+          "level": 4,
+          "name": "Iridium Trash Can",
+          "icon": "iridium_trash_can.png",
+          "gold_cost": 12500,
+          "materials": "5x Iridium Bar",
+          "perks": "Reclaims 60% of discarded item value."
+        }
+      ]
+    },
+    "Pan": {
+      "name": "Pan",
+      "tiers": [
+        {
+          "level": 1,
+          "name": "Copper Pan",
+          "icon": "copper_pan.png",
+          "gold_cost": 0,
+          "materials": null,
+          "perks": "Pans ore/minerals from sparkling water spots."
+        },
+        {
+          "level": 2,
+          "name": "Steel Pan",
+          "icon": "steel_pan.png",
+          "gold_cost": 2000,
+          "materials": "5x Iron Bar",
+          "perks": "Increased yield and chance for rare minerals."
+        },
+        {
+          "level": 3,
+          "name": "Gold Pan",
+          "icon": "gold_pan.png",
+          "gold_cost": 5000,
+          "materials": "5x Gold Bar",
+          "perks": "Higher yield and extra gems/minerals."
+        },
+        {
+          "level": 4,
+          "name": "Iridium Pan",
+          "icon": "iridium_pan.png",
+          "gold_cost": 10000,
+          "materials": "5x Iridium Bar",
+          "perks": "Maximum panning yields and special rewards."
+        }
+      ]
+    }
+  },
+  "special_tools": {
+    "Scythe": {
+      "name": "Scythe",
+      "type": "scythe",
+      "stages": [
+        {
+          "id": "Scythe",
+          "name": "Basic Scythe",
+          "icon": "scythe.png",
+          "tier": 0,
+          "hint": "Starter tool provided at game start."
+        },
+        {
+          "id": "Golden Scythe",
+          "name": "Golden Scythe",
+          "icon": "golden_scythe.png",
+          "tier": 1,
+          "hint": "Found at the end of the Quarry Mine statue."
+        },
+        {
+          "id": "Iridium Scythe",
+          "name": "Iridium Scythe",
+          "icon": "iridium_scythe.png",
+          "tier": 2,
+          "hint": "Unlocked in the Mastery Cave upon achieving Farming Mastery."
+        }
+      ]
+    }
+  }
+}

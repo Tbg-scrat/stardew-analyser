@@ -50,6 +50,7 @@ def test_analyze_save_schema_contract():
         "chests",
         "crops",
         "hay",
+        "tools",
         "grandpa",
         "community_center",
     ]
@@ -73,10 +74,22 @@ def test_log_save_summary_formatting(caplog):
         "artisan": {"summary": {"total_machines": 150}},
         "chests": {"total_chests": 12},
         "crops": {"summary": {"total_crops": 384, "ready_today": 84}},
+        "tools": {
+            "upgradeable": [
+                {"key": "Axe", "is_max": True},
+                {"key": "Pickaxe", "is_max": False},
+                {"key": "Hoe", "is_max": False},
+                {"key": "WateringCan", "is_max": False},
+                {"key": "TrashCan", "is_max": False},
+                {"key": "Pan", "is_max": True},
+            ],
+            "scythe": {"current_stage": {"name": "Golden Scythe"}, "is_max": False}
+        },
         "hay": {"current_hay": 350, "max_capacity": 480, "total_animals": 16},
         "grandpa": {"total_score": 14, "max_score": 21, "candles": 4},
         "community_center": {"completed_bundles": 28, "total_bundles": 30, "route_label": "Community Center (Junimo)"},
     }
+
 
     with caplog.at_level("INFO"):
         log_save_summary("Friisen_12345", mock_data)

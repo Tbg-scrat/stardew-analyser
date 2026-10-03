@@ -1,0 +1,294 @@
+<!-- templates/partials/tools.html -->
+{% set tools = farm.tools if farm is defined and farm.tools is defined else (tools if tools is defined else None) %}
+{% if tools and tools.upgradeable %}
+<style>
+    .tools-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+    .tools-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 1rem;
+    }
+    .tool-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: border-color 0.2s ease, background-color 0.2s ease;
+    }
+    .tool-card:hover {
+        background: var(--bg-card-hover);
+        border-color: #3b82f6;
+    }
+    .tool-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 0.75rem;
+        margin-bottom: 0.75rem;
+    }
+    .tool-title {
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: var(--text-primary);
+    }
+    .tool-badge {
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 0.25rem 0.65rem;
+        border-radius: 9999px;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+    }
+    .tool-badge.ready {
+        background: rgba(16, 185, 129, 0.15);
+        color: #34d399;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .tool-badge.upgrading {
+        background: rgba(245, 158, 11, 0.15);
+        color: #fbbf24;
+        border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+    .tool-badge.maxed {
+        background: rgba(168, 85, 247, 0.15);
+        color: #c084fc;
+        border: 1px solid rgba(168, 85, 247, 0.3);
+    }
+    .tool-body {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        margin-bottom: 0.75rem;
+    }
+    .tool-icon-box {
+        width: 48px;
+        height: 48px;
+        flex-shrink: 0;
+        background: var(--bg-subtle);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .tool-icon-img {
+        width: 32px;
+        height: 32px;
+        object-fit: contain;
+        image-rendering: pixelated;
+    }
+    .tool-tier-name {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--color-gold);
+    }
+    .tool-tier-perks {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        margin-top: 0.2rem;
+        line-height: 1.35;
+    }
+    .tool-progress-bar {
+        display: flex;
+        gap: 0.35rem;
+        margin-bottom: 0.85rem;
+    }
+    .tool-progress-step {
+        height: 6px;
+        flex: 1;
+        border-radius: 3px;
+        background: var(--bg-surface);
+    }
+    .tool-progress-step.active {
+        background: var(--color-gold);
+    }
+    .tool-footer {
+        border-top: 1px solid var(--border-color);
+        padding-top: 0.75rem;
+        font-size: 0.8rem;
+    }
+    .tool-req-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.25rem;
+    }
+    .tool-req-label {
+        color: var(--text-secondary);
+    }
+    .tool-req-val {
+        color: var(--text-primary);
+        font-weight: 600;
+    }
+    .tool-req-cost {
+        color: var(--color-gold);
+        font-weight: 700;
+    }
+    .tool-max-text {
+        color: var(--text-muted);
+        font-style: italic;
+        text-align: center;
+    }
+    .special-tools-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1.25rem;
+    }
+    .special-tools-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 0.75rem;
+    }
+    .special-tools-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+    .special-stage-box {
+        background: var(--bg-subtle);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 0.85rem;
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+    }
+    .special-stage-box.dimmed {
+        opacity: 0.6;
+    }
+</style>
+
+<div class="tools-wrapper">
+    <!-- Upgradeable Tools Grid -->
+    <div class="tools-grid">
+        {% for tool in tools.upgradeable %}
+        <div class="tool-card">
+            <div>
+                <!-- Card Header / Status Badge -->
+                <div class="tool-card-header">
+                    <span class="tool-title">{{ tool.display_name }}</span>
+                    {% if tool.status == 'upgrading' %}
+                        <span class="tool-badge upgrading">
+                            <span></span> At Clint's ({{ tool.days_left }}d left)
+                        </span>
+                    {% elif tool.status == 'maxed' %}
+                        <span class="tool-badge maxed">
+                            <span></span> Max Tier
+                        </span>
+                    {% else %}
+                        <span class="tool-badge ready">
+                            <span></span> Ready
+                        </span>
+                    {% endif %}
+                </div>
+
+                <!-- Current Tier Display -->
+                <div class="tool-body">
+                    <div class="tool-icon-box">
+                        {% if tool.current_tier.icon_url %}
+                            <img src="/{{ tool.current_tier.icon_url }}" alt="{{ tool.current_tier.name }}" class="tool-icon-img">
+                        {% else %}
+                            <span style="font-size: 1.5rem;"></span>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <div class="tool-tier-name">{{ tool.current_tier.name }}</div>
+                        <div class="tool-tier-perks">{{ tool.current_tier.perks }}</div>
+                    </div>
+                </div>
+
+                <!-- Tier Level Bar -->
+                <div class="tool-progress-bar">
+                    {% for lvl in range(0, tool.max_level + 1) %}
+                        <div class="tool-progress-step {% if lvl <= tool.current_level %}active{% endif %}"></div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Next Upgrade Requirements -->
+            <div class="tool-footer">
+                {% if tool.is_max %}
+                    <div class="tool-max-text">Fully upgraded to maximum tier</div>
+                {% elif tool.next_tier %}
+                    <div class="tool-req-row">
+                        <span class="tool-req-label">Next Upgrade:</span>
+                        <span class="tool-req-cost">{{ tool.next_tier.name }} ({{ "{:,}".format(tool.next_tier.gold_cost) }}g)</span>
+                    </div>
+                    <div class="tool-req-row">
+                        <span class="tool-req-label">Required Materials:</span>
+                        <span class="tool-req-val">{{ tool.next_tier.materials }}</span>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Special Tools Section (Scythe) -->
+    {% if tools.scythe %}
+    <div class="special-tools-card">
+        <div class="special-tools-header">
+            <span class="tool-title">Special Tools Progression</span>
+            {% if tools.scythe.is_max %}
+                <span class="tool-badge maxed">Highest Tier Unlocked</span>
+            {% else %}
+                <span class="tool-badge ready">Upgrade Available</span>
+            {% endif %}
+        </div>
+
+        <div class="special-tools-grid">
+            <!-- Current Scythe Stage -->
+            <div class="special-stage-box">
+                <div class="tool-icon-box">
+                    {% if tools.scythe.current_stage and tools.scythe.current_stage.icon_url %}
+                        <img src="/{{ tools.scythe.current_stage.icon_url }}" alt="{{ tools.scythe.current_stage.name }}" class="tool-icon-img">
+                    {% else %}
+                        <span style="font-size: 1.5rem;"></span>
+                    {% endif %}
+                </div>
+                <div>
+                    <div style="font-size: 0.75rem; color: var(--text-secondary);">Current Stage</div>
+                    <div class="tool-tier-name">{{ tools.scythe.current_stage.name if tools.scythe.current_stage else 'Scythe' }}</div>
+                    <div class="tool-tier-perks">{{ tools.scythe.current_stage.hint if tools.scythe.current_stage else '' }}</div>
+                </div>
+            </div>
+
+            <!-- Next Scythe Stage Hint -->
+            <div class="special-stage-box {% if not tools.scythe.next_stage %}dimmed{% endif %}">
+                {% if tools.scythe.next_stage %}
+                    <div class="tool-icon-box" style="opacity: 0.6;">
+                        {% if tools.scythe.next_stage.icon_url %}
+                            <img src="/{{ tools.scythe.next_stage.icon_url }}" alt="{{ tools.scythe.next_stage.name }}" class="tool-icon-img">
+                        {% else %}
+                            <span style="font-size: 1.5rem;"></span>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <div style="font-size: 0.75rem; color: var(--text-secondary);">Next Unlock</div>
+                        <div style="font-size: 0.9rem; font-weight: 700; color: var(--text-primary);">{{ tools.scythe.next_stage.name }}</div>
+                        <div style="font-size: 0.8rem; color: var(--color-gold); margin-top: 0.2rem;"> {{ tools.scythe.next_stage.hint }}</div>
+                    </div>
+                {% else %}
+                    <div style="font-size: 0.8rem; color: var(--text-muted); font-style: italic; text-align: center; width: 100%;">
+                        All scythe stages acquired!
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endif %}
