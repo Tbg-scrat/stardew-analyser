@@ -1,3 +1,4 @@
+# src/modules/tools.py
 import logging
 import time
 import xml.etree.ElementTree as ET
@@ -14,8 +15,25 @@ def parse_tools(xml_root: ET.Element) -> Dict[str, Any]:
     from the save file XML root.
     """
     start_time = time.perf_counter()
-    catalog = get_tools_catalog()
 
+    if xml_root is None:
+        logger.warning("xml_root is None. Returning default tools structure.")
+        return {
+            "upgradeable": [],
+            "scythe": {
+                "name": "Scythe",
+                "current_stage": {
+                    "name": "Basic Scythe",
+                    "tier": 0,
+                    "icon_url": "static/img/tools/scythe.png",
+                    "hint": "Starter tool.",
+                },
+                "is_max": False,
+                "next_stage": None,
+            },
+        }
+
+    catalog = get_tools_catalog()
     upgradeable_catalog = catalog.get("upgradeable_tools", {})
     special_catalog = catalog.get("special_tools", {})
 
@@ -41,11 +59,22 @@ def parse_tools(xml_root: ET.Element) -> Dict[str, Any]:
                 item_name = upgrading_item.findtext("name") or ""
                 upgrading_tool_type = item_type or item_name
 
+        if days_left > 0 and upgrading_tool_type:
+            logger.debug(
+                f"Active blacksmith upgrade detected at Clint's: {upgrading_tool_type} ({days_left}d remaining)"
+            )
+    else:
+        logger.debug("No <player> node found under save XML root")
+
     # 2. Track tool levels and scythe stages across inventory, chests, and blacksmith
     tool_levels = {tool_key: 0 for tool_key in upgradeable_catalog}
     scythe_tier_found = 0  # 0: Basic, 1: Golden, 2: Iridium
 
-    for item in xml_root.findall(".//Item"):
+    items = xml_root.findall(".//Item")
+    scanned_items_count = len(items)
+    matched_tools_count = 0
+
+    for item in items:
         if item.get("{http://www.w3.org/2001/XMLSchema-instance}nil") == "true":
             continue
 
@@ -59,11 +88,14 @@ def parse_tools(xml_root: ET.Element) -> Dict[str, Any]:
             if item_type == tool_key:
                 is_tool_match = True
             elif item_type in ("Tool", "GenericTool", "SpecialItem"):
-                valid_names = [tool_key, tool_info.get("name", "")] + [t["name"] for t in tool_info.get("tiers", [])]
+                valid_names = [tool_key, tool_info.get("name", "")] + [
+                    t["name"] for t in tool_info.get("tiers", [])
+                ]
                 if item_name in valid_names:
                     is_tool_match = True
 
             if is_tool_match:
+                matched_tools_count += 1
                 level_text = item.findtext("upgradeLevel")
                 if level_text is not None:
                     try:
@@ -80,6 +112,10 @@ def parse_tools(xml_root: ET.Element) -> Dict[str, Any]:
             scythe_tier_found = max(scythe_tier_found, 1)
         elif "Scythe" in item_name or "Scythe" in item_type:
             scythe_tier_found = max(scythe_tier_found, 0)
+
+    logger.debug(
+        f"Evaluated {scanned_items_count} <Item> nodes across save: {matched_tools_count} tool matches processed"
+    )
 
     # 3. Build upgradeable tools data structure
     tools_data: List[Dict[str, Any]] = []
@@ -156,8 +192,10 @@ def parse_tools(xml_root: ET.Element) -> Dict[str, Any]:
         } if next_scythe_stage else None,
     }
 
+    logger.debug(f"Resolved Scythe progression stage: {current_scythe_stage['name']} (Tier {scythe_tier_found})")
+
     elapsed_ms = (time.perf_counter() - start_time) * 1000
-    logger.debug("Parsed tools in %.2fms", elapsed_ms)
+    logger.debug(f"Parsed tools module in {elapsed_ms:.2f}ms")
 
     return {
         "upgradeable": tools_data,

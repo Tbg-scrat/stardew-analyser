@@ -172,7 +172,14 @@ def log_save_summary(save_id, data):
 
     tools_maxed = sum(1 for t in data.get("tools", {}).get("upgradeable", []) if t.get("is_max"))
     tools_total = len(data.get("tools", {}).get("upgradeable", []))
+    upgrading_tools = [t for t in data.get("tools", {}).get("upgradeable", []) if t.get("status") == "upgrading"]
     scythe_name = data.get("tools", {}).get("scythe", {}).get("current_stage", {}).get("name", "Scythe")
+
+    if upgrading_tools:
+        upg = upgrading_tools[0]
+        upg_detail = f"{upg.get('display_name', 'Tool')} at Clint's, {upg.get('days_left', 0)}d left | {scythe_name}"
+    else:
+        upg_detail = scythe_name
 
     hay_current = data.get("hay", {}).get("current_hay", 0)
     hay_max = data.get("hay", {}).get("max_capacity", 0)
@@ -197,7 +204,7 @@ def log_save_summary(save_id, data):
         f"Artisan: {artisan_machines} machines | "
         f"Chests: {chests_count} | "
         f"Crops: {crops_total} total ({crops_ready} ready) | "
-        f"Tools: {tools_maxed}/{tools_total} Maxed ({scythe_name}) | "
+        f"Tools: {tools_maxed}/{tools_total} Maxed ({upg_detail}) | "
         f"Hay: {hay_current}/{hay_max} ({hay_animals} animals) | "
         f"Grandpa: {grandpa_score}/{grandpa_max} pts ({grandpa_candles} Candles) | "
         f"CC: {cc_bundles}/{cc_total} Bundles ({cc_route})"
