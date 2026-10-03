@@ -128,13 +128,13 @@
 <section class="farm-switcher-section">
     <div class="farm-switcher-header" onclick="toggleFarmSwitcher()">
         <div class="active-farm-summary-chip" id="active-farm-summary">
-            🚜 <b>{{ farms[0].farm_name }} Farm</b> 
-            <span class="farmer-meta">({{ farms[0].farmer_name }})</span> 
+             <b>{{ farms[0].farm }} Farm</b> 
+            <span class="farmer-meta">({{ farms[0].farmer }})</span> 
             <span class="gold-meta">G: {{ "{:,}".format(farms[0].money) }} g</span>
         </div>
         <button class="switcher-toggle-btn" type="button">
             <span>Switch Farm ({{ farms|length }})</span>
-            <span id="switcher-arrow-icon">▾</span>
+            <span id="switcher-arrow-icon"></span>
         </button>
     </div>
 
@@ -142,17 +142,17 @@
         {% for farm in farms %}
         <button class="farm-pill-card {% if loop.first %}active{% endif %}"
                 data-farm-id="{{ farm.farm_id }}"
-                data-farm-name="{{ farm.farm_name }}"
-                data-farmer-name="{{ farm.farmer_name }}"
+                data-farm-name="{{ farm.farm }}"
+                data-farmer-name="{{ farm.farmer }}"
                 data-farm-money="{{ "{:,}".format(farm.money) }}"
                 id="tab-btn-{{ farm.farm_id }}"
                 onclick="switchFarm('{{ farm.farm_id }}')">
             <div class="pill-top-row">
-                <span>{{ farm.farm_name }} Farm</span>
+                <span>{{ farm.farm }} Farm</span>
                 <span class="pill-money">{{ "{:,}".format(farm.money) }}g</span>
             </div>
             <div class="pill-bottom-row">
-                <span>Farmer: {{ farm.farmer_name }}</span>
+                <span>Farmer: {{ farm.farmer }}</span>
             </div>
         </button>
         {% endfor %}
@@ -167,7 +167,7 @@
 
         const isCollapsed = grid.classList.toggle('collapsed');
         if (icon) {
-            icon.textContent = isCollapsed ? '▾' : '▴';
+            icon.textContent = isCollapsed ? '' : '';
         }
         localStorage.setItem('stardew_switcher_collapsed', isCollapsed ? 'true' : 'false');
     }
@@ -190,7 +190,7 @@
 
             const summaryLabel = document.getElementById('active-farm-summary');
             if (summaryLabel) {
-                summaryLabel.innerHTML = `🚜 <b>${farmName} Farm</b> <span class="farmer-meta">(${farmerName})</span> <span class="gold-meta">G: ${farmMoney} g</span>`;
+                summaryLabel.innerHTML = ` <b>${farmName} Farm</b> <span class="farmer-meta">(${farmerName})</span> <span class="gold-meta">G: ${farmMoney} g</span>`;
             }
         }
 
@@ -198,21 +198,21 @@
         localStorage.setItem('stardew_active_farm_id', farmId);
     }
 
-    // Restore state from localStorage on page render
-    (function restoreSwitcherState() {
+    // Defer state restoration until the DOM is fully parsed
+    document.addEventListener("DOMContentLoaded", function restoreSwitcherState() {
         const savedCollapsed = localStorage.getItem('stardew_switcher_collapsed');
         const grid = document.getElementById('farm-tabs-grid-collapsible');
         const icon = document.getElementById('switcher-arrow-icon');
 
         if (savedCollapsed === 'false' && grid) {
             grid.classList.remove('collapsed');
-            if (icon) icon.textContent = '▴';
+            if (icon) icon.textContent = '';
         }
 
         const savedFarmId = localStorage.getItem('stardew_active_farm_id');
         if (savedFarmId && document.getElementById('farm-pane-' + savedFarmId)) {
             switchFarm(savedFarmId);
         }
-    })();
+    });
 </script>
 {% endif %}

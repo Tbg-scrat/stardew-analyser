@@ -66,7 +66,7 @@
             {# 1. Immediate Stored Hay Deficit Warning #}
             {% if farm.hay and farm.hay.has_deficit_warning %}
             <div class="alert-banner alert-warning" style="background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1.25rem; color: #fca5a5; display: flex; align-items: flex-start; gap: 0.85rem;">
-                <div style="font-size: 1.5rem; line-height: 1;">⚠️️</div>
+                <div style="font-size: 1.5rem; line-height: 1;">⚠</div>
                 <div>
                     <strong style="color: #f87171; font-size: 0.95rem; display: block; margin-bottom: 0.25rem;">Winter Hay Deficit Warning</strong>
                     <p style="margin: 0; font-size: 0.85rem; color: #fca5a5;">
@@ -167,7 +167,9 @@
     </div>
 
     <script>
-        function switchModule(farmId, moduleName) {
+        const STORAGE_KEY_MODULE_PREFIX = 'stardew_active_module_';
+
+        function switchModule(farmId, moduleName, persist = true) {
             const farmPane = document.getElementById('farm-pane-' + farmId);
             if (!farmPane) return;
 
@@ -179,6 +181,10 @@
 
             if (activeBtn) activeBtn.classList.add('active');
             if (activePane) activePane.classList.add('active');
+
+            if (persist) {
+                localStorage.setItem(STORAGE_KEY_MODULE_PREFIX + farmId, moduleName);
+            }
         }
 
         function setCatalogFilter(btn) {
@@ -241,6 +247,17 @@
                 card.style.display = (matchesSearch && matchesFilter) ? 'flex' : 'none';
             });
         }
+
+        // Restore saved active module tab for each farm on initial page load / auto-reload
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll('.farm-pane').forEach(pane => {
+                const farmId = pane.id.replace('farm-pane-', '');
+                const savedModule = localStorage.getItem(STORAGE_KEY_MODULE_PREFIX + farmId);
+                if (savedModule) {
+                    switchModule(farmId, savedModule, false);
+                }
+            });
+        });
     </script>
 
     <!-- Automatic Reload on Save Update -->
