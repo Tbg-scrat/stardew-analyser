@@ -1,8 +1,13 @@
 # src/core/reference_data.py
-import json
+# -*- coding: utf-8 -*-
+"""
+Core item metadata lookup utility.
+Builds an in-memory index over OBJECTS_CATALOG for fast item detail lookups.
+"""
+
 import logging
 import time
-from pathlib import Path
+from data.data_loader import OBJECTS_CATALOG
 
 logger = logging.getLogger(__name__)
 
@@ -16,8 +21,6 @@ def _get_object_lookup():
         return _OBJECT_LOOKUP_CACHE
 
     start_time = time.perf_counter()
-    from data.data_loader import OBJECTS_CATALOG
-
     lookup = {}
     catalog = OBJECTS_CATALOG if isinstance(OBJECTS_CATALOG, list) else []
 
@@ -37,7 +40,6 @@ def _get_object_lookup():
         clean_name = name.replace(" ", "_").replace("'", "")
         wiki_filename = name.replace(" ", "_")
 
-        # Set primary local icon using ID convention (O_{id}.png) if ID exists, otherwise O_{Name}.png
         if item_id:
             primary_icon = f"/static/img/items/O_{item_id}.png"
         else:
@@ -102,26 +104,4 @@ def get_object_info(harvest_id: str) -> dict:
         "icon": f"/static/img/items/O_{raw_key}.png",
         "wiki_icon": f"https://stardewvalleywiki.com/Special:Redirect/file/{raw_key}.png"
     }
-
-
-def load_object_map(json_path="data/objects.json"):
-    """Load object names mapping ID -> Display Name."""
-    path = Path(json_path)
-    object_map = {}
-    if path.exists():
-        logger.debug(f"Loading object map JSON from '{path.resolve()}'")
-        with open(path, "r", encoding="utf-8") as f:
-            data = json.load(f)
-            if isinstance(data, list):
-                for item in data:
-                    if isinstance(item, dict) and "id" in item:
-                        item_id = str(item["id"])
-                        names = item.get("names", {})
-                        name = names.get("data-en-US") or names.get("en-US") or "Unknown"
-                        object_map[item_id] = name
-                        object_map[f"(O){item_id}"] = name
-        logger.debug(f"Loaded {len(object_map)} object mappings from '{json_path}'")
-    else:
-        logger.warning(f"Object map file not found at '{path.resolve()}'")
-    return object_map
     

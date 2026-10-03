@@ -1,14 +1,15 @@
 # src/modules/chests.py
+# -*- coding: utf-8 -*-
 
 import logging
 import time
 import xml.etree.ElementTree as ET
-from src.core.reference_data import load_object_map
+from src.core.reference_data import get_object_info
 
 logger = logging.getLogger(__name__)
 
 
-def _parse_item_node(item_node, object_map=None):
+def _parse_item_node(item_node):
     """
     Extract detailed item metadata from an XML <Item> node.
     Returns a dictionary with is_empty=True for nil or empty slots.
@@ -34,15 +35,9 @@ def _parse_item_node(item_node, object_map=None):
         .replace(" ", "_")
     )
 
-    name = item_node.findtext("name")
-
-    if object_map and isinstance(object_map, dict):
-        map_entry = object_map.get(qualified_id) or object_map.get(str(item_id))
-        
-        if isinstance(map_entry, dict):
-            name = map_entry.get("name") or name
-        elif isinstance(map_entry, str):
-            name = map_entry
+    xml_name = item_node.findtext("name")
+    obj_info = get_object_info(qualified_id)
+    name = obj_info.get("name") if obj_info else xml_name
 
     if not name:
         logger.debug(f"Missing item name for ID '{qualified_id}'; defaulting to 'Unknown Item'")
@@ -80,7 +75,7 @@ def _parse_item_node(item_node, object_map=None):
     }
 
 
-def _extract_raw_chests(root, object_map=None):
+def _extract_raw_chests(root):
     """
     Parses chest objects across all GameLocations in the save file.
     """
@@ -143,7 +138,7 @@ def _extract_raw_chests(root, object_map=None):
             items_container = obj.find("items")
             if items_container is not None:
                 for item_node in items_container.findall("Item"):
-                    parsed_item = _parse_item_node(item_node, object_map)
+                    parsed_item = _parse_item_node(item_node)
                     chest_items.append(parsed_item)
                     if not parsed_item.get("is_empty"):
                         total_items += parsed_item.get("stack", 1)
@@ -177,14 +172,11 @@ def _extract_raw_chests(root, object_map=None):
 def parse_chests(root, object_map=None):
     """
     Main entry point for parsing chest data from save XML.
-    Auto-loads object map if not explicitly passed.
+    Uses get_object_info via reference_data for item metadata lookups.
     """
     start_time = time.perf_counter()
-    if object_map is None:
-        logger.debug("Loading reference object map for chests parser")
-        object_map = load_object_map()
 
-    raw_chests = _extract_raw_chests(root, object_map)
+    raw_chests = _extract_raw_chests(root)
     material_totals = {}
 
     for chest in raw_chests.get("chests", []):
