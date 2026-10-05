@@ -1,0 +1,19 @@
+# .coveragerc
+[run]
+branch = True
+source = src
+
+[report]
+# Omit initialization files, static assets, and pure reference lookup data
+omit =
+    src/**/__init__.py
+    src/static/*
+    src/core/reference_data.py
+
+# Skip defensive or non-executable lines
+exclude_lines =
+    pragma: no cover
+    if __name__ == .__main__.:
+    raise NotImplementedError
+    def __repr__
+    

@@ -45,3 +45,10 @@ CONTEXT.MD
 Thumbs.db
 .vscode/
 .idea/
+
+
+# Coverage and Pytest artifacts
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/

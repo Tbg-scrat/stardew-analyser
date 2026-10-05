@@ -40,3 +40,9 @@ ehthumbs.db
 Desktop.ini
 .vscode/
 .idea/
+
+# Coverage and Pytest artifacts
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/

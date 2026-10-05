@@ -27,7 +27,9 @@ def parse_cooking(player):
         return {}
 
     cooked_counts = {}
-    recipes_cooked_node = player.find("recipesCooked") or player.find(".//recipesCooked")
+    recipes_cooked_node = player.find("recipesCooked")
+    if recipes_cooked_node is None:
+        recipes_cooked_node = player.find(".//recipesCooked")
 
     if recipes_cooked_node is None:
         logger.debug("No <recipesCooked> node found under player XML")
