@@ -52,6 +52,71 @@ def find_all_saves(saves_dir):
     return sorted(save_files, key=lambda x: x[0])
 
 
+def _evaluate_watering_can_rain_opportunity(data):
+    """
+    Evaluates if tomorrow is rainy/stormy and the watering can is ready to upgrade today with sufficient funds and materials.
+    Also detects Clint's festival pickup closures.
+    """
+    today_day = data.get("day_of_month", 1)
+    today_season = (data.get("season") or "spring").lower()
+
+    # Weather check
+    weather_valley = data.get("weather", {}).get("valley", {})
+    weather_id = weather_valley.get("id", "")
+    weather_name = weather_valley.get("name", "")
+    is_rainy_tomorrow = weather_id in ("Rain", "Storm") or weather_name in ("Rainy", "Stormy")
+
+    # Watering can check
+    tools_info = data.get("tools", {})
+    watering_can = tools_info.get("watering_can")
+    if not watering_can and "upgradeable" in tools_info:
+        watering_can = next((t for t in tools_info["upgradeable"] if t.get("key") == "WateringCan"), None)
+
+    if not watering_can:
+        return {"active": False}
+
+    is_ready = watering_can.get("status") == "ready"
+    next_tier = watering_can.get("next_tier") or {}
+    can_upgrade = next_tier.get("can_upgrade", False)
+
+    if is_rainy_tomorrow and is_ready and can_upgrade:
+        pickup_day = today_day + 2
+        pickup_season = today_season
+        if pickup_day > 28:
+            pickup_day -= 28
+            seasons_order = ["spring", "summer", "fall", "winter"]
+            next_idx = (seasons_order.index(today_season) + 1) % 4
+            pickup_season = seasons_order[next_idx]
+
+        festivals_shop_closed = {
+            ("spring", 13),  # Egg Festival
+            ("spring", 24),  # Flower Dance
+            ("summer", 11),  # Luau
+            ("fall", 16),    # Stardew Valley Fair
+            ("winter", 8),   # Festival of Ice
+            ("winter", 25),  # Feast of the Winter Star
+        }
+
+        has_festival_delay = (pickup_season, pickup_day) in festivals_shop_closed
+
+        logger.debug(
+            f"Watering Can Rain Opportunity active: {next_tier.get('name')} | "
+            f"Rain forecast tomorrow | Festival delay on pickup ({pickup_season.capitalize()} {pickup_day}): {has_festival_delay}"
+        )
+
+        return {
+            "active": True,
+            "next_tier_name": next_tier.get("name", "Watering Can Upgrade"),
+            "gold_cost": next_tier.get("gold_cost", 0),
+            "materials_text": next_tier.get("materials_text") or next_tier.get("materials") or "",
+            "has_festival_delay": has_festival_delay,
+            "pickup_day": pickup_day,
+            "pickup_season": pickup_season.capitalize(),
+        }
+
+    return {"active": False}
+
+
 def analyze_save(file_path):
     # Milestone 1: XML Ingestion
     t_xml_start = time.perf_counter()
@@ -117,6 +182,9 @@ def analyze_save(file_path):
         material_totals=chest_summary.get("material_totals", []),
     )
     data["tools"] = tools_summary
+
+    # Evaluate Watering Can Rain Opportunity
+    data["watering_can_opportunity"] = _evaluate_watering_can_rain_opportunity(data)
 
     # Hay Tracker Module
     hay_summary = parse_hay_data(root)

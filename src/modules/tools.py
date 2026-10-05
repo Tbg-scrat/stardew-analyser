@@ -42,6 +42,7 @@ def parse_tools(
         logger.warning("xml_root is None. Returning default tools structure.")
         return {
             "upgradeable": [],
+            "watering_can": None,
             "scythe": {
                 "name": "Scythe",
                 "current_stage": {
@@ -264,6 +265,8 @@ def parse_tools(
         } if next_scythe_stage else None,
     }
 
+    watering_can = next((t for t in tools_data if t["key"] == "WateringCan"), None)
+
     logger.debug(f"Resolved Scythe progression stage: {current_scythe_stage['name']} (Tier {scythe_tier_found})")
 
     elapsed_ms = (time.perf_counter() - start_time) * 1000
@@ -272,5 +275,6 @@ def parse_tools(
     return {
         "upgradeable": tools_data,
         "scythe": scythe_data,
+        "watering_can": watering_can,
     }
     
