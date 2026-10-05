@@ -10,7 +10,7 @@ from src.core.logger import setup_logging
 
 # Initialize central logging configuration
 setup_logging()
-logger = logging.getLogger("parse")
+logger = logging.getLogger(__name__)
 
 from src.core.xml_reader import get_player_node
 from src.core.renderer import generate_dashboard_html
@@ -110,8 +110,12 @@ def analyze_save(file_path):
     crops_summary = parse_all_crops_from_save(root, current_day=data["day_of_month"])
     data["crops"] = crops_summary
 
-    # Tools Module
-    tools_summary = parse_tools(root)
+    # Tools Module (passes player funds and chest material stock)
+    tools_summary = parse_tools(
+        root,
+        player_money=data.get("money", 0),
+        material_totals=chest_summary.get("material_totals", []),
+    )
     data["tools"] = tools_summary
 
     # Hay Tracker Module
@@ -173,11 +177,17 @@ def log_save_summary(save_id, data):
     tools_maxed = sum(1 for t in data.get("tools", {}).get("upgradeable", []) if t.get("is_max"))
     tools_total = len(data.get("tools", {}).get("upgradeable", []))
     upgrading_tools = [t for t in data.get("tools", {}).get("upgradeable", []) if t.get("status") == "upgrading"]
+    ready_tools_count = sum(
+        1 for t in data.get("tools", {}).get("upgradeable", [])
+        if (t.get("next_tier") or {}).get("can_upgrade")
+    )
     scythe_name = data.get("tools", {}).get("scythe", {}).get("current_stage", {}).get("name", "Scythe")
 
     if upgrading_tools:
         upg = upgrading_tools[0]
         upg_detail = f"{upg.get('display_name', 'Tool')} at Clint's, {upg.get('days_left', 0)}d left | {scythe_name}"
+    elif ready_tools_count > 0:
+        upg_detail = f"{ready_tools_count} Ready to Upgrade | {scythe_name}"
     else:
         upg_detail = scythe_name
 

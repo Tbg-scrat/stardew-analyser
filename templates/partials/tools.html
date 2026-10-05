@@ -53,6 +53,12 @@
         color: #34d399;
         border: 1px solid rgba(16, 185, 129, 0.3);
     }
+    .tool-badge.upgrade-ready {
+        background: rgba(16, 185, 129, 0.25);
+        color: #34d399;
+        border: 1px solid rgba(16, 185, 129, 0.5);
+        box-shadow: 0 0 8px rgba(52, 211, 153, 0.2);
+    }
     .tool-badge.upgrading {
         background: rgba(245, 158, 11, 0.15);
         color: #fbbf24;
@@ -182,15 +188,19 @@
                     <span class="tool-title">{{ tool.display_name }}</span>
                     {% if tool.status == 'upgrading' %}
                         <span class="tool-badge upgrading">
-                            <span></span> At Clint's ({{ tool.days_left }}d left)
+                            🔨 At Clint's ({{ tool.days_left }}d left)
                         </span>
                     {% elif tool.status == 'maxed' %}
                         <span class="tool-badge maxed">
-                            <span></span> Max Tier
+                            ⭐ Max Tier
+                        </span>
+                    {% elif tool.next_tier and tool.next_tier.can_upgrade %}
+                        <span class="tool-badge upgrade-ready">
+                            ✨ Upgrade Ready
                         </span>
                     {% else %}
                         <span class="tool-badge ready">
-                            <span></span> Ready
+                            ✔ Ready
                         </span>
                     {% endif %}
                 </div>
@@ -201,7 +211,7 @@
                         {% if tool.current_tier.icon_url %}
                             <img src="/{{ tool.current_tier.icon_url }}" alt="{{ tool.current_tier.name }}" class="tool-icon-img">
                         {% else %}
-                            <span style="font-size: 1.5rem;"></span>
+                            <span style="font-size: 1.5rem;">🛠️</span>
                         {% endif %}
                     </div>
                     <div>
@@ -225,11 +235,28 @@
                 {% elif tool.next_tier %}
                     <div class="tool-req-row">
                         <span class="tool-req-label">Next Upgrade:</span>
-                        <span class="tool-req-cost">{{ tool.next_tier.name }} ({{ "{:,}".format(tool.next_tier.gold_cost) }}g)</span>
+                        <span class="tool-req-cost">
+                            {{ tool.next_tier.name }} ({{ "{:,}".format(tool.next_tier.gold_cost) }}g)
+                            {% if tool.next_tier.has_enough_gold %}
+                                <span style="color: #34d399; font-size: 0.8rem; font-weight: bold;">✔</span>
+                            {% else %}
+                                <span style="color: #f87171; font-size: 0.8rem; font-weight: bold;">✘</span>
+                            {% endif %}
+                        </span>
                     </div>
                     <div class="tool-req-row">
                         <span class="tool-req-label">Required Materials:</span>
-                        <span class="tool-req-val">{{ tool.next_tier.materials }}</span>
+                        <span class="tool-req-val">
+                            {% if tool.next_tier.material_name %}
+                                {{ tool.next_tier.materials_text }}
+                                <span style="font-size: 0.8rem; margin-left: 0.25rem; {% if tool.next_tier.has_enough_materials %}color: #34d399;{% else %}color: #f87171;{% endif %}">
+                                    ({{ tool.next_tier.available_count }} in chests)
+                                    {% if tool.next_tier.has_enough_materials %}✔{% else %}✘{% endif %}
+                                </span>
+                            {% else %}
+                                {{ tool.next_tier.materials_text or 'None' }}
+                            {% endif %}
+                        </span>
                     </div>
                 {% endif %}
             </div>
@@ -256,7 +283,7 @@
                     {% if tools.scythe.current_stage and tools.scythe.current_stage.icon_url %}
                         <img src="/{{ tools.scythe.current_stage.icon_url }}" alt="{{ tools.scythe.current_stage.name }}" class="tool-icon-img">
                     {% else %}
-                        <span style="font-size: 1.5rem;"></span>
+                        <span style="font-size: 1.5rem;">🌾</span>
                     {% endif %}
                 </div>
                 <div>
@@ -273,13 +300,13 @@
                         {% if tools.scythe.next_stage.icon_url %}
                             <img src="/{{ tools.scythe.next_stage.icon_url }}" alt="{{ tools.scythe.next_stage.name }}" class="tool-icon-img">
                         {% else %}
-                            <span style="font-size: 1.5rem;"></span>
+                            <span style="font-size: 1.5rem;">🔒</span>
                         {% endif %}
                     </div>
                     <div>
                         <div style="font-size: 0.75rem; color: var(--text-secondary);">Next Unlock</div>
                         <div style="font-size: 0.9rem; font-weight: 700; color: var(--text-primary);">{{ tools.scythe.next_stage.name }}</div>
-                        <div style="font-size: 0.8rem; color: var(--color-gold); margin-top: 0.2rem;"> {{ tools.scythe.next_stage.hint }}</div>
+                        <div style="font-size: 0.8rem; color: var(--color-gold); margin-top: 0.2rem;">💡 {{ tools.scythe.next_stage.hint }}</div>
                     </div>
                 {% else %}
                     <div style="font-size: 0.8rem; color: var(--text-muted); font-style: italic; text-align: center; width: 100%;">

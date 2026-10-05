@@ -1,18 +1,40 @@
 # src/modules/tools.py
 import logging
+import re
 import time
 import xml.etree.ElementTree as ET
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional, Tuple
 
 from src.core.reference_data import get_tools_catalog
 
 logger = logging.getLogger(__name__)
 
 
-def parse_tools(xml_root: ET.Element) -> Dict[str, Any]:
+def _parse_material_requirement(mat_str: Optional[str]) -> Tuple[int, Optional[str]]:
+    """
+    Parses a material requirement string like "5x Copper Bar" into (count, item_name).
+    Returns (0, None) if mat_str is None or empty.
+    """
+    if not mat_str:
+        return 0, None
+
+    match = re.match(r"^(\d+)\s*x\s*(.+)$", mat_str.strip(), re.IGNORECASE)
+    if match:
+        count = int(match.group(1))
+        name = match.group(2).strip()
+        return count, name
+
+    return 0, mat_str.strip()
+
+
+def parse_tools(
+    xml_root: ET.Element,
+    player_money: int = 0,
+    material_totals: List[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
     """
     Parses tool upgrade levels, blacksmith processing status, and scythe discovery
-    from the save file XML root.
+    from the save file XML root, verifying upgrade gold and chest material requirements.
     """
     start_time = time.perf_counter()
 
@@ -36,6 +58,16 @@ def parse_tools(xml_root: ET.Element) -> Dict[str, Any]:
     catalog = get_tools_catalog()
     upgradeable_catalog = catalog.get("upgradeable_tools", {})
     special_catalog = catalog.get("special_tools", {})
+
+    # Build chest material stock lookup dictionary
+    chest_stock = {
+        item["name"]: item["count"]
+        for item in (material_totals or [])
+        if "name" in item and "count" in item
+    }
+    logger.debug(
+        f"Evaluating tool upgrades against {player_money:,}g funds and {len(chest_stock)} chest material types"
+    )
 
     player = xml_root.find("player")
 
@@ -117,8 +149,10 @@ def parse_tools(xml_root: ET.Element) -> Dict[str, Any]:
         f"Evaluated {scanned_items_count} <Item> nodes across save: {matched_tools_count} tool matches processed"
     )
 
-    # 3. Build upgradeable tools data structure
+    # 3. Build upgradeable tools data structure and check requirements
     tools_data: List[Dict[str, Any]] = []
+    maxed_count = 0
+    ready_to_upgrade_count = 0
 
     for tool_key, tool_info in upgradeable_catalog.items():
         current_lvl = tool_levels.get(tool_key, 0)
@@ -130,6 +164,9 @@ def parse_tools(xml_root: ET.Element) -> Dict[str, Any]:
 
         is_upgrading = (days_left > 0) and (upgrading_tool_type is not None) and (tool_key in upgrading_tool_type)
         is_max = (current_lvl >= max_lvl)
+
+        if is_max:
+            maxed_count += 1
 
         if is_upgrading:
             status = "upgrading"
@@ -145,12 +182,42 @@ def parse_tools(xml_root: ET.Element) -> Dict[str, Any]:
         if not is_max:
             raw_next = next((t for t in tiers if t["level"] == current_lvl + 1), None)
             if raw_next:
+                gold_cost = raw_next.get("gold_cost", 0)
+                has_enough_gold = player_money >= gold_cost
+                mat_text = raw_next.get("materials")
+                req_count, req_mat_name = _parse_material_requirement(mat_text)
+
+                if req_mat_name:
+                    available_count = chest_stock.get(req_mat_name, 0)
+                    has_enough_materials = available_count >= req_count
+                else:
+                    available_count = 0
+                    has_enough_materials = True
+
+                can_upgrade = has_enough_gold and has_enough_materials
+                if can_upgrade and status != "upgrading":
+                    ready_to_upgrade_count += 1
+
+                logger.debug(
+                    f"Tool '{tool_key}' -> Next: {raw_next['name']} | Gold: {gold_cost:,}g "
+                    f"({'OK' if has_enough_gold else 'NEEDS FUNDS'}) | Material: "
+                    f"{req_count}x {req_mat_name or 'None'} (Chests: {available_count} | "
+                    f"{'OK' if has_enough_materials else 'SHORT'}) -> Can Upgrade: {can_upgrade}"
+                )
+
                 next_icon_file = raw_next.get("icon")
                 next_tier_data = {
                     "level": raw_next["level"],
                     "name": raw_next["name"],
-                    "gold_cost": raw_next["gold_cost"],
-                    "materials": raw_next["materials"],
+                    "gold_cost": gold_cost,
+                    "has_enough_gold": has_enough_gold,
+                    "materials": mat_text,
+                    "materials_text": mat_text,
+                    "material_name": req_mat_name,
+                    "required_count": req_count,
+                    "available_count": available_count,
+                    "has_enough_materials": has_enough_materials,
+                    "can_upgrade": can_upgrade,
                     "icon_url": f"static/img/tools/{next_icon_file}" if next_icon_file else None,
                 }
 
@@ -169,6 +236,11 @@ def parse_tools(xml_root: ET.Element) -> Dict[str, Any]:
             },
             "next_tier": next_tier_data,
         })
+
+    logger.debug(
+        f"Tool evaluation completed: {maxed_count}/{len(upgradeable_catalog)} maxed, "
+        f"{ready_to_upgrade_count} ready to upgrade at Clint's"
+    )
 
     # 4. Build Scythe progression structure
     scythe_info = special_catalog.get("Scythe", {})
