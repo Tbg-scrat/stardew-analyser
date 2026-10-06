@@ -43,7 +43,9 @@ def get_player_node(file_path, retries=3, delay=0.5):
                 # Attempt fallback check for alternative player location (e.g., direct child vs subnode)
                 player = root.find(".//player")
                 if player is not None:
-                    logger.debug("Located <player> via deep recursive lookup (.//player)")
+                    logger.debug(
+                        "Located <player> via deep recursive lookup (.//player)"
+                    )
 
             if player is None:
                 logger.warning(
@@ -90,7 +92,9 @@ def get_key_value(item_node):
     val_node = item_node.find("value")
 
     if key_node is None:
-        logger.debug(f"No <key> node found inside <item> element (Tag: {item_node.tag})")
+        logger.debug(
+            f"No <key> node found inside <item> element (Tag: {item_node.tag})"
+        )
         return None, val_node
 
     child = key_node.find("*")
@@ -102,4 +106,3 @@ def get_key_value(item_node):
     raw_key = key_node.text.strip() if key_node.text else None
     logger.debug(f"Extracted raw key text '{raw_key}' from <key>")
     return raw_key, val_node
-    

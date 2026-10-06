@@ -1,5 +1,4 @@
 # src/modules/weather.py
-# -*- coding: utf-8 -*-
 """
 Weather module for Stardew Valley save file parsing.
 Extracts today's live weather conditions and tomorrow's forecast.
@@ -12,10 +11,14 @@ logger = logging.getLogger(__name__)
 
 WEATHER_MAP = {
     "Sun": {"name": "Sunny", "icon": "\u2600\ufe0f", "css_class": "weather-sunny"},
-    "Rain": {"name": "Rainy", "icon": "\U0001F327\ufe0f", "css_class": "weather-rainy"},
-    "Wind": {"name": "Windy", "icon": "\U0001F343", "css_class": "weather-windy"},
-    "Storm": {"name": "Stormy", "icon": "\u26C8\ufe0f", "css_class": "weather-stormy"},
-    "Festival": {"name": "Festival", "icon": "\U0001F38F", "css_class": "weather-festival"},
+    "Rain": {"name": "Rainy", "icon": "\U0001f327\ufe0f", "css_class": "weather-rainy"},
+    "Wind": {"name": "Windy", "icon": "\U0001f343", "css_class": "weather-windy"},
+    "Storm": {"name": "Stormy", "icon": "\u26c8\ufe0f", "css_class": "weather-stormy"},
+    "Festival": {
+        "name": "Festival",
+        "icon": "\U0001f38f",
+        "css_class": "weather-festival",
+    },
     "Snow": {"name": "Snowy", "icon": "\u2744\ufe0f", "css_class": "weather-snowy"},
 }
 
@@ -30,8 +33,15 @@ def parse_weather(root):
     start_time = time.perf_counter()
 
     if root is None:
-        logger.warning("SaveGame root is None. Defaulting weather conditions to Unknown.")
-        unknown = {"id": "Unknown", "name": "Unknown", "icon": "\u2753", "css_class": "weather-unknown"}
+        logger.warning(
+            "SaveGame root is None. Defaulting weather conditions to Unknown."
+        )
+        unknown = {
+            "id": "Unknown",
+            "name": "Unknown",
+            "icon": "\u2753",
+            "css_class": "weather-unknown",
+        }
         return {"today": unknown, "valley": unknown, "island": None}
 
     # 1. Parse Today's Weather from live state booleans
@@ -55,7 +65,9 @@ def parse_weather(root):
 
     # 2. Tomorrow's Main Valley Weather Forecast
     weather_node = root.find("weatherForTomorrow")
-    weather_id = weather_node.text if weather_node is not None and weather_node.text else "Sun"
+    weather_id = (
+        weather_node.text if weather_node is not None and weather_node.text else "Sun"
+    )
     valley_data = WEATHER_MAP.get(weather_id, WEATHER_MAP["Sun"])
 
     # 3. Ginger Island Weather Forecast (if unlocked)
@@ -65,7 +77,9 @@ def parse_weather(root):
         for item in location_contexts.findall("item"):
             key = item.find("key/string")
             if key is not None and key.text == "Island":
-                weather_for_tomorrow = item.find("value/LocationWeather/weatherForTomorrow")
+                weather_for_tomorrow = item.find(
+                    "value/LocationWeather/weatherForTomorrow"
+                )
                 if weather_for_tomorrow is not None and weather_for_tomorrow.text:
                     island_weather_id = weather_for_tomorrow.text
                 break
@@ -77,7 +91,7 @@ def parse_weather(root):
             "id": island_weather_id,
             "name": mapped_island["name"],
             "icon": mapped_island["icon"],
-            "css_class": mapped_island["css_class"]
+            "css_class": mapped_island["css_class"],
         }
 
     island_str = f" | Tomorrow Island: {island_data['name']}" if island_data else ""
@@ -93,14 +107,13 @@ def parse_weather(root):
             "id": today_key,
             "name": today_data["name"],
             "icon": today_data["icon"],
-            "css_class": today_data["css_class"]
+            "css_class": today_data["css_class"],
         },
         "valley": {
             "id": weather_id,
             "name": valley_data["name"],
             "icon": valley_data["icon"],
-            "css_class": valley_data["css_class"]
+            "css_class": valley_data["css_class"],
         },
-        "island": island_data
+        "island": island_data,
     }
-    

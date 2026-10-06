@@ -1,8 +1,8 @@
 # src/modules/crops.py
-# -*- coding: utf-8 -*-
 
-from collections import defaultdict
 import logging
+from collections import defaultdict
+
 from src.core.reference_data import get_object_info
 
 logger = logging.getLogger("parse")
@@ -23,8 +23,8 @@ def calculate_days_remaining(crop_node) -> dict:
 
         # Stardew Valley XML uses <fullGrown>, check both <fullGrown> and <fullyGrown>
         full_grown = (
-            crop_node.findtext("fullGrown", "false").lower() == "true" or
-            crop_node.findtext("fullyGrown", "false").lower() == "true"
+            crop_node.findtext("fullGrown", "false").lower() == "true"
+            or crop_node.findtext("fullyGrown", "false").lower() == "true"
         )
 
         regrow_after_harvest = int(crop_node.findtext("regrowAfterHarvest", "-1"))
@@ -67,26 +67,41 @@ def calculate_days_remaining(crop_node) -> dict:
 
     except Exception as e:
         logger.debug(f"Error calculating crop lifecycle: {e}")
-        return {"days_to_harvest": 0, "is_recurring": False, "fully_grown": False, "harvest_id": harvest_id}
+        return {
+            "days_to_harvest": 0,
+            "is_recurring": False,
+            "fully_grown": False,
+            "harvest_id": harvest_id,
+        }
+
 
 # Export alias expected by unit tests
 parse_crop = calculate_days_remaining
 
 
-def parse_crops_from_location(location_node, current_day=1, is_outdoor_farm=False) -> dict:
+def parse_crops_from_location(
+    location_node, current_day=1, is_outdoor_farm=False
+) -> dict:
     """
     Parses all HoeDirt crops within a given location XML node.
     Groups identical crop types by harvest maturity time.
     """
-    crop_counts = defaultdict(lambda: {
-        "count": 0,
-        "days_to_harvest": 0,
-        "is_recurring": False,
-        "will_wither": False
-    })
+    crop_counts = defaultdict(
+        lambda: {
+            "count": 0,
+            "days_to_harvest": 0,
+            "is_recurring": False,
+            "will_wither": False,
+        }
+    )
 
     if location_node is None:
-        return {"total_crops": 0, "ready_today": 0, "next_harvest_days": None, "items": []}
+        return {
+            "total_crops": 0,
+            "ready_today": 0,
+            "next_harvest_days": None,
+            "items": [],
+        }
 
     # Iterate through terrain features for HoeDirt crop nodes
     for item in location_node.findall(".//terrainFeatures/item"):
@@ -114,7 +129,9 @@ def parse_crops_from_location(location_node, current_day=1, is_outdoor_farm=Fals
         crop_counts[group_key]["count"] += 1
         crop_counts[group_key]["days_to_harvest"] = days_left
         crop_counts[group_key]["is_recurring"] = is_recurring
-        crop_counts[group_key]["will_wither"] = crop_counts[group_key]["will_wither"] or will_wither
+        crop_counts[group_key]["will_wither"] = (
+            crop_counts[group_key]["will_wither"] or will_wither
+        )
 
     items = []
     total_crops = 0
@@ -133,17 +150,19 @@ def parse_crops_from_location(location_node, current_day=1, is_outdoor_farm=Fals
             next_harvest_days = days_left
 
         unit_price = obj_info.get("price", 0)
-        items.append({
-            "harvest_id": harvest_id,
-            "name": obj_info.get("name", "Unknown"),
-            "icon": obj_info.get("icon", "/static/img/items/placeholder.png"),
-            "price": unit_price,
-            "count": count,
-            "days_to_harvest": days_left,
-            "is_recurring": info["is_recurring"],
-            "will_wither": info["will_wither"],
-            "total_value": unit_price * count
-        })
+        items.append(
+            {
+                "harvest_id": harvest_id,
+                "name": obj_info.get("name", "Unknown"),
+                "icon": obj_info.get("icon", "/static/img/items/placeholder.png"),
+                "price": unit_price,
+                "count": count,
+                "days_to_harvest": days_left,
+                "is_recurring": info["is_recurring"],
+                "will_wither": info["will_wither"],
+                "total_value": unit_price * count,
+            }
+        )
 
     # Sort items by days remaining (ascending) then name
     items.sort(key=lambda x: (x["days_to_harvest"], x["name"]))
@@ -152,7 +171,7 @@ def parse_crops_from_location(location_node, current_day=1, is_outdoor_farm=Fals
         "total_crops": total_crops,
         "ready_today": ready_today,
         "next_harvest_days": next_harvest_days,
-        "items": items
+        "items": items,
     }
 
 
@@ -168,8 +187,8 @@ def parse_all_crops_from_save(root, current_day=1) -> dict:
             "locations": {
                 "farm": parse_crops_from_location(None),
                 "greenhouse": parse_crops_from_location(None),
-                "ginger_island": parse_crops_from_location(None)
-            }
+                "ginger_island": parse_crops_from_location(None),
+            },
         }
 
     for loc in root.findall(".//locations/GameLocation"):
@@ -183,22 +202,32 @@ def parse_all_crops_from_save(root, current_day=1) -> dict:
         elif loc_name == "IslandWest" or loc_type == "IslandWest":
             locations["ginger_island"] = loc
 
-    farm_data = parse_crops_from_location(locations["farm"], current_day=current_day, is_outdoor_farm=True)
-    greenhouse_data = parse_crops_from_location(locations["greenhouse"], current_day=current_day, is_outdoor_farm=False)
-    island_data = parse_crops_from_location(locations["ginger_island"], current_day=current_day, is_outdoor_farm=False)
+    farm_data = parse_crops_from_location(
+        locations["farm"], current_day=current_day, is_outdoor_farm=True
+    )
+    greenhouse_data = parse_crops_from_location(
+        locations["greenhouse"], current_day=current_day, is_outdoor_farm=False
+    )
+    island_data = parse_crops_from_location(
+        locations["ginger_island"], current_day=current_day, is_outdoor_farm=False
+    )
 
-    total_crops = farm_data["total_crops"] + greenhouse_data["total_crops"] + island_data["total_crops"]
-    ready_today = farm_data["ready_today"] + greenhouse_data["ready_today"] + island_data["ready_today"]
+    total_crops = (
+        farm_data["total_crops"]
+        + greenhouse_data["total_crops"]
+        + island_data["total_crops"]
+    )
+    ready_today = (
+        farm_data["ready_today"]
+        + greenhouse_data["ready_today"]
+        + island_data["ready_today"]
+    )
 
     return {
-        "summary": {
-            "total_crops": total_crops,
-            "ready_today": ready_today
-        },
+        "summary": {"total_crops": total_crops, "ready_today": ready_today},
         "locations": {
             "farm": farm_data,
             "greenhouse": greenhouse_data,
-            "ginger_island": island_data
-        }
+            "ginger_island": island_data,
+        },
     }
-    

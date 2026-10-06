@@ -2,6 +2,7 @@
 
 import logging
 import time
+
 from data.data_loader import MUSEUM_CATALOG
 
 logger = logging.getLogger(__name__)
@@ -27,7 +28,9 @@ def parse_museum(root_node):
         return []
 
     game_locations = locations.findall("GameLocation")
-    logger.debug(f"Searching for museum donation pieces across {len(game_locations)} GameLocation nodes")
+    logger.debug(
+        f"Searching for museum donation pieces across {len(game_locations)} GameLocation nodes"
+    )
 
     museum_found = False
     for loc in game_locations:
@@ -35,7 +38,9 @@ def parse_museum(root_node):
         if museum_node is not None:
             museum_found = True
             raw_items = museum_node.findall("item")
-            logger.debug(f"Found <museumPieces> node with {len(raw_items)} raw donation entries")
+            logger.debug(
+                f"Found <museumPieces> node with {len(raw_items)} raw donation entries"
+            )
             for item in raw_items:
                 val_node = item.find("value")
                 if val_node is not None:
@@ -47,7 +52,9 @@ def parse_museum(root_node):
         logger.debug("No <museumPieces> subnode discovered in any GameLocation")
 
     donated_list = list(museum_pieces.keys())
-    logger.debug(f"Extracted {len(donated_list)} unique donated pieces from LibraryMuseum XML")
+    logger.debug(
+        f"Extracted {len(donated_list)} unique donated pieces from LibraryMuseum XML"
+    )
     return donated_list
 
 
@@ -76,18 +83,22 @@ def get_formatted_museum(root_node, catalog=None):
         is_donated = str(item_id) in donated_set
         item_name = catalog_item.get("name", f"Artifact/Mineral {item_id}")
 
-        museum_mapped.append({
-            "id": item_id,
-            "name": item_name,
-            "type": catalog_item.get("type", "Artifact"),
-            "status": "found" if is_donated else "not_found",
-            "is_unlocked": is_donated,
-            "image": catalog_item.get("image", ""),
-            "wiki_icon": format_wiki_filename(item_name),
-        })
+        museum_mapped.append(
+            {
+                "id": item_id,
+                "name": item_name,
+                "type": catalog_item.get("type", "Artifact"),
+                "status": "found" if is_donated else "not_found",
+                "is_unlocked": is_donated,
+                "image": catalog_item.get("image", ""),
+                "wiki_icon": format_wiki_filename(item_name),
+            }
+        )
 
     if unmapped_count > 0:
-        logger.debug(f"Skipped {unmapped_count} invalid non-dict entries in museum catalog")
+        logger.debug(
+            f"Skipped {unmapped_count} invalid non-dict entries in museum catalog"
+        )
 
     donated_total = sum(1 for m in museum_mapped if m["is_unlocked"])
     catalog_total = len(museum_mapped)
@@ -99,4 +110,3 @@ def get_formatted_museum(root_node, catalog=None):
     )
 
     return sorted(museum_mapped, key=lambda x: x["name"])
-    

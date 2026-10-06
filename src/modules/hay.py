@@ -40,7 +40,9 @@ def parse_hay_data(save_root: ET.Element) -> dict:
             try:
                 current_hay = int(hay_elem.text)
             except ValueError:
-                logger.debug(f"Invalid non-integer piecesOfHay text '{hay_elem.text}'; defaulting to 0")
+                logger.debug(
+                    f"Invalid non-integer piecesOfHay text '{hay_elem.text}'; defaulting to 0"
+                )
                 current_hay = 0
     else:
         logger.debug("Farm GameLocation node not found during hay parsing")
@@ -48,15 +50,21 @@ def parse_hay_data(save_root: ET.Element) -> dict:
     # 2. Count Silos & Total Capacity (240 hay per Silo)
     silos_built = 0
     if farm_node is not None:
-        silos_built = len(farm_node.findall(".//buildings/Building[buildingType='Silo']"))
+        silos_built = len(
+            farm_node.findall(".//buildings/Building[buildingType='Silo']")
+        )
 
     max_capacity = silos_built * 240
-    logger.debug(f"Hay storage: {current_hay}/{max_capacity} hay stored across {silos_built} Silo(s)")
+    logger.debug(
+        f"Hay storage: {current_hay}/{max_capacity} hay stored across {silos_built} Silo(s)"
+    )
 
     # 3. Count Total Farm Animals across all locations & building interiors
     farm_animals = save_root.findall(".//FarmAnimal")
     total_animals = len(farm_animals)
-    logger.debug(f"Counted {total_animals} total FarmAnimal nodes across all farm structures")
+    logger.debug(
+        f"Counted {total_animals} total FarmAnimal nodes across all farm structures"
+    )
 
     # 4. Seasonal Feed Logic (1 hay per animal per day)
     season_elem = save_root.find("currentSeason")
@@ -64,9 +72,13 @@ def parse_hay_data(save_root: ET.Element) -> dict:
 
     season = (season_elem.text or "").lower() if season_elem is not None else "spring"
     try:
-        day_of_month = int(day_elem.text) if day_elem is not None and day_elem.text else 1
+        day_of_month = (
+            int(day_elem.text) if day_elem is not None and day_elem.text else 1
+        )
     except ValueError:
-        logger.debug(f"Invalid dayOfMonth text '{day_elem.text if day_elem is not None else None}'; defaulting to 1")
+        logger.debug(
+            f"Invalid dayOfMonth text '{day_elem.text if day_elem is not None else None}'; defaulting to 1"
+        )
         day_of_month = 1
 
     daily_consumption = total_animals * 1
@@ -109,4 +121,3 @@ def parse_hay_data(save_root: ET.Element) -> dict:
         "has_deficit_warning": has_deficit_warning,
         "has_capacity_warning": has_capacity_warning,
     }
-    

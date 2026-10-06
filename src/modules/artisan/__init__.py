@@ -2,11 +2,12 @@
 
 import logging
 import time
-from src.modules.artisan.casks import parse_all_casks_from_save
-from src.modules.artisan.kegs import parse_all_kegs_from_save
-from src.modules.artisan.jars import parse_all_jars_from_save
-from src.modules.artisan.dehydrators import parse_all_dehydrators_from_save
+
 from src.modules.artisan.bee_houses import parse_all_bee_houses_from_save
+from src.modules.artisan.casks import parse_all_casks_from_save
+from src.modules.artisan.dehydrators import parse_all_dehydrators_from_save
+from src.modules.artisan.jars import parse_all_jars_from_save
+from src.modules.artisan.kegs import parse_all_kegs_from_save
 
 logger = logging.getLogger(__name__)
 
@@ -14,26 +15,56 @@ logger = logging.getLogger(__name__)
 def parse_all_artisan_goods(root, player=None):
     """
     Main aggregator for all multi-day artisan machines across the save.
-    Consolidates casks, kegs, jars, dehydrators, and bee houses into a 
+    Consolidates casks, kegs, jars, dehydrators, and bee houses into a
     standardized schema with aggregated summary metrics and idle alerts.
     """
     start_time = time.perf_counter()
 
     # 1. Parse Sub-modules
     casks_data = parse_all_casks_from_save(root, player) or {
-        "total_casks": 0, "empty_casks": 0, "ready_today": 0, "ready_tomorrow": 0, "aging_count": 0, "batches": []
+        "total_casks": 0,
+        "empty_casks": 0,
+        "ready_today": 0,
+        "ready_tomorrow": 0,
+        "aging_count": 0,
+        "batches": [],
     }
     kegs_data = parse_all_kegs_from_save(root) or {
-        "total": 0, "idle": 0, "ready_today": 0, "ready_tomorrow": 0, "processing": 0, "idle_locations": {}, "batches": []
+        "total": 0,
+        "idle": 0,
+        "ready_today": 0,
+        "ready_tomorrow": 0,
+        "processing": 0,
+        "idle_locations": {},
+        "batches": [],
     }
     jars_data = parse_all_jars_from_save(root) or {
-        "total": 0, "idle": 0, "ready_today": 0, "ready_tomorrow": 0, "processing": 0, "idle_locations": {}, "batches": []
+        "total": 0,
+        "idle": 0,
+        "ready_today": 0,
+        "ready_tomorrow": 0,
+        "processing": 0,
+        "idle_locations": {},
+        "batches": [],
     }
     dehydrators_data = parse_all_dehydrators_from_save(root) or {
-        "total": 0, "idle": 0, "ready_today": 0, "ready_tomorrow": 0, "processing": 0, "idle_locations": {}, "batches": []
+        "total": 0,
+        "idle": 0,
+        "ready_today": 0,
+        "ready_tomorrow": 0,
+        "processing": 0,
+        "idle_locations": {},
+        "batches": [],
     }
     bee_houses_data = parse_all_bee_houses_from_save(root) or {
-        "total": 0, "idle": 0, "hibernating": 0, "ready_today": 0, "ready_tomorrow": 0, "processing": 0, "idle_locations": {}, "batches": []
+        "total": 0,
+        "idle": 0,
+        "hibernating": 0,
+        "ready_today": 0,
+        "ready_tomorrow": 0,
+        "processing": 0,
+        "idle_locations": {},
+        "batches": [],
     }
 
     # 2. Grand Totals Calculation
@@ -44,11 +75,7 @@ def parse_all_artisan_goods(root, player=None):
     total_bee_houses = bee_houses_data.get("total", 0)
 
     total_machines = (
-        total_casks
-        + total_kegs
-        + total_jars
-        + total_dehydrators
-        + total_bee_houses
+        total_casks + total_kegs + total_jars + total_dehydrators + total_bee_houses
     )
 
     total_ready_today = (
@@ -140,4 +167,3 @@ def parse_all_artisan_goods(root, player=None):
         "bee_houses": bee_houses_data,
         "idle_summary": idle_summary,
     }
-    

@@ -1,8 +1,8 @@
 # src/modules/artisan/kegs.py
 
 import json
-import math
 import logging
+import math
 import time
 from pathlib import Path
 
@@ -23,7 +23,7 @@ QUALITY_MAP = {0: "Normal", 1: "Silver", 2: "Gold", 4: "Iridium"}
 
 def resolve_item_icon(item_name):
     """
-    Returns local sprite filename for color-mapped artisan goods or 
+    Returns local sprite filename for color-mapped artisan goods or
     defaults to standard Wiki filename formatting.
     """
     name_lower = item_name.lower().strip()
@@ -76,7 +76,9 @@ def parse_all_kegs_from_save(root):
     location_stats = {}
 
     all_locs = list(_get_all_locations(root))
-    logger.debug(f"Scanning {len(all_locs)} location nodes (including building interiors) for Kegs")
+    logger.debug(
+        f"Scanning {len(all_locs)} location nodes (including building interiors) for Kegs"
+    )
 
     for loc_name, loc_elem in all_locs:
         objects_node = loc_elem.find("objects")
@@ -100,7 +102,10 @@ def parse_all_kegs_from_save(root):
             is_big_craftable = obj.findtext("bigCraftable", "").lower() == "true"
 
             # Explicitly exclude Furnaces and non-keg machinery
-            if obj_name in ["Furnace", "Heavy Furnace"] or q_id in ["(BC)13", "(BC)HeavyFurnace"]:
+            if obj_name in ["Furnace", "Heavy Furnace"] or q_id in [
+                "(BC)13",
+                "(BC)HeavyFurnace",
+            ]:
                 continue
 
             # Keg Identification: (BC)12 or name == "Keg"
@@ -129,7 +134,9 @@ def parse_all_kegs_from_save(root):
                 continue
 
             item_name = (
-                held.findtext("displayName") or held.findtext("name") or "Unknown Product"
+                held.findtext("displayName")
+                or held.findtext("name")
+                or "Unknown Product"
             )
 
             try:
@@ -190,12 +197,13 @@ def parse_all_kegs_from_save(root):
             )
 
     sorted_batches = sorted(
-        list(batch_map.values()),
-        key=lambda b: (b["days_remaining"], b["name"])
+        list(batch_map.values()), key=lambda b: (b["days_remaining"], b["name"])
     )
 
     elapsed_ms = (time.perf_counter() - start_time) * 1000
-    logger.debug(f"Kegs summary: {total} total Kegs parsed across all locations in {elapsed_ms:.2f}ms")
+    logger.debug(
+        f"Kegs summary: {total} total Kegs parsed across all locations in {elapsed_ms:.2f}ms"
+    )
 
     return {
         "total": total,
@@ -207,4 +215,3 @@ def parse_all_kegs_from_save(root):
         "location_stats": location_stats,
         "batches": sorted_batches,
     }
-    

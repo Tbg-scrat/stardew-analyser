@@ -1,14 +1,21 @@
 # src/modules/grandpa.py
-# -*- coding: utf-8 -*-
 
 import logging
 import time
+
 from data.data_loader import GRANDPA_CATALOG
 
 logger = logging.getLogger("grandpa")
 
 
-def parse_grandpa_data(root, player, shipped_items=None, fish_caught=None, museum_pieces=None, friendships=None):
+def parse_grandpa_data(
+    root,
+    player,
+    shipped_items=None,
+    fish_caught=None,
+    museum_pieces=None,
+    friendships=None,
+):
     """
     Calculates Grandpa's Evaluation score (max 21 points) and candles earned (1-4).
     Accepts pre-parsed catalog items and friendship records to avoid redundant XML parsing.
@@ -16,7 +23,9 @@ def parse_grandpa_data(root, player, shipped_items=None, fish_caught=None, museu
     start_time = time.perf_counter()
 
     if root is None or player is None:
-        logger.warning("Root or player XML node is None. Returning default Grandpa evaluation.")
+        logger.warning(
+            "Root or player XML node is None. Returning default Grandpa evaluation."
+        )
         return _empty_grandpa_summary()
 
     # Default fallbacks for pre-parsed data
@@ -46,15 +55,19 @@ def parse_grandpa_data(root, player, shipped_items=None, fish_caught=None, museu
             earnings_score += 1
         earnings_items.append({"label": label, "points": 1, "completed": completed})
 
-    logger.debug(f"Grandpa Category 1 (Earnings): {earnings_score}/7 pts (Total Earned: {total_earned:,}g)")
+    logger.debug(
+        f"Grandpa Category 1 (Earnings): {earnings_score}/7 pts (Total Earned: {total_earned:,}g)"
+    )
 
-    categories.append({
-        "id": "earnings",
-        "name": "Farm Earnings",
-        "score": earnings_score,
-        "max_score": len(earnings_thresholds),
-        "items": earnings_items,
-    })
+    categories.append(
+        {
+            "id": "earnings",
+            "name": "Farm Earnings",
+            "score": earnings_score,
+            "max_score": len(earnings_thresholds),
+            "items": earnings_items,
+        }
+    )
 
     # 2. Player Skills (Max 2 points)
     farming = _safe_int_child(player, "farmingLevel")
@@ -74,17 +87,23 @@ def parse_grandpa_data(root, player, shipped_items=None, fish_caught=None, museu
         pts = item.get("points", 1)
         if completed:
             skills_score += pts
-        skills_items.append({"label": item.get("label", ""), "points": pts, "completed": completed})
+        skills_items.append(
+            {"label": item.get("label", ""), "points": pts, "completed": completed}
+        )
 
-    logger.debug(f"Grandpa Category 2 (Skills): {skills_score}/2 pts (Total Level: {total_skills}/50)")
+    logger.debug(
+        f"Grandpa Category 2 (Skills): {skills_score}/2 pts (Total Level: {total_skills}/50)"
+    )
 
-    categories.append({
-        "id": "skills",
-        "name": "Player Skills",
-        "score": skills_score,
-        "max_score": sum(i.get("points", 1) for i in skills_thresholds),
-        "items": skills_items,
-    })
+    categories.append(
+        {
+            "id": "skills",
+            "name": "Player Skills",
+            "score": skills_score,
+            "max_score": sum(i.get("points", 1) for i in skills_thresholds),
+            "items": skills_items,
+        }
+    )
 
     # 3. Collections (Max 3 points)
     shipped_unlocked = len([i for i in shipped_items if i.get("is_unlocked")])
@@ -115,20 +134,24 @@ def parse_grandpa_data(root, player, shipped_items=None, fish_caught=None, museu
         pts = item.get("points", 1)
         if completed:
             collections_score += pts
-        collections_items.append({"label": item.get("label", ""), "points": pts, "completed": completed})
+        collections_items.append(
+            {"label": item.get("label", ""), "points": pts, "completed": completed}
+        )
 
     logger.debug(
         f"Grandpa Category 3 (Collections): {collections_score}/3 pts "
         f"(Shipped: {full_shipment}, Fish: {master_angler}, Museum: {complete_museum})"
     )
 
-    categories.append({
-        "id": "collections",
-        "name": "Museum & Collections",
-        "score": collections_score,
-        "max_score": sum(i.get("points", 1) for i in collections_catalog),
-        "items": collections_items,
-    })
+    categories.append(
+        {
+            "id": "collections",
+            "name": "Museum & Collections",
+            "score": collections_score,
+            "max_score": sum(i.get("points", 1) for i in collections_catalog),
+            "items": collections_items,
+        }
+    )
 
     # 4. Social & Family (Max 4 points)
     house_upgrade_level = _safe_int_child(player, "houseUpgradeLevel")
@@ -146,57 +169,67 @@ def parse_grandpa_data(root, player, shipped_items=None, fish_caught=None, museu
     m_info = social_catalog.get("marriage_and_house", {})
     if is_married_and_upgraded:
         social_score += m_info.get("points", 1)
-    social_items.append({
-        "label": m_info.get("label", "Married + House Upgraded (Nursery)"),
-        "points": m_info.get("points", 1),
-        "completed": is_married_and_upgraded,
-    })
+    social_items.append(
+        {
+            "label": m_info.get("label", "Married + House Upgraded (Nursery)"),
+            "points": m_info.get("points", 1),
+            "completed": is_married_and_upgraded,
+        }
+    )
 
     # 5 Villagers at 8+ Hearts
     v5_info = social_catalog.get("villagers_8_hearts_5", {})
     v5_completed = villagers_8_plus >= v5_info.get("min_count", 5)
     if v5_completed:
         social_score += v5_info.get("points", 1)
-    social_items.append({
-        "label": v5_info.get("label", "5 Villagers at 8+ Hearts"),
-        "points": v5_info.get("points", 1),
-        "completed": v5_completed,
-    })
+    social_items.append(
+        {
+            "label": v5_info.get("label", "5 Villagers at 8+ Hearts"),
+            "points": v5_info.get("points", 1),
+            "completed": v5_completed,
+        }
+    )
 
     # 10 Villagers at 8+ Hearts
     v10_info = social_catalog.get("villagers_8_hearts_10", {})
     v10_completed = villagers_8_plus >= v10_info.get("min_count", 10)
     if v10_completed:
         social_score += v10_info.get("points", 1)
-    social_items.append({
-        "label": v10_info.get("label", "10 Villagers at 8+ Hearts"),
-        "points": v10_info.get("points", 1),
-        "completed": v10_completed,
-    })
+    social_items.append(
+        {
+            "label": v10_info.get("label", "10 Villagers at 8+ Hearts"),
+            "points": v10_info.get("points", 1),
+            "completed": v10_completed,
+        }
+    )
 
     # Pet Friendship
     pet_info = social_catalog.get("pet_friendship", {})
     pet_loves_you = pet_friendship >= pet_info.get("min_points", 1000)
     if pet_loves_you:
         social_score += pet_info.get("points", 1)
-    social_items.append({
-        "label": pet_info.get("label", "Pet Friendship >= 1,000 Points"),
-        "points": pet_info.get("points", 1),
-        "completed": pet_loves_you,
-    })
+    social_items.append(
+        {
+            "label": pet_info.get("label", "Pet Friendship >= 1,000 Points"),
+            "points": pet_info.get("points", 1),
+            "completed": pet_loves_you,
+        }
+    )
 
     logger.debug(
         f"Grandpa Category 4 (Social): {social_score}/4 pts "
         f"(House/Spouse: {is_married_and_upgraded}, 8-Heart Villagers: {villagers_8_plus}, Pet Friendship: {pet_friendship})"
     )
 
-    categories.append({
-        "id": "social",
-        "name": "Social & Relationships",
-        "score": social_score,
-        "max_score": 4,
-        "items": social_items,
-    })
+    categories.append(
+        {
+            "id": "social",
+            "name": "Social & Relationships",
+            "score": social_score,
+            "max_score": 4,
+            "items": social_items,
+        }
+    )
 
     # 5. Keys & Milestones (Max 5 points)
     has_rusty_key, has_skull_key = _check_keys_status(player)
@@ -218,20 +251,24 @@ def parse_grandpa_data(root, player, shipped_items=None, fish_caught=None, museu
         pts = meta.get("points", 1)
         if completed:
             milestones_score += pts
-        milestones_items.append({"label": meta.get("label", ""), "points": pts, "completed": completed})
+        milestones_items.append(
+            {"label": meta.get("label", ""), "points": pts, "completed": completed}
+        )
 
     logger.debug(
         f"Grandpa Category 5 (Milestones): {milestones_score}/5 pts "
         f"(Rusty Key: {has_rusty_key}, Skull Key: {has_skull_key}, CC Complete: {cc_complete}, Ceremony: {cc_ceremony})"
     )
 
-    categories.append({
-        "id": "milestones",
-        "name": "Keys & Community Center",
-        "score": milestones_score,
-        "max_score": sum(m.get("points", 1) for m in milestones_catalog.values()),
-        "items": milestones_items,
-    })
+    categories.append(
+        {
+            "id": "milestones",
+            "name": "Keys & Community Center",
+            "score": milestones_score,
+            "max_score": sum(m.get("points", 1) for m in milestones_catalog.values()),
+            "items": milestones_items,
+        }
+    )
 
     total_score = sum(cat["score"] for cat in categories)
     max_possible = GRANDPA_CATALOG.get("max_score", 21)
@@ -254,12 +291,15 @@ def parse_grandpa_data(root, player, shipped_items=None, fish_caught=None, museu
 
 
 def _calculate_candles(score):
-    thresholds = GRANDPA_CATALOG.get("candle_thresholds", [
-        {"min_score": 12, "candles": 4},
-        {"min_score": 8, "candles": 3},
-        {"min_score": 4, "candles": 2},
-        {"min_score": 0, "candles": 1},
-    ])
+    thresholds = GRANDPA_CATALOG.get(
+        "candle_thresholds",
+        [
+            {"min_score": 12, "candles": 4},
+            {"min_score": 8, "candles": 3},
+            {"min_score": 4, "candles": 2},
+            {"min_score": 0, "candles": 1},
+        ],
+    )
     for item in thresholds:
         if score >= item.get("min_score", 0):
             return item.get("candles", 1)
@@ -273,7 +313,6 @@ def _safe_int_child(element, child_name, default=0):
             return int(node.text)
         except ValueError:
             logger.debug(f"Invalid integer string for '{child_name}': '{node.text}'")
-            pass
     return default
 
 
@@ -283,11 +322,19 @@ def _extract_pet_friendship(root):
         npcs = location.find("characters")
         if npcs is not None:
             for npc in npcs.findall("NPC"):
-                npc_type = npc.get("{http://www.w3.org/2001/XMLSchema-instance}type", "")
-                if npc_type in ("Cat", "Dog", "Pet") or npc.tag in ("Cat", "Dog", "Pet"):
+                npc_type = npc.get(
+                    "{http://www.w3.org/2001/XMLSchema-instance}type", ""
+                )
+                if npc_type in ("Cat", "Dog", "Pet") or npc.tag in (
+                    "Cat",
+                    "Dog",
+                    "Pet",
+                ):
                     try:
                         val = int(npc.findtext("friendshipTowardFarmer", "0"))
-                        logger.debug(f"Found Pet ({npc_type or npc.tag}) friendship: {val}")
+                        logger.debug(
+                            f"Found Pet ({npc_type or npc.tag}) friendship: {val}"
+                        )
                         return val
                     except ValueError:
                         return 0
@@ -300,7 +347,9 @@ def _check_keys_status(player):
     Robust key lookup compatible with SDV 1.5 & 1.6+.
     Checks legacy boolean tags, 1.6 <stats> dictionary, mail flags, and events seen.
     """
-    mail_received = {m.text.lower() for m in player.findall(".//mailReceived/string") if m.text}
+    mail_received = {
+        m.text.lower() for m in player.findall(".//mailReceived/string") if m.text
+    }
     events_seen = {e.text for e in player.findall(".//eventsSeen/string") if e.text}
     for e in player.findall(".//eventsSeen/int"):
         if e.text:
@@ -309,13 +358,17 @@ def _check_keys_status(player):
     # 1. Rusty Key Check
     rusty_node = (player.findtext("hasRustyKey") or "").lower() == "true"
     rusty_event = "67" in events_seen
-    rusty_mail = any(k in mail_received for k in ["hasrustykey", "sewerkey", "gunthersewer"])
+    rusty_mail = any(
+        k in mail_received for k in ["hasrustykey", "sewerkey", "gunthersewer"]
+    )
 
     has_rusty_key = rusty_node or rusty_event or rusty_mail
 
     # 2. Skull Key Check
     skull_node = (player.findtext("hasSkullKey") or "").lower() == "true"
-    skull_mail = any(k in mail_received for k in ["hasskullkey", "skullkey", "openedskullcavern"])
+    skull_mail = any(
+        k in mail_received for k in ["hasskullkey", "skullkey", "openedskullcavern"]
+    )
     skull_event = bool({"901802", "120"} & events_seen)
 
     # Mine progression check (supporting SDV 1.6 <stats> dictionary)
@@ -335,7 +388,9 @@ def _check_keys_status(player):
     skull_mine_progress = deepest_mine >= 120
 
     has_skull_key = skull_node or skull_mail or skull_event or skull_mine_progress
-    logger.debug(f"Key status parsed -> Rusty Key: {has_rusty_key}, Skull Key: {has_skull_key} (Deepest Mine: {deepest_mine})")
+    logger.debug(
+        f"Key status parsed -> Rusty Key: {has_rusty_key}, Skull Key: {has_skull_key} (Deepest Mine: {deepest_mine})"
+    )
 
     return has_rusty_key, has_skull_key
 
@@ -343,7 +398,7 @@ def _check_keys_status(player):
 def _check_community_center_progress(root, player):
     """Robust Community Center and ceremony lookup across all mail and event flags."""
     mail_received = {m.text for m in player.findall(".//mailReceived/string") if m.text}
-    
+
     events_seen = set()
     for e in player.findall(".//eventsSeen/string"):
         if e.text:
@@ -354,7 +409,10 @@ def _check_community_center_progress(root, player):
 
     # 1. Community Center completion check (all 6 areas complete or mail flag)
     areas_completed = False
-    cc_node = root.find(".//locations/GameLocation[@xsi:type='CommunityCenter']", namespaces={"xsi": "http://www.w3.org/2001/XMLSchema-instance"})
+    cc_node = root.find(
+        ".//locations/GameLocation[@xsi:type='CommunityCenter']",
+        namespaces={"xsi": "http://www.w3.org/2001/XMLSchema-instance"},
+    )
     if cc_node is None:
         cc_node = root.find(".//GameLocation[name='CommunityCenter']")
 
@@ -366,18 +424,31 @@ def _check_community_center_progress(root, player):
                 areas_completed = True
 
     # 2. Joja Warehouse completion check (all 5 projects funded)
-    joja_projects = {"jojaGreenhouse", "jojaMinecart", "jojaBridge", "jojaPaniere", "jojaBoulder"}
+    joja_projects = {
+        "jojaGreenhouse",
+        "jojaMinecart",
+        "jojaBridge",
+        "jojaPaniere",
+        "jojaBoulder",
+    }
     is_joja_member = "JojaMember" in mail_received or "jojaMember" in mail_received
     joja_complete = is_joja_member and joja_projects.issubset(mail_received)
 
-    cc_complete = "ccIsComplete" in mail_received or "ccComplete" in mail_received or areas_completed or joja_complete
+    cc_complete = (
+        "ccIsComplete" in mail_received
+        or "ccComplete" in mail_received
+        or areas_completed
+        or joja_complete
+    )
 
     # 3. Re-opening ceremony cutscene check
     # Event 191393/191392 = Community Center Ceremony; Event 502261 = Joja Ceremony
     ceremony_events = {"191393", "191392", "502261"}
     ceremony_mail = {"ccGrandReopening", "ccCeremony", "jojaCeremony"}
 
-    cc_ceremony = bool((ceremony_mail & mail_received) or (ceremony_events & events_seen))
+    cc_ceremony = bool(
+        (ceremony_mail & mail_received) or (ceremony_events & events_seen)
+    )
 
     # Guard clause: Ceremony cannot have occurred if Community Center / Joja isn't completed yet
     if not cc_complete:

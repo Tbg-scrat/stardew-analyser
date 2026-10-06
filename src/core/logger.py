@@ -1,18 +1,18 @@
 # src/core/logger.py
 
+import logging
 import os
 import sys
-import logging
 
 
 class ColoredFormatter(logging.Formatter):
     """Custom logging formatter adding ANSI color codes for Docker terminal log readability."""
 
     COLOR_CODES = {
-        logging.DEBUG: "\033[36m",     # Cyan
-        logging.INFO: "\033[32m",      # Green
-        logging.WARNING: "\033[33m",   # Yellow
-        logging.ERROR: "\033[31m",     # Red
+        logging.DEBUG: "\033[36m",  # Cyan
+        logging.INFO: "\033[32m",  # Green
+        logging.WARNING: "\033[33m",  # Yellow
+        logging.ERROR: "\033[31m",  # Red
         logging.CRITICAL: "\033[35m",  # Magenta
     }
     RESET_CODE = "\033[0m"
@@ -52,4 +52,3 @@ def setup_logging():
 
     status_str = "ENABLED (DEBUG)" if is_debug else "DISABLED (INFO)"
     root_logger.info(f"Logging initialized. Debug mode: {status_str}")
-    

@@ -2,8 +2,9 @@
 
 import logging
 import time
-from src.core.xml_reader import get_key_value
+
 from data.data_loader import FISH_CATALOG
+from src.core.xml_reader import get_key_value
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +29,9 @@ def parse_fishing(player_node):
         return {}
 
     items = fish_node.findall("item")
-    logger.debug(f"Parsing <fishCaught> node containing {len(items)} raw fish item entries")
+    logger.debug(
+        f"Parsing <fishCaught> node containing {len(items)} raw fish item entries"
+    )
 
     for item in items:
         item_id, val_node = get_key_value(item)
@@ -45,13 +48,17 @@ def parse_fishing(player_node):
                     try:
                         count = int(ints[0].text)
                     except ValueError:
-                        logger.debug(f"Invalid count text '{ints[0].text}' for fish '{item_id}'; defaulting to 0")
+                        logger.debug(
+                            f"Invalid count text '{ints[0].text}' for fish '{item_id}'; defaulting to 0"
+                        )
                         count = 0
                 if len(ints) > 1 and ints[1].text:
                     try:
                         length = int(ints[1].text)
                     except ValueError:
-                        logger.debug(f"Invalid length text '{ints[1].text}' for fish '{item_id}'; defaulting to 0")
+                        logger.debug(
+                            f"Invalid length text '{ints[1].text}' for fish '{item_id}'; defaulting to 0"
+                        )
                         length = 0
             else:
                 int_val = val_node.findtext("int")
@@ -59,7 +66,9 @@ def parse_fishing(player_node):
                     try:
                         count = int(int_val)
                     except ValueError:
-                        logger.debug(f"Invalid single int_val '{int_val}' for fish '{item_id}'; defaulting to 0")
+                        logger.debug(
+                            f"Invalid single int_val '{int_val}' for fish '{item_id}'; defaulting to 0"
+                        )
                         count = 0
 
             fish_caught[str(item_id)] = {"count": count, "length": length}
@@ -94,19 +103,23 @@ def get_formatted_fishing(player_node, catalog=None):
         is_caught = stats is not None
         item_name = catalog_item.get("name", f"Fish {item_id}")
 
-        fish_mapped.append({
-            "id": item_id,
-            "name": item_name,
-            "count": stats["count"] if is_caught else 0,
-            "length": stats["length"] if is_caught else 0,
-            "status": "caught" if is_caught else "not_caught",
-            "is_unlocked": is_caught,
-            "image": catalog_item.get("image", ""),
-            "wiki_icon": format_wiki_filename(item_name),
-        })
+        fish_mapped.append(
+            {
+                "id": item_id,
+                "name": item_name,
+                "count": stats["count"] if is_caught else 0,
+                "length": stats["length"] if is_caught else 0,
+                "status": "caught" if is_caught else "not_caught",
+                "is_unlocked": is_caught,
+                "image": catalog_item.get("image", ""),
+                "wiki_icon": format_wiki_filename(item_name),
+            }
+        )
 
     if unmapped_count > 0:
-        logger.debug(f"Skipped {unmapped_count} invalid non-dict entries in fish catalog")
+        logger.debug(
+            f"Skipped {unmapped_count} invalid non-dict entries in fish catalog"
+        )
 
     caught_total = sum(1 for f in fish_mapped if f["is_unlocked"])
     catalog_total = len(fish_mapped)
@@ -118,4 +131,3 @@ def get_formatted_fishing(player_node, catalog=None):
     )
 
     return sorted(fish_mapped, key=lambda x: x["name"])
-    

@@ -22,7 +22,7 @@ def parse_player(player_node):
     name = player_node.findtext("name", "Unknown")
     farm_name = player_node.findtext("farmName", "Unknown")
     money = player_node.findtext("money", "0")
-    
+
     total_earned = player_node.findtext("totalMoneyEarned")
     if not total_earned or total_earned == "0":
         stats = player_node.find("stats")
@@ -39,7 +39,9 @@ def parse_player(player_node):
     try:
         earned_int = int(total_earned or 0)
     except ValueError:
-        logger.debug(f"Invalid non-integer totalMoneyEarned value '{total_earned}'; defaulting to 0")
+        logger.debug(
+            f"Invalid non-integer totalMoneyEarned value '{total_earned}'; defaulting to 0"
+        )
         earned_int = 0
 
     elapsed_ms = (time.perf_counter() - start_time) * 1000
@@ -54,4 +56,3 @@ def parse_player(player_node):
         "money": money_int,
         "total_earned": earned_int,
     }
-    

@@ -1,8 +1,8 @@
 # src/modules/achievements.py
-# -*- coding: utf-8 -*-
 
 import logging
 import time
+
 from data.data_loader import ACHIEVEMENTS_CATALOG
 
 logger = logging.getLogger(__name__)
@@ -29,27 +29,35 @@ def parse_achievements(player_node, catalog=None, shipped_items=None):
             logger.warning("No <achievements> node found in player XML.")
         else:
             raw_ids = achievements_node.findall("int")
-            logger.debug(f"Parsing <achievements> node containing {len(raw_ids)} raw achievement ID entries")
+            logger.debug(
+                f"Parsing <achievements> node containing {len(raw_ids)} raw achievement ID entries"
+            )
             for node in raw_ids:
                 if node.text and node.text.isdigit():
                     unlocked_ids.add(int(node.text))
                 elif node.text:
                     logger.warning(f"Ignored non-integer achievement ID: '{node.text}'")
 
-    logger.debug(f"Extracted {len(unlocked_ids)} valid unlocked achievement IDs from XML")
+    logger.debug(
+        f"Extracted {len(unlocked_ids)} valid unlocked achievement IDs from XML"
+    )
 
     monoculture_count = 0
     if shipped_items:
-        monoculture_items = [item for item in shipped_items if item.get("is_monoculture")]
+        monoculture_items = [
+            item for item in shipped_items if item.get("is_monoculture")
+        ]
         monoculture_count = (
             max([item.get("count", 0) for item in monoculture_items], default=0)
             if monoculture_items
             else 0
         )
-        logger.debug(f"Monoculture calculated max single crop shipped: {monoculture_count}")
+        logger.debug(
+            f"Monoculture calculated max single crop shipped: {monoculture_count}"
+        )
 
     processed_achievements = []
-    
+
     for catalog_item in achievements_catalog:
         item_id = catalog_item.get("id")
         is_unlocked = item_id in unlocked_ids
@@ -66,7 +74,7 @@ def parse_achievements(player_node, catalog=None, shipped_items=None):
             "tip": catalog_item.get("tip"),
             "unlocked": is_unlocked,
             "link_module": catalog_item.get("link_module"),
-            "link_filter": catalog_item.get("link_filter")
+            "link_filter": catalog_item.get("link_filter"),
         }
 
         # Handle Monoculture dynamic threshold calculation from catalog
@@ -74,7 +82,9 @@ def parse_achievements(player_node, catalog=None, shipped_items=None):
             target_val = target if isinstance(target, int) else 300
             override_unlock = is_unlocked or (monoculture_count >= target_val)
             if override_unlock and not is_unlocked:
-                logger.debug("Monoculture achievement marked unlocked based on shipped items threshold")
+                logger.debug(
+                    "Monoculture achievement marked unlocked based on shipped items threshold"
+                )
             item_dict["progress_current"] = min(monoculture_count, target_val)
             item_dict["target"] = target_val
             item_dict["unlocked"] = override_unlock
@@ -97,6 +107,5 @@ def parse_achievements(player_node, catalog=None, shipped_items=None):
         "list": processed_achievements,
         "total": total_count,
         "unlocked_count": unlocked_count,
-        "percent": pct
+        "percent": pct,
     }
-    

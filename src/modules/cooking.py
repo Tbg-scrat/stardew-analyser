@@ -1,8 +1,8 @@
 # src/modules/cooking.py
-# -*- coding: utf-8 -*-
 
 import logging
 import time
+
 from data.data_loader import COOKING_CATALOG
 
 logger = logging.getLogger(__name__)
@@ -36,7 +36,9 @@ def parse_cooking(player):
         return {}
 
     raw_entries = recipes_cooked_node.findall("item")
-    logger.debug(f"Found <recipesCooked> node with {len(raw_entries)} raw recipe item entries")
+    logger.debug(
+        f"Found <recipesCooked> node with {len(raw_entries)} raw recipe item entries"
+    )
 
     for item in raw_entries:
         key_node = item.find("key")
@@ -51,13 +53,17 @@ def parse_cooking(player):
                 try:
                     count = int(val_text)
                 except ValueError:
-                    logger.debug(f"Invalid non-integer count '{val_text}' for recipe '{raw_key}'; defaulting to 0")
+                    logger.debug(
+                        f"Invalid non-integer count '{val_text}' for recipe '{raw_key}'; defaulting to 0"
+                    )
                     count = 0
 
             if raw_key:
                 cooked_counts[raw_key] = count
 
-    logger.debug(f"Extracted {len(cooked_counts)} valid cooked recipe entries from player XML")
+    logger.debug(
+        f"Extracted {len(cooked_counts)} valid cooked recipe entries from player XML"
+    )
     return cooked_counts
 
 
@@ -102,7 +108,9 @@ def get_formatted_cooking(player, catalog=None):
         )
 
     if unmapped_count > 0:
-        logger.debug(f"Skipped {unmapped_count} invalid non-dict entries in cooking catalog")
+        logger.debug(
+            f"Skipped {unmapped_count} invalid non-dict entries in cooking catalog"
+        )
 
     cooked_total = sum(1 for c in cooking_mapped if c["is_unlocked"])
     catalog_total = len(cooking_mapped)
@@ -114,4 +122,3 @@ def get_formatted_cooking(player, catalog=None):
     )
 
     return sorted(cooking_mapped, key=lambda x: x["name"])
-    

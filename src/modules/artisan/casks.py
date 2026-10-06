@@ -1,5 +1,4 @@
 # src/modules/artisan/casks.py
-# -*- coding: utf-8 -*-
 
 import json
 import logging
@@ -18,23 +17,19 @@ if ARTISAN_COLORS_FILE.exists():
     except Exception as e:
         logger.warning(f"Could not load artisan colors map: {e}")
 
-QUALITY_MAP = {
-    0: "Normal",
-    1: "Silver",
-    2: "Gold",
-    4: "Iridium"
-}
+QUALITY_MAP = {0: "Normal", 1: "Silver", 2: "Gold", 4: "Iridium"}
+
 
 def resolve_item_icon(item_name):
     """
-    Returns local sprite filename for color-mapped artisan goods or 
+    Returns local sprite filename for color-mapped artisan goods or
     defaults to standard Wiki filename formatting.
     """
     name_lower = item_name.lower().strip()
-    
+
     if name_lower in ARTISAN_COLORS:
         return ARTISAN_COLORS[name_lower]
-    
+
     return item_name.replace(" ", "_").replace("'", "%27")
 
 
@@ -56,7 +51,9 @@ def parse_casks(location_elem):
         return None
 
     items = objects_node.findall("item")
-    logger.debug(f"Parsing Cellar <objects> node containing {len(items)} raw item entries")
+    logger.debug(
+        f"Parsing Cellar <objects> node containing {len(items)} raw item entries"
+    )
 
     for item in items:
         val = item.find("value")
@@ -78,18 +75,23 @@ def parse_casks(location_elem):
         total_casks += 1
 
         held = obj.find("heldObject")
-        is_nil = held is not None and held.get("{http://www.w3.org/2001/XMLSchema-instance}nil") == "true"
+        is_nil = (
+            held is not None
+            and held.get("{http://www.w3.org/2001/XMLSchema-instance}nil") == "true"
+        )
 
         if held is None or is_nil:
             empty_casks += 1
             continue
 
-        item_name = held.findtext("displayName") or held.findtext("name") or "Unknown Product"
-        
+        item_name = (
+            held.findtext("displayName") or held.findtext("name") or "Unknown Product"
+        )
+
         try:
             quality_raw = int(held.findtext("quality", "0"))
         except ValueError:
-            logger.debug(f"Invalid quality value in Cask; defaulting to 0")
+            logger.debug("Invalid quality value in Cask; defaulting to 0")
             quality_raw = 0
         quality_name = QUALITY_MAP.get(quality_raw, "Normal")
 
@@ -97,7 +99,9 @@ def parse_casks(location_elem):
             days_to_mature_raw = float(obj.findtext("daysToMature", "0"))
             days_remaining = max(0, int(round(days_to_mature_raw)))
         except ValueError:
-            logger.debug(f"Invalid daysToMature float for '{item_name}'; defaulting to 0")
+            logger.debug(
+                f"Invalid daysToMature float for '{item_name}'; defaulting to 0"
+            )
             days_remaining = 0
 
         if days_remaining == 0 or quality_raw == 4:
@@ -110,14 +114,16 @@ def parse_casks(location_elem):
             if days_remaining == 1:
                 ready_tomorrow += 1
 
-        parsed_items.append({
-            "name": item_name,
-            "quality": quality_raw,
-            "quality_name": quality_name,
-            "days_remaining": days_remaining,
-            "is_ready": is_ready,
-            "wiki_icon": resolve_item_icon(item_name)
-        })
+        parsed_items.append(
+            {
+                "name": item_name,
+                "quality": quality_raw,
+                "quality_name": quality_name,
+                "days_remaining": days_remaining,
+                "is_ready": is_ready,
+                "wiki_icon": resolve_item_icon(item_name),
+            }
+        )
 
     if total_casks == 0:
         logger.debug("No valid Cask objects found inside Cellar")
@@ -125,7 +131,11 @@ def parse_casks(location_elem):
 
     batch_map = {}
     for cask_item in parsed_items:
-        batch_key = (cask_item["name"], cask_item["quality"], cask_item["days_remaining"])
+        batch_key = (
+            cask_item["name"],
+            cask_item["quality"],
+            cask_item["days_remaining"],
+        )
         if batch_key not in batch_map:
             batch_map[batch_key] = {
                 "name": cask_item["name"],
@@ -134,13 +144,12 @@ def parse_casks(location_elem):
                 "days_remaining": cask_item["days_remaining"],
                 "is_ready": cask_item["is_ready"],
                 "wiki_icon": cask_item["wiki_icon"],
-                "count": 0
+                "count": 0,
             }
         batch_map[batch_key]["count"] += 1
 
     batches = sorted(
-        list(batch_map.values()),
-        key=lambda b: (b["days_remaining"], b["name"])
+        list(batch_map.values()), key=lambda b: (b["days_remaining"], b["name"])
     )
 
     return {
@@ -149,7 +158,7 @@ def parse_casks(location_elem):
         "ready_today": ready_today,
         "ready_tomorrow": ready_tomorrow,
         "aging_count": aging_count,
-        "batches": batches
+        "batches": batches,
     }
 
 
@@ -165,7 +174,7 @@ def parse_all_casks_from_save(root, player=None):
         "ready_today": 0,
         "ready_tomorrow": 0,
         "aging_count": 0,
-        "batches": []
+        "batches": [],
     }
 
     # Verify Host House Upgrade Level (Level 3 = Cellar Upgrade)
@@ -177,7 +186,9 @@ def parse_all_casks_from_save(root, player=None):
             house_level = 0
 
     if house_level < 3:
-        logger.debug(f"Primary player houseUpgradeLevel is {house_level} (< 3). Cellar is not built.")
+        logger.debug(
+            f"Primary player houseUpgradeLevel is {house_level} (< 3). Cellar is not built."
+        )
         return aggregated_result
 
     locations_node = root.find("locations")
@@ -211,8 +222,7 @@ def parse_all_casks_from_save(root, player=None):
             final_batch_map[key]["count"] += b["count"]
 
     aggregated_result["batches"] = sorted(
-        list(final_batch_map.values()),
-        key=lambda b: (b["days_remaining"], b["name"])
+        list(final_batch_map.values()), key=lambda b: (b["days_remaining"], b["name"])
     )
 
     elapsed_ms = (time.perf_counter() - start_time) * 1000
@@ -223,4 +233,3 @@ def parse_all_casks_from_save(root, player=None):
     )
 
     return aggregated_result
-    

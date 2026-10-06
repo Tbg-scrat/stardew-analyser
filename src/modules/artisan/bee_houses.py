@@ -1,8 +1,8 @@
 # src/modules/artisan/bee_houses.py
 
 import json
-import math
 import logging
+import math
 import time
 from pathlib import Path
 
@@ -23,7 +23,7 @@ QUALITY_MAP = {0: "Normal", 1: "Silver", 2: "Gold", 4: "Iridium"}
 
 def resolve_item_icon(item_name):
     """
-    Returns local sprite filename for color-mapped artisan goods or 
+    Returns local sprite filename for color-mapped artisan goods or
     defaults to standard Wiki filename formatting.
     """
     name_lower = item_name.lower().strip()
@@ -42,7 +42,9 @@ def _get_all_locations(root):
 
     def _traverse_location(loc_elem, default_name="Unknown", is_indoor=False):
         loc_name = loc_elem.findtext("name") or default_name
-        is_outdoor = loc_elem.findtext("isOutdoors", "false").lower() == "true" and not is_indoor
+        is_outdoor = (
+            loc_elem.findtext("isOutdoors", "false").lower() == "true" and not is_indoor
+        )
         yield loc_name, loc_elem, is_outdoor
 
         buildings = loc_elem.find("buildings")
@@ -126,7 +128,12 @@ def parse_all_bee_houses_from_save(root):
             )
 
             # Winter Hibernation Rule: Outdoor farm Bee Houses pause in Winter unless on Ginger Island
-            is_ginger_island = loc_name in ["IslandWest", "IslandNorth", "IslandEast", "IslandSouth"]
+            is_ginger_island = loc_name in [
+                "IslandWest",
+                "IslandNorth",
+                "IslandEast",
+                "IslandSouth",
+            ]
             if is_winter and is_outdoor and not is_ginger_island:
                 hibernating += 1
                 loc_hibernating += 1
@@ -138,9 +145,7 @@ def parse_all_bee_houses_from_save(root):
                 idle_locations[loc_name] = idle_locations.get(loc_name, 0) + 1
                 continue
 
-            item_name = (
-                held.findtext("displayName") or held.findtext("name") or "Honey"
-            )
+            item_name = held.findtext("displayName") or held.findtext("name") or "Honey"
 
             try:
                 quality_raw = int(held.findtext("quality", "0"))
@@ -201,8 +206,7 @@ def parse_all_bee_houses_from_save(root):
             )
 
     sorted_batches = sorted(
-        list(batch_map.values()),
-        key=lambda b: (b["days_remaining"], b["name"])
+        list(batch_map.values()), key=lambda b: (b["days_remaining"], b["name"])
     )
 
     elapsed_ms = (time.perf_counter() - start_time) * 1000
@@ -222,4 +226,3 @@ def parse_all_bee_houses_from_save(root):
         "location_stats": location_stats,
         "batches": sorted_batches,
     }
-    

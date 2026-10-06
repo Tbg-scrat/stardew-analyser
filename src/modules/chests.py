@@ -1,9 +1,8 @@
 # src/modules/chests.py
-# -*- coding: utf-8 -*-
 
 import logging
 import time
-import xml.etree.ElementTree as ET
+
 from src.core.reference_data import get_object_info
 
 logger = logging.getLogger(__name__)
@@ -22,9 +21,7 @@ def _parse_item_node(item_node):
         return {"is_empty": True}
 
     item_id = (
-        item_node.findtext("itemId")
-        or item_node.findtext("parentSheetIndex")
-        or "0"
+        item_node.findtext("itemId") or item_node.findtext("parentSheetIndex") or "0"
     )
     qualified_id = item_node.findtext("QualifiedItemId") or f"(O){item_id}"
 
@@ -40,7 +37,9 @@ def _parse_item_node(item_node):
     name = obj_info.get("name") if obj_info else xml_name
 
     if not name:
-        logger.debug(f"Missing item name for ID '{qualified_id}'; defaulting to 'Unknown Item'")
+        logger.debug(
+            f"Missing item name for ID '{qualified_id}'; defaulting to 'Unknown Item'"
+        )
         name = "Unknown Item"
 
     try:
@@ -50,7 +49,9 @@ def _parse_item_node(item_node):
         stack = 1
 
     try:
-        quality = int(item_node.findtext("quality") or item_node.findtext("Quality") or 0)
+        quality = int(
+            item_node.findtext("quality") or item_node.findtext("Quality") or 0
+        )
     except ValueError:
         logger.debug(f"Invalid quality value for '{qualified_id}'; defaulting to 0")
         quality = 0
@@ -131,8 +132,10 @@ def _extract_raw_chests(root):
                 b = color_node.findtext("B") or "0"
                 a = color_node.findtext("A") or "255"
                 if (r, g, b) != ("0", "0", "0"):
-                    chest_color = f"rgba({r}, {g}, {b}, {int(a)/255})"
-                    logger.debug(f"Custom chest color parsed at {loc_name} ({tile_x},{tile_y}): {chest_color}")
+                    chest_color = f"rgba({r}, {g}, {b}, {int(a) / 255})"
+                    logger.debug(
+                        f"Custom chest color parsed at {loc_name} ({tile_x},{tile_y}): {chest_color}"
+                    )
 
             chest_items = []
             items_container = obj.find("items")
@@ -149,14 +152,17 @@ def _extract_raw_chests(root):
                 chest_items.append({"is_empty": True})
                 empty_slots += 1
 
-            chests_data.append({
-                "location": loc_name,
-                "tile_location": {"x": int(float(tile_x)), "y": int(float(tile_y))},
-                "chest_name": obj_name or ("Big Chest" if is_big_chest else "Chest"),
-                "chest_color": chest_color,
-                "is_big_chest": is_big_chest,
-                "chest_items": chest_items,
-            })
+            chests_data.append(
+                {
+                    "location": loc_name,
+                    "tile_location": {"x": int(float(tile_x)), "y": int(float(tile_y))},
+                    "chest_name": obj_name
+                    or ("Big Chest" if is_big_chest else "Chest"),
+                    "chest_color": chest_color,
+                    "is_big_chest": is_big_chest,
+                    "chest_items": chest_items,
+                }
+            )
 
     logger.debug(
         f"Extracted {total_chests} chests containing {total_items} total item units "
@@ -213,4 +219,3 @@ def parse_chests(root, object_map=None):
         "chests": raw_chests.get("chests", []),
         "material_totals": sorted_materials,
     }
-    

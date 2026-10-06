@@ -4,6 +4,7 @@ import logging
 import sys
 import time
 from pathlib import Path
+
 from jinja2 import Environment, FileSystemLoader
 
 logger = logging.getLogger(__name__)
@@ -40,9 +41,7 @@ def generate_dashboard_html(all_saves_data, output_path=OUTPUT_HTML):
 
     build_time = int(time.time())
 
-    rendered_html = template.render(
-        farms=farms_context, build_timestamp=build_time
-    )
+    rendered_html = template.render(farms=farms_context, build_timestamp=build_time)
 
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(rendered_html)
@@ -52,4 +51,3 @@ def generate_dashboard_html(all_saves_data, output_path=OUTPUT_HTML):
         f" -> {Path(output_path).resolve()}"
     )
     return output_path
-    

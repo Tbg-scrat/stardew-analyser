@@ -2,8 +2,9 @@
 
 import logging
 import time
-from src.core.xml_reader import get_key_value
+
 from data.data_loader import SHIPPING_CATALOG
+from src.core.xml_reader import get_key_value
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +29,9 @@ def parse_shipping(player_node):
         return {}
 
     raw_items = basic_shipped.findall("item")
-    logger.debug(f"Parsing <basicShipped> node containing {len(raw_items)} raw shipped item entries")
+    logger.debug(
+        f"Parsing <basicShipped> node containing {len(raw_items)} raw shipped item entries"
+    )
 
     for item in raw_items:
         item_id, val_node = get_key_value(item)
@@ -37,11 +40,15 @@ def parse_shipping(player_node):
             try:
                 count_int = int(count)
             except ValueError:
-                logger.debug(f"Invalid non-integer count '{count}' for shipped item '{item_id}'; defaulting to 0")
+                logger.debug(
+                    f"Invalid non-integer count '{count}' for shipped item '{item_id}'; defaulting to 0"
+                )
                 count_int = 0
             shipped_items[str(item_id)] = count_int
 
-    logger.debug(f"Extracted {len(shipped_items)} valid shipped items from basicShipped XML")
+    logger.debug(
+        f"Extracted {len(shipped_items)} valid shipped items from basicShipped XML"
+    )
     return shipped_items
 
 
@@ -72,21 +79,25 @@ def get_formatted_shipping(player_node, catalog=None):
 
         item_name = catalog_item.get("name", f"Item {item_id}")
 
-        shipped_mapped.append({
-            "id": item_id,
-            "name": item_name,
-            "count": count,
-            "status": "shipped" if is_shipped else "not_shipped",
-            "is_unlocked": is_shipped,
-            "achievement_required": catalog_item.get("achievement_required", False),
-            "is_polyculture": catalog_item.get("is_polyculture", False),
-            "is_monoculture": catalog_item.get("is_monoculture", False),
-            "image": catalog_item.get("image", ""),
-            "wiki_icon": format_wiki_filename(item_name),
-        })
+        shipped_mapped.append(
+            {
+                "id": item_id,
+                "name": item_name,
+                "count": count,
+                "status": "shipped" if is_shipped else "not_shipped",
+                "is_unlocked": is_shipped,
+                "achievement_required": catalog_item.get("achievement_required", False),
+                "is_polyculture": catalog_item.get("is_polyculture", False),
+                "is_monoculture": catalog_item.get("is_monoculture", False),
+                "image": catalog_item.get("image", ""),
+                "wiki_icon": format_wiki_filename(item_name),
+            }
+        )
 
     if unmapped_count > 0:
-        logger.debug(f"Skipped {unmapped_count} invalid non-dict entries in shipping catalog")
+        logger.debug(
+            f"Skipped {unmapped_count} invalid non-dict entries in shipping catalog"
+        )
 
     shipped_total = sum(1 for s in shipped_mapped if s["is_unlocked"])
     catalog_total = len(shipped_mapped)
@@ -98,4 +109,3 @@ def get_formatted_shipping(player_node, catalog=None):
     )
 
     return sorted(shipped_mapped, key=lambda x: x["name"])
-    

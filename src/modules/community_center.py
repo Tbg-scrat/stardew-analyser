@@ -1,5 +1,4 @@
 # src/modules/community_center.py
-# -*- coding: utf-8 -*-
 
 import logging
 import time
@@ -19,13 +18,13 @@ ROOM_NAMES = {
 
 # Mapping of Room IDs to Bundle IDs
 ROOM_BUNDLES = {
-    0: [0, 1, 2, 3, 4, 5],            # Pantry
-    1: [13, 14, 15, 16, 17, 19],       # Crafts Room
-    2: [6, 7, 8, 9, 10, 11],          # Fish Tank
-    3: [20, 21, 22],                  # Boiler Room
-    4: [23, 24, 25, 26],              # Vault
-    5: [31, 32, 33, 34, 35],          # Bulletin Board
-    6: [36],                          # Abandoned JojaMart
+    0: [0, 1, 2, 3, 4, 5],  # Pantry
+    1: [13, 14, 15, 16, 17, 19],  # Crafts Room
+    2: [6, 7, 8, 9, 10, 11],  # Fish Tank
+    3: [20, 21, 22],  # Boiler Room
+    4: [23, 24, 25, 26],  # Vault
+    5: [31, 32, 33, 34, 35],  # Bulletin Board
+    6: [36],  # Abandoned JojaMart
 }
 
 # Standard Junimo Bundle Definitions: (Room ID, Bundle Name, Color Sprite)
@@ -94,7 +93,9 @@ def parse_community_center_data(root, player):
     mail_received = {m.text for m in player.findall(".//mailReceived/string") if m.text}
     is_joja = "JojaMember" in mail_received or "jojaMember" in mail_received
 
-    logger.debug(f"Determined progress route: {'Joja Warehouse' if is_joja else 'Junimo Community Center'}")
+    logger.debug(
+        f"Determined progress route: {'Joja Warehouse' if is_joja else 'Junimo Community Center'}"
+    )
 
     if is_joja:
         result = _parse_joja_route(root, player, mail_received)
@@ -107,8 +108,11 @@ def parse_community_center_data(root, player):
 
 
 def _parse_junimo_route(root, player, mail_received):
-    cc_node = root.find(".//locations/GameLocation[@xsi:type='CommunityCenter']", namespaces={"xsi": "http://www.w3.org/2001/XMLSchema-instance"})
-    
+    cc_node = root.find(
+        ".//locations/GameLocation[@xsi:type='CommunityCenter']",
+        namespaces={"xsi": "http://www.w3.org/2001/XMLSchema-instance"},
+    )
+
     if cc_node is None:
         cc_node = root.find(".//GameLocation[name='CommunityCenter']")
         if cc_node is not None:
@@ -124,11 +128,16 @@ def _parse_junimo_route(root, player, mail_received):
         bundles_container = cc_node.find("bundles")
         if bundles_container is not None:
             raw_bundle_items = bundles_container.findall("item")
-            logger.debug(f"Found <bundles> container with {len(raw_bundle_items)} bundle status entries")
+            logger.debug(
+                f"Found <bundles> container with {len(raw_bundle_items)} bundle status entries"
+            )
             for item in raw_bundle_items:
                 key_node = item.find("key/int")
-                booleans = [b.text.lower() == "true" for b in item.findall("value/ArrayOfBool/boolean")]
-                
+                booleans = [
+                    b.text.lower() == "true"
+                    for b in item.findall("value/ArrayOfBool/boolean")
+                ]
+
                 if key_node is not None and key_node.text:
                     try:
                         bundle_id = int(key_node.text)
@@ -147,7 +156,9 @@ def _parse_junimo_route(root, player, mail_received):
         areas_node = cc_node.find("areasComplete")
         if areas_node is not None:
             areas = areas_node.findall("boolean")
-            logger.debug(f"Found <areasComplete> node with {len(areas)} room status flags")
+            logger.debug(
+                f"Found <areasComplete> node with {len(areas)} room status flags"
+            )
             for idx, boolean_node in enumerate(areas):
                 room_completed_flags[idx] = boolean_node.text.lower() == "true"
 
@@ -157,9 +168,13 @@ def _parse_junimo_route(root, player, mail_received):
     )
 
     # Movie theater / Missing Bundle (Room 6) completion flag
-    movie_theater_complete = "ccMovieTheater" in mail_received or bundle_states.get(36, {}).get("is_complete", False)
+    movie_theater_complete = "ccMovieTheater" in mail_received or bundle_states.get(
+        36, {}
+    ).get("is_complete", False)
 
-    logger.debug(f"Junimo CC flags -> Main CC Complete: {main_cc_complete}, Movie Theater: {movie_theater_complete}")
+    logger.debug(
+        f"Junimo CC flags -> Main CC Complete: {main_cc_complete}, Movie Theater: {movie_theater_complete}"
+    )
 
     rooms_dict = {}
     total_bundles = 0
@@ -167,7 +182,7 @@ def _parse_junimo_route(root, player, mail_received):
 
     for bundle_id, meta in BUNDLE_METADATA.items():
         room_id = meta["room_id"]
-        
+
         # Room 6 (Abandoned JojaMart) uses movie_theater_complete; Rooms 0-5 use main_cc_complete
         if room_id == 6:
             room_done = room_completed_flags.get(6, False) or movie_theater_complete
@@ -194,7 +209,9 @@ def _parse_junimo_route(root, player, mail_received):
         else:
             # Check if any bundle in this room is active in <bundles>
             room_bundle_ids = ROOM_BUNDLES.get(room_id, [])
-            has_active_bundles_in_room = any(b_id in bundle_states for b_id in room_bundle_ids)
+            has_active_bundles_in_room = any(
+                b_id in bundle_states for b_id in room_bundle_ids
+            )
 
             if has_active_bundles_in_room:
                 # Active room: missing bundle was completed and purged
@@ -211,16 +228,20 @@ def _parse_junimo_route(root, player, mail_received):
         if is_complete:
             completed_bundles += 1
 
-        rooms_dict[room_id]["bundles"].append({
-            "id": bundle_id,
-            "name": meta["name"],
-            "color": meta["color"],
-            "is_complete": is_complete,
-            "filled_slots": filled_slots,
-            "total_slots": total_slots,
-        })
+        rooms_dict[room_id]["bundles"].append(
+            {
+                "id": bundle_id,
+                "name": meta["name"],
+                "color": meta["color"],
+                "is_complete": is_complete,
+                "filled_slots": filled_slots,
+                "total_slots": total_slots,
+            }
+        )
 
-    logger.debug(f"Parsed Junimo CC: {completed_bundles}/{total_bundles} bundles complete across {len(rooms_dict)} rooms.")
+    logger.debug(
+        f"Parsed Junimo CC: {completed_bundles}/{total_bundles} bundles complete across {len(rooms_dict)} rooms."
+    )
 
     return {
         "route": "junimo",
@@ -239,20 +260,26 @@ def _parse_joja_route(root, player, mail_received):
 
     for proj in JOJA_PROJECTS:
         p_id = proj["id"]
-        is_done = p_id in mail_received or (p_id == "jojaCinema" and "ccMovieTheater" in mail_received)
+        is_done = p_id in mail_received or (
+            p_id == "jojaCinema" and "ccMovieTheater" in mail_received
+        )
         if is_done:
             completed_count += 1
 
-        projects.append({
-            "id": p_id,
-            "name": proj["name"],
-            "cost": proj["cost"],
-            "is_complete": is_done,
-        })
+        projects.append(
+            {
+                "id": p_id,
+                "name": proj["name"],
+                "cost": proj["cost"],
+                "is_complete": is_done,
+            }
+        )
 
     is_all_complete = completed_count >= len(projects)
 
-    logger.debug(f"Parsed Joja Route: {completed_count}/{len(projects)} projects complete.")
+    logger.debug(
+        f"Parsed Joja Route: {completed_count}/{len(projects)} projects complete."
+    )
 
     return {
         "route": "joja",
@@ -276,4 +303,3 @@ def _empty_cc_summary():
         "total_bundles": 31,
         "rooms": [],
     }
-    
