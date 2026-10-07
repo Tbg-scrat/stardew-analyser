@@ -209,7 +209,8 @@
                 <div class="tool-body">
                     <div class="tool-icon-box">
                         {% if tool.current_tier.icon_url %}
-                            <img src="/{{ tool.current_tier.icon_url }}" alt="{{ tool.current_tier.name }}" class="tool-icon-img">
+                            <img src="/{{ tool.current_tier.icon_url.lstrip('/') }}" alt="{{ tool.current_tier.name }}" class="tool-icon-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                            <span style="display:none; font-size: 1.5rem;">🛠️</span>
                         {% else %}
                             <span style="font-size: 1.5rem;">🛠️</span>
                         {% endif %}
@@ -281,7 +282,8 @@
             <div class="special-stage-box">
                 <div class="tool-icon-box">
                     {% if tools.scythe.current_stage and tools.scythe.current_stage.icon_url %}
-                        <img src="/{{ tools.scythe.current_stage.icon_url }}" alt="{{ tools.scythe.current_stage.name }}" class="tool-icon-img">
+                        <img src="/{{ tools.scythe.current_stage.icon_url.lstrip('/') }}" alt="{{ tools.scythe.current_stage.name }}" class="tool-icon-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                        <span style="display:none; font-size: 1.5rem;">🌾</span>
                     {% else %}
                         <span style="font-size: 1.5rem;">🌾</span>
                     {% endif %}
@@ -298,7 +300,8 @@
                 {% if tools.scythe.next_stage %}
                     <div class="tool-icon-box" style="opacity: 0.6;">
                         {% if tools.scythe.next_stage.icon_url %}
-                            <img src="/{{ tools.scythe.next_stage.icon_url }}" alt="{{ tools.scythe.next_stage.name }}" class="tool-icon-img">
+                            <img src="/{{ tools.scythe.next_stage.icon_url.lstrip('/') }}" alt="{{ tools.scythe.next_stage.name }}" class="tool-icon-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                            <span style="display:none; font-size: 1.5rem;">🔒</span>
                         {% else %}
                             <span style="font-size: 1.5rem;">🔒</span>
                         {% endif %}

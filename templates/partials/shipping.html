@@ -43,10 +43,10 @@
          data-polyculture="{% if item.is_polyculture %}{{ 'done' if item.count >= 15 else 'needed' }}{% else %}none{% endif %}">
         <div class="item-sprite-box">
             {% if item.image %}
-            <img src="data:image/png;base64,{{ item.image }}" class="item-sprite" alt="{{ item.name }}">
+            <img src="{{ item.image }}" class="item-sprite" alt="{{ item.name }}" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+            <span class="img-missing-badge" style="display:none; color: #ef4444; font-size: 0.65rem; font-weight: bold; border: 1px dashed #ef4444; padding: 2px 4px; border-radius: 4px; line-height: 1;">NO IMG</span>
             {% else %}
-            <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ item.wiki_icon }}.png" class="item-sprite" alt="{{ item.name }}" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='inline';">
-            <span style="display:none; font-size: 1.2rem;">📦</span>
+            <span class="img-missing-badge" style="color: #ef4444; font-size: 0.65rem; font-weight: bold; border: 1px dashed #ef4444; padding: 2px 4px; border-radius: 4px; line-height: 1;">NO PATH</span>
             {% endif %}
         </div>
         <div class="item-info">

@@ -48,7 +48,7 @@ def parse_tools(
                 "current_stage": {
                     "name": "Basic Scythe",
                     "tier": 0,
-                    "icon_url": "static/img/tools/scythe.png",
+                    "icon_url": "/cache/img/items/T_47.png",
                     "hint": "Starter tool.",
                 },
                 "is_max": False,
@@ -187,7 +187,7 @@ def parse_tools(
             status = "ready"
 
         icon_file = current_tier_data.get("icon")
-        icon_url = f"static/img/tools/{icon_file}" if icon_file else None
+        icon_url = icon_file.lstrip("/") if icon_file else None
 
         next_tier_data = None
         if not is_max:
@@ -229,7 +229,7 @@ def parse_tools(
                     "available_count": available_count,
                     "has_enough_materials": has_enough_materials,
                     "can_upgrade": can_upgrade,
-                    "icon_url": f"static/img/tools/{next_icon_file}"
+                    "icon_url": next_icon_file.lstrip("/")
                     if next_icon_file
                     else None,
                 }
@@ -270,7 +270,7 @@ def parse_tools(
         "current_stage": {
             "name": current_scythe_stage["name"],
             "tier": current_scythe_stage["tier"],
-            "icon_url": f"static/img/tools/{current_scythe_stage['icon']}"
+            "icon_url": current_scythe_stage['icon'].lstrip("/")
             if current_scythe_stage.get("icon")
             else None,
             "hint": current_scythe_stage["hint"],
@@ -278,7 +278,7 @@ def parse_tools(
         "is_max": (scythe_tier_found >= len(stages) - 1),
         "next_stage": {
             "name": next_scythe_stage["name"],
-            "icon_url": f"static/img/tools/{next_scythe_stage['icon']}"
+            "icon_url": next_scythe_stage['icon'].lstrip("/")
             if next_scythe_stage.get("icon")
             else None,
             "hint": next_scythe_stage["hint"],

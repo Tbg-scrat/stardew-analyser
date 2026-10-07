@@ -154,7 +154,7 @@ def parse_crops_from_location(
             {
                 "harvest_id": harvest_id,
                 "name": obj_info.get("name", "Unknown"),
-                "icon": obj_info.get("icon", "/static/img/items/placeholder.png"),
+                "icon": obj_info.get("icon"),
                 "price": unit_price,
                 "count": count,
                 "days_to_harvest": days_left,

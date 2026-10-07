@@ -37,10 +37,10 @@
          data-status="{{ item.status }}">
         <div class="item-sprite-box">
             {% if item.image %}
-            <img src="data:image/png;base64,{{ item.image }}" class="item-sprite" alt="{{ item.name }}">
+            <img src="{{ item.image }}" class="item-sprite" alt="{{ item.name }}">
             {% else %}
             <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ item.wiki_icon }}.png" class="item-sprite" alt="{{ item.name }}" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='inline';">
-            <span style="display:none; font-size: 1.2rem;"></span>
+            <span style="display:none; font-size: 1.2rem;">❓</span>
             {% endif %}
         </div>
         <div class="item-info">

@@ -2,7 +2,7 @@
 
 from unittest.mock import patch
 import xml.etree.ElementTree as ET
-from parse import analyze_save, log_save_summary
+from parse import analyze_save, log_save_summary, run_pipeline
 
 
 def test_analyze_save_schema_contract():
@@ -90,7 +90,6 @@ def test_log_save_summary_formatting(caplog):
         "community_center": {"completed_bundles": 28, "total_bundles": 30, "route_label": "Community Center (Junimo)"},
     }
 
-
     with caplog.at_level("INFO"):
         log_save_summary("Friisen_12345", mock_data)
 
@@ -99,4 +98,14 @@ def test_log_save_summary_formatting(caplog):
     assert "Crops: 384 total (84 ready)" in caplog.text
     assert "Grandpa: 14/21 pts (4 Candles)" in caplog.text
     assert "CC: 28/30 Bundles (Community Center (Junimo))" in caplog.text
-    
+
+
+def test_run_pipeline_asset_cache_verification(tmp_path, caplog):
+    """Verifies that run_pipeline() asserts asset cache validity and logs status."""
+    with patch("parse.is_cache_valid", return_value=True) as mock_cache_check:
+        with caplog.at_level("INFO"):
+            run_pipeline(save_dir=tmp_path)
+
+        mock_cache_check.assert_called_once()
+        assert "Asset cache verification: VALID" in caplog.text
+        

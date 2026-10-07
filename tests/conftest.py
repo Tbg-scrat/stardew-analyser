@@ -160,7 +160,7 @@ def sample_render_data():
                         {
                             "harvest_id": "Powdermelon",
                             "name": "Powdermelon",
-                            "icon": "/static/img/items/Powdermelon.png",
+                            "icon": "/cache/img/items/Powdermelon.png",
                             "price": 60,
                             "count": 167,
                             "days_to_harvest": 1,
@@ -187,14 +187,14 @@ def sample_render_data():
                     "current_tier": {
                         "name": "Steel Axe",
                         "perks": "Can chop large logs (Secret Woods entry).",
-                        "icon_url": "static/img/tools/steel_axe.png",
+                        "icon_url": "/cache/img/items/T_117.png",
                     },
                     "next_tier": {
                         "level": 3,
                         "name": "Gold Axe",
                         "gold_cost": 10000,
                         "materials": "5x Gold Bar",
-                        "icon_url": "static/img/tools/gold_axe.png",
+                        "icon_url": "/cache/img/items/T_126.png",
                     },
                 },
                 {
@@ -208,14 +208,14 @@ def sample_render_data():
                     "current_tier": {
                         "name": "Gold Pickaxe",
                         "perks": "Breaks meteorites on the farm.",
-                        "icon_url": "static/img/tools/gold_pickaxe.png",
+                        "icon_url": "/cache/img/items/T_173.png",
                     },
                     "next_tier": {
                         "level": 4,
                         "name": "Iridium Pickaxe",
                         "gold_cost": 25000,
                         "materials": "5x Iridium Bar",
-                        "icon_url": "static/img/tools/iridium_pickaxe.png",
+                        "icon_url": "/cache/img/items/T_180.png",
                     },
                 },
                 {
@@ -229,14 +229,14 @@ def sample_render_data():
                     "current_tier": {
                         "name": "Steel Hoe",
                         "perks": "Tills a 5x1 line when charged.",
-                        "icon_url": "static/img/tools/steel_hoe.png",
+                        "icon_url": "/cache/img/items/T_33.png",
                     },
                     "next_tier": {
                         "level": 3,
                         "name": "Gold Hoe",
                         "gold_cost": 10000,
                         "materials": "5x Gold Bar",
-                        "icon_url": "static/img/tools/gold_hoe.png",
+                        "icon_url": "/cache/img/items/T_42.png",
                     },
                 },
                 {
@@ -250,14 +250,14 @@ def sample_render_data():
                     "current_tier": {
                         "name": "Watering Can",
                         "perks": "Capacity: 40. Waters 1 tile.",
-                        "icon_url": "static/img/tools/watering_can.png",
+                        "icon_url": "/cache/img/items/T_147.png",
                     },
                     "next_tier": {
                         "level": 1,
                         "name": "Copper Watering Can",
                         "gold_cost": 2000,
                         "materials": "5x Copper Bar",
-                        "icon_url": "static/img/tools/copper_watering_can.png",
+                        "icon_url": "/cache/img/items/T_153.png",
                     },
                 },
                 {
@@ -271,14 +271,14 @@ def sample_render_data():
                     "current_tier": {
                         "name": "Copper Trash Can",
                         "perks": "Reclaims 15% of discarded item value.",
-                        "icon_url": "static/img/tools/copper_trash_can.png",
+                        "icon_url": "/cache/img/items/T_175.png",
                     },
                     "next_tier": {
                         "level": 2,
                         "name": "Steel Trash Can",
                         "gold_cost": 2500,
                         "materials": "5x Iron Bar",
-                        "icon_url": "static/img/tools/steel_trash_can.png",
+                        "icon_url": "/cache/img/items/T_176.png",
                     },
                 },
                 {
@@ -292,7 +292,7 @@ def sample_render_data():
                     "current_tier": {
                         "name": "Iridium Pan",
                         "perks": "Maximum panning yields and special rewards.",
-                        "icon_url": "static/img/tools/iridium_pan.png",
+                        "icon_url": "/cache/img/items/T_15.png",
                     },
                     "next_tier": None,
                 },
@@ -302,13 +302,13 @@ def sample_render_data():
                 "current_stage": {
                     "name": "Golden Scythe",
                     "tier": 1,
-                    "icon_url": "static/img/tools/golden_scythe.png",
+                    "icon_url": "/cache/img/items/T_252.png",
                     "hint": "Found at the end of the Quarry Mine statue.",
                 },
                 "is_max": False,
                 "next_stage": {
                     "name": "Iridium Scythe",
-                    "icon_url": "static/img/tools/iridium_scythe.png",
+                    "icon_url": "/cache/img/items/T_251.png",
                     "hint": "Unlocked in the Mastery Cave upon achieving Farming Mastery.",
                 },
             },

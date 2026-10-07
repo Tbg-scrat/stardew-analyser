@@ -10,11 +10,11 @@ MOCK_TOOLS_CATALOG = {
         "Axe": {
             "name": "Axe",
             "tiers": [
-                {"level": 0, "name": "Axe", "icon": "axe.png", "gold_cost": 0, "materials": None, "perks": "Chops trees."},
-                {"level": 1, "name": "Copper Axe", "icon": "copper_axe.png", "gold_cost": 2000, "materials": "5x Copper Bar", "perks": "Chops stumps."},
-                {"level": 2, "name": "Steel Axe", "icon": "steel_axe.png", "gold_cost": 5000, "materials": "5x Iron Bar", "perks": "Chops logs."},
-                {"level": 3, "name": "Gold Axe", "icon": "gold_axe.png", "gold_cost": 10000, "materials": "5x Gold Bar", "perks": "Chops faster."},
-                {"level": 4, "name": "Iridium Axe", "icon": "iridium_axe.png", "gold_cost": 25000, "materials": "5x Iridium Bar", "perks": "Max efficiency."}
+                {"level": 0, "name": "Axe", "icon": "/cache/img/items/T_105.png", "gold_cost": 0, "materials": None, "perks": "Chops trees."},
+                {"level": 1, "name": "Copper Axe", "icon": "/cache/img/items/T_111.png", "gold_cost": 2000, "materials": "5x Copper Bar", "perks": "Chops stumps."},
+                {"level": 2, "name": "Steel Axe", "icon": "/cache/img/items/T_117.png", "gold_cost": 5000, "materials": "5x Iron Bar", "perks": "Chops logs."},
+                {"level": 3, "name": "Gold Axe", "icon": "/cache/img/items/T_126.png", "gold_cost": 10000, "materials": "5x Gold Bar", "perks": "Chops faster."},
+                {"level": 4, "name": "Iridium Axe", "icon": "/cache/img/items/T_132.png", "gold_cost": 25000, "materials": "5x Iridium Bar", "perks": "Max efficiency."}
             ]
         },
         "Pickaxe": {
@@ -63,7 +63,7 @@ def test_parse_tools_inventory_levels():
     assert axe["next_tier"]["name"] == "Gold Axe"
     assert axe["next_tier"]["gold_cost"] == 10000
     assert axe["next_tier"]["materials"] == "5x Gold Bar"
-    assert axe["next_tier"]["icon_url"] == "static/img/tools/gold_axe.png"
+    assert axe["next_tier"]["icon_url"] == "cache/img/items/T_126.png"
 
 
 def test_parse_tools_upgrading_at_blacksmith():

@@ -7,6 +7,7 @@ import time
 from pathlib import Path
 
 from src.core.logger import setup_logging
+from src.core.asset_extractor import is_cache_valid
 
 # Initialize central logging configuration
 setup_logging()
@@ -295,6 +296,13 @@ def run_pipeline(save_dir=None, output_path=None):
     parsing all discovered farms and rendering the multi-farm dashboard HTML.
     """
     pipeline_start = time.perf_counter()
+    
+     # Asset Cache Verification Log
+    cache_status = "VALID" if is_cache_valid() else "INVALID_OR_MISSING"
+    logger.info(f"Asset cache verification: {cache_status}")
+
+    target_dir = Path(save_dir) if save_dir else SAVE_DIR
+    logger.info(f"Scanning directory: {target_dir.resolve()}")
 
     target_dir = Path(save_dir) if save_dir else SAVE_DIR
     logger.info(f"Scanning directory: {target_dir.resolve()}")

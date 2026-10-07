@@ -28,7 +28,7 @@
         <button class="filter-btn" data-filter-key="status" data-filter-val="cooked" onclick="setCatalogFilter(this)">Cooked</button>
         <button class="filter-btn" data-filter-key="status" data-filter-val="not_cooked" onclick="setCatalogFilter(this)">Not Cooked</button>
     </div>
-    <input type="text" class="search-box" placeholder="Search recipes..." onkeyup="filterItems(this)">
+    <input type="text" class="search-box" placeholder="Search cooking recipes..." onkeyup="filterItems(this)">
 </div>
 <div class="items-grid">
     {% for item in farm.recipes_cooked %}
@@ -37,15 +37,15 @@
          data-status="{{ item.status }}">
         <div class="item-sprite-box">
             {% if item.image %}
-            <img src="data:image/png;base64,{{ item.image }}" class="item-sprite" alt="{{ item.name }}">
+            <img src="{{ item.image }}" class="item-sprite" alt="{{ item.name }}" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+            <span class="img-missing-badge" style="display:none; color: #ef4444; font-size: 0.65rem; font-weight: bold; border: 1px dashed #ef4444; padding: 2px 4px; border-radius: 4px; line-height: 1;">NO IMG</span>
             {% else %}
-            <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ item.wiki_icon }}.png" class="item-sprite" alt="{{ item.name }}" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='inline';">
-            <span style="display:none; font-size: 1.2rem;"></span>
+            <span class="img-missing-badge" style="color: #ef4444; font-size: 0.65rem; font-weight: bold; border: 1px dashed #ef4444; padding: 2px 4px; border-radius: 4px; line-height: 1;">NO PATH</span>
             {% endif %}
         </div>
         <div class="item-info">
             <div class="item-name">{{ item.name }}</div>
-            <div class="item-meta">Cooked: <b>{{ item.count }}</b></div>
+            <div class="item-meta">Times Cooked: <b>{{ item.count }}</b></div>
             <span class="status-badge {{ 'unlocked' if item.is_unlocked else 'locked' }}">{{ item.status|replace('_', ' ') }}</span>
         </div>
     </div>

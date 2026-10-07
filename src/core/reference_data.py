@@ -57,9 +57,9 @@ def _get_object_lookup():
         wiki_filename = name.replace(" ", "_")
 
         if item_id:
-            primary_icon = f"/static/img/items/O_{item_id}.png"
+            primary_icon = f"/cache/img/items/O_{item_id}.png"
         else:
-            primary_icon = f"/static/img/items/O_{clean_name}.png"
+            primary_icon = f"/cache/img/items/O_{clean_name}.png"
 
         info = {
             "id": item_id,
@@ -97,7 +97,7 @@ def get_object_info(harvest_id: str) -> dict:
         )
         return {
             "name": "Wild / Unknown",
-            "icon": "/static/img/items/placeholder.png",
+            "icon": "/cache/img/items/placeholder.png",
             "wiki_icon": "https://stardewvalleywiki.com/Special:Redirect/file/Tile.png",
             "price": 0,
         }
@@ -125,6 +125,6 @@ def get_object_info(harvest_id: str) -> dict:
         "id": raw_key,
         "name": formatted_name,
         "price": 0,
-        "icon": f"/static/img/items/O_{raw_key}.png",
+        "icon": f"/cache/img/items/O_{raw_key}.png",
         "wiki_icon": f"https://stardewvalleywiki.com/Special:Redirect/file/{raw_key}.png",
     }
