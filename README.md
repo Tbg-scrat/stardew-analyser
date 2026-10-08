@@ -12,6 +12,24 @@ A lightweight, local-first web dashboard designed specifically for self-hosted h
 
 ---
 
+## ⚠️ Note on Windows Environments & Version 2.0.0
+
+Please note that running the application on **Windows environments is currently broken** due to path resolution and runtime volume/extraction differences. Fixes for Windows support are under evaluation and will not be prioritized until **after** the stable release of version `2.0.0`.
+
+## ⚠️ Upgrading to Version 2.0.0 (Breaking Changes)
+
+Version 2.0.0 introduces a major architectural change regarding how game assets (icons, images) are handled. 
+
+### Why is this changing?
+To ensure compliance with copyright and asset distribution policies, future versions no longer bundle copyrighted Stardew Valley assets directly inside the container image. Instead, the application now extracts and caches them dynamically from your local game files at runtime.
+
+### What do you need to do?
+If you are upgrading from `1.x` to `2.0.0`, you **must** update your `docker-compose.yml` to mount an external volume for the runtime cache directory. Specific instructions will follow.
+
+**Want to stay on v1.6.3?** If you prefer not to update your configuration right away, please pin your deployment tag to v1.6.3 instead of using latest.
+
+---
+
 ## 🏠 Self-Hosting & Niche Use Cases
 
 This tool is built from the ground up to solve specific challenges encountered in homelab and self-hosted environments:
