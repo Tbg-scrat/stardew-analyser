@@ -19,13 +19,13 @@
     .chest-search-input:focus { border-color: var(--accent-blue); }
     .totals-count-indicator { font-size: 0.8rem; color: #94a3b8; font-weight: 600; white-space: nowrap; }
 
-    /* Spatial Grids Layout: 400px minimum forces wide cards on desktop/landscape */
+    /* Spatial Grids Layout */
     .locations-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 1.25rem; width: 100%; }
     .chest-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); min-width: 0; }
     .chest-header { display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: #ffffff; font-size: 0.95rem; }
     .chest-location { font-size: 0.775rem; color: var(--accent-blue); font-weight: 500; }
 
-    /* Fluid 12-Column Grid: Expands on wide screens, scrolls ONLY when card < ~380px */
+    /* Fluid 12-Column Grid */
     .in-game-chest-grid { 
         display: grid; 
         grid-template-columns: repeat(12, 1fr); 
@@ -48,7 +48,7 @@
     .in-game-chest-grid .item-slot:not(.empty-slot):hover { border-color: var(--accent-blue); background-color: var(--bg-card-hover); transform: scale(1.15); z-index: 10; }
     .in-game-chest-grid .item-sprite { width: 80%; height: 80%; object-fit: contain; image-rendering: pixelated; }
     .in-game-chest-grid .slot-stack { position: absolute; bottom: 1px; right: 2px; font-size: 0.65rem; font-weight: 800; color: #ffffff; text-shadow: 1px 1px 2px #000, -1px -1px 2px #000; pointer-events: none; }
-    .in-game-chest-grid .quality-badge { position: absolute; bottom: 1px; left: 1px; width: 10px; height: 10px; object-fit: contain; image-rendering: pixelated; pointer-events: none; }
+    .in-game-chest-grid .quality-badge { position: absolute; bottom: 1px; left: 1px; width: 10px; height: 10px; object-fit: contain; image-rendering: pixelated; z-index: 3; pointer-events: none; }
 
     /* Dimming & Highlighting */
     .in-game-chest-grid .item-slot.dimmed { opacity: 0.15; filter: grayscale(80%); }
@@ -69,8 +69,8 @@
         <div>
             <h2>Chests & Storage</h2>
             <div class="chest-subtabs">
-                <button class="subtab-btn active" onclick="switchChestTab(this, 'grids')"> Chest Grids</button>
-                <button class="subtab-btn" onclick="switchChestTab(this, 'totals')"> Material Totals</button>
+                <button class="subtab-btn active" onclick="switchChestTab(this, 'grids')">Chest Grids</button>
+                <button class="subtab-btn" onclick="switchChestTab(this, 'totals')">Material Totals</button>
             </div>
         </div>
         <span class="chests-count-badge">Total Chests: {{ farm.chests.total_chests }} | Total Stored Items: {{ farm.chests.total_items }}</span>
@@ -91,7 +91,7 @@
                     <div class="chest-card" {% if chest.chest_color %}style="border-top: 4px solid {{ chest.chest_color }};"{% endif %}>
                         <div class="chest-header">
                             <span class="chest-title">
-                                {% if chest.is_big_chest %}{% else %}{% endif %} {{ chest.chest_name }}
+                                {{ chest.chest_name }}
                             </span>
                             <span class="chest-location">{{ chest.location }} ({{ chest.tile_location.x }}, {{ chest.tile_location.y }})</span>
                         </div>
@@ -104,17 +104,17 @@
                                     <div class="item-slot" 
                                          data-item-name="{{ item.name | lower }}" 
                                          title="{{ item.name }} (x{{ item.stack }})">
-                                        <img src="static/img/items/{{ item.sprite_key }}.png" 
+                                        <img src="cache/img/items/{{ item.sprite_key }}.png" 
                                              alt="{{ item.name }}" 
                                              class="item-sprite"
                                              onerror="this.onerror=null; this.src='https://stardewvalleywiki.com/Special:Redirect/file/' + encodeURIComponent('{{ item.name }}'.replace(/ /g, '_')) + '.png';">
                                         
                                         {% if item.quality == 1 %}
-                                            <img src="static/img/badges/silver_star.png" class="quality-badge" alt="Silver Quality">
+                                            <img src="cache/img/items/silver_star.png" class="quality-badge" alt="Silver Quality">
                                         {% elif item.quality == 2 %}
-                                            <img src="static/img/badges/gold_star.png" class="quality-badge" alt="Gold Quality">
+                                            <img src="cache/img/items/gold_star.png" class="quality-badge" alt="Gold Quality">
                                         {% elif item.quality == 4 %}
-                                            <img src="static/img/badges/iridium_star.png" class="quality-badge" alt="Iridium Quality">
+                                            <img src="cache/img/items/iridium_star.png" class="quality-badge" alt="Iridium Quality">
                                         {% endif %}
 
                                         {% if item.stack > 1 %}
@@ -143,7 +143,7 @@
                 {% for mat in farm.chests.material_totals %}
                     <div class="material-card" data-item-name="{{ mat.name | lower }}">
                         <div class="material-sprite-box">
-                            <img src="static/img/items/{{ mat.sprite_key }}.png" 
+                            <img src="cache/img/items/{{ mat.sprite_key }}.png" 
                                  alt="{{ mat.name }}" 
                                  class="item-sprite"
                                  onerror="this.onerror=null; this.src='https://stardewvalleywiki.com/Special:Redirect/file/' + encodeURIComponent('{{ mat.name }}'.replace(/ /g, '_')) + '.png';">
