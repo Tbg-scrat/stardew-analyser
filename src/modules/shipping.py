@@ -1,3 +1,4 @@
+from src.core.reference_data import qualify_item_id
 # src/modules/shipping.py
 
 import logging
@@ -63,7 +64,7 @@ def get_formatted_shipping(player_node, catalog=None):
         catalog = SHIPPING_CATALOG
 
     raw_shipped = parse_shipping(player_node)
-    shipped_save_map = {str(k).replace("(O)", ""): v for k, v in raw_shipped.items()}
+    shipped_save_map = {qualify_item_id(k): v for k, v in raw_shipped.items()}
 
     shipped_mapped = []
     catalog_items = catalog.items() if isinstance(catalog, dict) else []
@@ -89,7 +90,7 @@ def get_formatted_shipping(player_node, catalog=None):
                 "achievement_required": catalog_item.get("achievement_required", False),
                 "is_polyculture": catalog_item.get("is_polyculture", False),
                 "is_monoculture": catalog_item.get("is_monoculture", False),
-                "image": catalog_item.get("image", ""),
+                "image": catalog_item.get("image") or f"/cache/img/items/{item_id}.png",
                 "wiki_icon": format_wiki_filename(item_name),
             }
         )

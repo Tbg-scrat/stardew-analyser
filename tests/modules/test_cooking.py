@@ -66,8 +66,8 @@ def test_get_formatted_cooking_catalog_merge():
     """
     player = ET.fromstring(xml_data)
     custom_catalog = {
-        "194": {"name": "Fried Egg", "image": "egg.png"},
-        "253": {"name": "Triple Shot Espresso", "image": "espresso.png"},
+        "O_194": {"name": "Fried Egg", "image": "egg.png"},
+        "O_253": {"name": "Triple Shot Espresso", "image": "espresso.png"},
         "invalid_key": "not_a_dict_catalog_item",
     }
 

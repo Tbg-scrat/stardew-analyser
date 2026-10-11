@@ -1,477 +1,382 @@
 {
-  "60": {
+  "O_60": {
     "name": "Emerald",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_60.png"
+    "type": "Mineral"
   },
-  "62": {
+  "O_62": {
     "name": "Aquamarine",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_62.png"
+    "type": "Mineral"
   },
-  "64": {
+  "O_64": {
     "name": "Ruby",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_64.png"
+    "type": "Mineral"
   },
-  "66": {
+  "O_66": {
     "name": "Amethyst",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_66.png"
+    "type": "Mineral"
   },
-  "68": {
+  "O_68": {
     "name": "Topaz",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_68.png"
+    "type": "Mineral"
   },
-  "70": {
+  "O_70": {
     "name": "Jade",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_70.png"
+    "type": "Mineral"
   },
-  "72": {
+  "O_72": {
     "name": "Diamond",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_72.png"
+    "type": "Mineral"
   },
-  "74": {
+  "O_74": {
     "name": "Prismatic Shard",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_74.png"
+    "type": "Mineral"
   },
-  "80": {
+  "O_80": {
     "name": "Quartz",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_80.png"
+    "type": "Mineral"
   },
-  "82": {
+  "O_82": {
     "name": "Fire Quartz",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_82.png"
+    "type": "Mineral"
   },
-  "84": {
+  "O_84": {
     "name": "Frozen Tear",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_84.png"
+    "type": "Mineral"
   },
-  "86": {
+  "O_86": {
     "name": "Earth Crystal",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_86.png"
+    "type": "Mineral"
   },
-  "96": {
+  "O_96": {
     "name": "Dwarf Scroll I",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_96.png"
+    "type": "Artifact"
   },
-  "97": {
+  "O_97": {
     "name": "Dwarf Scroll II",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_97.png"
+    "type": "Artifact"
   },
-  "98": {
+  "O_98": {
     "name": "Dwarf Scroll III",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_98.png"
+    "type": "Artifact"
   },
-  "99": {
+  "O_99": {
     "name": "Dwarf Scroll IV",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_99.png"
+    "type": "Artifact"
   },
-  "100": {
+  "O_100": {
     "name": "Chipped Amphora",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_100.png"
+    "type": "Artifact"
   },
-  "101": {
+  "O_101": {
     "name": "Arrowhead",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_101.png"
+    "type": "Artifact"
   },
-  "103": {
+  "O_103": {
     "name": "Ancient Doll",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_103.png"
+    "type": "Artifact"
   },
-  "104": {
+  "O_104": {
     "name": "Elvish Jewelry",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_104.png"
+    "type": "Artifact"
   },
-  "105": {
+  "O_105": {
     "name": "Chewing Stick",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_105.png"
+    "type": "Artifact"
   },
-  "106": {
+  "O_106": {
     "name": "Ornamental Fan",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_106.png"
+    "type": "Artifact"
   },
-  "107": {
+  "O_107": {
     "name": "Dinosaur Egg",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_107.png"
+    "type": "Artifact"
   },
-  "108": {
+  "O_108": {
     "name": "Rare Disc",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_108.png"
+    "type": "Artifact"
   },
-  "109": {
+  "O_109": {
     "name": "Ancient Sword",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_109.png"
+    "type": "Artifact"
   },
-  "110": {
+  "O_110": {
     "name": "Rusty Spoon",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_110.png"
+    "type": "Artifact"
   },
-  "111": {
+  "O_111": {
     "name": "Rusty Spur",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_111.png"
+    "type": "Artifact"
   },
-  "112": {
+  "O_112": {
     "name": "Rusty Cog",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_112.png"
+    "type": "Artifact"
   },
-  "113": {
+  "O_113": {
     "name": "Chicken Statue",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_113.png"
+    "type": "Artifact"
   },
-  "114": {
+  "O_114": {
     "name": "Ancient Seed",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_114.png"
+    "type": "Artifact"
   },
-  "115": {
+  "O_115": {
     "name": "Prehistoric Tool",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_115.png"
+    "type": "Artifact"
   },
-  "116": {
+  "O_116": {
     "name": "Dried Starfish",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_116.png"
+    "type": "Artifact"
   },
-  "117": {
+  "O_117": {
     "name": "Anchor",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_117.png"
+    "type": "Artifact"
   },
-  "118": {
+  "O_118": {
     "name": "Glass Shards",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_118.png"
+    "type": "Artifact"
   },
-  "119": {
+  "O_119": {
     "name": "Bone Flute",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_119.png"
+    "type": "Artifact"
   },
-  "120": {
+  "O_120": {
     "name": "Prehistoric Handaxe",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_120.png"
+    "type": "Artifact"
   },
-  "121": {
+  "O_121": {
     "name": "Dwarvish Helm",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_121.png"
+    "type": "Artifact"
   },
-  "122": {
+  "O_122": {
     "name": "Dwarf Gadget",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_122.png"
+    "type": "Artifact"
   },
-  "123": {
+  "O_123": {
     "name": "Ancient Drum",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_123.png"
+    "type": "Artifact"
   },
-  "124": {
+  "O_124": {
     "name": "Golden Mask",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_124.png"
+    "type": "Artifact"
   },
-  "125": {
+  "O_125": {
     "name": "Golden Relic",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_125.png"
+    "type": "Artifact"
   },
-  "126": {
+  "O_126": {
     "name": "Strange Doll",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_126.png"
+    "type": "Artifact"
   },
-  "127": {
+  "O_127": {
     "name": "Strange Doll",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_127.png"
+    "type": "Artifact"
   },
-  "538": {
+  "O_538": {
     "name": "Alamite",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_538.png"
+    "type": "Mineral"
   },
-  "539": {
+  "O_539": {
     "name": "Bixite",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_539.png"
+    "type": "Mineral"
   },
-  "540": {
+  "O_540": {
     "name": "Baryte",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_540.png"
+    "type": "Mineral"
   },
-  "541": {
+  "O_541": {
     "name": "Aerinite",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_541.png"
+    "type": "Mineral"
   },
-  "542": {
+  "O_542": {
     "name": "Calcite",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_542.png"
+    "type": "Mineral"
   },
-  "543": {
+  "O_543": {
     "name": "Dolomite",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_543.png"
+    "type": "Mineral"
   },
-  "544": {
+  "O_544": {
     "name": "Esperite",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_544.png"
+    "type": "Mineral"
   },
-  "545": {
+  "O_545": {
     "name": "Fluorapatite",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_545.png"
+    "type": "Mineral"
   },
-  "546": {
+  "O_546": {
     "name": "Geminite",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_546.png"
+    "type": "Mineral"
   },
-  "547": {
+  "O_547": {
     "name": "Helvite",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_547.png"
+    "type": "Mineral"
   },
-  "548": {
+  "O_548": {
     "name": "Jamborite",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_548.png"
+    "type": "Mineral"
   },
-  "549": {
+  "O_549": {
     "name": "Jagoite",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_549.png"
+    "type": "Mineral"
   },
-  "550": {
+  "O_550": {
     "name": "Kyanite",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_550.png"
+    "type": "Mineral"
   },
-  "551": {
+  "O_551": {
     "name": "Lunarite",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_551.png"
+    "type": "Mineral"
   },
-  "552": {
+  "O_552": {
     "name": "Malachite",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_552.png"
+    "type": "Mineral"
   },
-  "553": {
+  "O_553": {
     "name": "Neptunite",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_553.png"
+    "type": "Mineral"
   },
-  "554": {
+  "O_554": {
     "name": "Lemon Stone",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_554.png"
+    "type": "Mineral"
   },
-  "555": {
+  "O_555": {
     "name": "Nekoite",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_555.png"
+    "type": "Mineral"
   },
-  "556": {
+  "O_556": {
     "name": "Orpiment",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_556.png"
+    "type": "Mineral"
   },
-  "557": {
+  "O_557": {
     "name": "Petrified Slime",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_557.png"
+    "type": "Mineral"
   },
-  "558": {
+  "O_558": {
     "name": "Thunder Egg",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_558.png"
+    "type": "Mineral"
   },
-  "559": {
+  "O_559": {
     "name": "Pyrite",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_559.png"
+    "type": "Mineral"
   },
-  "560": {
+  "O_560": {
     "name": "Ocean Stone",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_560.png"
+    "type": "Mineral"
   },
-  "561": {
+  "O_561": {
     "name": "Ghost Crystal",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_561.png"
+    "type": "Mineral"
   },
-  "562": {
+  "O_562": {
     "name": "Tigerseye",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_562.png"
+    "type": "Mineral"
   },
-  "563": {
+  "O_563": {
     "name": "Jasper",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_563.png"
+    "type": "Mineral"
   },
-  "564": {
+  "O_564": {
     "name": "Opal",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_564.png"
+    "type": "Mineral"
   },
-  "565": {
+  "O_565": {
     "name": "Fire Opal",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_565.png"
+    "type": "Mineral"
   },
-  "566": {
+  "O_566": {
     "name": "Celestine",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_566.png"
+    "type": "Mineral"
   },
-  "567": {
+  "O_567": {
     "name": "Marble",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_567.png"
+    "type": "Mineral"
   },
-  "568": {
+  "O_568": {
     "name": "Sandstone",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_568.png"
+    "type": "Mineral"
   },
-  "569": {
+  "O_569": {
     "name": "Granite",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_569.png"
+    "type": "Mineral"
   },
-  "570": {
+  "O_570": {
     "name": "Basalt",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_570.png"
+    "type": "Mineral"
   },
-  "571": {
+  "O_571": {
     "name": "Limestone",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_571.png"
+    "type": "Mineral"
   },
-  "572": {
+  "O_572": {
     "name": "Soapstone",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_572.png"
+    "type": "Mineral"
   },
-  "573": {
+  "O_573": {
     "name": "Hematite",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_573.png"
+    "type": "Mineral"
   },
-  "574": {
+  "O_574": {
     "name": "Mudstone",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_574.png"
+    "type": "Mineral"
   },
-  "575": {
+  "O_575": {
     "name": "Obsidian",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_575.png"
+    "type": "Mineral"
   },
-  "576": {
+  "O_576": {
     "name": "Slate",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_576.png"
+    "type": "Mineral"
   },
-  "577": {
+  "O_577": {
     "name": "Fairy Stone",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_577.png"
+    "type": "Mineral"
   },
-  "578": {
+  "O_578": {
     "name": "Star Shards",
-    "type": "Mineral",
-    "image": "/cache/img/items/O_578.png"
+    "type": "Mineral"
   },
-  "579": {
+  "O_579": {
     "name": "Prehistoric Scapula",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_579.png"
+    "type": "Artifact"
   },
-  "580": {
+  "O_580": {
     "name": "Prehistoric Tibia",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_580.png"
+    "type": "Artifact"
   },
-  "581": {
+  "O_581": {
     "name": "Prehistoric Skull",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_581.png"
+    "type": "Artifact"
   },
-  "582": {
+  "O_582": {
     "name": "Skeletal Hand",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_582.png"
+    "type": "Artifact"
   },
-  "583": {
+  "O_583": {
     "name": "Prehistoric Rib",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_583.png"
+    "type": "Artifact"
   },
-  "584": {
+  "O_584": {
     "name": "Prehistoric Vertebra",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_584.png"
+    "type": "Artifact"
   },
-  "585": {
+  "O_585": {
     "name": "Skeletal Tail",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_585.png"
+    "type": "Artifact"
   },
-  "586": {
+  "O_586": {
     "name": "Nautilus Fossil",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_586.png"
+    "type": "Artifact"
   },
-  "587": {
+  "O_587": {
     "name": "Amphibian Fossil",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_587.png"
+    "type": "Artifact"
   },
-  "588": {
+  "O_588": {
     "name": "Palm Fossil",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_588.png"
+    "type": "Artifact"
   },
-  "589": {
+  "O_589": {
     "name": "Trilobite",
-    "type": "Artifact",
-    "image": "/cache/img/items/O_589.png"
+    "type": "Artifact"
   }
 }

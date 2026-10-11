@@ -3,7 +3,7 @@
 import logging
 from collections import defaultdict
 
-from src.core.reference_data import get_object_info
+from src.core.reference_data import qualify_item_id, get_object_info
 
 logger = logging.getLogger("parse")
 
@@ -16,7 +16,7 @@ def calculate_days_remaining(crop_node) -> dict:
     Calculates remaining days until harvest for a crop based on XML node fields.
     Returns a dict with 'days_to_harvest', 'is_recurring', 'fully_grown', and 'harvest_id'.
     """
-    harvest_id = crop_node.findtext("indexOfHarvest") if crop_node is not None else None
+    harvest_id = qualify_item_id(crop_node.findtext("indexOfHarvest")) if crop_node is not None else None
     try:
         current_phase = int(crop_node.findtext("currentPhase", "0"))
         day_of_phase = int(crop_node.findtext("dayOfCurrentPhase", "0"))

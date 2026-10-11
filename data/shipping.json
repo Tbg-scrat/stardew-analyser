@@ -1,1745 +1,1496 @@
 {
-  "16": {
+  "O_16": {
     "name": "Wild Horseradish",
-    "image": "/cache/img/items/O_16.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "18": {
+  "O_18": {
     "name": "Daffodil",
-    "image": "/cache/img/items/O_18.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "20": {
+  "O_20": {
     "name": "Leek",
-    "image": "/cache/img/items/O_20.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "22": {
+  "O_22": {
     "name": "Dandelion",
-    "image": "/cache/img/items/O_22.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "24": {
+  "O_24": {
     "name": "Parsnip",
-    "image": "/cache/img/items/O_24.png",
     "achievement_required": true,
     "is_polyculture": true,
     "is_monoculture": true
   },
-  "30": {
+  "O_30": {
     "name": "Lumber",
-    "image": "/cache/img/items/O_30.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "69": {
+  "O_69": {
     "name": "Banana Sapling",
-    "image": "/cache/img/items/O_69.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "73": {
+  "O_73": {
     "name": "Golden Walnut",
-    "image": "/cache/img/items/O_73.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "78": {
+  "O_78": {
     "name": "Cave Carrot",
-    "image": "/cache/img/items/O_78.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "88": {
+  "O_88": {
     "name": "Coconut",
-    "image": "/cache/img/items/O_88.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "90": {
+  "O_90": {
     "name": "Cactus Fruit",
-    "image": "/cache/img/items/O_90.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "91": {
+  "O_91": {
     "name": "Banana",
-    "image": "/cache/img/items/O_91.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "92": {
+  "O_92": {
     "name": "Sap",
-    "image": "/cache/img/items/O_92.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "166": {
+  "O_166": {
     "name": "Treasure Chest",
-    "image": "/cache/img/items/O_166.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "174": {
+  "O_174": {
     "name": "Large Egg",
-    "image": "/cache/img/items/O_174.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "176": {
+  "O_176": {
     "name": "Egg",
-    "image": "/cache/img/items/O_176.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "178": {
+  "O_178": {
     "name": "Hay",
-    "image": "/cache/img/items/O_178.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "180": {
+  "O_180": {
     "name": "Egg",
-    "image": "/cache/img/items/O_180.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "182": {
+  "O_182": {
     "name": "Large Egg",
-    "image": "/cache/img/items/O_182.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "184": {
+  "O_184": {
     "name": "Milk",
-    "image": "/cache/img/items/O_184.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "186": {
+  "O_186": {
     "name": "Large Milk",
-    "image": "/cache/img/items/O_186.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "188": {
+  "O_188": {
     "name": "Green Bean",
-    "image": "/cache/img/items/O_188.png",
     "achievement_required": true,
     "is_polyculture": true,
     "is_monoculture": true
   },
-  "190": {
+  "O_190": {
     "name": "Cauliflower",
-    "image": "/cache/img/items/O_190.png",
     "achievement_required": true,
     "is_polyculture": true,
     "is_monoculture": true
   },
-  "192": {
+  "O_192": {
     "name": "Potato",
-    "image": "/cache/img/items/O_192.png",
     "achievement_required": true,
     "is_polyculture": true,
     "is_monoculture": true
   },
-  "245": {
+  "O_245": {
     "name": "Sugar",
-    "image": "/cache/img/items/O_245.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "246": {
+  "O_246": {
     "name": "Wheat Flour",
-    "image": "/cache/img/items/O_246.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "247": {
+  "O_247": {
     "name": "Oil",
-    "image": "/cache/img/items/O_247.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "248": {
+  "O_248": {
     "name": "Garlic",
-    "image": "/cache/img/items/O_248.png",
     "achievement_required": true,
     "is_polyculture": true,
     "is_monoculture": true
   },
-  "250": {
+  "O_250": {
     "name": "Kale",
-    "image": "/cache/img/items/O_250.png",
     "achievement_required": true,
     "is_polyculture": true,
     "is_monoculture": true
   },
-  "251": {
+  "O_251": {
     "name": "Tea Sapling",
-    "image": "/cache/img/items/O_251.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "252": {
+  "O_252": {
     "name": "Rhubarb",
-    "image": "/cache/img/items/O_252.png",
     "achievement_required": true,
     "is_polyculture": true,
     "is_monoculture": true
   },
-  "254": {
+  "O_254": {
     "name": "Melon",
-    "image": "/cache/img/items/O_254.png",
     "achievement_required": true,
     "is_polyculture": true,
     "is_monoculture": true
   },
-  "256": {
+  "O_256": {
     "name": "Tomato",
-    "image": "/cache/img/items/O_256.png",
     "achievement_required": true,
     "is_polyculture": true,
     "is_monoculture": true
   },
-  "257": {
+  "O_257": {
     "name": "Morel",
-    "image": "/cache/img/items/O_257.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "258": {
+  "O_258": {
     "name": "Blueberry",
-    "image": "/cache/img/items/O_258.png",
     "achievement_required": true,
     "is_polyculture": true,
     "is_monoculture": true
   },
-  "259": {
+  "O_259": {
     "name": "Fiddlehead Fern",
-    "image": "/cache/img/items/O_259.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "260": {
+  "O_260": {
     "name": "Hot Pepper",
-    "image": "/cache/img/items/O_260.png",
     "achievement_required": true,
     "is_polyculture": true,
     "is_monoculture": true
   },
-  "262": {
+  "O_262": {
     "name": "Wheat",
-    "image": "/cache/img/items/O_262.png",
     "achievement_required": true,
     "is_polyculture": true,
     "is_monoculture": true
   },
-  "264": {
+  "O_264": {
     "name": "Radish",
-    "image": "/cache/img/items/O_264.png",
     "achievement_required": true,
     "is_polyculture": true,
     "is_monoculture": true
   },
-  "266": {
+  "O_266": {
     "name": "Red Cabbage",
-    "image": "/cache/img/items/O_266.png",
     "achievement_required": true,
     "is_polyculture": true,
     "is_monoculture": true
   },
-  "268": {
+  "O_268": {
     "name": "Starfruit",
-    "image": "/cache/img/items/O_268.png",
     "achievement_required": true,
     "is_polyculture": true,
     "is_monoculture": true
   },
-  "270": {
+  "O_270": {
     "name": "Corn",
-    "image": "/cache/img/items/O_270.png",
     "achievement_required": true,
     "is_polyculture": true,
     "is_monoculture": true
   },
-  "271": {
+  "O_271": {
     "name": "Unmilled Rice",
-    "image": "/cache/img/items/O_271.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "272": {
+  "O_272": {
     "name": "Eggplant",
-    "image": "/cache/img/items/O_272.png",
     "achievement_required": true,
     "is_polyculture": true,
     "is_monoculture": true
   },
-  "274": {
+  "O_274": {
     "name": "Artichoke",
-    "image": "/cache/img/items/O_274.png",
     "achievement_required": true,
     "is_polyculture": true,
     "is_monoculture": true
   },
-  "275": {
+  "O_275": {
     "name": "Artifact Trove",
-    "image": "/cache/img/items/O_275.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "276": {
+  "O_276": {
     "name": "Pumpkin",
-    "image": "/cache/img/items/O_276.png",
     "achievement_required": true,
     "is_polyculture": true,
     "is_monoculture": true
   },
-  "277": {
+  "O_277": {
     "name": "Wilted Bouquet",
-    "image": "/cache/img/items/O_277.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "278": {
+  "O_278": {
     "name": "Bok Choy",
-    "image": "/cache/img/items/O_278.png",
     "achievement_required": true,
     "is_polyculture": true,
     "is_monoculture": true
   },
-  "280": {
+  "O_280": {
     "name": "Yam",
-    "image": "/cache/img/items/O_280.png",
     "achievement_required": true,
     "is_polyculture": true,
     "is_monoculture": true
   },
-  "281": {
+  "O_281": {
     "name": "Chanterelle",
-    "image": "/cache/img/items/O_281.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "282": {
+  "O_282": {
     "name": "Cranberries",
-    "image": "/cache/img/items/O_282.png",
     "achievement_required": true,
     "is_polyculture": true,
     "is_monoculture": true
   },
-  "283": {
+  "O_283": {
     "name": "Holly",
-    "image": "/cache/img/items/O_283.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "284": {
+  "O_284": {
     "name": "Beet",
-    "image": "/cache/img/items/O_284.png",
     "achievement_required": true,
     "is_polyculture": true,
     "is_monoculture": true
   },
-  "289": {
+  "O_289": {
     "name": "Ostrich Egg",
-    "image": "/cache/img/items/O_289.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "296": {
+  "O_296": {
     "name": "Salmonberry",
-    "image": "/cache/img/items/O_296.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "300": {
+  "O_300": {
     "name": "Amaranth",
-    "image": "/cache/img/items/O_300.png",
     "achievement_required": true,
     "is_polyculture": true,
     "is_monoculture": true
   },
-  "303": {
+  "O_303": {
     "name": "Pale Ale",
-    "image": "/cache/img/items/O_303.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "304": {
+  "O_304": {
     "name": "Hops",
-    "image": "/cache/img/items/O_304.png",
     "achievement_required": true,
     "is_polyculture": true,
     "is_monoculture": true
   },
-  "305": {
+  "O_305": {
     "name": "Void Egg",
-    "image": "/cache/img/items/O_305.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "306": {
+  "O_306": {
     "name": "Mayonnaise",
-    "image": "/cache/img/items/O_306.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "307": {
+  "O_307": {
     "name": "Duck Mayonnaise",
-    "image": "/cache/img/items/O_307.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "308": {
+  "O_308": {
     "name": "Void Mayonnaise",
-    "image": "/cache/img/items/O_308.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "330": {
+  "O_330": {
     "name": "Clay",
-    "image": "/cache/img/items/O_330.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "334": {
+  "O_334": {
     "name": "Copper Bar",
-    "image": "/cache/img/items/O_334.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "335": {
+  "O_335": {
     "name": "Iron Bar",
-    "image": "/cache/img/items/O_335.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "336": {
+  "O_336": {
     "name": "Gold Bar",
-    "image": "/cache/img/items/O_336.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "337": {
+  "O_337": {
     "name": "Iridium Bar",
-    "image": "/cache/img/items/O_337.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "338": {
+  "O_338": {
     "name": "Refined Quartz",
-    "image": "/cache/img/items/O_338.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "340": {
+  "O_340": {
     "name": "Honey",
-    "image": "/cache/img/items/O_340.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "341": {
+  "O_341": {
     "name": "Tea Set",
-    "image": "/cache/img/items/O_341.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "342": {
+  "O_342": {
     "name": "Pickles",
-    "image": "/cache/img/items/O_342.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "344": {
+  "O_344": {
     "name": "Jelly",
-    "image": "/cache/img/items/O_344.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "346": {
+  "O_346": {
     "name": "Beer",
-    "image": "/cache/img/items/O_346.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "348": {
+  "O_348": {
     "name": "Wine",
-    "image": "/cache/img/items/O_348.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "350": {
+  "O_350": {
     "name": "Juice",
-    "image": "/cache/img/items/O_350.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "368": {
+  "O_368": {
     "name": "Basic Fertilizer",
-    "image": "/cache/img/items/O_368.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "369": {
+  "O_369": {
     "name": "Quality Fertilizer",
-    "image": "/cache/img/items/O_369.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "370": {
+  "O_370": {
     "name": "Basic Retaining Soil",
-    "image": "/cache/img/items/O_370.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "371": {
+  "O_371": {
     "name": "Quality Retaining Soil",
-    "image": "/cache/img/items/O_371.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "373": {
+  "O_373": {
     "name": "Golden Pumpkin",
-    "image": "/cache/img/items/O_373.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "376": {
+  "O_376": {
     "name": "Poppy",
-    "image": "/cache/img/items/O_376.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "378": {
+  "O_378": {
     "name": "Copper Ore",
-    "image": "/cache/img/items/O_378.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "380": {
+  "O_380": {
     "name": "Iron Ore",
-    "image": "/cache/img/items/O_380.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "382": {
+  "O_382": {
     "name": "Coal",
-    "image": "/cache/img/items/O_382.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "384": {
+  "O_384": {
     "name": "Gold Ore",
-    "image": "/cache/img/items/O_384.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "386": {
+  "O_386": {
     "name": "Iridium Ore",
-    "image": "/cache/img/items/O_386.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "388": {
+  "O_388": {
     "name": "Wood",
-    "image": "/cache/img/items/O_388.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "390": {
+  "O_390": {
     "name": "Stone",
-    "image": "/cache/img/items/O_390.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "392": {
+  "O_392": {
     "name": "Nautilus Shell",
-    "image": "/cache/img/items/O_392.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "393": {
+  "O_393": {
     "name": "Coral",
-    "image": "/cache/img/items/O_393.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "394": {
+  "O_394": {
     "name": "Rainbow Shell",
-    "image": "/cache/img/items/O_394.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "396": {
+  "O_396": {
     "name": "Spice Berry",
-    "image": "/cache/img/items/O_396.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "397": {
+  "O_397": {
     "name": "Sea Urchin",
-    "image": "/cache/img/items/O_397.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "398": {
+  "O_398": {
     "name": "Grape",
-    "image": "/cache/img/items/O_398.png",
     "achievement_required": true,
     "is_polyculture": true,
     "is_monoculture": true
   },
-  "399": {
+  "O_399": {
     "name": "Spring Onion",
-    "image": "/cache/img/items/O_399.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "400": {
+  "O_400": {
     "name": "Strawberry",
-    "image": "/cache/img/items/O_400.png",
     "achievement_required": true,
     "is_polyculture": true,
     "is_monoculture": true
   },
-  "402": {
+  "O_402": {
     "name": "Sweet Pea",
-    "image": "/cache/img/items/O_402.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "404": {
+  "O_404": {
     "name": "Common Mushroom",
-    "image": "/cache/img/items/O_404.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "406": {
+  "O_406": {
     "name": "Wild Plum",
-    "image": "/cache/img/items/O_406.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "408": {
+  "O_408": {
     "name": "Hazelnut",
-    "image": "/cache/img/items/O_408.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "410": {
+  "O_410": {
     "name": "Blackberry",
-    "image": "/cache/img/items/O_410.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "412": {
+  "O_412": {
     "name": "Winter Root",
-    "image": "/cache/img/items/O_412.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "413": {
+  "O_413": {
     "name": "Blue Slime Egg",
-    "image": "/cache/img/items/O_413.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "414": {
+  "O_414": {
     "name": "Crystal Fruit",
-    "image": "/cache/img/items/O_414.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "416": {
+  "O_416": {
     "name": "Snow Yam",
-    "image": "/cache/img/items/O_416.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "417": {
+  "O_417": {
     "name": "Sweet Gem Berry",
-    "image": "/cache/img/items/O_417.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "418": {
+  "O_418": {
     "name": "Crocus",
-    "image": "/cache/img/items/O_418.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "419": {
+  "O_419": {
     "name": "Vinegar",
-    "image": "/cache/img/items/O_419.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "420": {
+  "O_420": {
     "name": "Red Mushroom",
-    "image": "/cache/img/items/O_420.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "421": {
+  "O_421": {
     "name": "Sunflower",
-    "image": "/cache/img/items/O_421.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "422": {
+  "O_422": {
     "name": "Purple Mushroom",
-    "image": "/cache/img/items/O_422.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "423": {
+  "O_423": {
     "name": "Rice",
-    "image": "/cache/img/items/O_423.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "424": {
+  "O_424": {
     "name": "Cheese",
-    "image": "/cache/img/items/O_424.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "426": {
+  "O_426": {
     "name": "Goat Cheese",
-    "image": "/cache/img/items/O_426.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "428": {
+  "O_428": {
     "name": "Cloth",
-    "image": "/cache/img/items/O_428.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "430": {
+  "O_430": {
     "name": "Truffle",
-    "image": "/cache/img/items/O_430.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "432": {
+  "O_432": {
     "name": "Truffle Oil",
-    "image": "/cache/img/items/O_432.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "436": {
+  "O_436": {
     "name": "Goat Milk",
-    "image": "/cache/img/items/O_436.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "437": {
+  "O_437": {
     "name": "Red Slime Egg",
-    "image": "/cache/img/items/O_437.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "438": {
+  "O_438": {
     "name": "L. Goat Milk",
-    "image": "/cache/img/items/O_438.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "439": {
+  "O_439": {
     "name": "Purple Slime Egg",
-    "image": "/cache/img/items/O_439.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "440": {
+  "O_440": {
     "name": "Wool",
-    "image": "/cache/img/items/O_440.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "441": {
+  "O_441": {
     "name": "Explosive Ammo",
-    "image": "/cache/img/items/O_441.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "442": {
+  "O_442": {
     "name": "Duck Egg",
-    "image": "/cache/img/items/O_442.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "444": {
+  "O_444": {
     "name": "Duck Feather",
-    "image": "/cache/img/items/O_444.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "445": {
+  "O_445": {
     "name": "Caviar",
-    "image": "/cache/img/items/O_445.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "446": {
+  "O_446": {
     "name": "Rabbit's Foot",
-    "image": "/cache/img/items/O_446.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "447": {
+  "O_447": {
     "name": "Aged Roe",
-    "image": "/cache/img/items/O_447.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "454": {
+  "O_454": {
     "name": "Ancient Fruit",
-    "image": "/cache/img/items/O_454.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": true
   },
-  "458": {
+  "O_458": {
     "name": "Bouquet",
-    "image": "/cache/img/items/O_458.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "459": {
+  "O_459": {
     "name": "Mead",
-    "image": "/cache/img/items/O_459.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "460": {
+  "O_460": {
     "name": "Mermaid's Pendant",
-    "image": "/cache/img/items/O_460.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "465": {
+  "O_465": {
     "name": "Speed-Gro",
-    "image": "/cache/img/items/O_465.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "466": {
+  "O_466": {
     "name": "Deluxe Speed-Gro",
-    "image": "/cache/img/items/O_466.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "535": {
+  "O_535": {
     "name": "Geode",
-    "image": "/cache/img/items/O_535.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "536": {
+  "O_536": {
     "name": "Frozen Geode",
-    "image": "/cache/img/items/O_536.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "537": {
+  "O_537": {
     "name": "Magma Geode",
-    "image": "/cache/img/items/O_537.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "591": {
+  "O_591": {
     "name": "Tulip",
-    "image": "/cache/img/items/O_591.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": true
   },
-  "593": {
+  "O_593": {
     "name": "Summer Spangle",
-    "image": "/cache/img/items/O_593.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": true
   },
-  "595": {
+  "O_595": {
     "name": "Fairy Rose",
-    "image": "/cache/img/items/O_595.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": true
   },
-  "597": {
+  "O_597": {
     "name": "Blue Jazz",
-    "image": "/cache/img/items/O_597.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": true
   },
-  "613": {
+  "O_613": {
     "name": "Apple",
-    "image": "/cache/img/items/O_613.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "614": {
+  "O_614": {
     "name": "Green Tea",
-    "image": "/cache/img/items/O_614.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "628": {
+  "O_628": {
     "name": "Cherry Sapling",
-    "image": "/cache/img/items/O_628.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "629": {
+  "O_629": {
     "name": "Apricot Sapling",
-    "image": "/cache/img/items/O_629.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "630": {
+  "O_630": {
     "name": "Orange Sapling",
-    "image": "/cache/img/items/O_630.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "631": {
+  "O_631": {
     "name": "Peach Sapling",
-    "image": "/cache/img/items/O_631.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "632": {
+  "O_632": {
     "name": "Pomegranate Sapling",
-    "image": "/cache/img/items/O_632.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "633": {
+  "O_633": {
     "name": "Apple Sapling",
-    "image": "/cache/img/items/O_633.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "634": {
+  "O_634": {
     "name": "Apricot",
-    "image": "/cache/img/items/O_634.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "635": {
+  "O_635": {
     "name": "Orange",
-    "image": "/cache/img/items/O_635.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "636": {
+  "O_636": {
     "name": "Peach",
-    "image": "/cache/img/items/O_636.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "637": {
+  "O_637": {
     "name": "Pomegranate",
-    "image": "/cache/img/items/O_637.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "638": {
+  "O_638": {
     "name": "Cherry",
-    "image": "/cache/img/items/O_638.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "680": {
+  "O_680": {
     "name": "Green Slime Egg",
-    "image": "/cache/img/items/O_680.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "684": {
+  "O_684": {
     "name": "Bug Meat",
-    "image": "/cache/img/items/O_684.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "685": {
+  "O_685": {
     "name": "Bait",
-    "image": "/cache/img/items/O_685.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "686": {
+  "O_686": {
     "name": "Spinner",
-    "image": "/cache/img/items/O_686.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "687": {
+  "O_687": {
     "name": "Dressed Spinner",
-    "image": "/cache/img/items/O_687.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "691": {
+  "O_691": {
     "name": "Barbed Hook",
-    "image": "/cache/img/items/O_691.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "692": {
+  "O_692": {
     "name": "Lead Bobber",
-    "image": "/cache/img/items/O_692.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "693": {
+  "O_693": {
     "name": "Treasure Hunter",
-    "image": "/cache/img/items/O_693.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "694": {
+  "O_694": {
     "name": "Trap Bobber",
-    "image": "/cache/img/items/O_694.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "695": {
+  "O_695": {
     "name": "Cork Bobber",
-    "image": "/cache/img/items/O_695.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "703": {
+  "O_703": {
     "name": "Magnet",
-    "image": "/cache/img/items/O_703.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "709": {
+  "O_709": {
     "name": "Hardwood",
-    "image": "/cache/img/items/O_709.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "724": {
+  "O_724": {
     "name": "Maple Syrup",
-    "image": "/cache/img/items/O_724.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "725": {
+  "O_725": {
     "name": "Oak Resin",
-    "image": "/cache/img/items/O_725.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "726": {
+  "O_726": {
     "name": "Pine Tar",
-    "image": "/cache/img/items/O_726.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "747": {
+  "O_747": {
     "name": "Rotten Plant",
-    "image": "/cache/img/items/O_747.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "748": {
+  "O_748": {
     "name": "Rotten Plant",
-    "image": "/cache/img/items/O_748.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "749": {
+  "O_749": {
     "name": "Omni Geode",
-    "image": "/cache/img/items/O_749.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "766": {
+  "O_766": {
     "name": "Slime",
-    "image": "/cache/img/items/O_766.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "767": {
+  "O_767": {
     "name": "Bat Wing",
-    "image": "/cache/img/items/O_767.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "768": {
+  "O_768": {
     "name": "Solar Essence",
-    "image": "/cache/img/items/O_768.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "769": {
+  "O_769": {
     "name": "Void Essence",
-    "image": "/cache/img/items/O_769.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "771": {
+  "O_771": {
     "name": "Fiber",
-    "image": "/cache/img/items/O_771.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "774": {
+  "O_774": {
     "name": "Wild Bait",
-    "image": "/cache/img/items/O_774.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "787": {
+  "O_787": {
     "name": "Battery Pack",
-    "image": "/cache/img/items/O_787.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "797": {
+  "O_797": {
     "name": "Pearl",
-    "image": "/cache/img/items/O_797.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "803": {
+  "O_803": {
     "name": "Iridium Milk",
-    "image": "/cache/img/items/O_803.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "805": {
+  "O_805": {
     "name": "Tree Fertilizer",
-    "image": "/cache/img/items/O_805.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "807": {
+  "O_807": {
     "name": "Dinosaur Mayonnaise",
-    "image": "/cache/img/items/O_807.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "808": {
+  "O_808": {
     "name": "Void Ghost Pendant",
-    "image": "/cache/img/items/O_808.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "809": {
+  "O_809": {
     "name": "Movie Ticket",
-    "image": "/cache/img/items/O_809.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "812": {
+  "O_812": {
     "name": "Roe",
-    "image": "/cache/img/items/O_812.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "814": {
+  "O_814": {
     "name": "Squid Ink",
-    "image": "/cache/img/items/O_814.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "815": {
+  "O_815": {
     "name": "Tea Leaves",
-    "image": "/cache/img/items/O_815.png",
     "achievement_required": true,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "820": {
+  "O_820": {
     "name": "Fossilized Skull",
-    "image": "/cache/img/items/O_820.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "821": {
+  "O_821": {
     "name": "Fossilized Spine",
-    "image": "/cache/img/items/O_821.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "822": {
+  "O_822": {
     "name": "Fossilized Tail",
-    "image": "/cache/img/items/O_822.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "823": {
+  "O_823": {
     "name": "Fossilized Leg",
-    "image": "/cache/img/items/O_823.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "824": {
+  "O_824": {
     "name": "Fossilized Ribs",
-    "image": "/cache/img/items/O_824.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "825": {
+  "O_825": {
     "name": "Snake Skull",
-    "image": "/cache/img/items/O_825.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "826": {
+  "O_826": {
     "name": "Snake Vertebrae",
-    "image": "/cache/img/items/O_826.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "827": {
+  "O_827": {
     "name": "Mummified Bat",
-    "image": "/cache/img/items/O_827.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "828": {
+  "O_828": {
     "name": "Mummified Frog",
-    "image": "/cache/img/items/O_828.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "829": {
+  "O_829": {
     "name": "Ginger",
-    "image": "/cache/img/items/O_829.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "830": {
+  "O_830": {
     "name": "Taro Root",
-    "image": "/cache/img/items/O_830.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "832": {
+  "O_832": {
     "name": "Pineapple",
-    "image": "/cache/img/items/O_832.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "834": {
+  "O_834": {
     "name": "Mango",
-    "image": "/cache/img/items/O_834.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "835": {
+  "O_835": {
     "name": "Mango Sapling",
-    "image": "/cache/img/items/O_835.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "848": {
+  "O_848": {
     "name": "Cinder Shard",
-    "image": "/cache/img/items/O_848.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "851": {
+  "O_851": {
     "name": "Magma Cap",
-    "image": "/cache/img/items/O_851.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "852": {
+  "O_852": {
     "name": "Dragon Tooth",
-    "image": "/cache/img/items/O_852.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "856": {
+  "O_856": {
     "name": "Curiosity Lure",
-    "image": "/cache/img/items/O_856.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "857": {
+  "O_857": {
     "name": "Tiger Slime Egg",
-    "image": "/cache/img/items/O_857.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "858": {
+  "O_858": {
     "name": "Qi Gem",
-    "image": "/cache/img/items/O_858.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "872": {
+  "O_872": {
     "name": "Fairy Dust",
-    "image": "/cache/img/items/O_872.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "877": {
+  "O_877": {
     "name": "Quality Bobber",
-    "image": "/cache/img/items/O_877.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "881": {
+  "O_881": {
     "name": "Bone Fragment",
-    "image": "/cache/img/items/O_881.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "889": {
+  "O_889": {
     "name": "Qi Fruit",
-    "image": "/cache/img/items/O_889.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "908": {
+  "O_908": {
     "name": "Magic Bait",
-    "image": "/cache/img/items/O_908.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "909": {
+  "O_909": {
     "name": "Radioactive Ore",
-    "image": "/cache/img/items/O_909.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "910": {
+  "O_910": {
     "name": "Radioactive Bar",
-    "image": "/cache/img/items/O_910.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "913": {
+  "O_913": {
     "name": "Enricher",
-    "image": "/cache/img/items/O_913.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "915": {
+  "O_915": {
     "name": "Pressure Nozzle",
-    "image": "/cache/img/items/O_915.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "917": {
+  "O_917": {
     "name": "Qi Seasoning",
-    "image": "/cache/img/items/O_917.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "918": {
+  "O_918": {
     "name": "Hyper Speed-Gro",
-    "image": "/cache/img/items/O_918.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "919": {
+  "O_919": {
     "name": "Deluxe Fertilizer",
-    "image": "/cache/img/items/O_919.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "920": {
+  "O_920": {
     "name": "Deluxe Retaining Soil",
-    "image": "/cache/img/items/O_920.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "928": {
+  "O_928": {
     "name": "Golden Egg",
-    "image": "/cache/img/items/O_928.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "930": {
+  "O_930": {
     "name": "???",
-    "image": "/cache/img/items/O_930.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "FarAwayStone": {
+  "O_FarAwayStone": {
     "name": "Far Away Stone",
-    "image": "/cache/img/items/O_FarAwayStone.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "CalicoEgg": {
+  "O_CalicoEgg": {
     "name": "Calico Egg",
-    "image": "/cache/img/items/O_CalicoEgg.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "MysteryBox": {
+  "O_MysteryBox": {
     "name": "Mystery Box",
-    "image": "/cache/img/items/O_MysteryBox.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "TroutDerbyTag": {
+  "O_TroutDerbyTag": {
     "name": "Golden Tag",
-    "image": "/cache/img/items/O_TroutDerbyTag.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "DeluxeBait": {
+  "O_DeluxeBait": {
     "name": "Deluxe Bait",
-    "image": "/cache/img/items/O_DeluxeBait.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "Moss": {
+  "O_Moss": {
     "name": "Moss",
-    "image": "/cache/img/items/O_Moss.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "SonarBobber": {
+  "O_SonarBobber": {
     "name": "Sonar Bobber",
-    "image": "/cache/img/items/O_SonarBobber.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "SpecificBait": {
+  "O_SpecificBait": {
     "name": "Bait",
-    "image": "/cache/img/items/O_SpecificBait.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "MysticSyrup": {
+  "O_MysticSyrup": {
     "name": "Mystic Syrup",
-    "image": "/cache/img/items/O_MysticSyrup.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "Raisins": {
+  "O_Raisins": {
     "name": "Raisins",
-    "image": "/cache/img/items/O_Raisins.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "DriedFruit": {
+  "O_DriedFruit": {
     "name": "Dried",
-    "image": "/cache/img/items/O_DriedFruit.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "DriedMushrooms": {
+  "O_DriedMushrooms": {
     "name": "Dried",
-    "image": "/cache/img/items/O_DriedMushrooms.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "StardropTea": {
+  "O_StardropTea": {
     "name": "Stardrop Tea",
-    "image": "/cache/img/items/O_StardropTea.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "PrizeTicket": {
+  "O_PrizeTicket": {
     "name": "Prize Ticket",
-    "image": "/cache/img/items/O_PrizeTicket.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "GoldCoin": {
+  "O_GoldCoin": {
     "name": "Gold Coin",
-    "image": "/cache/img/items/O_GoldCoin.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "ChallengeBait": {
+  "O_ChallengeBait": {
     "name": "Challenge Bait",
-    "image": "/cache/img/items/O_ChallengeBait.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "Carrot": {
+  "O_Carrot": {
     "name": "Carrot",
-    "image": "/cache/img/items/O_Carrot.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "SummerSquash": {
+  "O_SummerSquash": {
     "name": "Summer Squash",
-    "image": "/cache/img/items/O_SummerSquash.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "Broccoli": {
+  "O_Broccoli": {
     "name": "Broccoli",
-    "image": "/cache/img/items/O_Broccoli.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "Powdermelon": {
+  "O_Powdermelon": {
     "name": "Powdermelon",
-    "image": "/cache/img/items/O_Powdermelon.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "SmokedFish": {
+  "O_SmokedFish": {
     "name": "Smoked",
-    "image": "/cache/img/items/O_SmokedFish.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "GoldenMysteryBox": {
+  "O_GoldenMysteryBox": {
     "name": "Golden Mystery Box",
-    "image": "/cache/img/items/O_GoldenMysteryBox.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "ButterflyPowder": {
+  "O_ButterflyPowder": {
     "name": "Butterfly Powder",
-    "image": "/cache/img/items/O_ButterflyPowder.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "PetLicense": {
+  "O_PetLicense": {
     "name": "Pet License",
-    "image": "/cache/img/items/O_PetLicense.png",
     "achievement_required": false,
     "is_polyculture": false,
     "is_monoculture": false
   },
-  "433": {
+  "O_433": {
     "name": "Coffee Bean",
     "is_polyculture": true,
     "is_monoculture": true,
-    "image": "/cache/img/items/O_433.png",
     "achievement_required": true
   }
 }

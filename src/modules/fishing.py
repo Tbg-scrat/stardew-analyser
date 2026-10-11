@@ -1,3 +1,4 @@
+from src.core.reference_data import qualify_item_id
 # src/modules/fishing.py
 
 import logging
@@ -88,7 +89,7 @@ def get_formatted_fishing(player_node, catalog=None):
         catalog = FISH_CATALOG
 
     raw_fish = parse_fishing(player_node)
-    fish_save_map = {str(k).replace("(O)", ""): v for k, v in raw_fish.items()}
+    fish_save_map = {qualify_item_id(k): v for k, v in raw_fish.items()}
 
     fish_mapped = []
     catalog_items = catalog.items() if isinstance(catalog, dict) else []
@@ -111,7 +112,7 @@ def get_formatted_fishing(player_node, catalog=None):
                 "length": stats["length"] if is_caught else 0,
                 "status": "caught" if is_caught else "not_caught",
                 "is_unlocked": is_caught,
-                "image": catalog_item.get("image", ""),
+                "image": catalog_item.get("image") or f"/cache/img/items/{item_id}.png",
                 "wiki_icon": format_wiki_filename(item_name),
             }
         )

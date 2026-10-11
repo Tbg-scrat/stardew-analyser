@@ -19,7 +19,7 @@ def test_parse_crop_ready_today():
     result = parse_crop(crop_elem)
 
     assert result["days_to_harvest"] == 0
-    assert result["harvest_id"] == "454"
+    assert result["harvest_id"] == "O_454"
     assert result["is_recurring"] is False
 
 
@@ -39,7 +39,7 @@ def test_parse_crop_days_remaining_calculation():
 
     # current_phase = 4, phase_days[4] = 2, day_of_phase = 1 -> 1 day remaining
     assert result["days_to_harvest"] == 1
-    assert result["harvest_id"] == "Powdermelon"
+    assert result["harvest_id"] == "O_Powdermelon"
 
 
 def test_season_wither_warning_on_main_farm():

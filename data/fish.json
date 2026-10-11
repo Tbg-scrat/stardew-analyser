@@ -1,310 +1,233 @@
 {
-  "128": {
-    "name": "Pufferfish",
-    "image": "/cache/img/items/O_128.png"
-  },
-  "129": {
-    "name": "Anchovy",
-    "image": "/cache/img/items/O_129.png"
-  },
-  "130": {
-    "name": "Tuna",
-    "image": "/cache/img/items/O_130.png"
-  },
-  "131": {
-    "name": "Sardine",
-    "image": "/cache/img/items/O_131.png"
-  },
-  "132": {
-    "name": "Bream",
-    "image": "/cache/img/items/O_132.png"
-  },
-  "136": {
-    "name": "Largemouth Bass",
-    "image": "/cache/img/items/O_136.png"
-  },
-  "137": {
-    "name": "Smallmouth Bass",
-    "image": "/cache/img/items/O_137.png"
-  },
-  "138": {
-    "name": "Rainbow Trout",
-    "image": "/cache/img/items/O_138.png"
-  },
-  "139": {
-    "name": "Salmon",
-    "image": "/cache/img/items/O_139.png"
-  },
-  "140": {
-    "name": "Walleye",
-    "image": "/cache/img/items/O_140.png"
-  },
-  "141": {
-    "name": "Perch",
-    "image": "/cache/img/items/O_141.png"
-  },
-  "142": {
-    "name": "Carp",
-    "image": "/cache/img/items/O_142.png"
-  },
-  "143": {
-    "name": "Catfish",
-    "image": "/cache/img/items/O_143.png"
-  },
-  "144": {
-    "name": "Pike",
-    "image": "/cache/img/items/O_144.png"
-  },
-  "145": {
-    "name": "Sunfish",
-    "image": "/cache/img/items/O_145.png"
-  },
-  "146": {
-    "name": "Red Mullet",
-    "image": "/cache/img/items/O_146.png"
-  },
-  "147": {
-    "name": "Herring",
-    "image": "/cache/img/items/O_147.png"
-  },
-  "148": {
-    "name": "Eel",
-    "image": "/cache/img/items/O_148.png"
-  },
-  "149": {
-    "name": "Octopus",
-    "image": "/cache/img/items/O_149.png"
-  },
-  "150": {
-    "name": "Red Snapper",
-    "image": "/cache/img/items/O_150.png"
-  },
-  "151": {
-    "name": "Squid",
-    "image": "/cache/img/items/O_151.png"
-  },
-  "152": {
-    "name": "Seaweed",
-    "image": "/cache/img/items/O_152.png"
-  },
-  "153": {
-    "name": "Green Algae",
-    "image": "/cache/img/items/O_153.png"
-  },
-  "154": {
-    "name": "Sea Cucumber",
-    "image": "/cache/img/items/O_154.png"
-  },
-  "155": {
-    "name": "Super Cucumber",
-    "image": "/cache/img/items/O_155.png"
-  },
-  "156": {
-    "name": "Ghostfish",
-    "image": "/cache/img/items/O_156.png"
-  },
-  "157": {
-    "name": "White Algae",
-    "image": "/cache/img/items/O_157.png"
-  },
-  "158": {
-    "name": "Stonefish",
-    "image": "/cache/img/items/O_158.png"
-  },
-  "159": {
-    "name": "Crimsonfish",
-    "image": "/cache/img/items/O_159.png"
-  },
-  "160": {
-    "name": "Angler",
-    "image": "/cache/img/items/O_160.png"
-  },
-  "161": {
-    "name": "Ice Pip",
-    "image": "/cache/img/items/O_161.png"
-  },
-  "162": {
-    "name": "Lava Eel",
-    "image": "/cache/img/items/O_162.png"
-  },
-  "163": {
-    "name": "Legend",
-    "image": "/cache/img/items/O_163.png"
-  },
-  "164": {
-    "name": "Sandfish",
-    "image": "/cache/img/items/O_164.png"
-  },
-  "165": {
-    "name": "Scorpion Carp",
-    "image": "/cache/img/items/O_165.png"
-  },
-  "267": {
-    "name": "Flounder",
-    "image": "/cache/img/items/O_267.png"
-  },
-  "269": {
-    "name": "Midnight Carp",
-    "image": "/cache/img/items/O_269.png"
-  },
-  "372": {
-    "name": "Clam",
-    "image": "/cache/img/items/O_372.png"
-  },
-  "682": {
-    "name": "Mutant Carp",
-    "image": "/cache/img/items/O_682.png"
-  },
-  "698": {
-    "name": "Sturgeon",
-    "image": "/cache/img/items/O_698.png"
-  },
-  "699": {
-    "name": "Tiger Trout",
-    "image": "/cache/img/items/O_699.png"
-  },
-  "700": {
-    "name": "Bullhead",
-    "image": "/cache/img/items/O_700.png"
-  },
-  "701": {
-    "name": "Tilapia",
-    "image": "/cache/img/items/O_701.png"
-  },
-  "702": {
-    "name": "Chub",
-    "image": "/cache/img/items/O_702.png"
-  },
-  "704": {
-    "name": "Dorado",
-    "image": "/cache/img/items/O_704.png"
-  },
-  "705": {
-    "name": "Albacore",
-    "image": "/cache/img/items/O_705.png"
-  },
-  "706": {
-    "name": "Shad",
-    "image": "/cache/img/items/O_706.png"
-  },
-  "707": {
-    "name": "Lingcod",
-    "image": "/cache/img/items/O_707.png"
-  },
-  "708": {
-    "name": "Halibut",
-    "image": "/cache/img/items/O_708.png"
-  },
-  "715": {
-    "name": "Lobster",
-    "image": "/cache/img/items/O_715.png"
-  },
-  "716": {
-    "name": "Crayfish",
-    "image": "/cache/img/items/O_716.png"
-  },
-  "717": {
-    "name": "Crab",
-    "image": "/cache/img/items/O_717.png"
-  },
-  "718": {
-    "name": "Cockle",
-    "image": "/cache/img/items/O_718.png"
-  },
-  "719": {
-    "name": "Mussel",
-    "image": "/cache/img/items/O_719.png"
-  },
-  "720": {
-    "name": "Shrimp",
-    "image": "/cache/img/items/O_720.png"
-  },
-  "721": {
-    "name": "Snail",
-    "image": "/cache/img/items/O_721.png"
-  },
-  "722": {
-    "name": "Periwinkle",
-    "image": "/cache/img/items/O_722.png"
-  },
-  "723": {
-    "name": "Oyster",
-    "image": "/cache/img/items/O_723.png"
-  },
-  "734": {
-    "name": "Woodskip",
-    "image": "/cache/img/items/O_734.png"
-  },
-  "775": {
-    "name": "Glacierfish",
-    "image": "/cache/img/items/O_775.png"
-  },
-  "795": {
-    "name": "Void Salmon",
-    "image": "/cache/img/items/O_795.png"
-  },
-  "796": {
-    "name": "Slimejack",
-    "image": "/cache/img/items/O_796.png"
-  },
-  "798": {
-    "name": "Midnight Squid",
-    "image": "/cache/img/items/O_798.png"
-  },
-  "799": {
-    "name": "Spook Fish",
-    "image": "/cache/img/items/O_799.png"
-  },
-  "800": {
-    "name": "Blobfish",
-    "image": "/cache/img/items/O_800.png"
-  },
-  "836": {
-    "name": "Stingray",
-    "image": "/cache/img/items/O_836.png"
-  },
-  "837": {
-    "name": "Lionfish",
-    "image": "/cache/img/items/O_837.png"
-  },
-  "838": {
-    "name": "Blue Discus",
-    "image": "/cache/img/items/O_838.png"
-  },
-  "898": {
-    "name": "Son of Crimsonfish",
-    "image": "/cache/img/items/O_898.png"
-  },
-  "899": {
-    "name": "Ms. Angler",
-    "image": "/cache/img/items/O_899.png"
-  },
-  "900": {
-    "name": "Legend II",
-    "image": "/cache/img/items/O_900.png"
-  },
-  "901": {
-    "name": "Radioactive Carp",
-    "image": "/cache/img/items/O_901.png"
-  },
-  "902": {
-    "name": "Glacierfish Jr.",
-    "image": "/cache/img/items/O_902.png"
-  },
-  "SeaJelly": {
-    "name": "Sea Jelly",
-    "image": "/cache/img/items/O_SeaJelly.png"
-  },
-  "CaveJelly": {
-    "name": "Cave Jelly",
-    "image": "/cache/img/items/O_CaveJelly.png"
-  },
-  "RiverJelly": {
-    "name": "River Jelly",
-    "image": "/cache/img/items/O_RiverJelly.png"
-  },
-  "Goby": {
-    "name": "Goby",
-    "image": "/cache/img/items/O_Goby.png"
+  "O_128": {
+    "name": "Pufferfish"
+  },
+  "O_129": {
+    "name": "Anchovy"
+  },
+  "O_130": {
+    "name": "Tuna"
+  },
+  "O_131": {
+    "name": "Sardine"
+  },
+  "O_132": {
+    "name": "Bream"
+  },
+  "O_136": {
+    "name": "Largemouth Bass"
+  },
+  "O_137": {
+    "name": "Smallmouth Bass"
+  },
+  "O_138": {
+    "name": "Rainbow Trout"
+  },
+  "O_139": {
+    "name": "Salmon"
+  },
+  "O_140": {
+    "name": "Walleye"
+  },
+  "O_141": {
+    "name": "Perch"
+  },
+  "O_142": {
+    "name": "Carp"
+  },
+  "O_143": {
+    "name": "Catfish"
+  },
+  "O_144": {
+    "name": "Pike"
+  },
+  "O_145": {
+    "name": "Sunfish"
+  },
+  "O_146": {
+    "name": "Red Mullet"
+  },
+  "O_147": {
+    "name": "Herring"
+  },
+  "O_148": {
+    "name": "Eel"
+  },
+  "O_149": {
+    "name": "Octopus"
+  },
+  "O_150": {
+    "name": "Red Snapper"
+  },
+  "O_151": {
+    "name": "Squid"
+  },
+  "O_152": {
+    "name": "Seaweed"
+  },
+  "O_153": {
+    "name": "Green Algae"
+  },
+  "O_154": {
+    "name": "Sea Cucumber"
+  },
+  "O_155": {
+    "name": "Super Cucumber"
+  },
+  "O_156": {
+    "name": "Ghostfish"
+  },
+  "O_157": {
+    "name": "White Algae"
+  },
+  "O_158": {
+    "name": "Stonefish"
+  },
+  "O_159": {
+    "name": "Crimsonfish"
+  },
+  "O_160": {
+    "name": "Angler"
+  },
+  "O_161": {
+    "name": "Ice Pip"
+  },
+  "O_162": {
+    "name": "Lava Eel"
+  },
+  "O_163": {
+    "name": "Legend"
+  },
+  "O_164": {
+    "name": "Sandfish"
+  },
+  "O_165": {
+    "name": "Scorpion Carp"
+  },
+  "O_267": {
+    "name": "Flounder"
+  },
+  "O_269": {
+    "name": "Midnight Carp"
+  },
+  "O_372": {
+    "name": "Clam"
+  },
+  "O_682": {
+    "name": "Mutant Carp"
+  },
+  "O_698": {
+    "name": "Sturgeon"
+  },
+  "O_699": {
+    "name": "Tiger Trout"
+  },
+  "O_700": {
+    "name": "Bullhead"
+  },
+  "O_701": {
+    "name": "Tilapia"
+  },
+  "O_702": {
+    "name": "Chub"
+  },
+  "O_704": {
+    "name": "Dorado"
+  },
+  "O_705": {
+    "name": "Albacore"
+  },
+  "O_706": {
+    "name": "Shad"
+  },
+  "O_707": {
+    "name": "Lingcod"
+  },
+  "O_708": {
+    "name": "Halibut"
+  },
+  "O_715": {
+    "name": "Lobster"
+  },
+  "O_716": {
+    "name": "Crayfish"
+  },
+  "O_717": {
+    "name": "Crab"
+  },
+  "O_718": {
+    "name": "Cockle"
+  },
+  "O_719": {
+    "name": "Mussel"
+  },
+  "O_720": {
+    "name": "Shrimp"
+  },
+  "O_721": {
+    "name": "Snail"
+  },
+  "O_722": {
+    "name": "Periwinkle"
+  },
+  "O_723": {
+    "name": "Oyster"
+  },
+  "O_734": {
+    "name": "Woodskip"
+  },
+  "O_775": {
+    "name": "Glacierfish"
+  },
+  "O_795": {
+    "name": "Void Salmon"
+  },
+  "O_796": {
+    "name": "Slimejack"
+  },
+  "O_798": {
+    "name": "Midnight Squid"
+  },
+  "O_799": {
+    "name": "Spook Fish"
+  },
+  "O_800": {
+    "name": "Blobfish"
+  },
+  "O_836": {
+    "name": "Stingray"
+  },
+  "O_837": {
+    "name": "Lionfish"
+  },
+  "O_838": {
+    "name": "Blue Discus"
+  },
+  "O_898": {
+    "name": "Son of Crimsonfish"
+  },
+  "O_899": {
+    "name": "Ms. Angler"
+  },
+  "O_900": {
+    "name": "Legend II"
+  },
+  "O_901": {
+    "name": "Radioactive Carp"
+  },
+  "O_902": {
+    "name": "Glacierfish Jr."
+  },
+  "O_SeaJelly": {
+    "name": "Sea Jelly"
+  },
+  "O_CaveJelly": {
+    "name": "Cave Jelly"
+  },
+  "O_RiverJelly": {
+    "name": "River Jelly"
+  },
+  "O_Goby": {
+    "name": "Goby"
   }
 }

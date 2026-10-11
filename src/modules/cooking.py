@@ -1,3 +1,4 @@
+from src.core.reference_data import qualify_item_id
 # src/modules/cooking.py
 
 import logging
@@ -78,7 +79,7 @@ def get_formatted_cooking(player, catalog=None):
         catalog = COOKING_CATALOG
 
     raw_cooking = parse_cooking(player)
-    cooking_save_map = {str(k).replace("(O)", ""): v for k, v in raw_cooking.items()}
+    cooking_save_map = {qualify_item_id(k): v for k, v in raw_cooking.items()}
 
     cooking_mapped = []
     catalog_items = catalog.items() if isinstance(catalog, dict) else []
@@ -100,7 +101,7 @@ def get_formatted_cooking(player, catalog=None):
                 "count": count,
                 "status": "cooked" if is_cooked else "not_cooked",
                 "is_unlocked": is_cooked,
-                "image": catalog_item.get("image", ""),
+                "image": catalog_item.get("image") or f"/cache/img/items/{item_id}.png",
                 "wiki_icon": catalog_item.get(
                     "wiki_icon", format_wiki_filename(item_name)
                 ),

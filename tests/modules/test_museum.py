@@ -81,18 +81,18 @@ def test_get_formatted_museum_catalog_merge():
     """
     root = ET.fromstring(xml_data)
     custom_catalog = {
-        "579": {"name": "Prehistoric Scapula", "type": "Artifact"},
-        "580": {"name": "Prehistoric Tibia", "type": "Artifact"},
+        "O_579": {"name": "Prehistoric Scapula", "type": "Artifact"},
+        "O_580": {"name": "Prehistoric Tibia", "type": "Artifact"},
         "bad_entry": None,
     }
 
     results = get_formatted_museum(root, catalog=custom_catalog)
 
     assert len(results) == 2
-    scapula = next(item for item in results if item["id"] == "579")
+    scapula = next(item for item in results if item["id"] == "O_579")
     assert scapula["is_unlocked"] is True
     assert scapula["status"] == "found"
 
-    tibia = next(item for item in results if item["id"] == "580")
+    tibia = next(item for item in results if item["id"] == "O_580")
     assert tibia["is_unlocked"] is False
     assert tibia["status"] == "not_found"

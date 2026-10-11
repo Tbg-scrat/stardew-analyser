@@ -60,13 +60,13 @@ def test_get_formatted_shipping_catalog_merge():
     """
     player = ET.fromstring(xml_data)
     custom_catalog = {
-        "24": {
+        "O_24": {
             "name": "Parsnip",
             "achievement_required": True,
             "is_polyculture": True,
             "is_monoculture": True,
         },
-        "190": {
+        "O_190": {
             "name": "Cauliflower",
             "achievement_required": True,
             "is_polyculture": True,
@@ -79,14 +79,14 @@ def test_get_formatted_shipping_catalog_merge():
 
     assert len(results) == 2
 
-    parsnip = next(item for item in results if item["id"] == "24")
+    parsnip = next(item for item in results if item["id"] == "O_24")
     assert parsnip["count"] == 15
     assert parsnip["is_unlocked"] is True
     assert parsnip["status"] == "shipped"
     assert parsnip["is_polyculture"] is True
     assert parsnip["is_monoculture"] is True
 
-    cauliflower = next(item for item in results if item["id"] == "190")
+    cauliflower = next(item for item in results if item["id"] == "O_190")
     assert cauliflower["count"] == 0
     assert cauliflower["is_unlocked"] is False
     assert cauliflower["status"] == "not_shipped"

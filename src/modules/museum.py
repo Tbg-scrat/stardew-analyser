@@ -1,3 +1,4 @@
+from src.core.reference_data import qualify_item_id
 # src/modules/museum.py
 
 import logging
@@ -69,7 +70,7 @@ def get_formatted_museum(root_node, catalog=None):
         catalog = MUSEUM_CATALOG
 
     raw_museum = parse_museum(root_node)
-    donated_set = {str(item_id).replace("(O)", "") for item_id in raw_museum}
+    donated_set = {qualify_item_id(item_id) for item_id in raw_museum}
 
     museum_mapped = []
     catalog_items = catalog.items() if isinstance(catalog, dict) else []
@@ -90,7 +91,7 @@ def get_formatted_museum(root_node, catalog=None):
                 "type": catalog_item.get("type", "Artifact"),
                 "status": "found" if is_donated else "not_found",
                 "is_unlocked": is_donated,
-                "image": catalog_item.get("image", ""),
+                "image": catalog_item.get("image") or f"/cache/img/items/{item_id}.png",
                 "wiki_icon": format_wiki_filename(item_name),
             }
         )
