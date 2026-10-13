@@ -106,7 +106,7 @@
         {% if farm.artisan.casks and farm.artisan.casks.batches %}
         {% set next_cask = farm.artisan.casks.batches[0] %}
         <div class="harvest-ticker-item">
-            <img class="harvest-ticker-icon" src="/static/img/items/{{ next_cask.wiki_icon }}" onerror="this.onerror=null; this.src='/static/img/items/Wine.png';" alt="Casks">
+            <img class="harvest-ticker-icon" src="/cache/img/items/{{ next_cask.wiki_icon }}" onerror="this.onerror=null; this.src='/cache/img/items/Wine.png';" alt="Casks">
             <div class="harvest-ticker-info">
                 <div class="harvest-machine-label">🍷 Cellar Casks</div>
                 <div class="harvest-item-name">{{ next_cask.name }} (x{{ next_cask.count }})</div>
@@ -125,7 +125,7 @@
         {% if farm.artisan.kegs and farm.artisan.kegs.batches %}
         {% set next_keg = farm.artisan.kegs.batches[0] %}
         <div class="harvest-ticker-item">
-            <img class="harvest-ticker-icon" src="/static/img/items/{{ next_keg.wiki_icon }}" onerror="this.onerror=null; this.src='/static/img/items/Wine.png';" alt="Kegs">
+            <img class="harvest-ticker-icon" src="/cache/img/items/{{ next_keg.wiki_icon }}" onerror="this.onerror=null; this.src='/cache/img/items/Wine.png';" alt="Kegs">
             <div class="harvest-ticker-info">
                 <div class="harvest-machine-label">🍺 Kegs</div>
                 <div class="harvest-item-name">{{ next_keg.name }} (x{{ next_keg.count }})</div>
@@ -144,7 +144,7 @@
         {% if farm.artisan.jars and farm.artisan.jars.batches %}
         {% set next_jar = farm.artisan.jars.batches[0] %}
         <div class="harvest-ticker-item">
-            <img class="harvest-ticker-icon" src="/static/img/items/{{ next_jar.wiki_icon }}" onerror="this.onerror=null; this.src='/static/img/items/Jelly.png';" alt="Preserves Jars">
+            <img class="harvest-ticker-icon" src="/cache/img/items/{{ next_jar.wiki_icon }}" onerror="this.onerror=null; this.src='/cache/img/items/Jelly.png';" alt="Preserves Jars">
             <div class="harvest-ticker-info">
                 <div class="harvest-machine-label">🫙 Preserves Jars</div>
                 <div class="harvest-item-name">{{ next_jar.name }} (x{{ next_jar.count }})</div>
@@ -163,7 +163,7 @@
         {% if farm.artisan.dehydrators and farm.artisan.dehydrators.batches %}
         {% set next_deh = farm.artisan.dehydrators.batches[0] %}
         <div class="harvest-ticker-item">
-            <img class="harvest-ticker-icon" src="/static/img/items/{{ next_deh.wiki_icon }}" onerror="this.onerror=null; this.src='/static/img/items/Dried_Fruit.png';" alt="Dehydrators">
+            <img class="harvest-ticker-icon" src="/cache/img/items/{{ next_deh.wiki_icon }}" onerror="this.onerror=null; this.src='/cache/img/items/Dried_Fruit.png';" alt="Dehydrators">
             <div class="harvest-ticker-info">
                 <div class="harvest-machine-label">🍄 Dehydrators</div>
                 <div class="harvest-item-name">{{ next_deh.name }} (x{{ next_deh.count }})</div>
@@ -182,7 +182,7 @@
         {% if farm.artisan.bee_houses and farm.artisan.bee_houses.batches %}
         {% set next_bee = farm.artisan.bee_houses.batches[0] %}
         <div class="harvest-ticker-item">
-            <img class="harvest-ticker-icon" src="/static/img/items/{{ next_bee.wiki_icon }}" onerror="this.onerror=null; this.src='/static/img/items/Honey.png';" alt="Bee Houses">
+            <img class="harvest-ticker-icon" src="/cache/img/items/{{ next_bee.wiki_icon }}" onerror="this.onerror=null; this.src='/cache/img/items/Honey.png';" alt="Bee Houses">
             <div class="harvest-ticker-info">
                 <div class="harvest-machine-label">🐝 Bee Houses</div>
                 <div class="harvest-item-name">{{ next_bee.name }} (x{{ next_bee.count }})</div>

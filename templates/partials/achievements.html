@@ -42,7 +42,7 @@
          data-name="{{ item.name|lower }}" 
          data-status="{{ 'unlocked' if item.unlocked else 'locked' }}">
         <div class="item-sprite-box">
-            <img src="static/img/achievements/{{ item.icon }}" 
+            <img src="/cache/img/achievements/{{ item.icon }}" 
                  class="item-sprite {% if not item.unlocked %}grayscale{% endif %}" 
                  alt="{{ item.name }}"
                  onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='inline';">

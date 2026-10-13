@@ -135,7 +135,7 @@
                         <img src="{{ item.icon }}" 
                              alt="{{ item.name }}" 
                              class="crop-icon" 
-                             onerror="this.onerror=null; this.src='/static/img/items/O_{{ item.name.replace(' ', '_') }}.png'; this.onerror=function(){ this.src='{{ item.wiki_icon }}'; };">
+                             onerror="this.onerror=null; this.src='/cache/img/items/O_{{ item.name.replace(' ', '_') }}.png'; this.onerror=function(){ this.src='{{ item.wiki_icon }}'; };">
                         <span style="color: var(--text-primary); font-weight: 600;">{{ item.name }}</span>
                         {% if item.will_wither %}
                           <span class="badge-status badge-wither" title="Crop will not mature before season ends!">⚠️ Will Wither</span>

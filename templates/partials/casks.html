@@ -262,7 +262,7 @@
         <div class="item-sprite-box">
             {% if batch.wiki_icon.endswith('.png') %}
             <!-- Local custom/colored sprite -->
-            <img src="static/img/items/{{ batch.wiki_icon }}" 
+            <img src="/cache/img/items/{{ batch.wiki_icon }}" 
                  class="item-sprite" 
                  alt="{{ batch.name }}" 
                  onerror="this.onerror=null; this.src='https://stardewvalleywiki.com/Special:Redirect/file/Wine.png';">
@@ -275,11 +275,11 @@
             {% endif %}
 
             {% if batch.quality == 1 %}
-            <img src="static/img/badges/silver_star.png" class="cask-star-badge" alt="Silver Quality">
+            <img src="/cache/img/items/silver_star.png" class="cask-star-badge" alt="Silver Quality">
             {% elif batch.quality == 2 %}
-            <img src="static/img/badges/gold_star.png" class="cask-star-badge" alt="Gold Quality">
+            <img src="/cache/img/items/gold_star.png" class="cask-star-badge" alt="Gold Quality">
             {% elif batch.quality == 4 %}
-            <img src="static/img/badges/iridium_star.png" class="cask-star-badge" alt="Iridium Quality">
+            <img src="/cache/img/items/iridium_star.png" class="cask-star-badge" alt="Iridium Quality">
             {% endif %}
         </div>
         <div class="item-info">

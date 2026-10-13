@@ -108,7 +108,7 @@
             {% if loc_data and loc_data.total_crops > 0 and loc_data['items'] %}
                 {% set next_crop = loc_data['items'][0] %}
                 <div class="harvest-ticker-item">
-                    <img class="harvest-ticker-icon" src="{{ next_crop.icon }}" onerror="this.onerror=null; this.src='/static/img/items/placeholder.png';" alt="{{ next_crop.name }}">
+                    <img class="harvest-ticker-icon" src="{{ next_crop.icon }}" onerror="this.onerror=null; this.src='/cache/img/items/placeholder.png';" alt="{{ next_crop.name }}">
                     <div class="harvest-ticker-info">
                         <div class="harvest-machine-label">{{ loc_icon }} {{ loc_title }}</div>
                         <div class="harvest-item-name">{{ next_crop.name }} (x{{ next_crop.count }})</div>
@@ -123,7 +123,7 @@
                 </div>
             {% else %}
                 <div class="harvest-ticker-item" style="opacity: 0.6;">
-                    <img class="harvest-ticker-icon" src="/static/img/items/placeholder.png" alt="Empty">
+                    <img class="harvest-ticker-icon" src="/cache/img/items/placeholder.png" alt="Empty">
                     <div class="harvest-ticker-info">
                         <div class="harvest-machine-label">{{ loc_icon }} {{ loc_title }}</div>
                         <div class="harvest-item-name" style="color: var(--text-muted);">Empty</div>

@@ -46,13 +46,37 @@
     .in-game-chest-grid .item-slot { position: relative; aspect-ratio: 1 / 1; width: 100%; background-color: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 4px; display: flex; align-items: center; justify-content: center; transition: transform 0.15s ease, border-color 0.15s ease, opacity 0.15s ease; cursor: pointer; min-width: 24px; }
     .in-game-chest-grid .item-slot.empty-slot { background-color: rgba(15, 23, 42, 0.4); border-color: rgba(39, 53, 83, 0.5); cursor: default; }
     .in-game-chest-grid .item-slot:not(.empty-slot):hover { border-color: var(--accent-blue); background-color: var(--bg-card-hover); transform: scale(1.15); z-index: 10; }
-    .in-game-chest-grid .item-sprite { width: 80%; height: 80%; object-fit: contain; image-rendering: pixelated; }
+    .in-game-chest-grid .item-sprite { width: 80%; height: 80%; object-fit: contain; image-rendering: pixelated; pointer-events: none; }
     .in-game-chest-grid .slot-stack { position: absolute; bottom: 1px; right: 2px; font-size: 0.65rem; font-weight: 800; color: #ffffff; text-shadow: 1px 1px 2px #000, -1px -1px 2px #000; pointer-events: none; }
     .in-game-chest-grid .quality-badge { position: absolute; bottom: 1px; left: 1px; width: 10px; height: 10px; object-fit: contain; image-rendering: pixelated; z-index: 3; pointer-events: none; }
 
     /* Dimming & Highlighting */
     .in-game-chest-grid .item-slot.dimmed { opacity: 0.15; filter: grayscale(80%); }
     .in-game-chest-grid .item-slot.highlighted { border-color: #38bdf8; box-shadow: 0 0 6px rgba(56, 189, 248, 0.6); z-index: 5; }
+
+    /* Global Floating Tooltip Styling */
+    .chest-floating-tooltip {
+        position: fixed;
+        background: #0f172a;
+        border: 1px solid #38bdf8;
+        color: #ffffff;
+        padding: 0.35rem 0.65rem;
+        border-radius: 6px;
+        font-size: 0.775rem;
+        font-weight: 600;
+        white-space: nowrap;
+        pointer-events: none;
+        z-index: 99999;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.12s ease;
+        transform: translate(-50%, -100%);
+    }
+    .chest-floating-tooltip.visible {
+        opacity: 1;
+        visibility: visible;
+    }
 
     /* Compact Material Totals Cards */
     .materials-totals-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.75rem; width: 100%; }
@@ -103,7 +127,8 @@
                                 {% else %}
                                     <div class="item-slot" 
                                          data-item-name="{{ item.name | lower }}" 
-                                         title="{{ item.name }} (x{{ item.stack }})">
+                                         data-display-name="{{ item.name }}"
+                                         data-stack="{{ item.stack }}">
                                         <img src="cache/img/items/{{ item.sprite_key }}.png" 
                                              alt="{{ item.name }}" 
                                              class="item-sprite"
@@ -162,7 +187,23 @@
 </section>
 
 <script>
+    if (typeof activeChestSlotEl === 'undefined') {
+        var activeChestSlotEl = null;
+    }
+
+    function getOrCreateChestTooltip() {
+        let tooltip = document.getElementById('global-chest-tooltip');
+        if (!tooltip) {
+            tooltip = document.createElement('div');
+            tooltip.id = 'global-chest-tooltip';
+            tooltip.className = 'chest-floating-tooltip';
+            document.body.appendChild(tooltip);
+        }
+        return tooltip;
+    }
+
     function switchChestTab(btnEl, tabName) {
+        hideChestTooltip();
         const section = btnEl.closest('.chests-section');
         if (!section) return;
 
@@ -177,6 +218,7 @@
     }
 
     function filterChestGrids(inputEl, query) {
+        hideChestTooltip();
         const section = inputEl.closest('#chest-tab-grids');
         if (!section) return;
 
@@ -212,5 +254,60 @@
                 card.style.display = 'none';
             }
         });
+    }
+
+    function hideChestTooltip() {
+        const tooltip = document.getElementById('global-chest-tooltip');
+        if (tooltip) {
+            tooltip.classList.remove('visible');
+        }
+        if (activeChestSlotEl) {
+            activeChestSlotEl.classList.remove('highlighted');
+            activeChestSlotEl = null;
+        }
+    }
+
+    function showChestTooltip(slotEl) {
+        const tooltip = getOrCreateChestTooltip();
+        const displayName = slotEl.getAttribute('data-display-name');
+        if (!displayName) return;
+
+        if (activeChestSlotEl && activeChestSlotEl !== slotEl) {
+            activeChestSlotEl.classList.remove('highlighted');
+        }
+
+        activeChestSlotEl = slotEl;
+        activeChestSlotEl.classList.add('highlighted');
+
+        tooltip.textContent = displayName;
+
+        const rect = slotEl.getBoundingClientRect();
+        const topPos = rect.top - 6;
+        const leftPos = rect.left + (rect.width / 2);
+
+        tooltip.style.top = topPos + 'px';
+        tooltip.style.left = leftPos + 'px';
+        tooltip.classList.add('visible');
+    }
+
+    if (!window.chestTooltipListenersAttached) {
+        window.chestTooltipListenersAttached = true;
+
+        document.addEventListener('click', function(e) {
+            const slotEl = e.target.closest('.in-game-chest-grid .item-slot:not(.empty-slot)');
+
+            if (slotEl) {
+                e.stopPropagation();
+                if (activeChestSlotEl === slotEl) {
+                    hideChestTooltip();
+                } else {
+                    showChestTooltip(slotEl);
+                }
+            } else {
+                hideChestTooltip();
+            }
+        });
+
+        window.addEventListener('scroll', hideChestTooltip, { passive: true });
     }
 </script>
