@@ -260,19 +260,10 @@
          data-name="{{ batch.name|lower }}" 
          data-status="{{ status_code }}">
         <div class="item-sprite-box">
-            {% if batch.wiki_icon.endswith('.png') %}
-            <!-- Local custom/colored sprite -->
-            <img src="/cache/img/items/{{ batch.wiki_icon }}" 
+            <img src="/cache/img/items/{{ batch.wiki_icon if batch.wiki_icon.endswith('.png') else batch.wiki_icon + '.png' }}" 
                  class="item-sprite" 
                  alt="{{ batch.name }}" 
-                 onerror="this.onerror=null; this.src='https://stardewvalleywiki.com/Special:Redirect/file/Wine.png';">
-            {% else %}
-            <!-- Standard Stardew Valley Wiki redirect -->
-            <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ batch.wiki_icon }}.png" 
-                 class="item-sprite" 
-                 alt="{{ batch.name }}" 
-                 onerror="this.onerror=null; this.src='https://stardewvalleywiki.com/Special:Redirect/file/Wine.png';">
-            {% endif %}
+                 onerror="this.onerror=null; this.src='/cache/img/items/O_348.png';">
 
             {% if batch.quality == 1 %}
             <img src="/cache/img/items/silver_star.png" class="cask-star-badge" alt="Silver Quality">

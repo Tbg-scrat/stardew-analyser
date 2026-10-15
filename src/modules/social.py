@@ -19,12 +19,26 @@ def format_wiki_filename(name):
 
 
 def get_loved_gifts(villager_name):
-    """Returns a list of dicts containing name and wiki_icon for a villager's loved gifts."""
+    """Returns structured loved gifts with item names and exact cache image filenames."""
     villagers_map = VILLAGERS_CATALOG.get("villagers", {})
     villager_data = villagers_map.get(villager_name, {})
     gifts = villager_data.get("loved_gifts", [])
-    return [{"name": name, "wiki_icon": format_wiki_filename(name)} for name in gifts]
-
+    
+    result = []
+    for item in gifts:
+        if isinstance(item, dict):
+            item_id = item.get("id", "")
+            item_name = item.get("name", "")
+            icon_filename = f"{item_id}.png" if item_id else "O_unknown.png"
+        else:
+            item_name = str(item)
+            icon_filename = f"O_{item_name.replace(' ', '_')}.png"
+            
+        result.append({
+            "name": item_name,
+            "icon": icon_filename,
+        })
+    return result
 
 def parse_social(player):
     """

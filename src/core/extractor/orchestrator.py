@@ -7,6 +7,8 @@ from src.core.logger import setup_logging
 from .cache_validator import compute_source_hash, is_cache_valid, save_cache_marker
 from .image_utils import resolve_case_insensitive_path
 from .processors.items import extract_objects_from_catalog
+from .processors.tools import extract_tools_from_catalog
+from .processors.social import extract_portraits
 from .processors.spritesheets import extract_quality_stars, slice_spritesheet
 
 setup_logging()
@@ -63,6 +65,16 @@ def extract_all_assets() -> bool:
                 shutil.copy(src_path, os.path.join(temp_packed, dst_name))
                 logger.debug(f"[AssetExtractor] Staged 1.6 optional asset {src_rel} (resolved: {src_path}).")
 
+        # Stage Portraits directory if present
+        portraits_src = resolve_case_insensitive_path(CONTENT_DIR, "Portraits")
+        if portraits_src and os.path.isdir(portraits_src):
+            portraits_dst = os.path.join(temp_packed, "Portraits")
+            os.makedirs(portraits_dst, exist_ok=True)
+            for file in os.listdir(portraits_src):
+                if file.lower().endswith(".xnb"):
+                    shutil.copy(os.path.join(portraits_src, file), os.path.join(portraits_dst, file))
+            logger.debug("[AssetExtractor] Staged Portraits directory.")
+
         cmd = [XNBCLI_BIN, "unpack", temp_packed, temp_unpacked]
         logger.debug(f"[AssetExtractor] Executing xnbcli: {' '.join(cmd)}")
         res = subprocess.run(cmd, capture_output=True, text=True, check=True)
@@ -77,12 +89,15 @@ def extract_all_assets() -> bool:
         cursors_png = os.path.join(temp_unpacked, "Cursors.png")
 
         slice_spritesheet(craft_png, "BC", 16, 32, 8)
-        slice_spritesheet(tools_png, "T", 16, 16, 21)
+        extract_tools_from_catalog(temp_unpacked)
         extract_quality_stars(cursors_png)
 
         craft2_png = os.path.join(temp_unpacked, "Craftables2.png")
         if os.path.exists(craft2_png):
             slice_spritesheet(craft2_png, "BC2", 16, 32, 8)
+
+        # 3. NPC Portrait extraction
+        extract_portraits(temp_unpacked)
 
         current_source_hash = compute_source_hash(CONTENT_DIR)
         save_cache_marker(current_source_hash)

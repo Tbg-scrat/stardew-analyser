@@ -250,15 +250,15 @@ def log_save_summary(save_id, data):
         1 for t in data.get("tools", {}).get("upgradeable", [])
         if (t.get("next_tier") or {}).get("can_upgrade")
     )
-    scythe_name = data.get("tools", {}).get("scythe", {}).get("current_stage", {}).get("name", "Scythe")
-
     if upgrading_tools:
         upg = upgrading_tools[0]
-        upg_detail = f"{upg.get('display_name', 'Tool')} at Clint's, {upg.get('days_left', 0)}d left | {scythe_name}"
+        upg_detail = f"{upg.get('display_name', 'Tool')} at Clint's, {upg.get('days_left', 0)}d left"
     elif ready_tools_count > 0:
-        upg_detail = f"{ready_tools_count} Ready to Upgrade | {scythe_name}"
+        upg_detail = f"{ready_tools_count} Ready to Upgrade"
+    elif tools_maxed == tools_total and tools_total > 0:
+        upg_detail = "All Tools Maxed"
     else:
-        upg_detail = scythe_name
+        upg_detail = "No Upgrades Pending"
 
     hay_current = data.get("hay", {}).get("current_hay", 0)
     hay_max = data.get("hay", {}).get("max_capacity", 0)

@@ -78,7 +78,7 @@ def is_cache_valid() -> bool:
         return False
 
     try:
-        with open(MARKER_FILE, "r") as f:
+        with open(MARKER_FILE, "r", encoding="utf-8") as f:
             marker_data = f.read().strip()
 
         if ":" not in marker_data:
@@ -105,6 +105,6 @@ def save_cache_marker(source_hash: str) -> None:
     """Compute final target metadata hash and write <source_hash>:<target_hash> marker."""
     target_hash = compute_target_metadata_hash(OUTPUT_IMG_DIR)
     marker_content = f"{source_hash}:{target_hash}"
-    with open(MARKER_FILE, "w") as f:
+    with open(MARKER_FILE, "w", encoding="utf-8") as f:
         f.write(marker_content)
     logger.debug(f"[AssetExtractor] Written marker record: {marker_content}")

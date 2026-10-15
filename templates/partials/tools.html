@@ -144,75 +144,41 @@
         font-style: italic;
         text-align: center;
     }
-    .special-tools-card {
-        background: var(--bg-card);
-        border: 1px solid var(--border-color);
-        border-radius: 10px;
-        padding: 1.25rem;
-    }
-    .special-tools-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid var(--border-color);
-        padding-bottom: 0.75rem;
-    }
-    .special-tools-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 1rem;
-        margin-top: 1rem;
-    }
-    .special-stage-box {
-        background: var(--bg-subtle);
-        border: 1px solid var(--border-color);
-        border-radius: 8px;
-        padding: 0.85rem;
-        display: flex;
-        align-items: center;
-        gap: 0.85rem;
-    }
-    .special-stage-box.dimmed {
-        opacity: 0.6;
-    }
 </style>
 
 <div class="tools-wrapper">
-    <!-- Upgradeable Tools Grid -->
     <div class="tools-grid">
         {% for tool in tools.upgradeable %}
         <div class="tool-card">
             <div>
-                <!-- Card Header / Status Badge -->
                 <div class="tool-card-header">
                     <span class="tool-title">{{ tool.display_name }}</span>
                     {% if tool.status == 'upgrading' %}
                         <span class="tool-badge upgrading">
-                            🔨 At Clint's ({{ tool.days_left }}d left)
+                            At Clint's ({{ tool.days_left }}d left)
                         </span>
                     {% elif tool.status == 'maxed' %}
                         <span class="tool-badge maxed">
-                            ⭐ Max Tier
+                            Max Tier
                         </span>
                     {% elif tool.next_tier and tool.next_tier.can_upgrade %}
                         <span class="tool-badge upgrade-ready">
-                            ✨ Upgrade Ready
+                            Upgrade Ready
                         </span>
                     {% else %}
                         <span class="tool-badge ready">
-                            ✔ Ready
+                            Ready
                         </span>
                     {% endif %}
                 </div>
 
-                <!-- Current Tier Display -->
                 <div class="tool-body">
                     <div class="tool-icon-box">
                         {% if tool.current_tier.icon_url %}
                             <img src="/{{ tool.current_tier.icon_url.lstrip('/') }}" alt="{{ tool.current_tier.name }}" class="tool-icon-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
-                            <span style="display:none; font-size: 1.5rem;">🛠️</span>
+                            <span style="display:none; font-size: 0.8rem;">[Tool]</span>
                         {% else %}
-                            <span style="font-size: 1.5rem;">🛠️</span>
+                            <span style="font-size: 0.8rem;">[Tool]</span>
                         {% endif %}
                     </div>
                     <div>
@@ -221,7 +187,6 @@
                     </div>
                 </div>
 
-                <!-- Tier Level Bar -->
                 <div class="tool-progress-bar">
                     {% for lvl in range(0, tool.max_level + 1) %}
                         <div class="tool-progress-step {% if lvl <= tool.current_level %}active{% endif %}"></div>
@@ -229,7 +194,6 @@
                 </div>
             </div>
 
-            <!-- Next Upgrade Requirements -->
             <div class="tool-footer">
                 {% if tool.is_max %}
                     <div class="tool-max-text">Fully upgraded to maximum tier</div>
@@ -239,9 +203,9 @@
                         <span class="tool-req-cost">
                             {{ tool.next_tier.name }} ({{ "{:,}".format(tool.next_tier.gold_cost) }}g)
                             {% if tool.next_tier.has_enough_gold %}
-                                <span style="color: #34d399; font-size: 0.8rem; font-weight: bold;">✔</span>
+                                <span style="color: #34d399; font-size: 0.8rem; font-weight: bold;">[OK]</span>
                             {% else %}
-                                <span style="color: #f87171; font-size: 0.8rem; font-weight: bold;">✘</span>
+                                <span style="color: #f87171; font-size: 0.8rem; font-weight: bold;">[X]</span>
                             {% endif %}
                         </span>
                     </div>
@@ -252,7 +216,7 @@
                                 {{ tool.next_tier.materials_text }}
                                 <span style="font-size: 0.8rem; margin-left: 0.25rem; {% if tool.next_tier.has_enough_materials %}color: #34d399;{% else %}color: #f87171;{% endif %}">
                                     ({{ tool.next_tier.available_count }} in chests)
-                                    {% if tool.next_tier.has_enough_materials %}✔{% else %}✘{% endif %}
+                                    {% if tool.next_tier.has_enough_materials %}[OK]{% else %}[X]{% endif %}
                                 </span>
                             {% else %}
                                 {{ tool.next_tier.materials_text or 'None' }}
@@ -264,61 +228,5 @@
         </div>
         {% endfor %}
     </div>
-
-    <!-- Special Tools Section (Scythe) -->
-    {% if tools.scythe %}
-    <div class="special-tools-card">
-        <div class="special-tools-header">
-            <span class="tool-title">Special Tools Progression</span>
-            {% if tools.scythe.is_max %}
-                <span class="tool-badge maxed">Highest Tier Unlocked</span>
-            {% else %}
-                <span class="tool-badge ready">Upgrade Available</span>
-            {% endif %}
-        </div>
-
-        <div class="special-tools-grid">
-            <!-- Current Scythe Stage -->
-            <div class="special-stage-box">
-                <div class="tool-icon-box">
-                    {% if tools.scythe.current_stage and tools.scythe.current_stage.icon_url %}
-                        <img src="/{{ tools.scythe.current_stage.icon_url.lstrip('/') }}" alt="{{ tools.scythe.current_stage.name }}" class="tool-icon-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
-                        <span style="display:none; font-size: 1.5rem;">🌾</span>
-                    {% else %}
-                        <span style="font-size: 1.5rem;">🌾</span>
-                    {% endif %}
-                </div>
-                <div>
-                    <div style="font-size: 0.75rem; color: var(--text-secondary);">Current Stage</div>
-                    <div class="tool-tier-name">{{ tools.scythe.current_stage.name if tools.scythe.current_stage else 'Scythe' }}</div>
-                    <div class="tool-tier-perks">{{ tools.scythe.current_stage.hint if tools.scythe.current_stage else '' }}</div>
-                </div>
-            </div>
-
-            <!-- Next Scythe Stage Hint -->
-            <div class="special-stage-box {% if not tools.scythe.next_stage %}dimmed{% endif %}">
-                {% if tools.scythe.next_stage %}
-                    <div class="tool-icon-box" style="opacity: 0.6;">
-                        {% if tools.scythe.next_stage.icon_url %}
-                            <img src="/{{ tools.scythe.next_stage.icon_url.lstrip('/') }}" alt="{{ tools.scythe.next_stage.name }}" class="tool-icon-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
-                            <span style="display:none; font-size: 1.5rem;">🔒</span>
-                        {% else %}
-                            <span style="font-size: 1.5rem;">🔒</span>
-                        {% endif %}
-                    </div>
-                    <div>
-                        <div style="font-size: 0.75rem; color: var(--text-secondary);">Next Unlock</div>
-                        <div style="font-size: 0.9rem; font-weight: 700; color: var(--text-primary);">{{ tools.scythe.next_stage.name }}</div>
-                        <div style="font-size: 0.8rem; color: var(--color-gold); margin-top: 0.2rem;">💡 {{ tools.scythe.next_stage.hint }}</div>
-                    </div>
-                {% else %}
-                    <div style="font-size: 0.8rem; color: var(--text-muted); font-style: italic; text-align: center; width: 100%;">
-                        All scythe stages acquired!
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-    {% endif %}
 </div>
 {% endif %}

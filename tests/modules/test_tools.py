@@ -1,4 +1,4 @@
-# tests/test_tools.py
+# tests/modules/test_tools.py
 
 from unittest.mock import patch
 import xml.etree.ElementTree as ET
@@ -22,16 +22,6 @@ MOCK_TOOLS_CATALOG = {
             "tiers": [
                 {"level": 0, "name": "Pickaxe", "icon": "pickaxe.png", "gold_cost": 0, "materials": None, "perks": "Breaks small rocks."},
                 {"level": 1, "name": "Copper Pickaxe", "icon": "copper_pickaxe.png", "gold_cost": 2000, "materials": "5x Copper Bar", "perks": "Breaks mine rocks."}
-            ]
-        }
-    },
-    "special_tools": {
-        "Scythe": {
-            "name": "Scythe",
-            "stages": [
-                {"id": "Scythe", "name": "Basic Scythe", "icon": "scythe.png", "tier": 0, "hint": "Starter tool."},
-                {"id": "Golden Scythe", "name": "Golden Scythe", "icon": "golden_scythe.png", "tier": 1, "hint": "Found in Quarry Mine."},
-                {"id": "Iridium Scythe", "name": "Iridium Scythe", "icon": "iridium_scythe.png", "tier": 2, "hint": "Unlocked in Mastery Cave."}
             ]
         }
     }
@@ -90,8 +80,8 @@ def test_parse_tools_upgrading_at_blacksmith():
     assert pickaxe["days_left"] == 2
 
 
-def test_parse_tools_scythe_progression():
-    """Verifies scythe detection and progression hinting (Basic -> Golden -> Iridium)."""
+def test_parse_tools_scythe_is_none():
+    """Verifies that scythe returns None cleanly for v2.0.0."""
     xml_data = """
     <SaveGame>
         <player>
@@ -108,11 +98,7 @@ def test_parse_tools_scythe_progression():
     with patch("src.modules.tools.get_tools_catalog", return_value=MOCK_TOOLS_CATALOG):
         result = parse_tools(root)
 
-    scythe = result["scythe"]
-    assert scythe["current_stage"]["name"] == "Golden Scythe"
-    assert scythe["is_max"] is False
-    assert scythe["next_stage"]["name"] == "Iridium Scythe"
-    assert "Mastery Cave" in scythe["next_stage"]["hint"]
+    assert result["scythe"] is None
 
 
 def test_parse_tools_max_level():
@@ -138,4 +124,3 @@ def test_parse_tools_max_level():
     assert axe["is_max"] is True
     assert axe["status"] == "maxed"
     assert axe["next_tier"] is None
-    

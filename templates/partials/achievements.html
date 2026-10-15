@@ -13,8 +13,6 @@
     .item-card.status-locked { opacity: 0.45; }
 
     .item-sprite-box { width: 44px; height: 44px; min-width: 44px; background: var(--bg-subtle); border: 1px solid var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
-    .item-sprite { width: 32px; height: 32px; object-fit: contain; image-rendering: pixelated; }
-    .item-sprite.grayscale { filter: grayscale(100%); opacity: 0.6; }
     .item-info { display: flex; flex-direction: column; gap: 0.2rem; flex: 1; min-width: 0; }
     .item-name { font-size: 0.95rem; font-weight: 700; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .item-meta { font-size: 0.75rem; color: var(--text-secondary); }
@@ -42,11 +40,15 @@
          data-name="{{ item.name|lower }}" 
          data-status="{{ 'unlocked' if item.unlocked else 'locked' }}">
         <div class="item-sprite-box">
-            <img src="/cache/img/achievements/{{ item.icon }}" 
-                 class="item-sprite {% if not item.unlocked %}grayscale{% endif %}" 
-                 alt="{{ item.name }}"
-                 onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='inline';">
-            <span style="display:none; font-size: 1.2rem;"></span>
+            {% if item.unlocked %}
+            <svg class="achievement-star unlocked" width="28" height="28" viewBox="0 0 24 24" fill="#f59e0b" stroke="#b45309" stroke-width="1.5">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            {% else %}
+            <svg class="achievement-star locked" width="28" height="28" viewBox="0 0 24 24" fill="rgba(255, 255, 255, 0.1)" stroke="var(--border-color)" stroke-width="1.5">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            {% endif %}
         </div>
         <div class="item-info">
             <div class="item-name">{{ item.name }}</div>
@@ -61,14 +63,14 @@
             {% if not item.unlocked %}
                 {% if item.tip %}
                 <div class="item-tip">
-                     <i>{{ item.tip }}</i>
+                      <i>{{ item.tip }}</i>
                 </div>
                 {% endif %}
                 
                 {% if item.link_module %}
                 <div class="item-action-link">
                     <a href="#" onclick="navigateToModule('{{ farm.farm_id }}', '{{ item.link_module }}', '{{ item.link_filter }}'); return false;">
-                        View missing in {{ item.link_module|capitalize }} 
+                        View missing in {{ item.link_module|capitalize }}  
                     </a>
                 </div>
                 {% endif %}

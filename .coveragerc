@@ -7,7 +7,7 @@ source = src
 # Omit initialization files, static assets, and pure reference lookup data
 omit =
     src/**/__init__.py
-    src/static/*
+    # src/static/* removed
     src/core/reference_data.py
 
 # Skip defensive or non-executable lines

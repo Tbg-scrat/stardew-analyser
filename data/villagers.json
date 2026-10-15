@@ -12,168 +12,984 @@
   "villagers": {
     "Abigail": {
       "datable": true,
-      "birthday": { "season": "fall", "day": 13 },
-      "loved_gifts": ["Amethyst", "Banana Pudding", "Blackberry Cobbler", "Chocolate Cake", "Pufferfish", "Pumpkin", "Spicy Eel"]
+      "birthday": {
+        "season": "fall",
+        "day": 13
+      },
+      "loved_gifts": [
+        {
+          "id": "O_66",
+          "name": "Amethyst"
+        },
+        {
+          "id": "O_904",
+          "name": "Banana Pudding"
+        },
+        {
+          "id": "O_611",
+          "name": "Blackberry Cobbler"
+        },
+        {
+          "id": "O_220",
+          "name": "Chocolate Cake"
+        },
+        {
+          "id": "O_128",
+          "name": "Pufferfish"
+        },
+        {
+          "id": "O_276",
+          "name": "Pumpkin"
+        },
+        {
+          "id": "O_226",
+          "name": "Spicy Eel"
+        }
+      ]
     },
     "Alex": {
       "datable": true,
-      "birthday": { "season": "summer", "day": 13 },
-      "loved_gifts": ["Complete Breakfast", "Salmon Dinner"]
+      "birthday": {
+        "season": "summer",
+        "day": 13
+      },
+      "loved_gifts": [
+        {
+          "id": "O_201",
+          "name": "Complete Breakfast"
+        },
+        {
+          "id": "O_212",
+          "name": "Salmon Dinner"
+        }
+      ]
     },
     "Caroline": {
       "datable": false,
-      "birthday": { "season": "winter", "day": 7 },
-      "loved_gifts": ["Fish Tacos", "Green Tea", "Summer Spangle", "Tropical Curry"]
+      "birthday": {
+        "season": "winter",
+        "day": 7
+      },
+      "loved_gifts": [
+        {
+          "id": "O_213",
+          "name": "Fish Taco"
+        },
+        {
+          "id": "O_614",
+          "name": "Green Tea"
+        },
+        {
+          "id": "O_593",
+          "name": "Summer Spangle"
+        },
+        {
+          "id": "O_907",
+          "name": "Tropical Curry"
+        }
+      ]
     },
     "Clint": {
       "datable": false,
-      "birthday": { "season": "winter", "day": 26 },
-      "loved_gifts": ["Amethyst", "Aquamarine", "Emerald", "Fiddlehead Risotto", "Gold Bar", "Iridium Bar", "Jade", "Omni Geode", "Ruby", "Topaz"]
+      "birthday": {
+        "season": "winter",
+        "day": 26
+      },
+      "loved_gifts": [
+        {
+          "id": "O_66",
+          "name": "Amethyst"
+        },
+        {
+          "id": "O_62",
+          "name": "Aquamarine"
+        },
+        {
+          "id": "O_60",
+          "name": "Emerald"
+        },
+        {
+          "id": "O_649",
+          "name": "Fiddlehead Risotto"
+        },
+        {
+          "id": "O_336",
+          "name": "Gold Bar"
+        },
+        {
+          "id": "O_337",
+          "name": "Iridium Bar"
+        },
+        {
+          "id": "O_70",
+          "name": "Jade"
+        },
+        {
+          "id": "O_749",
+          "name": "Omni Geode"
+        },
+        {
+          "id": "O_64",
+          "name": "Ruby"
+        },
+        {
+          "id": "O_68",
+          "name": "Topaz"
+        }
+      ]
     },
     "Demetrius": {
       "datable": false,
-      "birthday": { "season": "summer", "day": 19 },
-      "loved_gifts": ["Bean Hotpot", "Ice Cream", "Rice Pudding", "Strawberry"]
+      "birthday": {
+        "season": "summer",
+        "day": 19
+      },
+      "loved_gifts": [
+        {
+          "id": "O_207",
+          "name": "Bean Hotpot"
+        },
+        {
+          "id": "O_233",
+          "name": "Ice Cream"
+        },
+        {
+          "id": "O_232",
+          "name": "Rice Pudding"
+        },
+        {
+          "id": "O_400",
+          "name": "Strawberry"
+        }
+      ]
     },
     "Elliott": {
       "datable": true,
-      "birthday": { "season": "fall", "day": 5 },
-      "loved_gifts": ["Crab Cakes", "Duck Feather", "Lobster", "Pomegranate", "Squid Ink", "Tom Kha Soup"]
+      "birthday": {
+        "season": "fall",
+        "day": 5
+      },
+      "loved_gifts": [
+        {
+          "id": "O_732",
+          "name": "Crab Cakes"
+        },
+        {
+          "id": "O_444",
+          "name": "Duck Feather"
+        },
+        {
+          "id": "O_715",
+          "name": "Lobster"
+        },
+        {
+          "id": "O_637",
+          "name": "Pomegranate"
+        },
+        {
+          "id": "O_814",
+          "name": "Squid Ink"
+        },
+        {
+          "id": "O_218",
+          "name": "Tom Kha Soup"
+        }
+      ]
     },
     "Emily": {
       "datable": true,
-      "birthday": { "season": "spring", "day": 27 },
-      "loved_gifts": ["Amethyst", "Aquamarine", "Cloth", "Emerald", "Jade", "Ruby", "Survival Burger", "Topaz", "Wool"]
+      "birthday": {
+        "season": "spring",
+        "day": 27
+      },
+      "loved_gifts": [
+        {
+          "id": "O_66",
+          "name": "Amethyst"
+        },
+        {
+          "id": "O_62",
+          "name": "Aquamarine"
+        },
+        {
+          "id": "O_428",
+          "name": "Cloth"
+        },
+        {
+          "id": "O_60",
+          "name": "Emerald"
+        },
+        {
+          "id": "O_70",
+          "name": "Jade"
+        },
+        {
+          "id": "O_64",
+          "name": "Ruby"
+        },
+        {
+          "id": "O_241",
+          "name": "Survival Burger"
+        },
+        {
+          "id": "O_68",
+          "name": "Topaz"
+        },
+        {
+          "id": "O_440",
+          "name": "Wool"
+        }
+      ]
     },
     "Evelyn": {
       "datable": false,
-      "birthday": { "season": "winter", "day": 20 },
-      "loved_gifts": ["Beet", "Chocolate Cake", "Diamond", "Fairy Rose", "Stuffing", "Tulip"]
+      "birthday": {
+        "season": "winter",
+        "day": 20
+      },
+      "loved_gifts": [
+        {
+          "id": "O_284",
+          "name": "Beet"
+        },
+        {
+          "id": "O_220",
+          "name": "Chocolate Cake"
+        },
+        {
+          "id": "O_72",
+          "name": "Diamond"
+        },
+        {
+          "id": "O_595",
+          "name": "Fairy Rose"
+        },
+        {
+          "id": "O_239",
+          "name": "Stuffing"
+        },
+        {
+          "id": "O_591",
+          "name": "Tulip"
+        }
+      ]
     },
     "George": {
       "datable": false,
-      "birthday": { "season": "fall", "day": 24 },
-      "loved_gifts": ["Fried Mushroom", "Leek"]
+      "birthday": {
+        "season": "fall",
+        "day": 24
+      },
+      "loved_gifts": [
+        {
+          "id": "O_205",
+          "name": "Fried Mushroom"
+        },
+        {
+          "id": "O_20",
+          "name": "Leek"
+        }
+      ]
     },
     "Gus": {
       "datable": false,
-      "birthday": { "season": "summer", "day": 8 },
-      "loved_gifts": ["Diamond", "Escargot", "Fish Tacos", "Orange"]
+      "birthday": {
+        "season": "summer",
+        "day": 8
+      },
+      "loved_gifts": [
+        {
+          "id": "O_72",
+          "name": "Diamond"
+        },
+        {
+          "id": "O_729",
+          "name": "Escargot"
+        },
+        {
+          "id": "O_213",
+          "name": "Fish Taco"
+        },
+        {
+          "id": "O_635",
+          "name": "Orange"
+        }
+      ]
     },
     "Haley": {
       "datable": true,
-      "birthday": { "season": "spring", "day": 14 },
-      "loved_gifts": ["Coconut", "Fruit Salad", "Pink Cake", "Sunflower"]
+      "birthday": {
+        "season": "spring",
+        "day": 14
+      },
+      "loved_gifts": [
+        {
+          "id": "O_88",
+          "name": "Coconut"
+        },
+        {
+          "id": "O_610",
+          "name": "Fruit Salad"
+        },
+        {
+          "id": "O_221",
+          "name": "Pink Cake"
+        },
+        {
+          "id": "O_421",
+          "name": "Sunflower"
+        }
+      ]
     },
     "Harvey": {
       "datable": true,
-      "birthday": { "season": "winter", "day": 14 },
-      "loved_gifts": ["Coffee", "Pickles", "Super Meal", "Truffle Oil", "Wine"]
+      "birthday": {
+        "season": "winter",
+        "day": 14
+      },
+      "loved_gifts": [
+        {
+          "id": "O_395",
+          "name": "Coffee"
+        },
+        {
+          "id": "O_342",
+          "name": "Pickles"
+        },
+        {
+          "id": "O_237",
+          "name": "Super Meal"
+        },
+        {
+          "id": "O_432",
+          "name": "Truffle Oil"
+        },
+        {
+          "id": "O_348",
+          "name": "Wine"
+        }
+      ]
     },
     "Jas": {
       "datable": false,
-      "birthday": { "season": "summer", "day": 4 },
-      "loved_gifts": ["Fairy Rose", "Pink Cake", "Plum Pudding"]
+      "birthday": {
+        "season": "summer",
+        "day": 4
+      },
+      "loved_gifts": [
+        {
+          "id": "O_595",
+          "name": "Fairy Rose"
+        },
+        {
+          "id": "O_221",
+          "name": "Pink Cake"
+        },
+        {
+          "id": "O_604",
+          "name": "Plum Pudding"
+        }
+      ]
     },
     "Jodi": {
       "datable": false,
-      "birthday": { "season": "fall", "day": 11 },
-      "loved_gifts": ["Chocolate Cake", "Crispy Bass", "Eggplant Parmesan", "Fried Eel", "Pancakes", "Rhubarb Pie", "Vegetable Medley"]
+      "birthday": {
+        "season": "fall",
+        "day": 11
+      },
+      "loved_gifts": [
+        {
+          "id": "O_220",
+          "name": "Chocolate Cake"
+        },
+        {
+          "id": "O_214",
+          "name": "Crispy Bass"
+        },
+        {
+          "id": "O_231",
+          "name": "Eggplant Parmesan"
+        },
+        {
+          "id": "O_225",
+          "name": "Fried Eel"
+        },
+        {
+          "id": "O_211",
+          "name": "Pancakes"
+        },
+        {
+          "id": "O_222",
+          "name": "Rhubarb Pie"
+        },
+        {
+          "id": "O_200",
+          "name": "Vegetable Medley"
+        }
+      ]
     },
     "Kent": {
       "datable": false,
-      "birthday": { "season": "spring", "day": 4 },
-      "loved_gifts": ["Fiddlehead Risotto", "Roasted Hazelnuts"]
+      "birthday": {
+        "season": "spring",
+        "day": 4
+      },
+      "loved_gifts": [
+        {
+          "id": "O_649",
+          "name": "Fiddlehead Risotto"
+        },
+        {
+          "id": "O_607",
+          "name": "Roasted Hazelnuts"
+        }
+      ]
     },
     "Krobus": {
       "datable": false,
-      "birthday": { "season": "winter", "day": 1 },
-      "loved_gifts": ["Diamond", "Iridium Bar", "Monster Compendium", "Pumpkin", "Void Egg", "Void Mayonnaise", "Wild Horseradish"]
+      "birthday": {
+        "season": "winter",
+        "day": 1
+      },
+      "loved_gifts": [
+        {
+          "id": "O_72",
+          "name": "Diamond"
+        },
+        {
+          "id": "O_337",
+          "name": "Iridium Bar"
+        },
+        {
+          "id": "O_Book_Void",
+          "name": "Monster Compendium"
+        },
+        {
+          "id": "O_276",
+          "name": "Pumpkin"
+        },
+        {
+          "id": "O_305",
+          "name": "Void Egg"
+        },
+        {
+          "id": "O_308",
+          "name": "Void Mayonnaise"
+        },
+        {
+          "id": "O_16",
+          "name": "Wild Horseradish"
+        }
+      ]
     },
     "Leah": {
       "datable": true,
-      "birthday": { "season": "winter", "day": 23 },
-      "loved_gifts": ["Goat Cheese", "Poppyseed Muffin", "Salad", "Stir Fry", "Truffle", "Vegetable Medley", "Wine"]
+      "birthday": {
+        "season": "winter",
+        "day": 23
+      },
+      "loved_gifts": [
+        {
+          "id": "O_426",
+          "name": "Goat Cheese"
+        },
+        {
+          "id": "O_651",
+          "name": "Poppyseed Muffin"
+        },
+        {
+          "id": "O_196",
+          "name": "Salad"
+        },
+        {
+          "id": "O_606",
+          "name": "Stir Fry"
+        },
+        {
+          "id": "O_430",
+          "name": "Truffle"
+        },
+        {
+          "id": "O_200",
+          "name": "Vegetable Medley"
+        },
+        {
+          "id": "O_348",
+          "name": "Wine"
+        }
+      ]
     },
     "Leo": {
       "datable": false,
-      "birthday": { "season": "summer", "day": 26 },
-      "loved_gifts": ["Duck Feather", "Mango", "Ostrich Egg", "Poi"]
+      "birthday": {
+        "season": "summer",
+        "day": 26
+      },
+      "loved_gifts": [
+        {
+          "id": "O_444",
+          "name": "Duck Feather"
+        },
+        {
+          "id": "O_834",
+          "name": "Mango"
+        },
+        {
+          "id": "O_289",
+          "name": "Ostrich Egg"
+        },
+        {
+          "id": "O_906",
+          "name": "Poi"
+        }
+      ]
     },
     "Lewis": {
       "datable": false,
-      "birthday": { "season": "spring", "day": 7 },
-      "loved_gifts": ["Autumn's Bounty", "Glazed Yams", "Green Tea", "Hot Pepper", "Vegetable Medley"]
+      "birthday": {
+        "season": "spring",
+        "day": 7
+      },
+      "loved_gifts": [
+        {
+          "id": "O_235",
+          "name": "Autumn's Bounty"
+        },
+        {
+          "id": "O_208",
+          "name": "Glazed Yams"
+        },
+        {
+          "id": "O_614",
+          "name": "Green Tea"
+        },
+        {
+          "id": "O_260",
+          "name": "Hot Pepper"
+        },
+        {
+          "id": "O_200",
+          "name": "Vegetable Medley"
+        }
+      ]
     },
     "Linus": {
       "datable": false,
-      "birthday": { "season": "winter", "day": 3 },
-      "loved_gifts": ["Blueberry Tart", "Cactus Fruit", "Coconut", "Dish O' The Sea", "Yam"]
+      "birthday": {
+        "season": "winter",
+        "day": 3
+      },
+      "loved_gifts": [
+        {
+          "id": "O_234",
+          "name": "Blueberry Tart"
+        },
+        {
+          "id": "O_90",
+          "name": "Cactus Fruit"
+        },
+        {
+          "id": "O_88",
+          "name": "Coconut"
+        },
+        {
+          "id": "O_242",
+          "name": "Dish O' The Sea"
+        },
+        {
+          "id": "O_280",
+          "name": "Yam"
+        }
+      ]
     },
     "Marnie": {
       "datable": false,
-      "birthday": { "season": "fall", "day": 18 },
-      "loved_gifts": ["Farmer's Lunch", "Pink Cake", "Pumpkin Pie", "Diamond"]
+      "birthday": {
+        "season": "fall",
+        "day": 18
+      },
+      "loved_gifts": [
+        {
+          "id": "O_240",
+          "name": "Farmer's Lunch"
+        },
+        {
+          "id": "O_221",
+          "name": "Pink Cake"
+        },
+        {
+          "id": "O_608",
+          "name": "Pumpkin Pie"
+        },
+        {
+          "id": "O_72",
+          "name": "Diamond"
+        }
+      ]
     },
     "Maru": {
       "datable": true,
-      "birthday": { "season": "summer", "day": 10 },
-      "loved_gifts": ["Battery Pack", "Cheese Cauliflower", "Diamond", "Gold Bar", "Iridium Bar", "Miner's Treat", "Pepper Poppers", "Radioactive Bar", "Rhubarb Pie", "Strawberry"]
+      "birthday": {
+        "season": "summer",
+        "day": 10
+      },
+      "loved_gifts": [
+        {
+          "id": "O_787",
+          "name": "Battery Pack"
+        },
+        {
+          "id": "O_197",
+          "name": "Cheese Cauliflower"
+        },
+        {
+          "id": "O_72",
+          "name": "Diamond"
+        },
+        {
+          "id": "O_336",
+          "name": "Gold Bar"
+        },
+        {
+          "id": "O_337",
+          "name": "Iridium Bar"
+        },
+        {
+          "id": "O_243",
+          "name": "Miner's Treat"
+        },
+        {
+          "id": "O_215",
+          "name": "Pepper Poppers"
+        },
+        {
+          "id": "O_910",
+          "name": "Radioactive Bar"
+        },
+        {
+          "id": "O_222",
+          "name": "Rhubarb Pie"
+        },
+        {
+          "id": "O_400",
+          "name": "Strawberry"
+        }
+      ]
     },
     "Pam": {
       "datable": false,
-      "birthday": { "season": "spring", "day": 18 },
-      "loved_gifts": ["Beer", "Cactus Fruit", "Glazed Yams", "Mead", "Pale Ale", "Parsnip", "Parsnip Soup"]
+      "birthday": {
+        "season": "spring",
+        "day": 18
+      },
+      "loved_gifts": [
+        {
+          "id": "O_346",
+          "name": "Beer"
+        },
+        {
+          "id": "O_90",
+          "name": "Cactus Fruit"
+        },
+        {
+          "id": "O_208",
+          "name": "Glazed Yams"
+        },
+        {
+          "id": "O_459",
+          "name": "Mead"
+        },
+        {
+          "id": "O_303",
+          "name": "Pale Ale"
+        },
+        {
+          "id": "O_24",
+          "name": "Parsnip"
+        },
+        {
+          "id": "O_199",
+          "name": "Parsnip Soup"
+        }
+      ]
     },
     "Penny": {
       "datable": true,
-      "birthday": { "season": "fall", "day": 2 },
-      "loved_gifts": ["Diamond", "Emerald", "Melon", "Poppy", "Poppyseed Muffin", "Red Plate", "Roots Platter", "Sandfish", "Tom Kha Soup"]
+      "birthday": {
+        "season": "fall",
+        "day": 2
+      },
+      "loved_gifts": [
+        {
+          "id": "O_72",
+          "name": "Diamond"
+        },
+        {
+          "id": "O_60",
+          "name": "Emerald"
+        },
+        {
+          "id": "O_254",
+          "name": "Melon"
+        },
+        {
+          "id": "O_376",
+          "name": "Poppy"
+        },
+        {
+          "id": "O_651",
+          "name": "Poppyseed Muffin"
+        },
+        {
+          "id": "O_230",
+          "name": "Red Plate"
+        },
+        {
+          "id": "O_244",
+          "name": "Roots Platter"
+        },
+        {
+          "id": "O_164",
+          "name": "Sandfish"
+        },
+        {
+          "id": "O_218",
+          "name": "Tom Kha Soup"
+        }
+      ]
     },
     "Pierre": {
       "datable": false,
-      "birthday": { "season": "spring", "day": 26 },
-      "loved_gifts": ["Fried Squid"]
+      "birthday": {
+        "season": "spring",
+        "day": 26
+      },
+      "loved_gifts": [
+        {
+          "id": "O_202",
+          "name": "Fried Calamari"
+        }
+      ]
     },
     "Robin": {
       "datable": false,
-      "birthday": { "season": "fall", "day": 21 },
-      "loved_gifts": ["Goat Cheese", "Peach", "Spaghetti"]
+      "birthday": {
+        "season": "fall",
+        "day": 21
+      },
+      "loved_gifts": [
+        {
+          "id": "O_426",
+          "name": "Goat Cheese"
+        },
+        {
+          "id": "O_636",
+          "name": "Peach"
+        },
+        {
+          "id": "O_224",
+          "name": "Spaghetti"
+        }
+      ]
     },
     "Sam": {
       "datable": true,
-      "birthday": { "season": "summer", "day": 17 },
-      "loved_gifts": ["Cactus Fruit", "Maple Bar", "Pizza", "Tigerseye"]
+      "birthday": {
+        "season": "summer",
+        "day": 17
+      },
+      "loved_gifts": [
+        {
+          "id": "O_90",
+          "name": "Cactus Fruit"
+        },
+        {
+          "id": "O_731",
+          "name": "Maple Bar"
+        },
+        {
+          "id": "O_206",
+          "name": "Pizza"
+        },
+        {
+          "id": "O_562",
+          "name": "Tigerseye"
+        }
+      ]
     },
     "Sandy": {
       "datable": false,
-      "birthday": { "season": "fall", "day": 15 },
-      "loved_gifts": ["Cactus Fruit", "Daffodil", "Mango Sticky Rice", "Super Meal"]
+      "birthday": {
+        "season": "fall",
+        "day": 15
+      },
+      "loved_gifts": [
+        {
+          "id": "O_90",
+          "name": "Cactus Fruit"
+        },
+        {
+          "id": "O_18",
+          "name": "Daffodil"
+        },
+        {
+          "id": "O_905",
+          "name": "Mango Sticky Rice"
+        },
+        {
+          "id": "O_237",
+          "name": "Super Meal"
+        }
+      ]
     },
     "Sebastian": {
       "datable": true,
-      "birthday": { "season": "winter", "day": 10 },
-      "loved_gifts": ["Frozen Tear", "Obsidian", "Pumpkin Soup", "Sashimi", "Void Egg"]
+      "birthday": {
+        "season": "winter",
+        "day": 10
+      },
+      "loved_gifts": [
+        {
+          "id": "O_84",
+          "name": "Frozen Tear"
+        },
+        {
+          "id": "O_575",
+          "name": "Obsidian"
+        },
+        {
+          "id": "O_236",
+          "name": "Pumpkin Soup"
+        },
+        {
+          "id": "O_227",
+          "name": "Sashimi"
+        },
+        {
+          "id": "O_305",
+          "name": "Void Egg"
+        }
+      ]
     },
     "Shane": {
       "datable": true,
-      "birthday": { "season": "spring", "day": 20 },
-      "loved_gifts": ["Beer", "Hot Pepper", "Pepper Poppers", "Pizza"]
+      "birthday": {
+        "season": "spring",
+        "day": 20
+      },
+      "loved_gifts": [
+        {
+          "id": "O_346",
+          "name": "Beer"
+        },
+        {
+          "id": "O_260",
+          "name": "Hot Pepper"
+        },
+        {
+          "id": "O_215",
+          "name": "Pepper Poppers"
+        },
+        {
+          "id": "O_206",
+          "name": "Pizza"
+        }
+      ]
     },
     "Vincent": {
       "datable": false,
-      "birthday": { "season": "spring", "day": 10 },
-      "loved_gifts": ["Cranberry Candy", "Ginger Ale", "Pink Cake", "Snail"]
+      "birthday": {
+        "season": "spring",
+        "day": 10
+      },
+      "loved_gifts": [
+        {
+          "id": "O_612",
+          "name": "Cranberry Candy"
+        },
+        {
+          "id": "O_903",
+          "name": "Ginger Ale"
+        },
+        {
+          "id": "O_221",
+          "name": "Pink Cake"
+        },
+        {
+          "id": "O_721",
+          "name": "Snail"
+        }
+      ]
     },
     "Willy": {
       "datable": false,
-      "birthday": { "season": "summer", "day": 24 },
-      "loved_gifts": ["Catfish", "Diamond", "Iridium Bar", "Mead", "Octopus", "Pumpkin", "Sea Cucumber", "Sturgeon"]
+      "birthday": {
+        "season": "summer",
+        "day": 24
+      },
+      "loved_gifts": [
+        {
+          "id": "O_143",
+          "name": "Catfish"
+        },
+        {
+          "id": "O_72",
+          "name": "Diamond"
+        },
+        {
+          "id": "O_337",
+          "name": "Iridium Bar"
+        },
+        {
+          "id": "O_459",
+          "name": "Mead"
+        },
+        {
+          "id": "O_149",
+          "name": "Octopus"
+        },
+        {
+          "id": "O_276",
+          "name": "Pumpkin"
+        },
+        {
+          "id": "O_154",
+          "name": "Sea Cucumber"
+        },
+        {
+          "id": "O_698",
+          "name": "Sturgeon"
+        }
+      ]
     },
     "Wizard": {
       "datable": false,
-      "birthday": { "season": "winter", "day": 17 },
-      "loved_gifts": ["Book of Mysteries", "Ectoplasm", "Frozen Tear", "Purple Mushroom", "Super Cucumber"]
+      "birthday": {
+        "season": "winter",
+        "day": 17
+      },
+      "loved_gifts": [
+        {
+          "id": "O_Book_Mystery",
+          "name": "Book of Mysteries"
+        },
+        {
+          "id": "O_875",
+          "name": "Ectoplasm"
+        },
+        {
+          "id": "O_84",
+          "name": "Frozen Tear"
+        },
+        {
+          "id": "O_422",
+          "name": "Purple Mushroom"
+        },
+        {
+          "id": "O_155",
+          "name": "Super Cucumber"
+        }
+      ]
     }
   }
 }

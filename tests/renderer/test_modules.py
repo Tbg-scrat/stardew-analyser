@@ -30,8 +30,6 @@ def test_html_tools_rendering(tmp_path, sample_render_data):
     assert "Steel Axe" in page_text
     assert "Gold Pickaxe" in page_text
     assert "At Clint's (1d left)" in page_text
-    assert "Golden Scythe" in page_text
-    assert "Iridium Scythe" in page_text
 
 
 def test_html_grandpa_evaluation_rendering(tmp_path, sample_render_data):

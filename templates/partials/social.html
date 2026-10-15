@@ -202,7 +202,7 @@
          data-datable="{{ 'true' if villager.datable else 'false' }}">
         <div class="v-header-layout">
             <div class="v-portrait-box">
-                <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ villager.name }}.png" class="v-portrait-img" alt="{{ villager.name }}" onerror="this.onerror=null; this.style.display='none';">
+                <img src="/cache/img/portraits/{{ villager.name }}.png" class="v-portrait-img" alt="{{ villager.name }}" onerror="this.onerror=null; this.style.display='none';">
             </div>
             <div class="v-header-info">
                 <div class="v-top-row">
@@ -238,7 +238,7 @@
             <div class="v-gifts-row">
                 {% for gift in villager.loved_gifts %}
                 <span class="v-gift-badge">
-                    <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ gift.wiki_icon }}.png" class="v-gift-icon" alt="{{ gift.name }}" onerror="this.onerror=null; this.style.display='none';">
+                    <img src="/cache/img/items/{{ gift.icon }}" class="v-gift-icon" alt="{{ gift.name }}" onerror="this.onerror=null; this.style.display='none';">
                     {{ gift.name }}
                 </span>
                 {% endfor %}

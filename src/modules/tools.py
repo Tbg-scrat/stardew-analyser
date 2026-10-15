@@ -1,4 +1,3 @@
-# src/modules/tools.py
 import logging
 import re
 import time
@@ -9,12 +8,62 @@ from src.core.reference_data import get_tools_catalog
 
 logger = logging.getLogger(__name__)
 
+DEFAULT_UPGRADEABLE_TOOLS: dict[str, Any] = {
+    "Axe": {
+        "name": "Axe",
+        "tiers": [
+            {"level": 0, "name": "Axe", "icon": "cache/img/tools/Axe.png", "gold_cost": 0, "materials": None, "perks": "Chops trees."},
+            {"level": 1, "name": "Copper Axe", "icon": "cache/img/tools/CopperAxe.png", "gold_cost": 2000, "materials": "5x Copper Bar", "perks": "Chops large stumps."},
+            {"level": 2, "name": "Steel Axe", "icon": "cache/img/tools/SteelAxe.png", "gold_cost": 5000, "materials": "5x Iron Bar", "perks": "Chops large logs."},
+            {"level": 3, "name": "Gold Axe", "icon": "cache/img/tools/GoldAxe.png", "gold_cost": 10000, "materials": "5x Gold Bar", "perks": "Chops trees quickly."},
+            {"level": 4, "name": "Iridium Axe", "icon": "cache/img/tools/IridiumAxe.png", "gold_cost": 25000, "materials": "5x Iridium Bar", "perks": "Maximum chopping efficiency."}
+        ]
+    },
+    "Pickaxe": {
+        "name": "Pickaxe",
+        "tiers": [
+            {"level": 0, "name": "Pickaxe", "icon": "cache/img/tools/Pickaxe.png", "gold_cost": 0, "materials": None, "perks": "Breaks small rocks."},
+            {"level": 1, "name": "Copper Pickaxe", "icon": "cache/img/tools/CopperPickaxe.png", "gold_cost": 2000, "materials": "5x Copper Bar", "perks": "Breaks large rocks in mines."},
+            {"level": 2, "name": "Steel Pickaxe", "icon": "cache/img/tools/SteelPickaxe.png", "gold_cost": 5000, "materials": "5x Iron Bar", "perks": "Breaks boulders."},
+            {"level": 3, "name": "Gold Pickaxe", "icon": "cache/img/tools/GoldPickaxe.png", "gold_cost": 10000, "materials": "5x Gold Bar", "perks": "Breaks most rocks easily."},
+            {"level": 4, "name": "Iridium Pickaxe", "icon": "cache/img/tools/IridiumPickaxe.png", "gold_cost": 25000, "materials": "5x Iridium Bar", "perks": "Breaks any rock in 1-2 hits."}
+        ]
+    },
+    "Hoe": {
+        "name": "Hoe",
+        "tiers": [
+            {"level": 0, "name": "Hoe", "icon": "cache/img/tools/Hoe.png", "gold_cost": 0, "materials": None, "perks": "Till 1 tile."},
+            {"level": 1, "name": "Copper Hoe", "icon": "cache/img/tools/CopperHoe.png", "gold_cost": 2000, "materials": "5x Copper Bar", "perks": "Till 3 tiles in a line."},
+            {"level": 2, "name": "Steel Hoe", "icon": "cache/img/tools/SteelHoe.png", "gold_cost": 5000, "materials": "5x Iron Bar", "perks": "Till 5 tiles in a line."},
+            {"level": 3, "name": "Gold Hoe", "icon": "cache/img/tools/GoldHoe.png", "gold_cost": 10000, "materials": "5x Gold Bar", "perks": "Till 3x3 area."},
+            {"level": 4, "name": "Iridium Hoe", "icon": "cache/img/tools/IridiumHoe.png", "gold_cost": 25000, "materials": "5x Iridium Bar", "perks": "Till 6x3 area."}
+        ]
+    },
+    "WateringCan": {
+        "name": "Watering Can",
+        "tiers": [
+            {"level": 0, "name": "Watering Can", "icon": "cache/img/tools/WateringCan.png", "gold_cost": 0, "materials": None, "perks": "Water 1 tile."},
+            {"level": 1, "name": "Copper Watering Can", "icon": "cache/img/tools/CopperWateringCan.png", "gold_cost": 2000, "materials": "5x Copper Bar", "perks": "Water 3 tiles in a line."},
+            {"level": 2, "name": "Steel Watering Can", "icon": "cache/img/tools/SteelWateringCan.png", "gold_cost": 5000, "materials": "5x Iron Bar", "perks": "Water 5 tiles in a line."},
+            {"level": 3, "name": "Gold Watering Can", "icon": "cache/img/tools/GoldWateringCan.png", "gold_cost": 10000, "materials": "5x Gold Bar", "perks": "Water 3x3 area."},
+            {"level": 4, "name": "Iridium Watering Can", "icon": "cache/img/tools/IridiumWateringCan.png", "gold_cost": 25000, "materials": "5x Iridium Bar", "perks": "Water 6x3 area."}
+        ]
+    },
+    "TrashCan": {
+        "name": "Trash Can",
+        "tiers": [
+            {"level": 0, "name": "Trash Can", "icon": "cache/img/tools/CopperTrashCan.png", "gold_cost": 0, "materials": None, "perks": "Reclaims 0% item value."},
+            {"level": 1, "name": "Copper Trash Can", "icon": "cache/img/tools/CopperTrashCan.png", "gold_cost": 1000, "materials": "5x Copper Bar", "perks": "Reclaims 15% item value."},
+            {"level": 2, "name": "Steel Trash Can", "icon": "cache/img/tools/SteelTrashCan.png", "gold_cost": 2500, "materials": "5x Iron Bar", "perks": "Reclaims 30% item value."},
+            {"level": 3, "name": "Gold Trash Can", "icon": "cache/img/tools/GoldTrashCan.png", "gold_cost": 5000, "materials": "5x Gold Bar", "perks": "Reclaims 45% item value."},
+            {"level": 4, "name": "Iridium Trash Can", "icon": "cache/img/tools/IridiumTrashCan.png", "gold_cost": 12500, "materials": "5x Iridium Bar", "perks": "Reclaims 60% item value."}
+        ]
+    }
+}
+
 
 def _parse_material_requirement(mat_str: str | None) -> tuple[int, str | None]:
-    """
-    Parses a material requirement string like "5x Copper Bar" into (count, item_name).
-    Returns (0, None) if mat_str is None or empty.
-    """
+    """Parses a material requirement string like "5x Copper Bar" into (count, item_name)."""
     if not mat_str:
         return 0, None
 
@@ -28,14 +77,11 @@ def _parse_material_requirement(mat_str: str | None) -> tuple[int, str | None]:
 
 
 def parse_tools(
-    xml_root: ET.Element,
+    xml_root: Any,
     player_money: int = 0,
     material_totals: list[dict[str, Any]] = None,
 ) -> dict[str, Any]:
-    """
-    Parses tool upgrade levels, blacksmith processing status, and scythe discovery
-    from the save file XML root, verifying upgrade gold and chest material requirements.
-    """
+    """Parses tool upgrade levels and blacksmith processing status from XML."""
     start_time = time.perf_counter()
 
     if xml_root is None:
@@ -43,36 +89,22 @@ def parse_tools(
         return {
             "upgradeable": [],
             "watering_can": None,
-            "scythe": {
-                "name": "Scythe",
-                "current_stage": {
-                    "name": "Basic Scythe",
-                    "tier": 0,
-                    "icon_url": "/cache/img/items/T_47.png",
-                    "hint": "Starter tool.",
-                },
-                "is_max": False,
-                "next_stage": None,
-            },
+            "scythe": None,
         }
 
     catalog = get_tools_catalog()
-    upgradeable_catalog = catalog.get("upgradeable_tools", {})
-    special_catalog = catalog.get("special_tools", {})
+    upgradeable_catalog = catalog.get("upgradeable_tools") or DEFAULT_UPGRADEABLE_TOOLS
 
-    # Build chest material stock lookup dictionary
+    tool_levels = {tool_key: 0 for tool_key in upgradeable_catalog}
+
     chest_stock = {
         item["name"]: item["count"]
         for item in (material_totals or [])
         if "name" in item and "count" in item
     }
-    logger.debug(
-        f"Evaluating tool upgrades against {player_money:,}g funds and {len(chest_stock)} chest material types"
-    )
 
-    player = xml_root.find("player")
+    player = xml_root.find("player") if hasattr(xml_root, "find") else None
 
-    # 1. Check Clint's blacksmith upgrade status
     days_left = 0
     upgrading_tool_type = None
 
@@ -88,29 +120,18 @@ def parse_tools(
         if tool_upgrading_node is not None:
             upgrading_item = tool_upgrading_node.find("Item")
             if upgrading_item is not None:
-                item_type = (
-                    upgrading_item.get(
-                        "{http://www.w3.org/2001/XMLSchema-instance}type"
-                    )
-                    or ""
-                )
+                item_type = upgrading_item.get("{http://www.w3.org/2001/XMLSchema-instance}type") or ""
                 item_name = upgrading_item.findtext("name") or ""
                 upgrading_tool_type = item_type or item_name
 
-        if days_left > 0 and upgrading_tool_type:
-            logger.debug(
-                f"Active blacksmith upgrade detected at Clint's: {upgrading_tool_type} ({days_left}d remaining)"
-            )
-    else:
-        logger.debug("No <player> node found under save XML root")
+        trash_lvl_elem = player.find("trashCanLevel")
+        if trash_lvl_elem is not None and trash_lvl_elem.text:
+            try:
+                tool_levels["TrashCan"] = int(trash_lvl_elem.text)
+            except (ValueError, KeyError):
+                pass
 
-    # 2. Track tool levels and scythe stages across inventory, chests, and blacksmith
-    tool_levels = {tool_key: 0 for tool_key in upgradeable_catalog}
-    scythe_tier_found = 0  # 0: Basic, 1: Golden, 2: Iridium
-
-    items = xml_root.findall(".//Item")
-    scanned_items_count = len(items)
-    matched_tools_count = 0
+    items = xml_root.findall(".//Item") if hasattr(xml_root, "findall") else []
 
     for item in items:
         if item.get("{http://www.w3.org/2001/XMLSchema-instance}nil") == "true":
@@ -119,75 +140,47 @@ def parse_tools(
         item_type = item.get("{http://www.w3.org/2001/XMLSchema-instance}type") or ""
         item_name = item.findtext("name") or ""
 
-        # Precise matching for upgradeable tools
         for tool_key, tool_info in upgradeable_catalog.items():
             is_tool_match = False
-
             if item_type == tool_key:
                 is_tool_match = True
             elif item_type in ("Tool", "GenericTool", "SpecialItem"):
                 valid_names = [tool_key, tool_info.get("name", "")] + [
-                    t["name"] for t in tool_info.get("tiers", [])
+                    t["name"] for t in tool_info.get("tiers", []) if isinstance(t, dict) and "name" in t
                 ]
                 if item_name in valid_names:
                     is_tool_match = True
 
             if is_tool_match:
-                matched_tools_count += 1
                 level_text = item.findtext("upgradeLevel")
                 if level_text is not None:
                     try:
                         level = int(level_text)
-                        tool_levels[tool_key] = max(tool_levels[tool_key], level)
+                        tool_levels[tool_key] = max(tool_levels.get(tool_key, 0), level)
                     except ValueError:
                         pass
 
-        # Check Scythes
-        if "Iridium Scythe" in item_name:
-            scythe_tier_found = max(scythe_tier_found, 2)
-        elif "Golden Scythe" in item_name:
-            scythe_tier_found = max(scythe_tier_found, 1)
-        elif "Scythe" in item_name or "Scythe" in item_type:
-            scythe_tier_found = max(scythe_tier_found, 0)
-
-    logger.debug(
-        f"Evaluated {scanned_items_count} <Item> nodes across save: {matched_tools_count} tool matches processed"
-    )
-
-    # 3. Build upgradeable tools data structure and check requirements
     tools_data: list[dict[str, Any]] = []
-    maxed_count = 0
-    ready_to_upgrade_count = 0
 
     for tool_key, tool_info in upgradeable_catalog.items():
+        tiers = tool_info.get("tiers", []) if isinstance(tool_info, dict) else []
+        if not tiers:
+            continue
+
         current_lvl = tool_levels.get(tool_key, 0)
-        tiers = tool_info.get("tiers", [])
         max_lvl = tiers[-1]["level"] if tiers else 0
-
         current_lvl = min(current_lvl, max_lvl)
+
         current_tier_data = next(
-            (t for t in tiers if t["level"] == current_lvl), tiers[0]
+            (t for t in tiers if t["level"] == current_lvl),
+            tiers[0],
         )
 
-        is_upgrading = (
-            (days_left > 0)
-            and (upgrading_tool_type is not None)
-            and (tool_key in upgrading_tool_type)
-        )
+        is_upgrading = (days_left > 0) and (upgrading_tool_type is not None) and (tool_key in upgrading_tool_type)
         is_max = current_lvl >= max_lvl
 
-        if is_max:
-            maxed_count += 1
-
-        if is_upgrading:
-            status = "upgrading"
-        elif is_max:
-            status = "maxed"
-        else:
-            status = "ready"
-
-        icon_file = current_tier_data.get("icon")
-        icon_url = icon_file.lstrip("/") if icon_file else None
+        status = "upgrading" if is_upgrading else ("maxed" if is_max else "ready")
+        icon_file = current_tier_data.get("icon", "")
 
         next_tier_data = None
         if not is_max:
@@ -198,25 +191,11 @@ def parse_tools(
                 mat_text = raw_next.get("materials")
                 req_count, req_mat_name = _parse_material_requirement(mat_text)
 
-                if req_mat_name:
-                    available_count = chest_stock.get(req_mat_name, 0)
-                    has_enough_materials = available_count >= req_count
-                else:
-                    available_count = 0
-                    has_enough_materials = True
-
+                available_count = chest_stock.get(req_mat_name, 0) if req_mat_name else 0
+                has_enough_materials = available_count >= req_count if req_mat_name else True
                 can_upgrade = has_enough_gold and has_enough_materials
-                if can_upgrade and status != "upgrading":
-                    ready_to_upgrade_count += 1
 
-                logger.debug(
-                    f"Tool '{tool_key}' -> Next: {raw_next['name']} | Gold: {gold_cost:,}g "
-                    f"({'OK' if has_enough_gold else 'NEEDS FUNDS'}) | Material: "
-                    f"{req_count}x {req_mat_name or 'None'} (Chests: {available_count} | "
-                    f"{'OK' if has_enough_materials else 'SHORT'}) -> Can Upgrade: {can_upgrade}"
-                )
-
-                next_icon_file = raw_next.get("icon")
+                next_icon_file = raw_next.get("icon", "")
                 next_tier_data = {
                     "level": raw_next["level"],
                     "name": raw_next["name"],
@@ -229,15 +208,13 @@ def parse_tools(
                     "available_count": available_count,
                     "has_enough_materials": has_enough_materials,
                     "can_upgrade": can_upgrade,
-                    "icon_url": next_icon_file.lstrip("/")
-                    if next_icon_file
-                    else None,
+                    "icon_url": next_icon_file.lstrip("/") if next_icon_file else None,
                 }
 
         tools_data.append(
             {
                 "key": tool_key,
-                "display_name": tool_info.get("name", tool_key),
+                "display_name": tool_info.get("name", tool_key) if isinstance(tool_info, dict) else tool_key,
                 "current_level": current_lvl,
                 "max_level": max_lvl,
                 "status": status,
@@ -245,59 +222,15 @@ def parse_tools(
                 "is_max": is_max,
                 "current_tier": {
                     "name": current_tier_data["name"],
-                    "perks": current_tier_data["perks"],
-                    "icon_url": icon_url,
+                    "perks": current_tier_data.get("perks", ""),
+                    "icon_url": icon_file.lstrip("/") if icon_file else None,
                 },
                 "next_tier": next_tier_data,
             }
         )
 
-    logger.debug(
-        f"Tool evaluation completed: {maxed_count}/{len(upgradeable_catalog)} maxed, "
-        f"{ready_to_upgrade_count} ready to upgrade at Clint's"
-    )
-
-    # 4. Build Scythe progression structure
-    scythe_info = special_catalog.get("Scythe", {})
-    stages = scythe_info.get("stages", [])
-    current_scythe_stage = stages[min(scythe_tier_found, len(stages) - 1)]
-    next_scythe_stage = (
-        stages[scythe_tier_found + 1] if scythe_tier_found + 1 < len(stages) else None
-    )
-
-    scythe_data = {
-        "name": scythe_info.get("name", "Scythe"),
-        "current_stage": {
-            "name": current_scythe_stage["name"],
-            "tier": current_scythe_stage["tier"],
-            "icon_url": current_scythe_stage['icon'].lstrip("/")
-            if current_scythe_stage.get("icon")
-            else None,
-            "hint": current_scythe_stage["hint"],
-        },
-        "is_max": (scythe_tier_found >= len(stages) - 1),
-        "next_stage": {
-            "name": next_scythe_stage["name"],
-            "icon_url": next_scythe_stage['icon'].lstrip("/")
-            if next_scythe_stage.get("icon")
-            else None,
-            "hint": next_scythe_stage["hint"],
-        }
-        if next_scythe_stage
-        else None,
-    }
-
-    watering_can = next((t for t in tools_data if t["key"] == "WateringCan"), None)
-
-    logger.debug(
-        f"Resolved Scythe progression stage: {current_scythe_stage['name']} (Tier {scythe_tier_found})"
-    )
-
-    elapsed_ms = (time.perf_counter() - start_time) * 1000
-    logger.debug(f"Parsed tools module in {elapsed_ms:.2f}ms")
-
     return {
         "upgradeable": tools_data,
-        "scythe": scythe_data,
-        "watering_can": watering_can,
+        "watering_can": next((t for t in tools_data if t["key"] == "WateringCan"), None),
+        "scythe": None,
     }

@@ -264,7 +264,7 @@
                     <div class="stat-label">Next Birthday</div>
                     {% if farm.birthdays.next_birthday %}
                     <div class="stat-value">
-                        <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ farm.birthdays.next_birthday.name }}.png" class="bday-portrait-mini" alt="{{ farm.birthdays.next_birthday.name }}" onerror="this.onerror=null; this.style.display='none';">
+                        <img src="/cache/img/portraits/{{ farm.birthdays.next_birthday.name }}.png" class="bday-portrait-mini" alt="{{ farm.birthdays.next_birthday.name }}" onerror="this.onerror=null; this.style.display='none';">
                         {{ farm.birthdays.next_birthday.name }}
                     </div>
                     <div class="subtext-detail">{{ farm.birthdays.status_text }}</div>
@@ -272,7 +272,7 @@
                     <div class="bday-gifts-mini">
                         {% for gift in farm.birthdays.next_birthday.loved_gifts[:3] %}
                         <span class="bday-gift-pill" title="{{ gift.name }}">
-                            <img src="https://stardewvalleywiki.com/Special:Redirect/file/{{ gift.wiki_icon }}.png" class="bday-gift-icon" alt="{{ gift.name }}" onerror="this.onerror=null; this.style.display='none';">
+                            <img src="/cache/img/items/{{ gift.icon }}" class="bday-gift-icon" alt="{{ gift.name }}" onerror="this.onerror=null; this.style.display='none';">
                             {{ gift.name }}
                         </span>
                         {% endfor %}
