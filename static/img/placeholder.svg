@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="100%" height="100%">
+  <!-- Outer Border (Dark Wood) -->
+  <rect x="2" y="2" width="60" height="60" rx="4" fill="#fbc371" stroke="#5d2c28" stroke-width="4"/>
+  <!-- Inner Slot (Light Wood/Parchment) -->
+  <rect x="6" y="6" width="52" height="52" rx="2" fill="#ffdeb5" />
+  <!-- Question Mark -->
+  <text x="32" y="46" font-family="monospace, sans-serif" font-size="40" font-weight="bold" fill="#884b2b" text-anchor="middle">?</text>
+</svg>

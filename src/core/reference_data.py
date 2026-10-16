@@ -114,7 +114,7 @@ def _get_object_lookup():
     return lookup
 
 
-def get_object_info(harvest_id: str) -> dict:
+def get_object_info(harvest_id: str, fallback_name: str = None) -> dict:
     """
     Look up item metadata (display name, sprite icon, base price)
     by qualified ID ("O_128"), numeric ID ("128"), qualified save ID ("(O)128"),
@@ -147,7 +147,7 @@ def get_object_info(harvest_id: str) -> dict:
     if raw_key.lower() in lookup:
         return dict(lookup[raw_key.lower()])
 
-    formatted_name = raw_key.replace("_", " ")
+    formatted_name = fallback_name if fallback_name else raw_key.replace("_", " ")
     icon_filename = raw_key if raw_key.startswith(KNOWN_PREFIXES) else f"O_{raw_key}"
 
     logger.debug(
@@ -160,4 +160,3 @@ def get_object_info(harvest_id: str) -> dict:
         "icon": f"/cache/img/items/{icon_filename}.png",
         "wiki_icon": f"https://stardewvalleywiki.com/Special:Redirect/file/{raw_key}.png",
     }
-    

@@ -33,15 +33,16 @@ def _parse_item_node(item_node):
     )
 
     xml_name = item_node.findtext("name")
-    obj_info = get_object_info(qualified_id)
-    name = obj_info.get("name") if obj_info else xml_name
+    
+    # Pass xml_name into the lookup so it can be used if the catalog misses
+    obj_info = get_object_info(qualified_id, fallback_name=xml_name)
+    name = obj_info.get("name")
 
     if not name:
         logger.debug(
             f"Missing item name for ID '{qualified_id}'; defaulting to 'Unknown Item'"
         )
         name = "Unknown Item"
-
     try:
         stack = int(item_node.findtext("Stack") or item_node.findtext("stack") or 1)
     except ValueError:
