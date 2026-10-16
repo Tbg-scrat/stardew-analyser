@@ -70,7 +70,6 @@ def _get_object_lookup():
         price = item.get("price", 0)
 
         clean_name = name.replace(" ", "_").replace("'", "")
-        wiki_filename = name.replace(" ", "_")
 
         # Resolve icon path dynamically without duplicating prefixes
         if item_id:
@@ -86,7 +85,6 @@ def _get_object_lookup():
             "name": name,
             "price": price,
             "icon": primary_icon,
-            "wiki_icon": f"https://stardewvalleywiki.com/Special:Redirect/file/{wiki_filename}.png",
         }
 
         if item_id:
@@ -126,8 +124,7 @@ def get_object_info(harvest_id: str, fallback_name: str = None) -> dict:
         )
         return {
             "name": "Wild / Unknown",
-            "icon": "/cache/img/items/placeholder.png",
-            "wiki_icon": "https://stardewvalleywiki.com/Special:Redirect/file/Tile.png",
+            "icon": "/static/img/placeholder.svg",
             "price": 0,
         }
 
@@ -158,5 +155,4 @@ def get_object_info(harvest_id: str, fallback_name: str = None) -> dict:
         "name": formatted_name,
         "price": 0,
         "icon": f"/cache/img/items/{icon_filename}.png",
-        "wiki_icon": f"https://stardewvalleywiki.com/Special:Redirect/file/{raw_key}.png",
     }
