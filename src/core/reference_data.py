@@ -6,19 +6,22 @@ Builds an in-memory index over domain catalogs for fast item detail lookups.
 
 import logging
 import time
+import re
 
 from data.data_loader import TOOLS_CATALOG, get_combined_objects_catalog
 
 logger = logging.getLogger(__name__)
 
-KNOWN_PREFIXES = ("O_", "T_", "BC_", "W_", "H_", "B_", "F_")
+KNOWN_PREFIXES = ("O_", "T_", "BC_", "W_", "H_", "P_", "R_", "F_", "S_")
 
 
 def qualify_item_id(raw_id: str, default_prefix: str = "O_") -> str:
     """Normalizes raw save IDs or bare numeric strings to catalog keys (e.g. "128" -> "O_128")."""
     if not raw_id:
         return ""
-    clean = str(raw_id).replace("(O)", "").replace("(W)", "").replace("(BC)", "").strip()
+    clean = str(raw_id).strip()
+    while "(" in clean and ")" in clean:
+        clean = re.sub(r'\([^)]*\)', '', clean).strip()
     if clean.startswith(KNOWN_PREFIXES):
         return clean
     return f"{default_prefix}{clean}"
@@ -61,15 +64,15 @@ def _get_object_lookup():
         
         name = (
             item.get("name")
+            or item.get("Name")
             or names.get("data-en-US")
             or names.get("en-US")
             or "Unknown"
         )
-        price = item.get("price", 0)
+        price = item.get("price", item.get("SalePrice", 0))
 
         clean_name = name.replace(" ", "_").replace("'", "")
 
-        # Resolve icon path dynamically without duplicating prefixes
         if item_id:
             if item_id.startswith(KNOWN_PREFIXES):
                 primary_icon = f"/cache/img/items/{item_id}.png"
@@ -83,26 +86,25 @@ def _get_object_lookup():
             "name": name,
             "price": price,
             "icon": primary_icon,
+            "sprite_key": item.get("sprite_key"),
         }
 
         if item_id:
-            # Primary lookup under qualified ID (e.g., "O_128", "W_43")
+            # Store exact qualified primary ID (e.g., H_17, BC_37, W_64)
             lookup[item_id] = info
 
-            # Aliases for backward compatibility with bare numeric IDs and qualified parentheses tags
-            if item_id.startswith("W_"):
-                bare_id = item_id[2:]
-                lookup[bare_id] = info
-                lookup[f"(W){bare_id}"] = info
-            elif item_id.startswith("BC_"):
-                bare_id = item_id[3:]
-                lookup[bare_id] = info
-                lookup[f"(BC){bare_id}"] = info
-            elif item_id.startswith("O_"):
-                bare_id = item_id[2:]
-                lookup[bare_id] = info
-                lookup[f"(O){bare_id}"] = info
-            elif not item_id.startswith(KNOWN_PREFIXES):
+            # Map explicit parenthesis tags strictly to their prefixed catalog keys
+            for tag, prefix in [
+                ("(O)", "O_"), ("(W)", "W_"), ("(BC)", "BC_"), 
+                ("(T)", "T_"), ("(H)", "H_"), ("(P)", "P_"), 
+                ("(R)", "R_"), ("(F)", "F_"), ("(S)", "S_")
+            ]:
+                if item_id.startswith(prefix):
+                    bare_id = item_id[len(prefix):]
+                    # Store with explicit prefix tag so (H)17 checks H_17 directly
+                    lookup[f"{tag}{bare_id}"] = info
+
+            if not item_id.startswith(KNOWN_PREFIXES):
                 lookup[f"(O){item_id}"] = info
 
         if name:
@@ -120,51 +122,58 @@ def _get_object_lookup():
 
 def get_object_info(harvest_id: str, fallback_name: str = None) -> dict:
     """
-    Look up item metadata (display name, sprite icon, base price)
-    by qualified ID ("O_128", "W_43"), numeric ID ("128", "43"), qualified save ID ("(O)128", "(W)43"),
-    or 1.6 string key ("Powdermelon").
+    Look up item metadata ensuring strict category prefix separation (H_, BC_, W_, etc.).
     """
     if not harvest_id or str(harvest_id).strip() in ("None", "-1", ""):
-        logger.debug(
-            f"Blank/invalid harvest_id '{harvest_id}' passed to get_object_info; returning Wild/Unknown default"
-        )
         return {
             "name": "Wild / Unknown",
             "icon": "/static/img/placeholder.svg",
             "price": 0,
         }
 
-    raw_key = (
-        str(harvest_id)
-        .replace("(O)", "")
-        .replace("(W)", "")
-        .replace("(BC)", "")
-        .strip()
-    )
+    raw_input = str(harvest_id).strip()
     lookup = _get_object_lookup()
 
-    # Direct key hit
-    if raw_key in lookup:
-        return dict(lookup[raw_key])
+    # 1. Direct exact match in lookup (e.g., "(H)17", "(BC)37", "BC_37", "H_17")
+    if raw_input in lookup:
+        return dict(lookup[raw_input])
 
-    # Try matching with known prefixes if an unqualified ID was passed
-    for prefix in ("W_", "BC_", "O_"):
-        prefixed_key = f"{prefix}{raw_key}"
-        if prefixed_key in lookup:
-            return dict(lookup[prefixed_key])
+    # 2. Convert parenthesis notation directly to catalog prefix format (e.g. "(H)17" -> "H_17")
+    tag_mapping = {
+        "(O)": "O_",
+        "(W)": "W_",
+        "(BC)": "BC_",
+        "(T)": "T_",
+        "(H)": "H_",
+        "(P)": "P_",
+        "(R)": "R_",
+        "(F)": "F_",
+        "(S)": "S_"
+    }
 
-    # Lowercase match fallback
-    if raw_key.lower() in lookup:
-        return dict(lookup[raw_key.lower()])
+    for tag, catalog_prefix in tag_mapping.items():
+        if tag in raw_input:
+            bare_id = raw_input.replace(tag, "").strip()
+            while "(" in bare_id and ")" in bare_id:
+                bare_id = re.sub(r'\([^)]*\)', '', bare_id).strip()
+            
+            prefixed_key = f"{catalog_prefix}{bare_id}"
+            if prefixed_key in lookup:
+                return dict(lookup[prefixed_key])
 
-    formatted_name = fallback_name if fallback_name else raw_key.replace("_", " ")
-    icon_filename = raw_key if raw_key.startswith(KNOWN_PREFIXES) else f"O_{raw_key}"
+    # 3. Clean fallback search
+    clean_key = raw_input
+    while "(" in clean_key and ")" in clean_key:
+        clean_key = re.sub(r'\([^)]*\)', '', clean_key).strip()
 
-    logger.debug(
-        f"Catalog miss for item key '{harvest_id}'. Falling back to formatted key '{formatted_name}'"
-    )
+    if clean_key in lookup:
+        return dict(lookup[clean_key])
+
+    formatted_name = fallback_name if fallback_name else clean_key.replace("_", " ")
+    icon_filename = clean_key if clean_key.startswith(KNOWN_PREFIXES) else f"O_{clean_key}"
+
     return {
-        "id": raw_key,
+        "id": clean_key,
         "name": formatted_name,
         "price": 0,
         "icon": f"/cache/img/items/{icon_filename}.png",

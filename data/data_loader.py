@@ -40,6 +40,7 @@ def get_combined_objects_catalog() -> list:
         COOKING_CATALOG,
         MUSEUM_CATALOG,
         WEAPONS_CATALOG,
+        TOOLS_CATALOG,
     ]
 
     for catalog in domain_catalogs:
@@ -55,6 +56,19 @@ def get_combined_objects_catalog() -> list:
                 entry.update(item_data)
                 if "sprite_key" not in entry:
                     entry["sprite_key"] = prefixed_id
+                combined.append(entry)
+                seen_ids.add(prefixed_id)
+                seen_ids.add(str(item_id))
+            elif catalog is TOOLS_CATALOG:
+                prefixed_id = f"T_{item_id}"
+                entry = {"id": prefixed_id}
+                entry.update(item_data)
+                # Map name correctly from tool fields if missing
+                if "name" not in entry and "Name" in item_data:
+                    entry["name"] = item_data["Name"]
+                if "sprite_key" not in entry:
+                    sprite_idx = item_data.get("SpriteIndex", 0)
+                    entry["sprite_key"] = f"tools_{sprite_idx}"
                 combined.append(entry)
                 seen_ids.add(prefixed_id)
                 seen_ids.add(str(item_id))

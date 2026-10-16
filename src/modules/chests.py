@@ -24,24 +24,53 @@ def _parse_item_node(item_node):
         item_node.findtext("itemId") or item_node.findtext("parentSheetIndex") or "0"
     )
 
-    # Detect item types / category flags from XML xsi:type or tags
+    # Detect item types strictly from XML xsi:type or tags (no ID fallback collisions)
     item_xsi_type = item_node.get("{http://www.w3.org/2001/XMLSchema-instance}type", "")
     is_big_craftable = item_node.findtext("bigCraftable", "").lower() == "true"
-    is_weapon = "Weapon" in item_xsi_type or item_xsi_type == "MeleeWeapon"
+    
+    is_weapon = (
+        "Weapon" in item_xsi_type 
+        or item_xsi_type in ["MeleeWeapon", "Slingshot"]
+    )
+    
+    is_tool = (
+        item_node.tag == "Tool"
+        or "Tool" in item_xsi_type
+        or "Rod" in item_xsi_type
+        or item_xsi_type in ["FishingRod", "Pan", "Shears", "MilkPail", "Wand", "Axe", "Pickaxe", "Hoe", "WateringCan", "GenericTool"]
+    )
 
-    # Determine correct namespace prefix
-    if is_weapon:
+    # Explicit namespace prefix mapping based strictly on xsi:type or tags
+    if is_tool:
+        default_prefix = "(T)"
+    elif is_weapon:
         default_prefix = "(W)"
-    elif is_big_craftable:
+    elif is_big_craftable or item_xsi_type == "BigCraftable":
         default_prefix = "(BC)"
-    else:
+    elif item_xsi_type in ["Object", "ColoredObject", "Torch"]:
         default_prefix = "(O)"
+    elif item_xsi_type == "Ring":
+        default_prefix = "(R)"
+    elif item_xsi_type == "Boots":
+        default_prefix = "(P)"
+    elif item_xsi_type == "Hat":
+        default_prefix = "(H)"
+    elif item_xsi_type == "Furniture":
+        default_prefix = "(F)"
+    elif item_xsi_type in ["Wallpaper", "Flooring"]:
+        default_prefix = "(W)"
+    elif item_xsi_type == "Clothing":
+        default_prefix = "(S)"
+    else:
+        raise ValueError(f"Unrecognized item xsi:type '{item_xsi_type}' for item ID: {item_id}")
 
-    qualified_id = item_node.findtext("QualifiedItemId") or f"{default_prefix}{item_id}"
-
+    # For tools, item_id might be numeric or empty, but the name/identifier is often in <name>
     xml_name = item_node.findtext("name")
+    identifier = item_id if (item_id and item_id != "0") else (xml_name or "0")
 
-    # Pass qualified_id into reference_data lookup (now handles (W) / W_ catalogs)
+    qualified_id = item_node.findtext("QualifiedItemId") or f"{default_prefix}{identifier}"
+
+    # Pass qualified_id into reference_data lookup
     obj_info = get_object_info(qualified_id, fallback_name=xml_name)
     name = obj_info.get("name")
 
