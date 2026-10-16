@@ -18,15 +18,13 @@ def qualify_item_id(raw_id: str, default_prefix: str = "O_") -> str:
     """Normalizes raw save IDs or bare numeric strings to catalog keys (e.g. "128" -> "O_128")."""
     if not raw_id:
         return ""
-    clean = str(raw_id).replace("(O)", "").strip()
+    clean = str(raw_id).replace("(O)", "").replace("(W)", "").replace("(BC)", "").strip()
     if clean.startswith(KNOWN_PREFIXES):
         return clean
     return f"{default_prefix}{clean}"
 
 
 _OBJECT_LOOKUP_CACHE = None
-
-KNOWN_PREFIXES = ("O_", "T_", "BC_", "W_", "H_", "B_", "F_")
 
 
 def get_tools_catalog() -> dict:
@@ -39,7 +37,7 @@ def get_tools_catalog() -> dict:
 
 
 def _get_object_lookup():
-    """Builds an in-memory index mapping string IDs, (O)IDs, and string names to object metadata."""
+    """Builds an in-memory index mapping string IDs, qualified IDs, and string names to object metadata."""
     global _OBJECT_LOOKUP_CACHE
     if _OBJECT_LOOKUP_CACHE is not None:
         return _OBJECT_LOOKUP_CACHE
@@ -88,11 +86,19 @@ def _get_object_lookup():
         }
 
         if item_id:
-            # Primary lookup under qualified ID (e.g., "O_128")
+            # Primary lookup under qualified ID (e.g., "O_128", "W_43")
             lookup[item_id] = info
 
-            # Aliases for backward compatibility with bare numeric IDs ("128", "(O)128")
-            if item_id.startswith("O_"):
+            # Aliases for backward compatibility with bare numeric IDs and qualified parentheses tags
+            if item_id.startswith("W_"):
+                bare_id = item_id[2:]
+                lookup[bare_id] = info
+                lookup[f"(W){bare_id}"] = info
+            elif item_id.startswith("BC_"):
+                bare_id = item_id[3:]
+                lookup[bare_id] = info
+                lookup[f"(BC){bare_id}"] = info
+            elif item_id.startswith("O_"):
                 bare_id = item_id[2:]
                 lookup[bare_id] = info
                 lookup[f"(O){bare_id}"] = info
@@ -115,7 +121,7 @@ def _get_object_lookup():
 def get_object_info(harvest_id: str, fallback_name: str = None) -> dict:
     """
     Look up item metadata (display name, sprite icon, base price)
-    by qualified ID ("O_128"), numeric ID ("128"), qualified save ID ("(O)128"),
+    by qualified ID ("O_128", "W_43"), numeric ID ("128", "43"), qualified save ID ("(O)128", "(W)43"),
     or 1.6 string key ("Powdermelon").
     """
     if not harvest_id or str(harvest_id).strip() in ("None", "-1", ""):
@@ -128,17 +134,24 @@ def get_object_info(harvest_id: str, fallback_name: str = None) -> dict:
             "price": 0,
         }
 
-    raw_key = str(harvest_id).replace("(O)", "").strip()
+    raw_key = (
+        str(harvest_id)
+        .replace("(O)", "")
+        .replace("(W)", "")
+        .replace("(BC)", "")
+        .strip()
+    )
     lookup = _get_object_lookup()
 
     # Direct key hit
     if raw_key in lookup:
         return dict(lookup[raw_key])
 
-    # Try prepending O_ if an unqualified ID was passed
-    prefixed_key = f"O_{raw_key}"
-    if prefixed_key in lookup:
-        return dict(lookup[prefixed_key])
+    # Try matching with known prefixes if an unqualified ID was passed
+    for prefix in ("W_", "BC_", "O_"):
+        prefixed_key = f"{prefix}{raw_key}"
+        if prefixed_key in lookup:
+            return dict(lookup[prefixed_key])
 
     # Lowercase match fallback
     if raw_key.lower() in lookup:
@@ -156,3 +169,4 @@ def get_object_info(harvest_id: str, fallback_name: str = None) -> dict:
         "price": 0,
         "icon": f"/cache/img/items/{icon_filename}.png",
     }
+    

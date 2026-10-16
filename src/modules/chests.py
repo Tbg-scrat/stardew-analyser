@@ -23,26 +23,42 @@ def _parse_item_node(item_node):
     item_id = (
         item_node.findtext("itemId") or item_node.findtext("parentSheetIndex") or "0"
     )
-    qualified_id = item_node.findtext("QualifiedItemId") or f"(O){item_id}"
 
-    sprite_key = (
+    # Detect item types / category flags from XML xsi:type or tags
+    item_xsi_type = item_node.get("{http://www.w3.org/2001/XMLSchema-instance}type", "")
+    is_big_craftable = item_node.findtext("bigCraftable", "").lower() == "true"
+    is_weapon = "Weapon" in item_xsi_type or item_xsi_type == "MeleeWeapon"
+
+    # Determine correct namespace prefix
+    if is_weapon:
+        default_prefix = "(W)"
+    elif is_big_craftable:
+        default_prefix = "(BC)"
+    else:
+        default_prefix = "(O)"
+
+    qualified_id = item_node.findtext("QualifiedItemId") or f"{default_prefix}{item_id}"
+
+    xml_name = item_node.findtext("name")
+
+    # Pass qualified_id into reference_data lookup (now handles (W) / W_ catalogs)
+    obj_info = get_object_info(qualified_id, fallback_name=xml_name)
+    name = obj_info.get("name")
+
+    # Use catalog sprite key if available, otherwise construct from qualified_id
+    sprite_key = obj_info.get("sprite_key") or (
         qualified_id.replace("(", "")
         .replace(")", "_")
         .replace(":", "_")
         .replace(" ", "_")
     )
 
-    xml_name = item_node.findtext("name")
-    
-    # Pass xml_name into the lookup so it can be used if the catalog misses
-    obj_info = get_object_info(qualified_id, fallback_name=xml_name)
-    name = obj_info.get("name")
-
     if not name:
         logger.debug(
             f"Missing item name for ID '{qualified_id}'; defaulting to 'Unknown Item'"
         )
         name = "Unknown Item"
+
     try:
         stack = int(item_node.findtext("Stack") or item_node.findtext("stack") or 1)
     except ValueError:
@@ -220,3 +236,4 @@ def parse_chests(root, object_map=None):
         "chests": raw_chests.get("chests", []),
         "material_totals": sorted_materials,
     }
+    

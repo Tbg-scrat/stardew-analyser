@@ -10,13 +10,6 @@ from src.core.xml_reader import get_key_value
 logger = logging.getLogger(__name__)
 
 
-def format_wiki_filename(name):
-    """Clean item names into Stardew Valley Wiki image file conventions."""
-    if not name:
-        return ""
-    return name.replace(" ", "_").replace("'", "%27")
-
-
 def parse_shipping(player_node):
     """Extract basicShipped item counts from the player XML node."""
     if player_node is None:
@@ -91,7 +84,6 @@ def get_formatted_shipping(player_node, catalog=None):
                 "is_polyculture": catalog_item.get("is_polyculture", False),
                 "is_monoculture": catalog_item.get("is_monoculture", False),
                 "image": catalog_item.get("image") or f"/cache/img/items/{item_id}.png",
-                "wiki_icon": format_wiki_filename(item_name),
             }
         )
 
@@ -110,3 +102,4 @@ def get_formatted_shipping(player_node, catalog=None):
     )
 
     return sorted(shipped_mapped, key=lambda x: x["name"])
+    

@@ -16,6 +16,7 @@ FISH_CATALOG = load_json_catalog("fish.json")
 MUSEUM_CATALOG = load_json_catalog("museum.json")
 SHIPPING_CATALOG = load_json_catalog("shipping.json")
 COOKING_CATALOG = load_json_catalog("cooking.json")
+WEAPONS_CATALOG = load_json_catalog("weapons.json")
 ACHIEVEMENTS_CATALOG = load_json_catalog("achievements.json", default_factory=list)
 OBJECTS_CATALOG = load_json_catalog("objects.json", default_factory=list)
 VILLAGERS_CATALOG = load_json_catalog("villagers.json")
@@ -38,6 +39,7 @@ def get_combined_objects_catalog() -> list:
         SHIPPING_CATALOG,
         COOKING_CATALOG,
         MUSEUM_CATALOG,
+        WEAPONS_CATALOG,
     ]
 
     for catalog in domain_catalogs:
@@ -47,10 +49,20 @@ def get_combined_objects_catalog() -> list:
             if not isinstance(item_data, dict):
                 continue
 
-            entry = {"id": str(item_id)}
-            entry.update(item_data)
-            combined.append(entry)
-            seen_ids.add(str(item_id))
+            if catalog is WEAPONS_CATALOG:
+                prefixed_id = f"W_{item_id}"
+                entry = {"id": prefixed_id}
+                entry.update(item_data)
+                if "sprite_key" not in entry:
+                    entry["sprite_key"] = prefixed_id
+                combined.append(entry)
+                seen_ids.add(prefixed_id)
+                seen_ids.add(str(item_id))
+            else:
+                entry = {"id": str(item_id)}
+                entry.update(item_data)
+                combined.append(entry)
+                seen_ids.add(str(item_id))
 
     # 2. Process legacy list catalog (objects.json) for items not yet extracted
     if isinstance(OBJECTS_CATALOG, list):

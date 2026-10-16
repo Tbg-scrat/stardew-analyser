@@ -3,16 +3,9 @@
 
 import xml.etree.ElementTree as ET
 from src.modules.shipping import (
-    format_wiki_filename,
     get_formatted_shipping,
     parse_shipping,
 )
-
-
-def test_format_wiki_filename():
-    """Verifies item name formatting for wiki icon URLs."""
-    assert format_wiki_filename("") == ""
-    assert format_wiki_filename("Sweet Gem Berry") == "Sweet_Gem_Berry"
 
 
 def test_parse_shipping_none_and_empty():

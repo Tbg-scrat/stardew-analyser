@@ -1,3 +1,5 @@
+<!-- templates/partials/chests.html -->
+
 <style>
     /* Chests Module Header & Summary */
     .chests-header-summary { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
@@ -72,6 +74,7 @@
         visibility: hidden;
         transition: opacity 0.12s ease;
         transform: translate(-50%, -100%);
+        text-align: center;
     }
     .chest-floating-tooltip.visible {
         opacity: 1;
@@ -128,18 +131,19 @@
                                     <div class="item-slot" 
                                          data-item-name="{{ item.name | lower }}" 
                                          data-display-name="{{ item.name }}"
+                                         data-qualified-id="{{ item.qualified_id }}"
                                          data-stack="{{ item.stack }}">
-                                        <img src="cache/img/items/{{ item.sprite_key }}.png" 
+                                        <img src="/cache/img/items/{{ item.sprite_key }}.png" 
                                              alt="{{ item.name }}" 
                                              class="item-sprite"
-                                             onerror="this.onerror=null; this.src='https://stardewvalleywiki.com/Special:Redirect/file/' + encodeURIComponent('{{ item.name }}'.replace(/ /g, '_')) + '.png';">
-                                        
+                                             onerror="this.onerror=null; this.src='/static/img/placeholder.svg';">
+
                                         {% if item.quality == 1 %}
-                                            <img src="cache/img/items/silver_star.png" class="quality-badge" alt="Silver Quality">
+                                            <img src="/cache/img/items/silver_star.png" class="quality-badge" alt="Silver Quality">
                                         {% elif item.quality == 2 %}
-                                            <img src="cache/img/items/gold_star.png" class="quality-badge" alt="Gold Quality">
+                                            <img src="/cache/img/items/gold_star.png" class="quality-badge" alt="Gold Quality">
                                         {% elif item.quality == 4 %}
-                                            <img src="cache/img/items/iridium_star.png" class="quality-badge" alt="Iridium Quality">
+                                            <img src="/cache/img/items/iridium_star.png" class="quality-badge" alt="Iridium Quality">
                                         {% endif %}
 
                                         {% if item.stack > 1 %}
@@ -168,10 +172,10 @@
                 {% for mat in farm.chests.material_totals %}
                     <div class="material-card" data-item-name="{{ mat.name | lower }}">
                         <div class="material-sprite-box">
-                            <img src="cache/img/items/{{ mat.sprite_key }}.png" 
+                            <img src="/cache/img/items/{{ mat.sprite_key }}.png" 
                                  alt="{{ mat.name }}" 
                                  class="item-sprite"
-                                 onerror="this.onerror=null; this.src='https://stardewvalleywiki.com/Special:Redirect/file/' + encodeURIComponent('{{ mat.name }}'.replace(/ /g, '_')) + '.png';">
+                                 onerror="this.onerror=null; this.src='/static/img/placeholder.svg';">
                         </div>
                         <div class="material-info">
                             <div class="material-name" title="{{ mat.name }}">{{ mat.name }}</div>
@@ -270,6 +274,7 @@
     function showChestTooltip(slotEl) {
         const tooltip = getOrCreateChestTooltip();
         const displayName = slotEl.getAttribute('data-display-name');
+        const qualifiedId = slotEl.getAttribute('data-qualified-id');
         if (!displayName) return;
 
         if (activeChestSlotEl && activeChestSlotEl !== slotEl) {
@@ -279,7 +284,7 @@
         activeChestSlotEl = slotEl;
         activeChestSlotEl.classList.add('highlighted');
 
-        tooltip.textContent = displayName;
+        tooltip.innerHTML = displayName + (qualifiedId ? '<br><span style="font-size: 0.7rem; opacity: 0.85;">(' + qualifiedId + ')</span>' : '');
 
         const rect = slotEl.getBoundingClientRect();
         const topPos = rect.top - 6;

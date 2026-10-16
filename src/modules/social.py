@@ -13,11 +13,6 @@ from data.data_loader import VILLAGERS_CATALOG
 logger = logging.getLogger(__name__)
 
 
-def format_wiki_filename(name):
-    """Clean item names into Stardew Valley Wiki image file conventions."""
-    return name.replace(" ", "_").replace("'", "%27")
-
-
 def get_loved_gifts(villager_name):
     """Returns structured loved gifts with item names and exact cache image filenames."""
     villagers_map = VILLAGERS_CATALOG.get("villagers", {})
@@ -151,3 +146,4 @@ def parse_social(player):
     )
 
     return friendships_list
+    

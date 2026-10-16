@@ -3,17 +3,9 @@
 
 import xml.etree.ElementTree as ET
 from src.modules.cooking import (
-    format_wiki_filename,
     get_formatted_cooking,
     parse_cooking,
 )
-
-
-def test_format_wiki_filename():
-    """Verifies string cleaning for Stardew Valley Wiki conventions."""
-    assert format_wiki_filename("") == ""
-    assert format_wiki_filename("Fried Egg") == "Fried_Egg"
-    assert format_wiki_filename("Miner's Treat") == "Miner%27s_Treat"
 
 
 def test_parse_cooking_none_and_empty():
@@ -84,3 +76,4 @@ def test_get_formatted_cooking_catalog_merge():
     assert results[1]["count"] == 0
     assert results[1]["is_unlocked"] is False
     assert results[1]["status"] == "not_cooked"
+    

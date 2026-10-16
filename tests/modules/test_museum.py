@@ -3,16 +3,9 @@
 
 import xml.etree.ElementTree as ET
 from src.modules.museum import (
-    format_wiki_filename,
     get_formatted_museum,
     parse_museum,
 )
-
-
-def test_format_wiki_filename():
-    """Verifies image filename string formatting for museum items."""
-    assert format_wiki_filename("") == ""
-    assert format_wiki_filename("Prehistoric Scapula") == "Prehistoric_Scapula"
 
 
 def test_parse_museum_none_and_empty():
@@ -96,3 +89,4 @@ def test_get_formatted_museum_catalog_merge():
     tibia = next(item for item in results if item["id"] == "O_580")
     assert tibia["is_unlocked"] is False
     assert tibia["status"] == "not_found"
+    

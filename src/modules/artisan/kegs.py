@@ -24,12 +24,12 @@ QUALITY_MAP = {0: "Normal", 1: "Silver", 2: "Gold", 4: "Iridium"}
 def resolve_item_icon(item_name):
     """
     Returns local sprite filename for color-mapped artisan goods or
-    defaults to standard Wiki filename formatting.
+    defaults to local cache item path.
     """
     name_lower = item_name.lower().strip()
     if name_lower in ARTISAN_COLORS:
         return ARTISAN_COLORS[name_lower]
-    return item_name.replace(" ", "_").replace("'", "%27") + ".png"
+    return f"O_{item_name.replace(' ', '_')}.png"
 
 
 def _get_all_locations(root):
@@ -179,7 +179,7 @@ def parse_all_kegs_from_save(root):
                     "quality_name": quality_name,
                     "days_remaining": days_remaining,
                     "is_ready": is_ready,
-                    "wiki_icon": resolve_item_icon(item_name),
+                    "image": resolve_item_icon(item_name),
                     "count": 0,
                 }
             batch_map[batch_key]["count"] += 1
@@ -215,3 +215,4 @@ def parse_all_kegs_from_save(root):
         "location_stats": location_stats,
         "batches": sorted_batches,
     }
+    

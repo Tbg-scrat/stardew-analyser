@@ -217,8 +217,8 @@
     {% for batch in farm.artisan.casks.batches %}
     <div class="artisan-card item-card" data-name="{{ batch.name }}">
         <div class="artisan-icon-wrapper">
-            <img src="/cache/img/items/{{ batch.wiki_icon }}" 
-                 onerror="this.onerror=null; this.src='/cache/img/items/O_348.png';" 
+            <img src="/cache/img/items/{{ batch.image }}" 
+                 onerror="this.onerror=null; this.src='/static/img/placeholder.svg';" 
                  alt="{{ batch.name }}">
             {% if batch.quality == 1 %}
             <img src="/cache/img/items/silver_star.png" class="artisan-star-badge" alt="Silver Quality">
@@ -252,8 +252,8 @@
     {% for batch in farm.artisan.kegs.batches %}
     <div class="artisan-card item-card" data-name="{{ batch.name }}">
         <div class="artisan-icon-wrapper">
-            <img src="/cache/img/items/{{ batch.wiki_icon }}" 
-                 onerror="this.onerror=null; this.src='/cache/img/items/O_348.png';" 
+            <img src="/cache/img/items/{{ batch.image }}" 
+                 onerror="this.onerror=null; this.src='/static/img/placeholder.svg';" 
                  alt="{{ batch.name }}">
             {% if batch.quality == 1 %}
             <img src="/cache/img/items/silver_star.png" class="artisan-star-badge" alt="Silver Quality">
@@ -287,8 +287,8 @@
     {% for batch in farm.artisan.jars.batches %}
     <div class="artisan-card item-card" data-name="{{ batch.name }}">
         <div class="artisan-icon-wrapper">
-            <img src="/cache/img/items/{{ batch.wiki_icon }}" 
-                 onerror="this.onerror=null; this.src='/cache/img/items/O_344.png';" 
+            <img src="/cache/img/items/{{ batch.image }}" 
+                 onerror="this.onerror=null; this.src='/static/img/placeholder.svg';" 
                  alt="{{ batch.name }}">
             <span class="artisan-badge-count">{{ batch.count }}</span>
         </div>
@@ -315,8 +315,8 @@
     {% for batch in farm.artisan.dehydrators.batches %}
     <div class="artisan-card item-card" data-name="{{ batch.name }}">
         <div class="artisan-icon-wrapper">
-            <img src="/cache/img/items/{{ batch.wiki_icon }}" 
-                 onerror="this.onerror=null; this.src='/cache/img/items/O_298.png';" 
+            <img src="/cache/img/items/{{ batch.image }}" 
+                 onerror="this.onerror=null; this.src='/static/img/placeholder.svg';" 
                  alt="{{ batch.name }}">
             <span class="artisan-badge-count">{{ batch.count }}</span>
         </div>
@@ -343,8 +343,8 @@
     {% for batch in farm.artisan.bee_houses.batches %}
     <div class="artisan-card item-card" data-name="{{ batch.name }}">
         <div class="artisan-icon-wrapper">
-            <img src="/cache/img/items/{{ batch.wiki_icon }}" 
-                 onerror="this.onerror=null; this.src='/cache/img/items/O_340.png';" 
+            <img src="/cache/img/items/{{ batch.image }}" 
+                 onerror="this.onerror=null; this.src='/static/img/placeholder.svg';" 
                  alt="{{ batch.name }}">
             <span class="artisan-badge-count">{{ batch.count }}</span>
         </div>

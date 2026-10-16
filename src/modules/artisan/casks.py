@@ -23,14 +23,14 @@ QUALITY_MAP = {0: "Normal", 1: "Silver", 2: "Gold", 4: "Iridium"}
 def resolve_item_icon(item_name):
     """
     Returns local sprite filename for color-mapped artisan goods or
-    defaults to standard Wiki filename formatting.
+    defaults to local cache item path.
     """
     name_lower = item_name.lower().strip()
 
     if name_lower in ARTISAN_COLORS:
         return ARTISAN_COLORS[name_lower]
 
-    return item_name.replace(" ", "_").replace("'", "%27")
+    return f"O_{item_name.replace(' ', '_')}.png"
 
 
 def parse_casks(location_elem):
@@ -121,7 +121,7 @@ def parse_casks(location_elem):
                 "quality_name": quality_name,
                 "days_remaining": days_remaining,
                 "is_ready": is_ready,
-                "wiki_icon": resolve_item_icon(item_name),
+                "image": resolve_item_icon(item_name),
             }
         )
 
@@ -143,7 +143,7 @@ def parse_casks(location_elem):
                 "quality_name": cask_item["quality_name"],
                 "days_remaining": cask_item["days_remaining"],
                 "is_ready": cask_item["is_ready"],
-                "wiki_icon": cask_item["wiki_icon"],
+                "image": cask_item["image"],
                 "count": 0,
             }
         batch_map[batch_key]["count"] += 1
@@ -233,3 +233,4 @@ def parse_all_casks_from_save(root, player=None):
     )
 
     return aggregated_result
+    

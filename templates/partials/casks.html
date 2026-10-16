@@ -1,3 +1,5 @@
+<!-- templates/partials/casks.html -->
+
 <style>
     .casks-summary-bar {
         display: flex;
@@ -260,10 +262,10 @@
          data-name="{{ batch.name|lower }}" 
          data-status="{{ status_code }}">
         <div class="item-sprite-box">
-            <img src="/cache/img/items/{{ batch.wiki_icon if batch.wiki_icon.endswith('.png') else batch.wiki_icon + '.png' }}" 
+            <img src="/cache/img/items/{{ batch.image if batch.image.endswith('.png') else batch.image + '.png' }}" 
                  class="item-sprite" 
                  alt="{{ batch.name }}" 
-                 onerror="this.onerror=null; this.src='/cache/img/items/O_348.png';">
+                 onerror="this.onerror=null; this.src='/static/img/placeholder.svg';">
 
             {% if batch.quality == 1 %}
             <img src="/cache/img/items/silver_star.png" class="cask-star-badge" alt="Silver Quality">

@@ -9,13 +9,6 @@ from data.data_loader import MUSEUM_CATALOG
 logger = logging.getLogger(__name__)
 
 
-def format_wiki_filename(name):
-    """Clean item names into Stardew Valley Wiki image file conventions."""
-    if not name:
-        return ""
-    return name.replace(" ", "_").replace("'", "%27")
-
-
 def parse_museum(root_node):
     """Extract LibraryMuseum donated pieces."""
     if root_node is None:
@@ -92,7 +85,6 @@ def get_formatted_museum(root_node, catalog=None):
                 "status": "found" if is_donated else "not_found",
                 "is_unlocked": is_donated,
                 "image": catalog_item.get("image") or f"/cache/img/items/{item_id}.png",
-                "wiki_icon": format_wiki_filename(item_name),
             }
         )
 
@@ -111,3 +103,4 @@ def get_formatted_museum(root_node, catalog=None):
     )
 
     return sorted(museum_mapped, key=lambda x: x["name"])
+    

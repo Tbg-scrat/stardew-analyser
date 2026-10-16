@@ -10,13 +10,6 @@ from src.core.xml_reader import get_key_value
 logger = logging.getLogger(__name__)
 
 
-def format_wiki_filename(name):
-    """Clean item names into Stardew Valley Wiki image file conventions."""
-    if not name:
-        return ""
-    return name.replace(" ", "_").replace("'", "%27")
-
-
 def parse_fishing(player_node):
     """Extract fishCaught records with quantity and max length."""
     if player_node is None:
@@ -113,7 +106,6 @@ def get_formatted_fishing(player_node, catalog=None):
                 "status": "caught" if is_caught else "not_caught",
                 "is_unlocked": is_caught,
                 "image": catalog_item.get("image") or f"/cache/img/items/{item_id}.png",
-                "wiki_icon": format_wiki_filename(item_name),
             }
         )
 
@@ -132,3 +124,4 @@ def get_formatted_fishing(player_node, catalog=None):
     )
 
     return sorted(fish_mapped, key=lambda x: x["name"])
+    

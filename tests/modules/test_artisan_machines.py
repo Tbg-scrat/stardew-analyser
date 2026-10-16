@@ -12,9 +12,9 @@ from src.modules.artisan.kegs import parse_all_kegs_from_save
 
 def test_resolve_item_icon_mapping_and_fallback():
     """Verifies item icon resolution for color-mapped goods and standard wiki string fallbacks."""
-    # Unmapped items fallback to Wiki filename conventions
-    assert resolve_item_icon("Unmapped Test Item") == "Unmapped_Test_Item"
-    assert resolve_item_icon("Governor's Reserve") == "Governor%27s_Reserve"
+    # Unmapped items fallback to local cache filename conventions
+    assert resolve_item_icon("Unmapped Test Item") == "O_Unmapped_Test_Item.png"
+    assert resolve_item_icon("Governor's Reserve") == "O_Governor's_Reserve.png"
 
 
 def test_casks_edge_cases_and_parsing():

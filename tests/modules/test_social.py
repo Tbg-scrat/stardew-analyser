@@ -3,14 +3,7 @@
 
 import xml.etree.ElementTree as ET
 from data.data_loader import VILLAGERS_CATALOG
-from src.modules.social import format_wiki_filename, get_loved_gifts, parse_social
-
-
-def test_format_wiki_filename():
-    """Verifies image URL formatting for Stardew Wiki conventions."""
-    assert format_wiki_filename("Abigail") == "Abigail"
-    assert format_wiki_filename("Axe Master") == "Axe_Master"
-    assert format_wiki_filename("Governor's Feast") == "Governor%27s_Feast"
+from src.modules.social import get_loved_gifts, parse_social
 
 
 def test_get_loved_gifts():
