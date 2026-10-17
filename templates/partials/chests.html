@@ -133,10 +133,10 @@
                                          data-display-name="{{ item.name }}"
                                          data-qualified-id="{{ item.qualified_id }}"
                                          data-stack="{{ item.stack }}">
-                                        <img src="/cache/img/items/{{ item.sprite_key }}.png" 
+                                        <img src="/cache/img/{{ item.prefix }}/{{ item.sprite_key }}.png" 
                                              alt="{{ item.name }}" 
                                              class="item-sprite"
-                                             onerror="this.onerror=null; this.src='/static/img/placeholder.svg';">
+                                             onerror="if (this.src.includes('/img/{{ item.prefix }}/')) { this.src = '/cache/img/items/{{ item.sprite_key }}.png'; } else { this.onerror=null; this.src='/static/img/placeholder.svg'; }">
 
                                         {% if item.quality == 1 %}
                                             <img src="/cache/img/items/silver_star.png" class="quality-badge" alt="Silver Quality">
@@ -172,10 +172,10 @@
                 {% for mat in farm.chests.material_totals %}
                     <div class="material-card" data-item-name="{{ mat.name | lower }}">
                         <div class="material-sprite-box">
-                            <img src="/cache/img/items/{{ mat.sprite_key }}.png" 
+                            <img src="/cache/img/{{ mat.prefix }}/{{ mat.sprite_key }}.png" 
                                  alt="{{ mat.name }}" 
                                  class="item-sprite"
-                                 onerror="this.onerror=null; this.src='/static/img/placeholder.svg';">
+                                 onerror="if (this.src.includes('/img/{{ mat.prefix }}/')) { this.src = '/cache/img/items/{{ mat.sprite_key }}.png'; } else { this.onerror=null; this.src='/static/img/placeholder.svg'; }">
                         </div>
                         <div class="material-info">
                             <div class="material-name" title="{{ mat.name }}">{{ mat.name }}</div>
@@ -275,6 +275,11 @@
         const tooltip = getOrCreateChestTooltip();
         const displayName = slotEl.getAttribute('data-display-name');
         const qualifiedId = slotEl.getAttribute('data-qualified-id');
+        
+        // DEV ADDITION: Grab the actual image source path
+        const imgEl = slotEl.querySelector('img.item-sprite');
+        const imgSrc = imgEl ? imgEl.getAttribute('src') : '';
+
         if (!displayName) return;
 
         if (activeChestSlotEl && activeChestSlotEl !== slotEl) {
@@ -284,7 +289,16 @@
         activeChestSlotEl = slotEl;
         activeChestSlotEl.classList.add('highlighted');
 
-        tooltip.innerHTML = displayName + (qualifiedId ? '<br><span style="font-size: 0.7rem; opacity: 0.85;">(' + qualifiedId + ')</span>' : '');
+        // Build tooltip content including the dev image path in yellow
+        let tooltipHTML = displayName;
+        if (qualifiedId) {
+            tooltipHTML += '<br><span style="font-size: 0.7rem; opacity: 0.85;">(' + qualifiedId + ')</span>';
+        }
+        if (imgSrc) {
+            tooltipHTML += '<br><span style="font-size: 0.6rem; color: #fde047; word-break: break-all;">' + imgSrc + '</span>';
+        }
+        
+        tooltip.innerHTML = tooltipHTML;
 
         const rect = slotEl.getBoundingClientRect();
         const topPos = rect.top - 6;

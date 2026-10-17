@@ -70,6 +70,12 @@ def _parse_item_node(item_node):
 
     qualified_id = item_node.findtext("QualifiedItemId") or f"{default_prefix}{identifier}"
 
+    # Extract the prefix strictly for image routing (e.g., "(BC)130" -> "BC", "(O)388" -> "O")
+    # If no valid prefix is found, default to "items" for backward compatibility
+    prefix = "items"
+    if qualified_id.startswith("(") and ")" in qualified_id:
+        prefix = qualified_id.split(")")[0].replace("(", "")
+
     # Pass qualified_id into reference_data lookup
     obj_info = get_object_info(qualified_id, fallback_name=xml_name)
     name = obj_info.get("name")
@@ -113,6 +119,7 @@ def _parse_item_node(item_node):
         "is_empty": False,
         "id": item_id,
         "qualified_id": qualified_id,
+        "prefix": prefix,
         "sprite_key": sprite_key,
         "name": name,
         "stack": stack,
@@ -239,11 +246,13 @@ def parse_chests(root, object_map=None):
             item_name = item.get("name", "Unknown Item")
             stack = item.get("stack", 1)
             sprite_key = item.get("sprite_key", "")
+            prefix = item.get("prefix", "items")
 
             if item_name not in material_totals:
                 material_totals[item_name] = {
                     "name": item_name,
                     "count": 0,
+                    "prefix": prefix,
                     "sprite_key": sprite_key,
                 }
 
