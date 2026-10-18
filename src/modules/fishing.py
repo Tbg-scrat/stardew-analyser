@@ -1,4 +1,4 @@
-from src.core.reference_data import qualify_item_id
+from src.core.reference_data import qualify_item_id, get_object_info
 # src/modules/fishing.py
 
 import logging
@@ -96,6 +96,9 @@ def get_formatted_fishing(player_node, catalog=None):
         stats = fish_save_map.get(str(item_id))
         is_caught = stats is not None
         item_name = catalog_item.get("name", f"Fish {item_id}")
+        
+        # Look up the dynamic icon path from our central routing dictionary
+        obj_info = get_object_info(item_id, fallback_name=item_name)
 
         fish_mapped.append(
             {
@@ -105,7 +108,7 @@ def get_formatted_fishing(player_node, catalog=None):
                 "length": stats["length"] if is_caught else 0,
                 "status": "caught" if is_caught else "not_caught",
                 "is_unlocked": is_caught,
-                "image": catalog_item.get("image") or f"/cache/img/items/{item_id}.png",
+                "image": obj_info["icon"],
             }
         )
 

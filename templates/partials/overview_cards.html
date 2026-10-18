@@ -272,7 +272,7 @@
                     <div class="bday-gifts-mini">
                         {% for gift in farm.birthdays.next_birthday.loved_gifts[:3] %}
                         <span class="bday-gift-pill" title="{{ gift.name }}">
-                            <img src="/cache/img/items/{{ gift.icon }}" class="bday-gift-icon" alt="{{ gift.name }}" onerror="this.onerror=null; this.style.display='none';">
+                            <img src="{{ gift.icon }}" class="bday-gift-icon" alt="{{ gift.name }}" onerror="this.onerror=null; this.style.display='none';">
                             {{ gift.name }}
                         </span>
                         {% endfor %}

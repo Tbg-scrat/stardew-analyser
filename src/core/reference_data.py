@@ -69,17 +69,18 @@ def _get_object_lookup():
 
             for item_key, item_data in items.items():
                 item_key_str = str(item_key).strip()
+                
+                # Default sprite target is the item's own key
                 sprite_target = item_key_str
 
                 if isinstance(item_data, dict):
                     name = item_data.get("Name") or item_data.get("name") or "Unknown"
                     price = item_data.get("Price") or item_data.get("price") or 0
                     
-                    # Map 1.6 string IDs to their numeric sprite images (e.g., MushroomLog -> 283)
-                    # Exclude Tools ("T") because they were extracted using their string names
-                    # Map 1.6 string IDs to their numeric sprite images
+                    # If a SpriteIndex is explicitly defined, use it for the image drawing coordinates,
+                    # but DO NOT let it hijack the item's primary key mapping.
                     sprite_idx = item_data.get("SpriteIndex")
-                    if sprite_idx is not None and not item_key_str.isdigit() and prefix not in ("T", "WP", "FL"):
+                    if sprite_idx is not None and prefix not in ("T", "WP", "FL"):
                         if isinstance(sprite_idx, int) and sprite_idx >= 0:
                             sprite_target = str(sprite_idx)
                 else:
@@ -89,7 +90,6 @@ def _get_object_lookup():
                 # Sanitize colons to match the saved image files
                 sprite_target = sprite_target.replace(":", "_")
                 sprite_key = f"{prefix}_{sprite_target}"
-
                 
                 info = {
                     "id": item_key_str,
@@ -100,22 +100,31 @@ def _get_object_lookup():
                     "icon": f"/cache/img/{prefix}/{sprite_key}.png"
                 }
 
+                # Register primary lookup keys safely without collisions
                 lookup[f"({prefix}){item_key_str}"] = info
-                lookup[sprite_key] = info
                 
                 if item_key_str not in lookup:
                     lookup[item_key_str] = info
 
+                # Only map the sprite_key if it is not already claimed by the primary item 
+                # (prevents secondary items from overwriting base numeric IDs like 69 and 91)
+                if sprite_key not in lookup:
+                    lookup[sprite_key] = info
+
                 if name and name != "Unknown":
-                    lookup[name] = info
-                    lookup[name.lower()] = info
+                    if name not in lookup:
+                        lookup[name] = info
+                    if name.lower() not in lookup:
+                        lookup[name.lower()] = info
                     
-                    # Catch Stardew 1.6 string IDs (e.g., "MushroomLog" -> "Mushroom Log")
                     no_space_name = name.replace(" ", "")
-                    lookup[no_space_name] = info
-                    lookup[no_space_name.lower()] = info
+                    if no_space_name not in lookup:
+                        lookup[no_space_name] = info
+                    if no_space_name.lower() not in lookup:
+                        lookup[no_space_name.lower()] = info
 
                 loaded_count += 1
+
         except Exception as e:
             logger.warning(f"[ReferenceData] Failed to parse catalog {file_path}: {e}")
 

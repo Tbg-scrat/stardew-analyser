@@ -1,4 +1,4 @@
-from src.core.reference_data import qualify_item_id
+from src.core.reference_data import qualify_item_id, get_object_info
 # src/modules/shipping.py
 
 import logging
@@ -72,6 +72,9 @@ def get_formatted_shipping(player_node, catalog=None):
         is_shipped = count > 0
 
         item_name = catalog_item.get("name", f"Item {item_id}")
+        
+        # Look up the dynamic icon path from our central routing dictionary
+        obj_info = get_object_info(item_id, fallback_name=item_name)
 
         shipped_mapped.append(
             {
@@ -83,7 +86,7 @@ def get_formatted_shipping(player_node, catalog=None):
                 "achievement_required": catalog_item.get("achievement_required", False),
                 "is_polyculture": catalog_item.get("is_polyculture", False),
                 "is_monoculture": catalog_item.get("is_monoculture", False),
-                "image": catalog_item.get("image") or f"/cache/img/items/{item_id}.png",
+                "image": obj_info["icon"],
             }
         )
 

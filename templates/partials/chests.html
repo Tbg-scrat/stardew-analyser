@@ -136,7 +136,7 @@
                                         <img src="/cache/img/{{ item.prefix }}/{{ item.sprite_key }}.png" 
                                              alt="{{ item.name }}" 
                                              class="item-sprite"
-                                             onerror="if (this.src.includes('/img/{{ item.prefix }}/')) { this.src = '/cache/img/items/{{ item.sprite_key }}.png'; } else { this.onerror=null; this.src='/static/img/placeholder.svg'; }">
+                                             onerror="if (this.src.includes('/img/{{ item.prefix }}/')) { this.src = '/cache/img/{{ item.prefix }}/{{ item.sprite_key }}.png'; } else { this.onerror=null; this.src='/static/img/placeholder.svg'; }">
 
                                         {% if item.quality == 1 %}
                                             <img src="/cache/img/items/silver_star.png" class="quality-badge" alt="Silver Quality">
@@ -175,7 +175,7 @@
                             <img src="/cache/img/{{ mat.prefix }}/{{ mat.sprite_key }}.png" 
                                  alt="{{ mat.name }}" 
                                  class="item-sprite"
-                                 onerror="if (this.src.includes('/img/{{ mat.prefix }}/')) { this.src = '/cache/img/items/{{ mat.sprite_key }}.png'; } else { this.onerror=null; this.src='/static/img/placeholder.svg'; }">
+                                 onerror="if (this.src.includes('/img/{{ mat.prefix }}/')) { this.src = '/cache/img/{{ mat.prefix }}/{{ mat.sprite_key }}.png'; } else { this.onerror=null; this.src='/static/img/placeholder.svg'; }">
                         </div>
                         <div class="material-info">
                             <div class="material-name" title="{{ mat.name }}">{{ mat.name }}</div>

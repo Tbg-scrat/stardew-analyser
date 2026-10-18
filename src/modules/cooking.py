@@ -1,4 +1,4 @@
-from src.core.reference_data import qualify_item_id
+from src.core.reference_data import qualify_item_id, get_object_info
 # src/modules/cooking.py
 
 import logging
@@ -87,6 +87,8 @@ def get_formatted_cooking(player, catalog=None):
         is_cooked = count > 0
         item_name = catalog_item.get("name", f"Recipe {item_id}")
 
+        obj_info = get_object_info(item_id, fallback_name=item_name)
+
         cooking_mapped.append(
             {
                 "id": item_id,
@@ -94,7 +96,7 @@ def get_formatted_cooking(player, catalog=None):
                 "count": count,
                 "status": "cooked" if is_cooked else "not_cooked",
                 "is_unlocked": is_cooked,
-                "image": catalog_item.get("image") or f"/cache/img/items/{item_id}.png",
+                "image": obj_info["icon"],
             }
         )
 

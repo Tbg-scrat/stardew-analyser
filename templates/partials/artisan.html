@@ -217,7 +217,7 @@
     {% for batch in farm.artisan.casks.batches %}
     <div class="artisan-card item-card" data-name="{{ batch.name }}">
         <div class="artisan-icon-wrapper">
-            <img src="/cache/img/items/{{ batch.image }}" 
+            <img src="{{ batch.image }}" 
                  onerror="this.onerror=null; this.src='/static/img/placeholder.svg';" 
                  alt="{{ batch.name }}">
             {% if batch.quality == 1 %}
@@ -252,7 +252,7 @@
     {% for batch in farm.artisan.kegs.batches %}
     <div class="artisan-card item-card" data-name="{{ batch.name }}">
         <div class="artisan-icon-wrapper">
-            <img src="/cache/img/items/{{ batch.image }}" 
+            <img src="{{ batch.image }}" 
                  onerror="this.onerror=null; this.src='/static/img/placeholder.svg';" 
                  alt="{{ batch.name }}">
             {% if batch.quality == 1 %}
@@ -287,7 +287,7 @@
     {% for batch in farm.artisan.jars.batches %}
     <div class="artisan-card item-card" data-name="{{ batch.name }}">
         <div class="artisan-icon-wrapper">
-            <img src="/cache/img/items/{{ batch.image }}" 
+            <img src="{{ batch.image }}" 
                  onerror="this.onerror=null; this.src='/static/img/placeholder.svg';" 
                  alt="{{ batch.name }}">
             <span class="artisan-badge-count">{{ batch.count }}</span>
@@ -315,7 +315,7 @@
     {% for batch in farm.artisan.dehydrators.batches %}
     <div class="artisan-card item-card" data-name="{{ batch.name }}">
         <div class="artisan-icon-wrapper">
-            <img src="/cache/img/items/{{ batch.image }}" 
+            <img src="{{ batch.image }}" 
                  onerror="this.onerror=null; this.src='/static/img/placeholder.svg';" 
                  alt="{{ batch.name }}">
             <span class="artisan-badge-count">{{ batch.count }}</span>
@@ -343,7 +343,7 @@
     {% for batch in farm.artisan.bee_houses.batches %}
     <div class="artisan-card item-card" data-name="{{ batch.name }}">
         <div class="artisan-icon-wrapper">
-            <img src="/cache/img/items/{{ batch.image }}" 
+            <img src="{{ batch.image }}" 
                  onerror="this.onerror=null; this.src='/static/img/placeholder.svg';" 
                  alt="{{ batch.name }}">
             <span class="artisan-badge-count">{{ batch.count }}</span>

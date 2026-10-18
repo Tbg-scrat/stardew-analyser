@@ -5,8 +5,10 @@ from ..image_utils import crop_tile
 
 logger = logging.getLogger(__name__)
 
-def process_grid(temp_unpacked_dir: str, meta: dict, cache_dir: str) -> int:
+# Fix: Standardized parameter signature to accept 'config: dict' like other processors
+def process_grid(temp_unpacked_dir: str, config: dict, cache_dir: str) -> int:
     """Dynamically slices a spritesheet based on JSON metadata configuration."""
+    meta = config["meta"]
     source_xnb = meta.get("source_xnb", "")
     prefix = meta.get("prefix", "IMG")
     tile_w = meta.get("tile_width", 16)
@@ -18,8 +20,8 @@ def process_grid(temp_unpacked_dir: str, meta: dict, cache_dir: str) -> int:
     
     tiles_per_row = meta.get("tiles_per_row", 0)
 
-    # Reconstruct the unpacked .png filename from the source .xnb path
-    filename = os.path.basename(source_xnb).replace(".xnb", ".png")
+    # Fix: Resolve relative path from config to accommodate nested directories
+    filename = source_xnb.replace(".xnb", ".png").replace("\\", "/")
     sheet_path = os.path.join(temp_unpacked_dir, filename)
 
     if not os.path.exists(sheet_path):

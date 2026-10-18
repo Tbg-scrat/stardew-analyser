@@ -13,7 +13,8 @@ def process_free_crop(temp_unpacked_dir: str, config: dict, cache_dir: str) -> i
     prefix = meta.get("prefix", "items")
     source_xnb = meta.get("source_xnb", "")
 
-    filename = os.path.basename(source_xnb).replace(".xnb", ".png")
+    # Fix: Resolve relative path from config to accommodate nested directories
+    filename = source_xnb.replace(".xnb", ".png").replace("\\", "/")
     sheet_path = os.path.join(temp_unpacked_dir, filename)
 
     if not os.path.exists(sheet_path):

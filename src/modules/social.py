@@ -1,3 +1,4 @@
+from src.core.reference_data import get_object_info
 # src/modules/social.py
 """
 Social module for Stardew Valley save file parsing.
@@ -22,16 +23,22 @@ def get_loved_gifts(villager_name):
     result = []
     for item in gifts:
         if isinstance(item, dict):
-            item_id = item.get("id", "")
+            item_id = str(item.get("id", ""))
             item_name = item.get("name", "")
-            icon_filename = f"{item_id}.png" if item_id else "O_unknown.png"
         else:
+            item_id = ""
             item_name = str(item)
-            icon_filename = f"O_{item_name.replace(' ', '_')}.png"
+            
+        # Nutze den dynamischen Router für den vollständigen Bildpfad
+        if item_id:
+            obj_info = get_object_info(item_id, fallback_name=item_name)
+            icon_path = obj_info["icon"]
+        else:
+            icon_path = "/static/img/placeholder.svg"
             
         result.append({
             "name": item_name,
-            "icon": icon_filename,
+            "icon": icon_path,
         })
     return result
 

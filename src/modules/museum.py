@@ -1,4 +1,4 @@
-from src.core.reference_data import qualify_item_id
+from src.core.reference_data import qualify_item_id, get_object_info
 # src/modules/museum.py
 
 import logging
@@ -77,6 +77,8 @@ def get_formatted_museum(root_node, catalog=None):
         is_donated = str(item_id) in donated_set
         item_name = catalog_item.get("name", f"Artifact/Mineral {item_id}")
 
+        obj_info = get_object_info(item_id, fallback_name=item_name)
+
         museum_mapped.append(
             {
                 "id": item_id,
@@ -84,7 +86,7 @@ def get_formatted_museum(root_node, catalog=None):
                 "type": catalog_item.get("type", "Artifact"),
                 "status": "found" if is_donated else "not_found",
                 "is_unlocked": is_donated,
-                "image": catalog_item.get("image") or f"/cache/img/items/{item_id}.png",
+                "image": obj_info["icon"],
             }
         )
 

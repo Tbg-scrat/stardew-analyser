@@ -238,7 +238,7 @@
             <div class="v-gifts-row">
                 {% for gift in villager.loved_gifts %}
                 <span class="v-gift-badge">
-                    <img src="/cache/img/items/{{ gift.icon }}" class="v-gift-icon" alt="{{ gift.name }}" onerror="this.onerror=null; this.style.display='none';">
+                    <img src="{{ gift.icon }}" class="v-gift-icon" alt="{{ gift.name }}" onerror="this.onerror=null; this.style.display='none';">
                     {{ gift.name }}
                 </span>
                 {% endfor %}

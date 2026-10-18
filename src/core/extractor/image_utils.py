@@ -11,7 +11,8 @@ def resolve_case_insensitive_path(base_dir: str, rel_path: str) -> str | None:
     if os.path.exists(exact_path):
         return exact_path
 
-    parts = rel_path.replace("\\", "/").split("/")
+    # Filter out empty strings to prevent failure on consecutive/trailing slashes
+    parts = [p for p in rel_path.replace("\\", "/").split("/") if p]
     curr = base_dir
 
     for part in parts:
@@ -49,4 +50,7 @@ def crop_tile(
         return None
 
     tile = sheet_img.crop(crop_box)
+    
+    # Retained: Returns None if the cropped tile is fully transparent
     return tile if tile.getbbox() else None
+    

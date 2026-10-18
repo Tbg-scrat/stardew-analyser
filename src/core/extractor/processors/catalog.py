@@ -29,21 +29,18 @@ def process_catalog(temp_unpacked_dir: str, config: dict, cache_dir: str) -> int
         logger.warning(f"[CatalogProcessor] No items found in {file_path}")
         return 0
 
-    # 2. Pre-load all available spritesheets in the unpacked directory
+    # 2. Lazy-load sheet caching mechanism
     loaded_sheets = {}
-    for filename in os.listdir(temp_unpacked_dir):
-        if filename.lower().endswith(".png"):
-            key = os.path.splitext(filename)[0].lower()
-            try:
-                loaded_sheets[key] = Image.open(os.path.join(temp_unpacked_dir, filename))
-            except Exception as e:
-                logger.error(f"[CatalogProcessor] Failed to open image {filename}: {e}")
-
-    default_sheet_name = os.path.basename(default_texture_xnb).replace(".xnb", "").lower()
-    default_sheet = loaded_sheets.get(default_sheet_name)
     
-    if not default_sheet:
-        logger.warning(f"[CatalogProcessor] Default texture '{default_sheet_name}.png' missing in unpacked files.")
+    # Resolve the default texture path properly against the nested structure
+    default_texture_rel = default_texture_xnb.replace(".xnb", ".png").replace("\\", "/")
+    default_sheet_path = os.path.join(temp_unpacked_dir, default_texture_rel)
+    
+    try:
+        default_sheet = Image.open(default_sheet_path)
+        loaded_sheets[default_texture_rel.lower()] = default_sheet
+    except Exception as e:
+        logger.warning(f"[CatalogProcessor] Default texture '{default_texture_rel}' missing in unpacked files: {e}")
         return 0
 
     # 3. Setup output directory
@@ -62,31 +59,55 @@ def process_catalog(temp_unpacked_dir: str, config: dict, cache_dir: str) -> int
         if sprite_index is None or sprite_index < 0:
             continue
 
-        # Handle custom texture overrides if they exist
+        # Handle custom texture overrides if they exist using lazy loading
         texture_path = item_data.get("Texture")
         if not texture_path:
             sheet_img = default_sheet
+            sheet_name_for_log = default_texture_rel
         else:
-            sheet_name = os.path.basename(texture_path.replace("\\", "/")).replace(".xnb", "").lower()
-            sheet_img = loaded_sheets.get(sheet_name)
+            # Resolve the relative path and normalize it for dictionary caching
+            tex_rel = texture_path.replace(".xnb", ".png").replace("\\", "/")
+            
+            # Catch extension-less texture references from the JSON
+            if not tex_rel.lower().endswith(".png"):
+                tex_rel += ".png"
+                
+            tex_key = tex_rel.lower()
+            
+            # Load custom sheet into cache if not already present
+            if tex_key not in loaded_sheets:
+                tex_path_full = os.path.join(temp_unpacked_dir, tex_rel)
+                if os.path.exists(tex_path_full):
+                    try:
+                        loaded_sheets[tex_key] = Image.open(tex_path_full)
+                    except Exception as e:
+                        logger.error(f"[CatalogProcessor] Failed to open {tex_rel}: {e}")
+            
+            sheet_img = loaded_sheets.get(tex_key)
             if not sheet_img:
-                if sheet_name not in missing_sheets_warned:
-                    logger.warning(f"[CatalogProcessor] Required texture '{sheet_name}' not found. Falling back to default.")
-                    missing_sheets_warned.add(sheet_name)
+                if tex_rel not in missing_sheets_warned:
+                    logger.warning(f"[CatalogProcessor] Required texture '{tex_rel}' not found. Falling back to default.")
+                    missing_sheets_warned.add(tex_rel)
                 sheet_img = default_sheet
+                sheet_name_for_log = default_texture_rel
+            else:
+                sheet_name_for_log = tex_rel
+
+        # Boundary Guarding: Prevent out-of-bounds crop calculations prior to extraction
+        tiles_per_row = sheet_img.width // tile_w
+        if tiles_per_row > 0:
+            required_height = ((sprite_index // tiles_per_row) + 1) * tile_h
+            if required_height > sheet_img.height:
+                logger.warning(f"[CatalogProcessor] Skipping {item_key}: SpriteIndex {sprite_index} exceeds {sheet_name_for_log} boundaries.")
+                continue
 
         # Crop and save
         tile = crop_tile(sheet_img, sprite_index, tile_w=tile_w, tile_h=tile_h)
         if tile:
-            item_key_str = str(item_key)
-            sprite_target = item_key_str
+            sprite_target = str(item_key)
             
-            # Exclude Tools (T), Wallpapers (WP), and Flooring (FL) from numeric routing
-            if not item_key_str.isdigit() and prefix not in ("T", "WP", "FL"):
-                sprite_target = str(sprite_index)
-
-            # Sanitize colons for safe file saving (e.g., "MoreWalls:11" -> "MoreWalls_11")
-            sprite_target = sprite_target.replace(":", "_")
+            # Sanitize colons, slashes, and spaces for safe file saving on all platforms
+            sprite_target = sprite_target.replace(":", "_").replace("/", "_").replace(" ", "_")
 
             out_filename = f"{prefix}_{sprite_target}.png"
             tile.save(os.path.join(out_dir, out_filename))

@@ -13,7 +13,8 @@ from .image_utils import resolve_case_insensitive_path
 from .processors.grid import process_grid
 from .processors.catalog import process_catalog
 from .processors.free_crop import process_free_crop
-from .processors.furniture import process_furniture  # ADD THIS LINE
+from .processors.furniture import process_furniture
+from .processors.directory import process_directory  # ADDED for Portraits
 
 setup_logging()
 logger = logging.getLogger(__name__)
@@ -31,7 +32,8 @@ def get_domain_configs() -> list[dict]:
         try:
             with open(file_path, "r", encoding="utf-8") as f:
                 data = json.load(f)
-                if isinstance(data, dict) and "_meta" in data:
+                # Null Metadata Check: Ensure _meta exists and is not null
+                if isinstance(data, dict) and data.get("_meta") is not None:
                     configs.append({
                         "file_path": file_path,
                         "meta": data["_meta"]
@@ -74,6 +76,16 @@ def extract_assets() -> bool:
             if default_tex:
                 textures_to_stage.add(default_tex)
                 
+            # Handle entire directories (for directory processors like Portraits)
+            source_dir = meta.get("source_dir")
+            if source_dir:
+                # Resolve path case-insensitively in case of mismatched OS filesystems
+                full_source_dir = resolve_case_insensitive_path(CONTENT_DIR, source_dir) or os.path.join(CONTENT_DIR, source_dir)
+                if os.path.isdir(full_source_dir):
+                    for file in os.listdir(full_source_dir):
+                        if file.lower().endswith(".xnb"):
+                            textures_to_stage.add(os.path.join(source_dir, file).replace("\\", "/"))
+                
             # Peek inside catalog files to find custom textures (like Objects_2)
             if meta.get("processor") == "catalog":
                 try:
@@ -99,10 +111,15 @@ def extract_assets() -> bool:
                 if src_rel_clean in staged_files:
                     continue
                     
-                dst_name = os.path.basename(src_rel_clean)
                 src_path = resolve_case_insensitive_path(CONTENT_DIR, src_rel_clean)
                 if src_path:
-                    shutil.copy(src_path, os.path.join(temp_packed, dst_name))
+                    # Staging Tree Preservation: Maintain directory structure to prevent file collisions
+                    relative_dir = os.path.dirname(src_rel_clean)
+                    target_dir = os.path.join(temp_packed, relative_dir)
+                    os.makedirs(target_dir, exist_ok=True)
+                    
+                    target_file = os.path.join(temp_packed, src_rel_clean)
+                    shutil.copy(src_path, target_file)
                     staged_files.add(src_rel_clean)
                     logger.debug(f"[Router] Staged asset: {src_rel_clean}")
                 else:
@@ -126,13 +143,16 @@ def extract_assets() -> bool:
 
             processor_type = meta.get("processor")
             if processor_type == "grid":
-                process_grid(temp_unpacked, meta, CACHE_DIR)
+                # Standardized parameter signature
+                process_grid(temp_unpacked, config, CACHE_DIR)
             elif processor_type == "catalog":
                 process_catalog(temp_unpacked, config, CACHE_DIR)
             elif processor_type == "free_crop":
                 process_free_crop(temp_unpacked, config, CACHE_DIR)
             elif processor_type == "furniture":
-                process_furniture(temp_unpacked, config, CACHE_DIR)  # ADD THIS LINE
+                process_furniture(temp_unpacked, config, CACHE_DIR)
+            elif processor_type == "directory":
+                process_directory(temp_unpacked, config, CACHE_DIR)
             else:
                 logger.warning(f"[Router] Unknown processor type '{processor_type}' in {config['file_path']}")
 
