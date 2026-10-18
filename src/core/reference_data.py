@@ -70,26 +70,17 @@ def _get_object_lookup():
             for item_key, item_data in items.items():
                 item_key_str = str(item_key).strip()
                 
-                # Default sprite target is the item's own key
-                sprite_target = item_key_str
+                # FIX: Guarantee parity with catalog.py generation logic
+                # Ensure sanitization completely mirrors file output
+                sprite_target = item_key_str.replace(":", "_").replace("/", "_").replace(" ", "_")
+                sprite_key = f"{prefix}_{sprite_target}"
 
                 if isinstance(item_data, dict):
                     name = item_data.get("Name") or item_data.get("name") or "Unknown"
                     price = item_data.get("Price") or item_data.get("price") or 0
-                    
-                    # If a SpriteIndex is explicitly defined, use it for the image drawing coordinates,
-                    # but DO NOT let it hijack the item's primary key mapping.
-                    sprite_idx = item_data.get("SpriteIndex")
-                    if sprite_idx is not None and prefix not in ("T", "WP", "FL"):
-                        if isinstance(sprite_idx, int) and sprite_idx >= 0:
-                            sprite_target = str(sprite_idx)
                 else:
                     name = str(item_data)
                     price = 0
-
-                # Sanitize colons to match the saved image files
-                sprite_target = sprite_target.replace(":", "_")
-                sprite_key = f"{prefix}_{sprite_target}"
                 
                 info = {
                     "id": item_key_str,
@@ -106,22 +97,14 @@ def _get_object_lookup():
                 if item_key_str not in lookup:
                     lookup[item_key_str] = info
 
-                # Only map the sprite_key if it is not already claimed by the primary item 
-                # (prevents secondary items from overwriting base numeric IDs like 69 and 91)
                 if sprite_key not in lookup:
                     lookup[sprite_key] = info
 
+                # FIX: Cleaned up memory bloat from unnecessary fuzzy name variations. 
+                # Keep primary exact-name mappings for chests.py xml_name fallbacks.
                 if name and name != "Unknown":
                     if name not in lookup:
                         lookup[name] = info
-                    if name.lower() not in lookup:
-                        lookup[name.lower()] = info
-                    
-                    no_space_name = name.replace(" ", "")
-                    if no_space_name not in lookup:
-                        lookup[no_space_name] = info
-                    if no_space_name.lower() not in lookup:
-                        lookup[no_space_name.lower()] = info
 
                 loaded_count += 1
 
@@ -184,7 +167,7 @@ def get_object_info(harvest_id: str, fallback_name: str = None) -> dict:
     if clean_key in lookup:
         return dict(lookup[clean_key])
         
-    # NEW: Catch case-insensitive 1.6 string IDs as a final fallback
+    # Catch case-insensitive 1.6 string IDs as a final fallback
     if clean_key.lower() in lookup:
         return dict(lookup[clean_key.lower()])
         

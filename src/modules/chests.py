@@ -67,9 +67,9 @@ def _parse_item_node(item_node):
     else:
         raise ValueError(f"Unrecognized item xsi:type '{item_xsi_type}' for item ID: {item_id}")
 
-    # For tools, item_id might be numeric or empty, but the name/identifier is often in <name>
+    # FIX: Restored trust in the "0" item_id. 0 is a valid ID for weapons (Rusty Sword) and objects (Weeds).
     xml_name = item_node.findtext("name")
-    identifier = item_id if (item_id and item_id != "0") else (xml_name or "0")
+    identifier = item_id if item_id else (xml_name or "0")
 
     qualified_id = item_node.findtext("QualifiedItemId") or f"{default_prefix}{identifier}"
 
@@ -83,13 +83,8 @@ def _parse_item_node(item_node):
     obj_info = get_object_info(qualified_id, fallback_name=xml_name)
     name = obj_info.get("name")
 
-    # Use catalog sprite key and true prefix if available
-    sprite_key = obj_info.get("sprite_key") or (
-        qualified_id.replace("(", "")
-        .replace(")", "_")
-        .replace(":", "_")
-        .replace(" ", "_")
-    )
+    # FIX: Removed redundant string replacements; trust reference_data to provide the clean sprite_key
+    sprite_key = obj_info.get("sprite_key")
     resolved_prefix = obj_info.get("prefix") or raw_prefix
 
     if not name:
@@ -97,7 +92,6 @@ def _parse_item_node(item_node):
             f"Missing item name for ID '{qualified_id}'; defaulting to 'Unknown Item'"
         )
         name = "Unknown Item"
-
 
     try:
         stack = int(item_node.findtext("Stack") or item_node.findtext("stack") or 1)
@@ -132,7 +126,6 @@ def _parse_item_node(item_node):
         "quality_name": quality_map.get(quality, "normal"),
         "category": category,
     }
-
 
 
 def _extract_raw_chests(root):

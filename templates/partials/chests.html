@@ -133,10 +133,12 @@
                                          data-display-name="{{ item.name }}"
                                          data-qualified-id="{{ item.qualified_id }}"
                                          data-stack="{{ item.stack }}">
+                                        
+                                        <!-- FIX: Stripped infinite loop logic from onerror -->
                                         <img src="/cache/img/{{ item.prefix }}/{{ item.sprite_key }}.png" 
                                              alt="{{ item.name }}" 
                                              class="item-sprite"
-                                             onerror="if (this.src.includes('/img/{{ item.prefix }}/')) { this.src = '/cache/img/{{ item.prefix }}/{{ item.sprite_key }}.png'; } else { this.onerror=null; this.src='/static/img/placeholder.svg'; }">
+                                             onerror="this.onerror=null; this.src='/static/img/placeholder.svg';">
 
                                         {% if item.quality == 1 %}
                                             <img src="/cache/img/items/silver_star.png" class="quality-badge" alt="Silver Quality">
@@ -172,10 +174,12 @@
                 {% for mat in farm.chests.material_totals %}
                     <div class="material-card" data-item-name="{{ mat.name | lower }}">
                         <div class="material-sprite-box">
+                            
+                            <!-- FIX: Stripped infinite loop logic from onerror -->
                             <img src="/cache/img/{{ mat.prefix }}/{{ mat.sprite_key }}.png" 
                                  alt="{{ mat.name }}" 
                                  class="item-sprite"
-                                 onerror="if (this.src.includes('/img/{{ mat.prefix }}/')) { this.src = '/cache/img/{{ mat.prefix }}/{{ mat.sprite_key }}.png'; } else { this.onerror=null; this.src='/static/img/placeholder.svg'; }">
+                                 onerror="this.onerror=null; this.src='/static/img/placeholder.svg';">
                         </div>
                         <div class="material-info">
                             <div class="material-name" title="{{ mat.name }}">{{ mat.name }}</div>
