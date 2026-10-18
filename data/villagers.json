@@ -1,4 +1,12 @@
 {
+  "_meta": {
+    "extract_images": true,
+    "processor": "directory",
+    "prefix": "portraits",
+    "source_dir": "Portraits",
+    "crop": [0, 0, 64, 64],
+    "file_format": "{key}.png"
+  },
   "ignored_npcs": [
     "Henchman",
     "Granter",
