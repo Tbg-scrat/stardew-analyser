@@ -1,0 +1,503 @@
+{
+  "_meta": {
+    "extract_images": true,
+    "processor": "grid",
+    "prefix": "H",
+    "source_xnb": "Characters/Farmer/hats.xnb",
+    "tile_width": 20,
+    "tile_height": 80,
+    "crop_width": 20,
+    "crop_height": 20,
+    "tiles_per_row": 12
+  },
+  "items": {
+    "0": {
+      "Name": "Cowboy Hat",
+      "SpriteIndex": 0
+    },
+    "1": {
+      "Name": "Bowler Hat",
+      "SpriteIndex": 1
+    },
+    "2": {
+      "Name": "Top Hat",
+      "SpriteIndex": 2
+    },
+    "3": {
+      "Name": "Sombrero",
+      "SpriteIndex": 3
+    },
+    "4": {
+      "Name": "Straw Hat",
+      "SpriteIndex": 4
+    },
+    "5": {
+      "Name": "Official Cap",
+      "SpriteIndex": 5
+    },
+    "6": {
+      "Name": "Blue Bonnet",
+      "SpriteIndex": 6
+    },
+    "7": {
+      "Name": "Plum Chapeau",
+      "SpriteIndex": 7
+    },
+    "8": {
+      "Name": "Skeleton Mask",
+      "SpriteIndex": 8
+    },
+    "9": {
+      "Name": "Goblin Mask",
+      "SpriteIndex": 9
+    },
+    "10": {
+      "Name": "Chicken Mask",
+      "SpriteIndex": 10
+    },
+    "11": {
+      "Name": "Earmuffs",
+      "SpriteIndex": 11
+    },
+    "12": {
+      "Name": "Delicate Bow",
+      "SpriteIndex": 12
+    },
+    "13": {
+      "Name": "Tropiclip",
+      "SpriteIndex": 13
+    },
+    "14": {
+      "Name": "Butterfly Bow",
+      "SpriteIndex": 14
+    },
+    "15": {
+      "Name": "Hunter's Cap",
+      "SpriteIndex": 15
+    },
+    "16": {
+      "Name": "Trucker Hat",
+      "SpriteIndex": 16
+    },
+    "17": {
+      "Name": "Sailor's Cap",
+      "SpriteIndex": 17
+    },
+    "18": {
+      "Name": "Good Ol' Cap",
+      "SpriteIndex": 18
+    },
+    "19": {
+      "Name": "Fedora",
+      "SpriteIndex": 19
+    },
+    "20": {
+      "Name": "Cool Cap",
+      "SpriteIndex": 20
+    },
+    "21": {
+      "Name": "Lucky Bow",
+      "SpriteIndex": 21
+    },
+    "22": {
+      "Name": "Polka Bow",
+      "SpriteIndex": 22
+    },
+    "23": {
+      "Name": "Gnome's Cap",
+      "SpriteIndex": 23
+    },
+    "24": {
+      "Name": "Eye Patch",
+      "SpriteIndex": 24
+    },
+    "25": {
+      "Name": "Santa Hat",
+      "SpriteIndex": 25
+    },
+    "26": {
+      "Name": "Tiara",
+      "SpriteIndex": 26
+    },
+    "27": {
+      "Name": "Hard Hat",
+      "SpriteIndex": 27
+    },
+    "28": {
+      "Name": "Sou'wester",
+      "SpriteIndex": 28
+    },
+    "29": {
+      "Name": "Daisy",
+      "SpriteIndex": 29
+    },
+    "30": {
+      "Name": "Watermelon Band",
+      "SpriteIndex": 30
+    },
+    "31": {
+      "Name": "Mouse Ears",
+      "SpriteIndex": 31
+    },
+    "32": {
+      "Name": "Cat Ears",
+      "SpriteIndex": 32
+    },
+    "33": {
+      "Name": "Cowgal Hat",
+      "SpriteIndex": 33
+    },
+    "34": {
+      "Name": "Cowpoke Hat",
+      "SpriteIndex": 34
+    },
+    "35": {
+      "Name": "Archer's Cap",
+      "SpriteIndex": 35
+    },
+    "36": {
+      "Name": "Panda Hat",
+      "SpriteIndex": 36
+    },
+    "37": {
+      "Name": "Blue Cowboy Hat",
+      "SpriteIndex": 37
+    },
+    "38": {
+      "Name": "Red Cowboy Hat",
+      "SpriteIndex": 38
+    },
+    "39": {
+      "Name": "Cone Hat",
+      "SpriteIndex": 39
+    },
+    "40": {
+      "Name": "Living Hat",
+      "SpriteIndex": 40
+    },
+    "41": {
+      "Name": "Emily's Magic Hat",
+      "SpriteIndex": 41
+    },
+    "42": {
+      "Name": "Mushroom Cap",
+      "SpriteIndex": 42
+    },
+    "43": {
+      "Name": "Dinosaur Hat",
+      "SpriteIndex": 43
+    },
+    "44": {
+      "Name": "Totem Mask",
+      "SpriteIndex": 44
+    },
+    "45": {
+      "Name": "Logo Cap",
+      "SpriteIndex": 45
+    },
+    "46": {
+      "Name": "Wearable Dwarf Helm",
+      "SpriteIndex": 46
+    },
+    "47": {
+      "Name": "Fashion Hat",
+      "SpriteIndex": 47
+    },
+    "48": {
+      "Name": "Pumpkin Mask",
+      "SpriteIndex": 48
+    },
+    "49": {
+      "Name": "Hair Bone",
+      "SpriteIndex": 49
+    },
+    "50": {
+      "Name": "Knight's Helmet",
+      "SpriteIndex": 50
+    },
+    "51": {
+      "Name": "Squire's Helmet",
+      "SpriteIndex": 51
+    },
+    "52": {
+      "Name": "Spotted Headscarf",
+      "SpriteIndex": 52
+    },
+    "53": {
+      "Name": "Beanie",
+      "SpriteIndex": 53
+    },
+    "54": {
+      "Name": "Floppy Beanie",
+      "SpriteIndex": 54
+    },
+    "55": {
+      "Name": "Fishing Hat",
+      "SpriteIndex": 55
+    },
+    "56": {
+      "Name": "Blobfish Mask",
+      "SpriteIndex": 56
+    },
+    "57": {
+      "Name": "Party Hat",
+      "SpriteIndex": 57
+    },
+    "58": {
+      "Name": "Party Hat",
+      "SpriteIndex": 58
+    },
+    "59": {
+      "Name": "Party Hat",
+      "SpriteIndex": 59
+    },
+    "60": {
+      "Name": "Arcane Hat",
+      "SpriteIndex": 60
+    },
+    "61": {
+      "Name": "Chef Hat",
+      "SpriteIndex": 61
+    },
+    "62": {
+      "Name": "Pirate Hat",
+      "SpriteIndex": 62
+    },
+    "63": {
+      "Name": "Flat Topped Hat",
+      "SpriteIndex": 63
+    },
+    "64": {
+      "Name": "Elegant Turban",
+      "SpriteIndex": 64
+    },
+    "65": {
+      "Name": "White Turban",
+      "SpriteIndex": 65
+    },
+    "66": {
+      "Name": "Garbage Hat",
+      "SpriteIndex": 66
+    },
+    "67": {
+      "Name": "Golden Mask",
+      "SpriteIndex": 67
+    },
+    "68": {
+      "Name": "Propeller Hat",
+      "SpriteIndex": 68
+    },
+    "69": {
+      "Name": "Bridal Veil",
+      "SpriteIndex": 69
+    },
+    "70": {
+      "Name": "Witch Hat",
+      "SpriteIndex": 70
+    },
+    "71": {
+      "Name": "Copper Pan",
+      "SpriteIndex": 71
+    },
+    "72": {
+      "Name": "Green Turban",
+      "SpriteIndex": 72
+    },
+    "73": {
+      "Name": "Magic Cowboy Hat",
+      "SpriteIndex": 73
+    },
+    "74": {
+      "Name": "Magic Turban",
+      "SpriteIndex": 74
+    },
+    "75": {
+      "Name": "Golden Helmet",
+      "SpriteIndex": 75
+    },
+    "76": {
+      "Name": "Deluxe Pirate Hat",
+      "SpriteIndex": 76
+    },
+    "77": {
+      "Name": "Pink Bow",
+      "SpriteIndex": 77
+    },
+    "78": {
+      "Name": "Frog Hat",
+      "SpriteIndex": 78
+    },
+    "79": {
+      "Name": "Small Cap",
+      "SpriteIndex": 79
+    },
+    "80": {
+      "Name": "Bluebird Mask",
+      "SpriteIndex": 80
+    },
+    "81": {
+      "Name": "Deluxe Cowboy Hat",
+      "SpriteIndex": 81
+    },
+    "82": {
+      "Name": "Mr. Qi's Hat",
+      "SpriteIndex": 82
+    },
+    "83": {
+      "Name": "Dark Cowboy Hat",
+      "SpriteIndex": 83
+    },
+    "84": {
+      "Name": "Radioactive Goggles",
+      "SpriteIndex": 84
+    },
+    "85": {
+      "Name": "Swashbuckler Hat",
+      "SpriteIndex": 85
+    },
+    "86": {
+      "Name": "Qi Mask",
+      "SpriteIndex": 86
+    },
+    "87": {
+      "Name": "Star Helmet",
+      "SpriteIndex": 87
+    },
+    "88": {
+      "Name": "Sunglasses",
+      "SpriteIndex": 88
+    },
+    "89": {
+      "Name": "Goggles",
+      "SpriteIndex": 89
+    },
+    "90": {
+      "Name": "Forager's Hat",
+      "SpriteIndex": 90
+    },
+    "91": {
+      "Name": "Tiger Hat",
+      "SpriteIndex": 91
+    },
+    "92": {
+      "Name": "???",
+      "SpriteIndex": 92
+    },
+    "93": {
+      "Name": "Warrior Helmet",
+      "SpriteIndex": 93
+    },
+    "94": {
+      "Name": "Abigail's Bow",
+      "SpriteIndex": 94
+    },
+    "95": {
+      "Name": "Tricorn Hat",
+      "SpriteIndex": 95
+    },
+    "96": {
+      "Name": "Joja Cap",
+      "SpriteIndex": 96
+    },
+    "97": {
+      "Name": "Laurel Wreath Crown",
+      "SpriteIndex": 97
+    },
+    "98": {
+      "Name": "Gil's Hat",
+      "SpriteIndex": 98
+    },
+    "99": {
+      "Name": "Blue Bow",
+      "SpriteIndex": 99
+    },
+    "100": {
+      "Name": "Dark Velvet Bow",
+      "SpriteIndex": 100
+    },
+    "101": {
+      "Name": "Mummy Mask",
+      "SpriteIndex": 101
+    },
+    "102": {
+      "Name": "Bucket Hat",
+      "SpriteIndex": 102
+    },
+    "103": {
+      "Name": "Squid Hat",
+      "SpriteIndex": 103
+    },
+    "104": {
+      "Name": "Sports Cap",
+      "SpriteIndex": 104
+    },
+    "105": {
+      "Name": "Red Fez",
+      "SpriteIndex": 105
+    },
+    "106": {
+      "Name": "Raccoon Hat",
+      "SpriteIndex": 106
+    },
+    "107": {
+      "Name": "Steel Pan",
+      "SpriteIndex": 107
+    },
+    "108": {
+      "Name": "Gold Pan",
+      "SpriteIndex": 108
+    },
+    "109": {
+      "Name": "Iridium Pan",
+      "SpriteIndex": 109
+    },
+    "110": {
+      "Name": "Mystery Hat",
+      "SpriteIndex": 110
+    },
+    "111": {
+      "Name": "Dark Ballcap",
+      "SpriteIndex": 111
+    },
+    "112": {
+      "Name": "Leprechaun Hat",
+      "SpriteIndex": 112
+    },
+    "113": {
+      "Name": "Junimo Hat",
+      "SpriteIndex": 113
+    },
+    "114": {
+      "Name": "Paper Hat",
+      "SpriteIndex": 114
+    },
+    "115": {
+      "Name": "Pageboy Cap",
+      "SpriteIndex": 115
+    },
+    "116": {
+      "Name": "Jester Hat",
+      "SpriteIndex": 116
+    },
+    "117": {
+      "Name": "Blue Ribbon",
+      "SpriteIndex": 117
+    },
+    "118": {
+      "Name": "Governor's Hat",
+      "SpriteIndex": 118
+    },
+    "119": {
+      "Name": "White Bow",
+      "SpriteIndex": 119
+    },
+    "120": {
+      "Name": "Space Helmet",
+      "SpriteIndex": 120
+    },
+    "121": {
+      "Name": "Infinity Crown",
+      "SpriteIndex": 121
+    }
+  }
+}

@@ -1,0 +1,4525 @@
+{
+  "_meta": {
+    "extract_images": true,
+    "processor": "furniture",
+    "prefix": "F",
+    "source_xnb": "TileSheets/furniture.xnb"
+  },
+  "items": {
+    "0": {
+      "Name": "Oak Chair",
+      "Type": "chair",
+      "SpriteIndex": 0,
+      "Width": 1,
+      "Height": 1
+    },
+    "3": {
+      "Name": "Walnut Chair",
+      "Type": "chair",
+      "SpriteIndex": 3,
+      "Width": 1,
+      "Height": 1
+    },
+    "6": {
+      "Name": "Birch Chair",
+      "Type": "chair",
+      "SpriteIndex": 6,
+      "Width": 1,
+      "Height": 1
+    },
+    "9": {
+      "Name": "Mahogany Chair",
+      "Type": "chair",
+      "SpriteIndex": 9,
+      "Width": 1,
+      "Height": 1
+    },
+    "12": {
+      "Name": "Red Diner Chair",
+      "Type": "chair",
+      "SpriteIndex": 12,
+      "Width": 1,
+      "Height": 1
+    },
+    "15": {
+      "Name": "Blue Diner Chair",
+      "Type": "chair",
+      "SpriteIndex": 15,
+      "Width": 1,
+      "Height": 1
+    },
+    "18": {
+      "Name": "Country Chair",
+      "Type": "chair",
+      "SpriteIndex": 18,
+      "Width": 1,
+      "Height": 1
+    },
+    "21": {
+      "Name": "Breakfast Chair",
+      "Type": "chair",
+      "SpriteIndex": 21,
+      "Width": 1,
+      "Height": 1
+    },
+    "24": {
+      "Name": "Pink Office Chair",
+      "Type": "chair",
+      "SpriteIndex": 24,
+      "Width": 1,
+      "Height": 1
+    },
+    "27": {
+      "Name": "Purple Office Chair",
+      "Type": "chair",
+      "SpriteIndex": 27,
+      "Width": 1,
+      "Height": 1
+    },
+    "30": {
+      "Name": "Green Office Stool",
+      "Type": "chair",
+      "SpriteIndex": 30,
+      "Width": 1,
+      "Height": 1
+    },
+    "31": {
+      "Name": "Orange Office Stool",
+      "Type": "chair",
+      "SpriteIndex": 31,
+      "Width": 1,
+      "Height": 1
+    },
+    "64": {
+      "Name": "Dark Throne",
+      "Type": "chair",
+      "SpriteIndex": 64,
+      "Width": 1,
+      "Height": 1
+    },
+    "67": {
+      "Name": "Dining Chair",
+      "Type": "chair",
+      "SpriteIndex": 67,
+      "Width": 1,
+      "Height": 1
+    },
+    "70": {
+      "Name": "Dining Chair",
+      "Type": "chair",
+      "SpriteIndex": 70,
+      "Width": 1,
+      "Height": 1
+    },
+    "73": {
+      "Name": "Green Plush Seat",
+      "Type": "chair",
+      "SpriteIndex": 73,
+      "Width": 1,
+      "Height": 1
+    },
+    "76": {
+      "Name": "Pink Plush Seat",
+      "Type": "chair",
+      "SpriteIndex": 76,
+      "Width": 1,
+      "Height": 1
+    },
+    "79": {
+      "Name": "Winter Chair",
+      "Type": "chair",
+      "SpriteIndex": 79,
+      "Width": 1,
+      "Height": 1
+    },
+    "82": {
+      "Name": "Groovy Chair",
+      "Type": "chair",
+      "SpriteIndex": 82,
+      "Width": 1,
+      "Height": 1
+    },
+    "85": {
+      "Name": "Cute Chair",
+      "Type": "chair",
+      "SpriteIndex": 85,
+      "Width": 1,
+      "Height": 1
+    },
+    "88": {
+      "Name": "Stump Seat",
+      "Type": "chair",
+      "SpriteIndex": 88,
+      "Width": 1,
+      "Height": 1
+    },
+    "91": {
+      "Name": "Metal Chair",
+      "Type": "chair",
+      "SpriteIndex": 91,
+      "Width": 1,
+      "Height": 1
+    },
+    "94": {
+      "Name": "Green Stool",
+      "Type": "chair",
+      "SpriteIndex": 94,
+      "Width": 1,
+      "Height": 1
+    },
+    "95": {
+      "Name": "Blue Stool",
+      "Type": "chair",
+      "SpriteIndex": 95,
+      "Width": 1,
+      "Height": 1
+    },
+    "128": {
+      "Name": "King Chair",
+      "Type": "chair",
+      "SpriteIndex": 128,
+      "Width": 1,
+      "Height": 1
+    },
+    "131": {
+      "Name": "Crystal Chair",
+      "Type": "chair",
+      "SpriteIndex": 131,
+      "Width": 1,
+      "Height": 1
+    },
+    "192": {
+      "Name": "Oak Bench",
+      "Type": "bench",
+      "SpriteIndex": 192,
+      "Width": 1,
+      "Height": 1
+    },
+    "197": {
+      "Name": "Walnut Bench",
+      "Type": "bench",
+      "SpriteIndex": 197,
+      "Width": 1,
+      "Height": 1
+    },
+    "202": {
+      "Name": "Birch Bench",
+      "Type": "bench",
+      "SpriteIndex": 202,
+      "Width": 1,
+      "Height": 1
+    },
+    "207": {
+      "Name": "Mahogany Bench",
+      "Type": "bench",
+      "SpriteIndex": 207,
+      "Width": 1,
+      "Height": 1
+    },
+    "212": {
+      "Name": "Modern Bench",
+      "Type": "bench",
+      "SpriteIndex": 212,
+      "Width": 1,
+      "Height": 1
+    },
+    "288": {
+      "Name": "Blue Armchair",
+      "Type": "armchair",
+      "SpriteIndex": 288,
+      "Width": 1,
+      "Height": 1
+    },
+    "294": {
+      "Name": "Red Armchair",
+      "Type": "armchair",
+      "SpriteIndex": 294,
+      "Width": 1,
+      "Height": 1
+    },
+    "300": {
+      "Name": "Green Armchair",
+      "Type": "armchair",
+      "SpriteIndex": 300,
+      "Width": 1,
+      "Height": 1
+    },
+    "306": {
+      "Name": "Yellow Armchair",
+      "Type": "armchair",
+      "SpriteIndex": 306,
+      "Width": 1,
+      "Height": 1
+    },
+    "312": {
+      "Name": "Brown Armchair",
+      "Type": "armchair",
+      "SpriteIndex": 312,
+      "Width": 1,
+      "Height": 1
+    },
+    "416": {
+      "Name": "Blue Couch",
+      "Type": "couch",
+      "SpriteIndex": 416,
+      "Width": 1,
+      "Height": 1
+    },
+    "424": {
+      "Name": "Red Couch",
+      "Type": "couch",
+      "SpriteIndex": 424,
+      "Width": 1,
+      "Height": 1
+    },
+    "432": {
+      "Name": "Green Couch",
+      "Type": "couch",
+      "SpriteIndex": 432,
+      "Width": 1,
+      "Height": 1
+    },
+    "440": {
+      "Name": "Yellow Couch",
+      "Type": "couch",
+      "SpriteIndex": 440,
+      "Width": 1,
+      "Height": 1
+    },
+    "512": {
+      "Name": "Brown Couch",
+      "Type": "couch",
+      "SpriteIndex": 512,
+      "Width": 1,
+      "Height": 1
+    },
+    "520": {
+      "Name": "Dark Couch",
+      "Type": "couch",
+      "SpriteIndex": 520,
+      "Width": 1,
+      "Height": 1
+    },
+    "528": {
+      "Name": "Wizard Couch",
+      "Type": "couch",
+      "SpriteIndex": 528,
+      "Width": 1,
+      "Height": 1
+    },
+    "536": {
+      "Name": "Woodsy Couch",
+      "Type": "couch",
+      "SpriteIndex": 536,
+      "Width": 1,
+      "Height": 1
+    },
+    "704": {
+      "Name": "Oak Dresser",
+      "Type": "dresser",
+      "SpriteIndex": 704,
+      "Width": 1,
+      "Height": 1
+    },
+    "709": {
+      "Name": "Walnut Dresser",
+      "Type": "dresser",
+      "SpriteIndex": 709,
+      "Width": 1,
+      "Height": 1
+    },
+    "714": {
+      "Name": "Birch Dresser",
+      "Type": "dresser",
+      "SpriteIndex": 714,
+      "Width": 1,
+      "Height": 1
+    },
+    "719": {
+      "Name": "Mahogany Dresser",
+      "Type": "dresser",
+      "SpriteIndex": 719,
+      "Width": 1,
+      "Height": 1
+    },
+    "724": {
+      "Name": "Coffee Table",
+      "Type": "table",
+      "SpriteIndex": 724,
+      "Width": 2,
+      "Height": 2
+    },
+    "727": {
+      "Name": "Stone Slab",
+      "Type": "table",
+      "SpriteIndex": 727,
+      "Width": 2,
+      "Height": 2
+    },
+    "800": {
+      "Name": "Winter Dining Table",
+      "Type": "long table",
+      "SpriteIndex": 800,
+      "Width": 1,
+      "Height": 1
+    },
+    "807": {
+      "Name": "Festive Dining Table",
+      "Type": "long table",
+      "SpriteIndex": 807,
+      "Width": 1,
+      "Height": 1
+    },
+    "814": {
+      "Name": "Mahogany Dining Table",
+      "Type": "long table",
+      "SpriteIndex": 814,
+      "Width": 1,
+      "Height": 1
+    },
+    "821": {
+      "Name": "Modern Dining Table",
+      "Type": "long table",
+      "SpriteIndex": 821,
+      "Width": 1,
+      "Height": 1
+    },
+    "1120": {
+      "Name": "Oak Table",
+      "Type": "table",
+      "SpriteIndex": 1120,
+      "Width": 1,
+      "Height": 1
+    },
+    "1122": {
+      "Name": "Walnut Table",
+      "Type": "table",
+      "SpriteIndex": 1122,
+      "Width": 1,
+      "Height": 1
+    },
+    "1124": {
+      "Name": "Birch Table",
+      "Type": "table",
+      "SpriteIndex": 1124,
+      "Width": 1,
+      "Height": 1
+    },
+    "1126": {
+      "Name": "Mahogany Table",
+      "Type": "table",
+      "SpriteIndex": 1126,
+      "Width": 1,
+      "Height": 1
+    },
+    "1128": {
+      "Name": "Sun Table",
+      "Type": "table",
+      "SpriteIndex": 1128,
+      "Width": 1,
+      "Height": 1
+    },
+    "1130": {
+      "Name": "Moon Table",
+      "Type": "table",
+      "SpriteIndex": 1130,
+      "Width": 1,
+      "Height": 1
+    },
+    "1132": {
+      "Name": "Modern Table",
+      "Type": "table",
+      "SpriteIndex": 1132,
+      "Width": 1,
+      "Height": 1
+    },
+    "1134": {
+      "Name": "Pub Table",
+      "Type": "table",
+      "SpriteIndex": 1134,
+      "Width": 1,
+      "Height": 1
+    },
+    "1136": {
+      "Name": "Luxury Table",
+      "Type": "table",
+      "SpriteIndex": 1136,
+      "Width": 1,
+      "Height": 1
+    },
+    "1138": {
+      "Name": "Diviner Table",
+      "Type": "table",
+      "SpriteIndex": 1138,
+      "Width": 1,
+      "Height": 1
+    },
+    "1140": {
+      "Name": "Neolithic Table",
+      "Type": "table",
+      "SpriteIndex": 1140,
+      "Width": 1,
+      "Height": 1
+    },
+    "1142": {
+      "Name": "Puzzle Table",
+      "Type": "table",
+      "SpriteIndex": 1142,
+      "Width": 1,
+      "Height": 1
+    },
+    "1144": {
+      "Name": "Winter Table",
+      "Type": "table",
+      "SpriteIndex": 1144,
+      "Width": 1,
+      "Height": 1
+    },
+    "1146": {
+      "Name": "Candy Table",
+      "Type": "table",
+      "SpriteIndex": 1146,
+      "Width": 1,
+      "Height": 1
+    },
+    "1148": {
+      "Name": "Luau Table",
+      "Type": "table",
+      "SpriteIndex": 1148,
+      "Width": 1,
+      "Height": 1
+    },
+    "1150": {
+      "Name": "Dark Table",
+      "Type": "table",
+      "SpriteIndex": 1150,
+      "Width": 1,
+      "Height": 1
+    },
+    "1216": {
+      "Name": "Oak Tea-Table",
+      "Type": "table",
+      "SpriteIndex": 1216,
+      "Width": 2,
+      "Height": 1
+    },
+    "1218": {
+      "Name": "Walnut Tea-Table",
+      "Type": "table",
+      "SpriteIndex": 1218,
+      "Width": 2,
+      "Height": 1
+    },
+    "1220": {
+      "Name": "Birch Tea-Table",
+      "Type": "table",
+      "SpriteIndex": 1220,
+      "Width": 2,
+      "Height": 1
+    },
+    "1222": {
+      "Name": "Mahogany Tea-Table",
+      "Type": "table",
+      "SpriteIndex": 1222,
+      "Width": 2,
+      "Height": 1
+    },
+    "1224": {
+      "Name": "Modern Tea-Table",
+      "Type": "table",
+      "SpriteIndex": 1224,
+      "Width": 2,
+      "Height": 1
+    },
+    "1226": {
+      "Name": "Furniture Catalogue",
+      "Type": "table",
+      "SpriteIndex": 1226,
+      "Width": 2,
+      "Height": 1
+    },
+    "1280": {
+      "Name": "China Cabinet",
+      "Type": "other",
+      "SpriteIndex": 1280,
+      "Width": 3,
+      "Height": 3
+    },
+    "1283": {
+      "Name": "Artist Bookcase",
+      "Type": "bookcase",
+      "SpriteIndex": 1283,
+      "Width": 1,
+      "Height": 1
+    },
+    "1285": {
+      "Name": "Luxury Bookcase",
+      "Type": "bookcase",
+      "SpriteIndex": 1285,
+      "Width": 1,
+      "Height": 1
+    },
+    "1287": {
+      "Name": "Modern Bookcase",
+      "Type": "bookcase",
+      "SpriteIndex": 1287,
+      "Width": 1,
+      "Height": 1
+    },
+    "1289": {
+      "Name": "Dark Bookcase",
+      "Type": "bookcase",
+      "SpriteIndex": 1289,
+      "Width": 1,
+      "Height": 1
+    },
+    "1291": {
+      "Name": "Ceramic Pillar",
+      "Type": "decor",
+      "SpriteIndex": 1291,
+      "Width": 1,
+      "Height": 1
+    },
+    "1292": {
+      "Name": "Gold Pillar",
+      "Type": "decor",
+      "SpriteIndex": 1292,
+      "Width": 1,
+      "Height": 1
+    },
+    "1293": {
+      "Name": "Industrial Pipe",
+      "Type": "decor",
+      "SpriteIndex": 1293,
+      "Width": 1,
+      "Height": 1
+    },
+    "1294": {
+      "Name": "Indoor Palm",
+      "Type": "decor",
+      "SpriteIndex": 1294,
+      "Width": 1,
+      "Height": 1
+    },
+    "1295": {
+      "Name": "Totem Pole",
+      "Type": "decor",
+      "SpriteIndex": 1295,
+      "Width": 1,
+      "Height": 1
+    },
+    "1296": {
+      "Name": "Manicured Pine",
+      "Type": "decor",
+      "SpriteIndex": 1296,
+      "Width": 1,
+      "Height": 1
+    },
+    "1297": {
+      "Name": "Topiary Tree",
+      "Type": "decor",
+      "SpriteIndex": 1297,
+      "Width": 1,
+      "Height": 1
+    },
+    "1298": {
+      "Name": "Standing Geode",
+      "Type": "decor",
+      "SpriteIndex": 1298,
+      "Width": 1,
+      "Height": 1
+    },
+    "1299": {
+      "Name": "Obsidian Vase",
+      "Type": "decor",
+      "SpriteIndex": 1299,
+      "Width": 1,
+      "Height": 1
+    },
+    "1300": {
+      "Name": "Singing Stone",
+      "Type": "decor",
+      "SpriteIndex": 1300,
+      "Width": 1,
+      "Height": 1
+    },
+    "1301": {
+      "Name": "Sloth Skeleton L",
+      "Type": "decor",
+      "SpriteIndex": 1301,
+      "Width": 1,
+      "Height": 1
+    },
+    "1302": {
+      "Name": "Sloth Skeleton M",
+      "Type": "decor",
+      "SpriteIndex": 1302,
+      "Width": 1,
+      "Height": 1
+    },
+    "1303": {
+      "Name": "Sloth Skeleton R",
+      "Type": "decor",
+      "SpriteIndex": 1303,
+      "Width": 1,
+      "Height": 1
+    },
+    "1304": {
+      "Name": "Skeleton",
+      "Type": "decor",
+      "SpriteIndex": 1304,
+      "Width": 1,
+      "Height": 1
+    },
+    "1305": {
+      "Name": "Chicken Statue",
+      "Type": "decor",
+      "SpriteIndex": 1305,
+      "Width": 1,
+      "Height": 1
+    },
+    "1306": {
+      "Name": "Leah's Sculpture",
+      "Type": "decor",
+      "SpriteIndex": 1306,
+      "Width": 1,
+      "Height": 1
+    },
+    "1307": {
+      "Name": "Dried Sunflowers",
+      "Type": "decor",
+      "SpriteIndex": 1307,
+      "Width": 1,
+      "Height": 1
+    },
+    "1308": {
+      "Name": "Catalogue",
+      "Type": "decor",
+      "SpriteIndex": 1308,
+      "Width": 1,
+      "Height": 1
+    },
+    "1309": {
+      "Name": "Sam's Boombox",
+      "Type": "decor",
+      "SpriteIndex": 1309,
+      "Width": 1,
+      "Height": 1
+    },
+    "1362": {
+      "Name": "Small Plant",
+      "Type": "decor",
+      "SpriteIndex": 1362,
+      "Width": 1,
+      "Height": 1
+    },
+    "1363": {
+      "Name": "Table Plant",
+      "Type": "decor",
+      "SpriteIndex": 1363,
+      "Width": 1,
+      "Height": 1
+    },
+    "1364": {
+      "Name": "Decorative Bowl",
+      "Type": "decor",
+      "SpriteIndex": 1364,
+      "Width": 1,
+      "Height": 1
+    },
+    "1365": {
+      "Name": "Futan Bear",
+      "Type": "decor",
+      "SpriteIndex": 1365,
+      "Width": 1,
+      "Height": 1
+    },
+    "1366": {
+      "Name": "Globe",
+      "Type": "decor",
+      "SpriteIndex": 1366,
+      "Width": 1,
+      "Height": 1
+    },
+    "1367": {
+      "Name": "Model Ship",
+      "Type": "decor",
+      "SpriteIndex": 1367,
+      "Width": 1,
+      "Height": 1
+    },
+    "1368": {
+      "Name": "Small Crystal",
+      "Type": "decor",
+      "SpriteIndex": 1368,
+      "Width": 1,
+      "Height": 1
+    },
+    "1369": {
+      "Name": "Decorative Lantern",
+      "Type": "decor",
+      "SpriteIndex": 1369,
+      "Width": 1,
+      "Height": 1
+    },
+    "1376": {
+      "Name": "House Plant",
+      "Type": "decor",
+      "SpriteIndex": 1376,
+      "Width": 1,
+      "Height": 1
+    },
+    "1377": {
+      "Name": "House Plant",
+      "Type": "decor",
+      "SpriteIndex": 1377,
+      "Width": 1,
+      "Height": 1
+    },
+    "1378": {
+      "Name": "House Plant",
+      "Type": "decor",
+      "SpriteIndex": 1378,
+      "Width": 1,
+      "Height": 1
+    },
+    "1379": {
+      "Name": "House Plant",
+      "Type": "decor",
+      "SpriteIndex": 1379,
+      "Width": 1,
+      "Height": 1
+    },
+    "1380": {
+      "Name": "House Plant",
+      "Type": "decor",
+      "SpriteIndex": 1380,
+      "Width": 1,
+      "Height": 1
+    },
+    "1381": {
+      "Name": "House Plant",
+      "Type": "decor",
+      "SpriteIndex": 1381,
+      "Width": 1,
+      "Height": 1
+    },
+    "1382": {
+      "Name": "House Plant",
+      "Type": "decor",
+      "SpriteIndex": 1382,
+      "Width": 1,
+      "Height": 1
+    },
+    "1383": {
+      "Name": "House Plant",
+      "Type": "decor",
+      "SpriteIndex": 1383,
+      "Width": 1,
+      "Height": 1
+    },
+    "1384": {
+      "Name": "House Plant",
+      "Type": "decor",
+      "SpriteIndex": 1384,
+      "Width": 1,
+      "Height": 1
+    },
+    "1385": {
+      "Name": "House Plant",
+      "Type": "decor",
+      "SpriteIndex": 1385,
+      "Width": 1,
+      "Height": 1
+    },
+    "1386": {
+      "Name": "House Plant",
+      "Type": "decor",
+      "SpriteIndex": 1386,
+      "Width": 1,
+      "Height": 1
+    },
+    "1387": {
+      "Name": "House Plant",
+      "Type": "decor",
+      "SpriteIndex": 1387,
+      "Width": 1,
+      "Height": 1
+    },
+    "1388": {
+      "Name": "House Plant",
+      "Type": "decor",
+      "SpriteIndex": 1388,
+      "Width": 1,
+      "Height": 1
+    },
+    "1389": {
+      "Name": "House Plant",
+      "Type": "decor",
+      "SpriteIndex": 1389,
+      "Width": 1,
+      "Height": 1
+    },
+    "1390": {
+      "Name": "House Plant",
+      "Type": "decor",
+      "SpriteIndex": 1390,
+      "Width": 1,
+      "Height": 1
+    },
+    "1391": {
+      "Name": "Oak End Table",
+      "Type": "table",
+      "SpriteIndex": 1391,
+      "Width": 1,
+      "Height": 1
+    },
+    "1393": {
+      "Name": "Walnut End Table",
+      "Type": "table",
+      "SpriteIndex": 1393,
+      "Width": 1,
+      "Height": 1
+    },
+    "1395": {
+      "Name": "Birch End Table",
+      "Type": "table",
+      "SpriteIndex": 1395,
+      "Width": 1,
+      "Height": 1
+    },
+    "1397": {
+      "Name": "Mahogany End Table",
+      "Type": "table",
+      "SpriteIndex": 1397,
+      "Width": 1,
+      "Height": 1
+    },
+    "1399": {
+      "Name": "Modern End Table",
+      "Type": "table",
+      "SpriteIndex": 1399,
+      "Width": 1,
+      "Height": 1
+    },
+    "1400": {
+      "Name": "Grandmother End Table",
+      "Type": "table",
+      "SpriteIndex": 1400,
+      "Width": 1,
+      "Height": 1
+    },
+    "1401": {
+      "Name": "Winter End Table",
+      "Type": "table",
+      "SpriteIndex": 1401,
+      "Width": 1,
+      "Height": 1
+    },
+    "1402": {
+      "Name": "Calendar",
+      "Type": "painting",
+      "SpriteIndex": 1402,
+      "Width": 1,
+      "Height": 1
+    },
+    "1440": {
+      "Name": "Tree of the Winter Star",
+      "Type": "decor",
+      "SpriteIndex": 1440,
+      "Width": 3,
+      "Height": 3
+    },
+    "1443": {
+      "Name": "Country Lamp",
+      "Type": "lamp",
+      "SpriteIndex": 1443,
+      "Width": 1,
+      "Height": 1
+    },
+    "1445": {
+      "Name": "Box Lamp",
+      "Type": "lamp",
+      "SpriteIndex": 1445,
+      "Width": 1,
+      "Height": 1
+    },
+    "1447": {
+      "Name": "Modern Lamp",
+      "Type": "lamp",
+      "SpriteIndex": 1447,
+      "Width": 1,
+      "Height": 1
+    },
+    "1449": {
+      "Name": "Classic Lamp",
+      "Type": "lamp",
+      "SpriteIndex": 1449,
+      "Width": 1,
+      "Height": 1
+    },
+    "1451": {
+      "Name": "Red Rug",
+      "Type": "rug",
+      "SpriteIndex": 1451,
+      "Width": 1,
+      "Height": 1
+    },
+    "1456": {
+      "Name": "Patchwork Rug",
+      "Type": "rug",
+      "SpriteIndex": 1456,
+      "Width": 1,
+      "Height": 1
+    },
+    "1461": {
+      "Name": "Dark Rug",
+      "Type": "rug",
+      "SpriteIndex": 1461,
+      "Width": 1,
+      "Height": 1
+    },
+    "1466": {
+      "Name": "Budget TV",
+      "Type": "decor",
+      "SpriteIndex": 1466,
+      "Width": 2,
+      "Height": 2
+    },
+    "1468": {
+      "Name": "Plasma TV",
+      "Type": "decor",
+      "SpriteIndex": 1468,
+      "Width": 3,
+      "Height": 3
+    },
+    "1539": {
+      "Name": "'The Muzzamaroo'",
+      "Type": "painting",
+      "SpriteIndex": 1539,
+      "Width": 1,
+      "Height": 1
+    },
+    "1541": {
+      "Name": "'A Night On Eco-Hill'",
+      "Type": "painting",
+      "SpriteIndex": 1541,
+      "Width": 1,
+      "Height": 1
+    },
+    "1543": {
+      "Name": "'Pathways'",
+      "Type": "painting",
+      "SpriteIndex": 1543,
+      "Width": 1,
+      "Height": 1
+    },
+    "1545": {
+      "Name": "'Burnt Offering'",
+      "Type": "painting",
+      "SpriteIndex": 1545,
+      "Width": 1,
+      "Height": 1
+    },
+    "1547": {
+      "Name": "'Queen of the Gem Sea'",
+      "Type": "painting",
+      "SpriteIndex": 1547,
+      "Width": 3,
+      "Height": 3
+    },
+    "1550": {
+      "Name": "'Vanilla Villa'",
+      "Type": "painting",
+      "SpriteIndex": 1550,
+      "Width": 1,
+      "Height": 1
+    },
+    "1552": {
+      "Name": "'Primal Motion'",
+      "Type": "painting",
+      "SpriteIndex": 1552,
+      "Width": 1,
+      "Height": 1
+    },
+    "1554": {
+      "Name": "'Jade Hills'",
+      "Type": "painting",
+      "SpriteIndex": 1554,
+      "Width": 3,
+      "Height": 3
+    },
+    "1557": {
+      "Name": "'Sun #44'",
+      "Type": "painting",
+      "SpriteIndex": 1557,
+      "Width": 1,
+      "Height": 1
+    },
+    "1559": {
+      "Name": "Wallflower Pal",
+      "Type": "painting",
+      "SpriteIndex": 1559,
+      "Width": 1,
+      "Height": 1
+    },
+    "1561": {
+      "Name": "'Spires'",
+      "Type": "painting",
+      "SpriteIndex": 1561,
+      "Width": 1,
+      "Height": 1
+    },
+    "1563": {
+      "Name": "'Highway 89'",
+      "Type": "painting",
+      "SpriteIndex": 1563,
+      "Width": 1,
+      "Height": 1
+    },
+    "1565": {
+      "Name": "Calico Falls",
+      "Type": "painting",
+      "SpriteIndex": 1565,
+      "Width": 1,
+      "Height": 1
+    },
+    "1567": {
+      "Name": "Needlepoint Flower",
+      "Type": "painting",
+      "SpriteIndex": 1567,
+      "Width": 1,
+      "Height": 1
+    },
+    "1600": {
+      "Name": "Skull Poster",
+      "Type": "painting",
+      "SpriteIndex": 1600,
+      "Width": 1,
+      "Height": 1
+    },
+    "1601": {
+      "Name": "'Sun #45'",
+      "Type": "painting",
+      "SpriteIndex": 1601,
+      "Width": 1,
+      "Height": 1
+    },
+    "1602": {
+      "Name": "'Little Tree'",
+      "Type": "painting",
+      "SpriteIndex": 1602,
+      "Width": 1,
+      "Height": 1
+    },
+    "1603": {
+      "Name": "'Blueberries'",
+      "Type": "painting",
+      "SpriteIndex": 1603,
+      "Width": 1,
+      "Height": 1
+    },
+    "1604": {
+      "Name": "'Blue City'",
+      "Type": "painting",
+      "SpriteIndex": 1604,
+      "Width": 1,
+      "Height": 1
+    },
+    "1605": {
+      "Name": "Little Photos",
+      "Type": "painting",
+      "SpriteIndex": 1605,
+      "Width": 1,
+      "Height": 1
+    },
+    "1606": {
+      "Name": "'Dancing Grass'",
+      "Type": "painting",
+      "SpriteIndex": 1606,
+      "Width": 1,
+      "Height": 1
+    },
+    "1607": {
+      "Name": "'VGA Paradise'",
+      "Type": "painting",
+      "SpriteIndex": 1607,
+      "Width": 2,
+      "Height": 2
+    },
+    "1609": {
+      "Name": "J. Cola Light",
+      "Type": "painting",
+      "SpriteIndex": 1609,
+      "Width": 3,
+      "Height": 3
+    },
+    "1612": {
+      "Name": "'Kitemaster '95'",
+      "Type": "painting",
+      "SpriteIndex": 1612,
+      "Width": 1,
+      "Height": 1
+    },
+    "1614": {
+      "Name": "Basic Window",
+      "Type": "window",
+      "SpriteIndex": 1614,
+      "Width": 1,
+      "Height": 1
+    },
+    "1616": {
+      "Name": "Small Window",
+      "Type": "window",
+      "SpriteIndex": 1616,
+      "Width": 1,
+      "Height": 1
+    },
+    "1618": {
+      "Name": "Red Cottage Rug",
+      "Type": "rug",
+      "SpriteIndex": 1618,
+      "Width": 1,
+      "Height": 1
+    },
+    "1623": {
+      "Name": "Green Cottage Rug",
+      "Type": "rug",
+      "SpriteIndex": 1623,
+      "Width": 1,
+      "Height": 1
+    },
+    "1628": {
+      "Name": "Monster Rug",
+      "Type": "rug",
+      "SpriteIndex": 1628,
+      "Width": 2,
+      "Height": 2
+    },
+    "1630": {
+      "Name": "Boarded Window",
+      "Type": "painting",
+      "SpriteIndex": 1630,
+      "Width": 1,
+      "Height": 1
+    },
+    "1664": {
+      "Name": "Mystic Rug",
+      "Type": "rug",
+      "SpriteIndex": 1664,
+      "Width": 1,
+      "Height": 1
+    },
+    "1669": {
+      "Name": "Lg. Futan Bear",
+      "Type": "decor",
+      "SpriteIndex": 1669,
+      "Width": 2,
+      "Height": 2
+    },
+    "1733": {
+      "Name": "Junimo Plush",
+      "Type": "decor",
+      "SpriteIndex": 1733,
+      "Width": 2,
+      "Height": 2
+    },
+    "1671": {
+      "Name": "Bear Statue",
+      "Type": "decor",
+      "SpriteIndex": 1671,
+      "Width": 2,
+      "Height": 2
+    },
+    "1673": {
+      "Name": "Porthole",
+      "Type": "window",
+      "SpriteIndex": 1673,
+      "Width": 1,
+      "Height": 1
+    },
+    "1675": {
+      "Name": "Anchor",
+      "Type": "painting",
+      "SpriteIndex": 1675,
+      "Width": 1,
+      "Height": 1
+    },
+    "1676": {
+      "Name": "World Map",
+      "Type": "painting",
+      "SpriteIndex": 1676,
+      "Width": 1,
+      "Height": 1
+    },
+    "1678": {
+      "Name": "Ornate Window",
+      "Type": "window",
+      "SpriteIndex": 1678,
+      "Width": 1,
+      "Height": 1
+    },
+    "1680": {
+      "Name": "Floor TV",
+      "Type": "decor",
+      "SpriteIndex": 1680,
+      "Width": 2,
+      "Height": 2
+    },
+    "1682": {
+      "Name": "Carved Window",
+      "Type": "window",
+      "SpriteIndex": 1682,
+      "Width": 1,
+      "Height": 1
+    },
+    "1737": {
+      "Name": "Nautical Rug",
+      "Type": "rug",
+      "SpriteIndex": 1737,
+      "Width": 1,
+      "Height": 1
+    },
+    "1742": {
+      "Name": "Burlap Rug",
+      "Type": "rug",
+      "SpriteIndex": 1742,
+      "Width": 2,
+      "Height": 2
+    },
+    "1744": {
+      "Name": "Tree Column",
+      "Type": "decor",
+      "SpriteIndex": 1744,
+      "Width": 1,
+      "Height": 1
+    },
+    "1745": {
+      "Name": "L. Light String",
+      "Type": "painting",
+      "SpriteIndex": 1745,
+      "Width": 2,
+      "Height": 2
+    },
+    "1747": {
+      "Name": "S. Pine",
+      "Type": "decor",
+      "SpriteIndex": 1747,
+      "Width": 1,
+      "Height": 1
+    },
+    "1748": {
+      "Name": "Bonsai Tree",
+      "Type": "decor",
+      "SpriteIndex": 1748,
+      "Width": 1,
+      "Height": 1
+    },
+    "1749": {
+      "Name": "Metal Window",
+      "Type": "window",
+      "SpriteIndex": 1749,
+      "Width": 1,
+      "Height": 1
+    },
+    "1751": {
+      "Name": "Candle Lamp",
+      "Type": "lamp",
+      "SpriteIndex": 1751,
+      "Width": 1,
+      "Height": 1
+    },
+    "1753": {
+      "Name": "Miner's Crest",
+      "Type": "painting",
+      "SpriteIndex": 1753,
+      "Width": 2,
+      "Height": 2
+    },
+    "1755": {
+      "Name": "Bamboo Mat",
+      "Type": "rug",
+      "SpriteIndex": 1755,
+      "Width": 2,
+      "Height": 2
+    },
+    "1758": {
+      "Name": "Ornate Lamp",
+      "Type": "lamp",
+      "SpriteIndex": 1758,
+      "Width": 1,
+      "Height": 1
+    },
+    "1777": {
+      "Name": "Woodcut Rug",
+      "Type": "rug",
+      "SpriteIndex": 1777,
+      "Width": 2,
+      "Height": 2
+    },
+    "1811": {
+      "Name": "Hanging Shield",
+      "Type": "painting",
+      "SpriteIndex": 1811,
+      "Width": 1,
+      "Height": 1
+    },
+    "1812": {
+      "Name": "Monster Danglers",
+      "Type": "painting",
+      "SpriteIndex": 1812,
+      "Width": 2,
+      "Height": 2
+    },
+    "1814": {
+      "Name": "Ceiling Flags",
+      "Type": "painting",
+      "SpriteIndex": 1814,
+      "Width": 1,
+      "Height": 1
+    },
+    "1838": {
+      "Name": "'Red Eagle'",
+      "Type": "painting",
+      "SpriteIndex": 1838,
+      "Width": 1,
+      "Height": 1
+    },
+    "1840": {
+      "Name": "'Portrait Of A Mermaid'",
+      "Type": "painting",
+      "SpriteIndex": 1840,
+      "Width": 1,
+      "Height": 1
+    },
+    "1842": {
+      "Name": "'Solar Kingdom'",
+      "Type": "painting",
+      "SpriteIndex": 1842,
+      "Width": 1,
+      "Height": 1
+    },
+    "1844": {
+      "Name": "'Clouds'",
+      "Type": "painting",
+      "SpriteIndex": 1844,
+      "Width": 1,
+      "Height": 1
+    },
+    "1846": {
+      "Name": "'1000 Years From Now'",
+      "Type": "painting",
+      "SpriteIndex": 1846,
+      "Width": 1,
+      "Height": 1
+    },
+    "1848": {
+      "Name": "'Three Trees'",
+      "Type": "painting",
+      "SpriteIndex": 1848,
+      "Width": 1,
+      "Height": 1
+    },
+    "1850": {
+      "Name": "'The Serpent'",
+      "Type": "painting",
+      "SpriteIndex": 1850,
+      "Width": 1,
+      "Height": 1
+    },
+    "1852": {
+      "Name": "'Tropical Fish #173'",
+      "Type": "painting",
+      "SpriteIndex": 1852,
+      "Width": 1,
+      "Height": 1
+    },
+    "1854": {
+      "Name": "'Land Of Clay'",
+      "Type": "painting",
+      "SpriteIndex": 1854,
+      "Width": 1,
+      "Height": 1
+    },
+    "1792": {
+      "Name": "Brick Fireplace",
+      "Type": "fireplace",
+      "SpriteIndex": 1792,
+      "Width": 1,
+      "Height": 1
+    },
+    "1794": {
+      "Name": "Stone Fireplace",
+      "Type": "fireplace",
+      "SpriteIndex": 1794,
+      "Width": 1,
+      "Height": 1
+    },
+    "1796": {
+      "Name": "Iridium Fireplace",
+      "Type": "fireplace",
+      "SpriteIndex": 1796,
+      "Width": 1,
+      "Height": 1
+    },
+    "1798": {
+      "Name": "Stove Fireplace",
+      "Type": "fireplace",
+      "SpriteIndex": 1798,
+      "Width": 1,
+      "Height": 1
+    },
+    "1800": {
+      "Name": "Monster Fireplace",
+      "Type": "fireplace",
+      "SpriteIndex": 1800,
+      "Width": 1,
+      "Height": 1
+    },
+    "1802": {
+      "Name": "My First Painting",
+      "Type": "painting",
+      "SpriteIndex": 1802,
+      "Width": 1,
+      "Height": 1
+    },
+    "1866": {
+      "Name": "Elegant Fireplace",
+      "Type": "fireplace",
+      "SpriteIndex": 1866,
+      "Width": 1,
+      "Height": 1
+    },
+    "1900": {
+      "Name": "Pirate Flag",
+      "Type": "painting",
+      "SpriteIndex": 1900,
+      "Width": 1,
+      "Height": 1
+    },
+    "1902": {
+      "Name": "Pirate Rug",
+      "Type": "rug",
+      "SpriteIndex": 1902,
+      "Width": 1,
+      "Height": 1
+    },
+    "1964": {
+      "Name": "Bone Rug",
+      "Type": "rug",
+      "SpriteIndex": 1964,
+      "Width": 1,
+      "Height": 1
+    },
+    "1971": {
+      "Name": "Butterfly Hutch",
+      "Type": "decor",
+      "SpriteIndex": 1971,
+      "Width": 2,
+      "Height": 2
+    },
+    "1907": {
+      "Name": "Strawberry Decal",
+      "Type": "painting",
+      "SpriteIndex": 1907,
+      "Width": 1,
+      "Height": 1
+    },
+    "1909": {
+      "Name": "Fruit Salad Rug",
+      "Type": "rug",
+      "SpriteIndex": 1909,
+      "Width": 1,
+      "Height": 1
+    },
+    "1914": {
+      "Name": "Night Sky Decal #1",
+      "Type": "painting",
+      "SpriteIndex": 1914,
+      "Width": 1,
+      "Height": 1
+    },
+    "1978": {
+      "Name": "Snowy Rug",
+      "Type": "rug",
+      "SpriteIndex": 1978,
+      "Width": 1,
+      "Height": 1
+    },
+    "1915": {
+      "Name": "Night Sky Decal #2",
+      "Type": "painting",
+      "SpriteIndex": 1915,
+      "Width": 1,
+      "Height": 1
+    },
+    "1916": {
+      "Name": "Night Sky Decal #3",
+      "Type": "painting",
+      "SpriteIndex": 1916,
+      "Width": 1,
+      "Height": 1
+    },
+    "1952": {
+      "Name": "'The Brave Little Sapling'",
+      "Type": "painting",
+      "SpriteIndex": 1952,
+      "Width": 1,
+      "Height": 1
+    },
+    "1953": {
+      "Name": "'Mysterium'",
+      "Type": "painting",
+      "SpriteIndex": 1953,
+      "Width": 1,
+      "Height": 1
+    },
+    "1954": {
+      "Name": "'Journey Of The Prairie King: The Motion Picture'",
+      "Type": "painting",
+      "SpriteIndex": 1954,
+      "Width": 1,
+      "Height": 1
+    },
+    "1955": {
+      "Name": "'Wumbus'",
+      "Type": "painting",
+      "SpriteIndex": 1955,
+      "Width": 1,
+      "Height": 1
+    },
+    "1956": {
+      "Name": "'The Zuzu City Express'",
+      "Type": "painting",
+      "SpriteIndex": 1956,
+      "Width": 1,
+      "Height": 1
+    },
+    "1957": {
+      "Name": "'The Miracle At Coldstar Ranch'",
+      "Type": "painting",
+      "SpriteIndex": 1957,
+      "Width": 1,
+      "Height": 1
+    },
+    "1958": {
+      "Name": "'Natural Wonders: Exploring Our Vibrant World'",
+      "Type": "painting",
+      "SpriteIndex": 1958,
+      "Width": 1,
+      "Height": 1
+    },
+    "1959": {
+      "Name": "'It Howls In The Rain'",
+      "Type": "painting",
+      "SpriteIndex": 1959,
+      "Width": 1,
+      "Height": 1
+    },
+    "1960": {
+      "Name": "Indoor Hanging Basket",
+      "Type": "painting",
+      "SpriteIndex": 1960,
+      "Width": 1,
+      "Height": 1
+    },
+    "1961": {
+      "Name": "Winter Tree Decal",
+      "Type": "painting",
+      "SpriteIndex": 1961,
+      "Width": 1,
+      "Height": 1
+    },
+    "1760": {
+      "Name": "Small Junimo Plush",
+      "Type": "decor",
+      "SpriteIndex": 1760,
+      "Width": 1,
+      "Height": 1
+    },
+    "1761": {
+      "Name": "Small Junimo Plush",
+      "Type": "decor",
+      "SpriteIndex": 1761,
+      "Width": 1,
+      "Height": 1
+    },
+    "1762": {
+      "Name": "Small Junimo Plush",
+      "Type": "decor",
+      "SpriteIndex": 1762,
+      "Width": 1,
+      "Height": 1
+    },
+    "1763": {
+      "Name": "Small Junimo Plush",
+      "Type": "decor",
+      "SpriteIndex": 1763,
+      "Width": 1,
+      "Height": 1
+    },
+    "1764": {
+      "Name": "Futan Rabbit",
+      "Type": "decor",
+      "SpriteIndex": 1764,
+      "Width": 1,
+      "Height": 1
+    },
+    "1371": {
+      "Name": "Wumbus Statue",
+      "Type": "decor",
+      "SpriteIndex": 1371,
+      "Width": 2,
+      "Height": 2
+    },
+    "1373": {
+      "Name": "Bobo Statue",
+      "Type": "decor",
+      "SpriteIndex": 1373,
+      "Width": 2,
+      "Height": 2
+    },
+    "1375": {
+      "Name": "Purple Serpent Statue",
+      "Type": "decor",
+      "SpriteIndex": 1375,
+      "Width": 1,
+      "Height": 1
+    },
+    "1471": {
+      "Name": "Green Serpent Statue",
+      "Type": "decor",
+      "SpriteIndex": 1471,
+      "Width": 1,
+      "Height": 1
+    },
+    "985": {
+      "Name": "Long Palm",
+      "Type": "decor",
+      "SpriteIndex": 985,
+      "Width": 1,
+      "Height": 1
+    },
+    "984": {
+      "Name": "Long Cactus",
+      "Type": "decor",
+      "SpriteIndex": 984,
+      "Width": 1,
+      "Height": 1
+    },
+    "986": {
+      "Name": "Exotic Tree",
+      "Type": "decor",
+      "SpriteIndex": 986,
+      "Width": 3,
+      "Height": 3
+    },
+    "989": {
+      "Name": "Deluxe Tree",
+      "Type": "decor",
+      "SpriteIndex": 989,
+      "Width": 3,
+      "Height": 3
+    },
+    "1917": {
+      "Name": "Wall Pumpkin",
+      "Type": "painting",
+      "SpriteIndex": 1917,
+      "Width": 1,
+      "Height": 1
+    },
+    "1918": {
+      "Name": "Small Wall Pumpkin",
+      "Type": "painting",
+      "SpriteIndex": 1918,
+      "Width": 1,
+      "Height": 1
+    },
+    "2048": {
+      "Name": "Bed",
+      "Type": "bed",
+      "SpriteIndex": 2048,
+      "Width": 2,
+      "Height": 2
+    },
+    "2052": {
+      "Name": "Double Bed",
+      "Type": "bed double",
+      "SpriteIndex": 2052,
+      "Width": 3,
+      "Height": 3
+    },
+    "2058": {
+      "Name": "Starry Double Bed",
+      "Type": "bed double",
+      "SpriteIndex": 2058,
+      "Width": 3,
+      "Height": 3
+    },
+    "2064": {
+      "Name": "Strawberry Double Bed",
+      "Type": "bed double",
+      "SpriteIndex": 2064,
+      "Width": 3,
+      "Height": 3
+    },
+    "2070": {
+      "Name": "Pirate Double Bed",
+      "Type": "bed double",
+      "SpriteIndex": 2070,
+      "Width": 3,
+      "Height": 3
+    },
+    "2076": {
+      "Name": "Child Bed",
+      "Type": "bed child",
+      "SpriteIndex": 2076,
+      "Width": 2,
+      "Height": 2
+    },
+    "2176": {
+      "Name": "Tropical Bed",
+      "Type": "bed",
+      "SpriteIndex": 2176,
+      "Width": 2,
+      "Height": 2
+    },
+    "2180": {
+      "Name": "Tropical Double Bed",
+      "Type": "bed double",
+      "SpriteIndex": 2180,
+      "Width": 3,
+      "Height": 3
+    },
+    "2186": {
+      "Name": "Deluxe Red Double Bed",
+      "Type": "bed double",
+      "SpriteIndex": 2186,
+      "Width": 3,
+      "Height": 3
+    },
+    "2192": {
+      "Name": "Modern Double Bed",
+      "Type": "bed double",
+      "SpriteIndex": 2192,
+      "Width": 3,
+      "Height": 3
+    },
+    "2304": {
+      "Name": "Large Fish Tank",
+      "Type": "fishtank",
+      "SpriteIndex": 2304,
+      "Width": 4,
+      "Height": 4
+    },
+    "2312": {
+      "Name": "Deluxe Fish Tank",
+      "Type": "fishtank",
+      "SpriteIndex": 2312,
+      "Width": 5,
+      "Height": 5
+    },
+    "2322": {
+      "Name": "Small Fish Tank",
+      "Type": "fishtank",
+      "SpriteIndex": 2322,
+      "Width": 2,
+      "Height": 2
+    },
+    "1228": {
+      "Name": "Oceanic Rug",
+      "Type": "rug",
+      "SpriteIndex": 1228,
+      "Width": 1,
+      "Height": 1
+    },
+    "2326": {
+      "Name": "Tropical TV",
+      "Type": "decor",
+      "SpriteIndex": 2326,
+      "Width": 3,
+      "Height": 3
+    },
+    "2329": {
+      "Name": "'Volcano' Photo",
+      "Type": "painting",
+      "SpriteIndex": 2329,
+      "Width": 1,
+      "Height": 1
+    },
+    "2331": {
+      "Name": "Jungle Torch",
+      "Type": "torch",
+      "SpriteIndex": 2331,
+      "Width": 1,
+      "Height": 1
+    },
+    "2393": {
+      "Name": "Palm Wall Ornament",
+      "Type": "painting",
+      "SpriteIndex": 2393,
+      "Width": 1,
+      "Height": 1
+    },
+    "134": {
+      "Name": "Tropical Chair",
+      "Type": "chair",
+      "SpriteIndex": 134,
+      "Width": 1,
+      "Height": 1
+    },
+    "2400": {
+      "Name": "Aquatic Sanctuary",
+      "Type": "fishtank",
+      "SpriteIndex": 2400,
+      "Width": 7,
+      "Height": 7
+    },
+    "2414": {
+      "Name": "Modern Fish Tank",
+      "Type": "fishtank",
+      "SpriteIndex": 2414,
+      "Width": 2,
+      "Height": 2
+    },
+    "2496": {
+      "Name": "Wild Double Bed",
+      "Type": "bed double",
+      "SpriteIndex": 2496,
+      "Width": 3,
+      "Height": 3
+    },
+    "2502": {
+      "Name": "Fisher Double Bed",
+      "Type": "bed double",
+      "SpriteIndex": 2502,
+      "Width": 3,
+      "Height": 3
+    },
+    "2508": {
+      "Name": "Birch Double Bed",
+      "Type": "bed double",
+      "SpriteIndex": 2508,
+      "Width": 3,
+      "Height": 3
+    },
+    "2514": {
+      "Name": "Exotic Double Bed",
+      "Type": "bed double",
+      "SpriteIndex": 2514,
+      "Width": 3,
+      "Height": 3
+    },
+    "2418": {
+      "Name": "Lifesaver",
+      "Type": "painting",
+      "SpriteIndex": 2418,
+      "Width": 1,
+      "Height": 1
+    },
+    "2419": {
+      "Name": "Foliage Print",
+      "Type": "painting",
+      "SpriteIndex": 2419,
+      "Width": 2,
+      "Height": 2
+    },
+    "2421": {
+      "Name": "'Boat'",
+      "Type": "painting",
+      "SpriteIndex": 2421,
+      "Width": 2,
+      "Height": 2
+    },
+    "2423": {
+      "Name": "'Vista'",
+      "Type": "painting",
+      "SpriteIndex": 2423,
+      "Width": 2,
+      "Height": 2
+    },
+    "2425": {
+      "Name": "Wall Basket",
+      "Type": "painting",
+      "SpriteIndex": 2425,
+      "Width": 2,
+      "Height": 2
+    },
+    "2427": {
+      "Name": "Decorative Trash Can",
+      "Type": "decor",
+      "SpriteIndex": 2427,
+      "Width": 1,
+      "Height": 1
+    },
+    "2396": {
+      "Name": "Iridium Krobus",
+      "Type": "decor",
+      "SpriteIndex": 2396,
+      "Width": 1,
+      "Height": 1
+    },
+    "2332": {
+      "Name": "Gourmand Statue",
+      "Type": "decor",
+      "SpriteIndex": 2332,
+      "Width": 2,
+      "Height": 2
+    },
+    "2334": {
+      "Name": "Pyramid Decal",
+      "Type": "painting",
+      "SpriteIndex": 2334,
+      "Width": 2,
+      "Height": 2
+    },
+    "2397": {
+      "Name": "Plain Torch",
+      "Type": "torch",
+      "SpriteIndex": 2397,
+      "Width": 1,
+      "Height": 1
+    },
+    "2398": {
+      "Name": "Stump Torch",
+      "Type": "torch",
+      "SpriteIndex": 2398,
+      "Width": 1,
+      "Height": 1
+    },
+    "1973": {
+      "Name": "Wall Flower",
+      "Type": "painting",
+      "SpriteIndex": 1973,
+      "Width": 1,
+      "Height": 1
+    },
+    "1974": {
+      "Name": "S. Wall Flower",
+      "Type": "painting",
+      "SpriteIndex": 1974,
+      "Width": 1,
+      "Height": 1
+    },
+    "1975": {
+      "Name": "Clouds Banner",
+      "Type": "painting",
+      "SpriteIndex": 1975,
+      "Width": 1,
+      "Height": 1
+    },
+    "1684": {
+      "Name": "Colorful Set",
+      "Type": "painting",
+      "SpriteIndex": 1684,
+      "Width": 1,
+      "Height": 1
+    },
+    "2624": {
+      "Name": "Pastel Banner",
+      "Type": "painting",
+      "SpriteIndex": 2624,
+      "Width": 1,
+      "Height": 1
+    },
+    "2625": {
+      "Name": "Winter Banner",
+      "Type": "painting",
+      "SpriteIndex": 2625,
+      "Width": 1,
+      "Height": 1
+    },
+    "2626": {
+      "Name": "Moonlight Jellies Banner",
+      "Type": "painting",
+      "SpriteIndex": 2626,
+      "Width": 1,
+      "Height": 1
+    },
+    "2627": {
+      "Name": "Jungle Decal",
+      "Type": "painting",
+      "SpriteIndex": 2627,
+      "Width": 1,
+      "Height": 1
+    },
+    "2628": {
+      "Name": "Jungle Decal",
+      "Type": "painting",
+      "SpriteIndex": 2628,
+      "Width": 1,
+      "Height": 1
+    },
+    "2629": {
+      "Name": "Jungle Decal",
+      "Type": "painting",
+      "SpriteIndex": 2629,
+      "Width": 1,
+      "Height": 1
+    },
+    "2630": {
+      "Name": "Jungle Decal",
+      "Type": "painting",
+      "SpriteIndex": 2630,
+      "Width": 1,
+      "Height": 1
+    },
+    "2631": {
+      "Name": "Starport Decal",
+      "Type": "painting",
+      "SpriteIndex": 2631,
+      "Width": 1,
+      "Height": 1
+    },
+    "2632": {
+      "Name": "Decorative Pitchfork",
+      "Type": "painting",
+      "SpriteIndex": 2632,
+      "Width": 1,
+      "Height": 1
+    },
+    "2633": {
+      "Name": "Wood Panel",
+      "Type": "painting",
+      "SpriteIndex": 2633,
+      "Width": 1,
+      "Height": 1
+    },
+    "2634": {
+      "Name": "Decorative Axe",
+      "Type": "painting",
+      "SpriteIndex": 2634,
+      "Width": 1,
+      "Height": 1
+    },
+    "2635": {
+      "Name": "Log Panel",
+      "Type": "painting",
+      "SpriteIndex": 2635,
+      "Width": 1,
+      "Height": 1
+    },
+    "2636": {
+      "Name": "Log Panel",
+      "Type": "painting",
+      "SpriteIndex": 2636,
+      "Width": 1,
+      "Height": 1
+    },
+    "1817": {
+      "Name": "Ceiling Leaves",
+      "Type": "painting",
+      "SpriteIndex": 1817,
+      "Width": 1,
+      "Height": 1
+    },
+    "1818": {
+      "Name": "Ceiling Leaves",
+      "Type": "painting",
+      "SpriteIndex": 1818,
+      "Width": 1,
+      "Height": 1
+    },
+    "1819": {
+      "Name": "Ceiling Leaves",
+      "Type": "painting",
+      "SpriteIndex": 1819,
+      "Width": 1,
+      "Height": 1
+    },
+    "1820": {
+      "Name": "Ceiling Leaves",
+      "Type": "painting",
+      "SpriteIndex": 1820,
+      "Width": 1,
+      "Height": 1
+    },
+    "1821": {
+      "Name": "Ceiling Leaves",
+      "Type": "painting",
+      "SpriteIndex": 1821,
+      "Width": 1,
+      "Height": 1
+    },
+    "1687": {
+      "Name": "Cloud Decal",
+      "Type": "painting",
+      "SpriteIndex": 1687,
+      "Width": 2,
+      "Height": 2
+    },
+    "1692": {
+      "Name": "Cloud Decal",
+      "Type": "painting",
+      "SpriteIndex": 1692,
+      "Width": 2,
+      "Height": 2
+    },
+    "2637": {
+      "Name": "Floor Divider R",
+      "Type": "rug",
+      "SpriteIndex": 2637,
+      "Width": 1,
+      "Height": 1
+    },
+    "2638": {
+      "Name": "Floor Divider L",
+      "Type": "rug",
+      "SpriteIndex": 2638,
+      "Width": 1,
+      "Height": 1
+    },
+    "2639": {
+      "Name": "Floor Divider R",
+      "Type": "rug",
+      "SpriteIndex": 2639,
+      "Width": 1,
+      "Height": 1
+    },
+    "2640": {
+      "Name": "Floor Divider L",
+      "Type": "rug",
+      "SpriteIndex": 2640,
+      "Width": 1,
+      "Height": 1
+    },
+    "2641": {
+      "Name": "Floor Divider R",
+      "Type": "rug",
+      "SpriteIndex": 2641,
+      "Width": 1,
+      "Height": 1
+    },
+    "2642": {
+      "Name": "Floor Divider L",
+      "Type": "rug",
+      "SpriteIndex": 2642,
+      "Width": 1,
+      "Height": 1
+    },
+    "2643": {
+      "Name": "Floor Divider R",
+      "Type": "rug",
+      "SpriteIndex": 2643,
+      "Width": 1,
+      "Height": 1
+    },
+    "2644": {
+      "Name": "Floor Divider L",
+      "Type": "rug",
+      "SpriteIndex": 2644,
+      "Width": 1,
+      "Height": 1
+    },
+    "2645": {
+      "Name": "Floor Divider R",
+      "Type": "rug",
+      "SpriteIndex": 2645,
+      "Width": 1,
+      "Height": 1
+    },
+    "2646": {
+      "Name": "Floor Divider L",
+      "Type": "rug",
+      "SpriteIndex": 2646,
+      "Width": 1,
+      "Height": 1
+    },
+    "2647": {
+      "Name": "Floor Divider R",
+      "Type": "rug",
+      "SpriteIndex": 2647,
+      "Width": 1,
+      "Height": 1
+    },
+    "2648": {
+      "Name": "Floor Divider L",
+      "Type": "rug",
+      "SpriteIndex": 2648,
+      "Width": 1,
+      "Height": 1
+    },
+    "2649": {
+      "Name": "Floor Divider R",
+      "Type": "rug",
+      "SpriteIndex": 2649,
+      "Width": 1,
+      "Height": 1
+    },
+    "2650": {
+      "Name": "Floor Divider L",
+      "Type": "rug",
+      "SpriteIndex": 2650,
+      "Width": 1,
+      "Height": 1
+    },
+    "2651": {
+      "Name": "Floor Divider R",
+      "Type": "rug",
+      "SpriteIndex": 2651,
+      "Width": 1,
+      "Height": 1
+    },
+    "2652": {
+      "Name": "Floor Divider L",
+      "Type": "rug",
+      "SpriteIndex": 2652,
+      "Width": 1,
+      "Height": 1
+    },
+    "2488": {
+      "Name": "Light Green Rug",
+      "Type": "rug",
+      "SpriteIndex": 2488,
+      "Width": 3,
+      "Height": 3
+    },
+    "2584": {
+      "Name": "'Jade Hills Extended'",
+      "Type": "painting",
+      "SpriteIndex": 2584,
+      "Width": 4,
+      "Height": 4
+    },
+    "2720": {
+      "Name": "Large Brown Couch",
+      "Type": "couch",
+      "SpriteIndex": 2720,
+      "Width": 4,
+      "Height": 4
+    },
+    "2784": {
+      "Name": "Large Green Rug",
+      "Type": "rug",
+      "SpriteIndex": 2784,
+      "Width": 4,
+      "Height": 4
+    },
+    "2790": {
+      "Name": "Icy Rug",
+      "Type": "rug",
+      "SpriteIndex": 2790,
+      "Width": 4,
+      "Height": 4
+    },
+    "2794": {
+      "Name": "Old World Rug",
+      "Type": "rug",
+      "SpriteIndex": 2794,
+      "Width": 4,
+      "Height": 4
+    },
+    "2798": {
+      "Name": "Large Red Rug",
+      "Type": "rug",
+      "SpriteIndex": 2798,
+      "Width": 4,
+      "Height": 4
+    },
+    "2730": {
+      "Name": "'Frozen Dreams'",
+      "Type": "painting",
+      "SpriteIndex": 2730,
+      "Width": 2,
+      "Height": 2
+    },
+    "2653": {
+      "Name": "Icy Banner",
+      "Type": "painting",
+      "SpriteIndex": 2653,
+      "Width": 1,
+      "Height": 1
+    },
+    "2654": {
+      "Name": "Wall Palm",
+      "Type": "painting",
+      "SpriteIndex": 2654,
+      "Width": 1,
+      "Height": 1
+    },
+    "2655": {
+      "Name": "Wall Cactus",
+      "Type": "painting",
+      "SpriteIndex": 2655,
+      "Width": 1,
+      "Height": 1
+    },
+    "2802": {
+      "Name": "Large Cottage Rug",
+      "Type": "rug",
+      "SpriteIndex": 2802,
+      "Width": 4,
+      "Height": 4
+    },
+    "2732": {
+      "Name": "'Physics 101'",
+      "Type": "painting",
+      "SpriteIndex": 2732,
+      "Width": 2,
+      "Height": 2
+    },
+    "2734": {
+      "Name": "Wall Sconce",
+      "Type": "sconce",
+      "SpriteIndex": 2734,
+      "Width": 1,
+      "Height": 1
+    },
+    "2736": {
+      "Name": "Wall Sconce",
+      "Type": "sconce",
+      "SpriteIndex": 2736,
+      "Width": 1,
+      "Height": 1
+    },
+    "2738": {
+      "Name": "Wall Sconce",
+      "Type": "sconce",
+      "SpriteIndex": 2738,
+      "Width": 1,
+      "Height": 1
+    },
+    "2740": {
+      "Name": "Wall Sconce",
+      "Type": "sconce",
+      "SpriteIndex": 2740,
+      "Width": 1,
+      "Height": 1
+    },
+    "2748": {
+      "Name": "Wall Sconce",
+      "Type": "sconce",
+      "SpriteIndex": 2748,
+      "Width": 1,
+      "Height": 1
+    },
+    "2812": {
+      "Name": "Wall Sconce",
+      "Type": "sconce",
+      "SpriteIndex": 2812,
+      "Width": 1,
+      "Height": 1
+    },
+    "2750": {
+      "Name": "Wall Sconce",
+      "Type": "sconce",
+      "SpriteIndex": 2750,
+      "Width": 1,
+      "Height": 1
+    },
+    "2742": {
+      "Name": "Blossom Rug",
+      "Type": "rug",
+      "SpriteIndex": 2742,
+      "Width": 6,
+      "Height": 6
+    },
+    "2870": {
+      "Name": "Funky Rug",
+      "Type": "rug",
+      "SpriteIndex": 2870,
+      "Width": 5,
+      "Height": 5
+    },
+    "2875": {
+      "Name": "Modern Rug",
+      "Type": "rug",
+      "SpriteIndex": 2875,
+      "Width": 5,
+      "Height": 5
+    },
+    "2814": {
+      "Name": "Squirrel Figurine",
+      "Type": "decor",
+      "SpriteIndex": 2814,
+      "Width": 1,
+      "Height": 1
+    },
+    "FreeCactus": {
+      "Name": "Cactus",
+      "Type": "randomized_plant",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "HangingFish": {
+      "Name": "Hanging Fish",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "RetroTV": {
+      "Name": "Retro TV",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "ArtPhoto": {
+      "Name": "Art Photo",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "ArtPhoto2": {
+      "Name": "Art Photo 2",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "ShortBookcase": {
+      "Name": "Short Bookcase",
+      "Type": "bookcase",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "PierresSign": {
+      "Name": "Pierre's Sign",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "SamsSkateboard": {
+      "Name": "Sam's Skateboard",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "ChickenDecal": {
+      "Name": "Chicken Decal",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "ExoticPalace": {
+      "Name": "Exotic Palace",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "PeriodicTable": {
+      "Name": "Periodic Table",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "DustySkull": {
+      "Name": "Dusty Skull",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "RadioDesk": {
+      "Name": "Radio Desk",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "ModelPlanes": {
+      "Name": "Model Planes",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "CatStatue": {
+      "Name": "Calico Statue",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "SunDunes": {
+      "Name": "Sun Dunes",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "DesertTable": {
+      "Name": "Desert Table",
+      "Type": "table",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "DesertChair": {
+      "Name": "Desert Chair",
+      "Type": "chair",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "DesertFireplace": {
+      "Name": "Desert Fireplace",
+      "Type": "fireplace",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "SandyRug": {
+      "Name": "Sandy Rug",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "DesertRug": {
+      "Name": "Desert Rug",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 4,
+      "Height": 4
+    },
+    "DesertEndTable": {
+      "Name": "Desert End Table",
+      "Type": "table",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "DesertFlags": {
+      "Name": "Desert Flags",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 4,
+      "Height": 4
+    },
+    "DecorativeBarrel": {
+      "Name": "Decorative Barrel",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "MountedTrout_Painting": {
+      "Name": "Mounted Trout",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "SquidKid_Painting": {
+      "Name": "'Squid Kid'",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "CowDecal": {
+      "Name": "Cow Decal",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "BluePinstripeBed": {
+      "Name": "Blue Pinstripe Bed",
+      "Type": "bed",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "JungleTank": {
+      "Name": "JungleTank",
+      "Type": "fishtank",
+      "SpriteIndex": -1,
+      "Width": 4,
+      "Height": 4
+    },
+    "CCFishTank": {
+      "Name": "CCFishTank",
+      "Type": "fishtank",
+      "SpriteIndex": -1,
+      "Width": 6,
+      "Height": 6
+    },
+    "BluePinstripeDoubleBed": {
+      "Name": "Blue Pinstripe Double Bed",
+      "Type": "bed double",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "JojaBed": {
+      "Name": "JojaBed",
+      "Type": "bed double",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "JojaVault": {
+      "Name": "JojaVault",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "JojaChair": {
+      "Name": "JojaChair",
+      "Type": "chair",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "J": {
+      "Name": "J",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "JojaColaTeaTable": {
+      "Name": "JojaColaTeaTable",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "JojaTable": {
+      "Name": "JojaTable",
+      "Type": "table",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "JPainting": {
+      "Name": "JPainting",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "JLight": {
+      "Name": "JLight",
+      "Type": "sconce",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "JojaCatalogue": {
+      "Name": "JojaCatalogue",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "JojaColaPainting": {
+      "Name": "JojaColaPainting",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "JojaColaOrnament": {
+      "Name": "JojaColaOrnament",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "JojaFireplace": {
+      "Name": "JojaFireplace",
+      "Type": "fireplace",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "JojaColaCans": {
+      "Name": "JojaColaCans",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "CashRegister": {
+      "Name": "CashRegister",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "PlasticPlant": {
+      "Name": "PlasticPlant",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "PlasticSapling": {
+      "Name": "PlasticSapling",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "GrayJojaCushion": {
+      "Name": "GrayJojaCushion",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "JojaCushion": {
+      "Name": "JojaCushion",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "StackedJojaCrates": {
+      "Name": "StackedJojaBoxes",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "JojaCouch": {
+      "Name": "JojaCouch",
+      "Type": "couch",
+      "SpriteIndex": -1,
+      "Width": 4,
+      "Height": 4
+    },
+    "MorrisPortrait": {
+      "Name": "MorrisPortrait",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "JojaHQPainting": {
+      "Name": "JojaHQPainting",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "JojaCrate": {
+      "Name": "JojaCrate",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "JojaShoppingCart": {
+      "Name": "JojaShoppingCart",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "LargeJojaCrate": {
+      "Name": "LargeJojaCrate",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "JojaColaFridge": {
+      "Name": "JojaColaFridge",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "JojaDresser": {
+      "Name": "JojaDresser",
+      "Type": "dresser",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "GrayJojaDresser": {
+      "Name": "GrayJojaDresser",
+      "Type": "dresser",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "LargeJojaRug": {
+      "Name": "LargeJojaRug",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 5,
+      "Height": 5
+    },
+    "SmallJojaRug": {
+      "Name": "SmallJojaRug",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "SquareJojaRug": {
+      "Name": "SquareJojaRug",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "JojaRug": {
+      "Name": "JojaRug",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "JojaCoffeeTable": {
+      "Name": "JojaCoffeeTable",
+      "Type": "table",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "GrayJojaCoffeeTable": {
+      "Name": "GrayJojaCoffeeTable",
+      "Type": "table",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "JojaLamp": {
+      "Name": "JojaLamp",
+      "Type": "lamp",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "GrayJojaBookcase": {
+      "Name": "GrayJojaBookcase",
+      "Type": "bookcase",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "JojaBookcase": {
+      "Name": "JojaBookcase",
+      "Type": "bookcase",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "JojaStool": {
+      "Name": "JojaStool",
+      "Type": "chair",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "JojaEndTable": {
+      "Name": "JojaEndTable",
+      "Type": "table",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "GrayJojaEndTable": {
+      "Name": "GrayJojaEndTable",
+      "Type": "table",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "DecorativeJojaDoor": {
+      "Name": "DecorativeJojaDoor",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "WizardBed": {
+      "Name": "WizardBed",
+      "Type": "bed double",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "LargeWizardBookcase": {
+      "Name": "LargeWizardBookcase",
+      "Type": "bookcase",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "WizardBookcase": {
+      "Name": "WizardBookcase",
+      "Type": "bookcase",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "ShortWizardBookcase": {
+      "Name": "ShortWizardBookcase",
+      "Type": "bookcase",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "SmallWizardBookcase": {
+      "Name": "SmallWizardBookcase",
+      "Type": "bookcase",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "WizardStool": {
+      "Name": "WizardStool",
+      "Type": "chair",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "WizardFireplace": {
+      "Name": "WizardFireplace",
+      "Type": "fireplace",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "WizardDresser": {
+      "Name": "WizardDresser",
+      "Type": "dresser",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "WizardStudy": {
+      "Name": "WizardStudy",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "WizardEndTable": {
+      "Name": "WizardEndTable",
+      "Type": "table",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "WitchBroom": {
+      "Name": "WitchBroom",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "Cauldron": {
+      "Name": "Cauldron",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "CurlyTree": {
+      "Name": "CurlyTree",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "LeafyPlant": {
+      "Name": "LeafyPlant",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "WizardChair": {
+      "Name": "WizardChair",
+      "Type": "chair",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "WizardTable": {
+      "Name": "WizardTable",
+      "Type": "table",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "WizardCushion": {
+      "Name": "WizardCushion",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "DarkWizardCushion": {
+      "Name": "DarkWizardCushion",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "WizardTeaTable": {
+      "Name": "WizardTeaTable",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "SmallElixirShelf": {
+      "Name": "SmallElixirShelf",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "ElixirShelf": {
+      "Name": "ElixirShelf",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "SmallStackedElixirShelf": {
+      "Name": "SmallStackedElixirShelf",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "StackedElixirShelf": {
+      "Name": "StackedElixirShelf",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "ElixirBundle": {
+      "Name": "ElixirBundle",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "CoupleElixirs": {
+      "Name": "CoupleElixirs",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "ElixirTable": {
+      "Name": "ElixirTable",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "LongElixirTable": {
+      "Name": "LongElixirTable",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "WizardLamp": {
+      "Name": "WizardLamp",
+      "Type": "lamp",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "Runes": {
+      "Name": "Runes",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "WizardTower": {
+      "Name": "WizardTower",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "PottedRedMushroom": {
+      "Name": "PottedRedMushroom",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "WizardCatalogue": {
+      "Name": "WizardCatalogue",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "VoidSwirls": {
+      "Name": "VoidSwirls",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "WizardBookshelf": {
+      "Name": "WizardBookshelf",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "Glyph": {
+      "Name": "Glyph",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "StoneFlooring": {
+      "Name": "StoneFlooring",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 4,
+      "Height": 4
+    },
+    "RuneRug": {
+      "Name": "RuneRug",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "SwirlRug": {
+      "Name": "SwirlRug",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "StarryMoonRug": {
+      "Name": "StarryMoonRug",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 5,
+      "Height": 5
+    },
+    "CrystalBall": {
+      "Name": "CrystalBall",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "AmethystCrystalBall": {
+      "Name": "AmethystCrystalBall",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "TopazCrystalBall": {
+      "Name": "TopazCrystalBall",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "AquamarineCrystalBall": {
+      "Name": "AquamarineCrystalBall",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "EmeraldCrystalBall": {
+      "Name": "EmeraldCrystalBall",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "RubyCrystalBall": {
+      "Name": "RubyCrystalBall",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "SmallBookStack": {
+      "Name": "SmallBookStack",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "BookStack": {
+      "Name": "BookStack",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "LargeBookStack": {
+      "Name": "LargeBookStack",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "PurpleBook": {
+      "Name": "PurpleBook",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "BlueBook": {
+      "Name": "BlueBook",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "YellowBook": {
+      "Name": "YellowBook",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "RedBook": {
+      "Name": "RedBook",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "GreenBook": {
+      "Name": "GreenBook",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "BrownBook": {
+      "Name": "BrownBook",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "FallenPurpleBook": {
+      "Name": "FallenPurpleBook",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "FallenBlueBook": {
+      "Name": "FallenBlueBook",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "FallenYellowBook": {
+      "Name": "FallenYellowBook",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "FallenRedBook": {
+      "Name": "FallenRedBook",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "FallenGreenBook": {
+      "Name": "FallenGreenBook",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "FallenBrownBook": {
+      "Name": "FallenBrownBook",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "SmallBookPile": {
+      "Name": "SmallBookPile",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "BookPile": {
+      "Name": "BookPile",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "LargeBookPile": {
+      "Name": "LargeBookPile",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "DecorativeWizardDoor": {
+      "Name": "DecorativeWizardDoor",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "JunimoBed": {
+      "Name": "JunimoBed",
+      "Type": "bed double",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "JunimoHut": {
+      "Name": "JunimoHut",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "LargeJunimoHut": {
+      "Name": "LargeJunimoHut",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 4,
+      "Height": 4
+    },
+    "SmallJunimoHut": {
+      "Name": "SmallJunimoHut",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "JunimoFireplace": {
+      "Name": "JunimoFireplace",
+      "Type": "fireplace",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "JunimoBookcase": {
+      "Name": "JunimoBookcase",
+      "Type": "bookcase",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "JunimoPot": {
+      "Name": "JunimoPot",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "JunimoBag": {
+      "Name": "JunimoBag",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "JunimoBundle": {
+      "Name": "JunimoBundle",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "JunimoStool": {
+      "Name": "JunimoStool",
+      "Type": "chair",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "JunimoTable": {
+      "Name": "JunimoTable",
+      "Type": "table",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "JunimoChair": {
+      "Name": "JunimoChair",
+      "Type": "chair",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "SmallJunimoPot": {
+      "Name": "SmallJunimoPot",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "JunimoFlower": {
+      "Name": "JunimoFlower",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "JunimoEndTable": {
+      "Name": "JunimoEndTable",
+      "Type": "table",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "JunimoCatalogue": {
+      "Name": "JunimoCatalogue",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "JunimoTeaTable": {
+      "Name": "JunimoTeaTable",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "JunimoDresser": {
+      "Name": "JunimoDresser",
+      "Type": "dresser",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "JunimoLamp": {
+      "Name": "JunimoLamp",
+      "Type": "lamp",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "JunimoPlant": {
+      "Name": "JunimoPlant",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "JunimoWallPlaque": {
+      "Name": "JunimoWallPlaque",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "JunimoPlaque": {
+      "Name": "JunimoPlaque",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "JunimoCushion": {
+      "Name": "JunimoCushion",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "DarkJunimoCushion": {
+      "Name": "DarkJunimoCushion",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "JunimoTree": {
+      "Name": "JunimoTree",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "JunimoCouch": {
+      "Name": "JunimoCouch",
+      "Type": "couch",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "GreenSleepingJunimo": {
+      "Name": "GreenSleepingJunimo",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "BlueSleepingJunimo": {
+      "Name": "BlueSleepingJunimo",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "RedSleepingJunimo": {
+      "Name": "RedSleepingJunimo",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "PurpleSleepingJunimo": {
+      "Name": "PurpleSleepingJunimo",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "YellowSleepingJunimo": {
+      "Name": "YellowSleepingJunimo",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "OrangeSleepingJunimo": {
+      "Name": "OrangeSleepingJunimo",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "GraySleepingJunimo": {
+      "Name": "GraySleepingJunimo",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "SquareJunimoRug": {
+      "Name": "SquareJunimoRug",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "JunimoRug": {
+      "Name": "JunimoRug",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 4,
+      "Height": 4
+    },
+    "JunimoMat": {
+      "Name": "JunimoMat",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "CircularJunimoRug": {
+      "Name": "CircularJunimoRug",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "SmallJunimoMat": {
+      "Name": "SmallJunimoMat",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "CommunityCenter": {
+      "Name": "CommunityCenter",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 4,
+      "Height": 4
+    },
+    "LittleBuddies": {
+      "Name": "LittleBuddies",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "Stardrop": {
+      "Name": "Stardrop",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "Hut": {
+      "Name": "Hut",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "AbigailPortrait": {
+      "Name": "AbigailPortrait",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "EmilyPortrait": {
+      "Name": "EmilyPortrait",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "HaleyPortrait": {
+      "Name": "HaleyPortrait",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "LeahPortrait": {
+      "Name": "LeahPortrait",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "MaruPortrait": {
+      "Name": "MaruPortrait",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "PennyPortrait": {
+      "Name": "PennyPortrait",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "AlexPortrait": {
+      "Name": "AlexPortrait",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "ElliottPortrait": {
+      "Name": "ElliottPortrait",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "HarveyPortrait": {
+      "Name": "HarveyPortrait",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "SamPortrait": {
+      "Name": "SamPortrait",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "SebastianPortrait": {
+      "Name": "SebastianPortrait",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "ShanePortrait": {
+      "Name": "ShanePortrait",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "KrobusPortrait": {
+      "Name": "KrobusPortrait",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "JunimoStar": {
+      "Name": "JunimoStar",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "BulletinBoard": {
+      "Name": "BulletinBoard",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "BrochureCabinet": {
+      "Name": "BrochureCabinet",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "LeafyWallPanel": {
+      "Name": "LeafyWallPanel",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "LightLeafyWallPanel": {
+      "Name": "LightLeafyWallPanel",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "DarkLeafyWallPanel": {
+      "Name": "DarkLeafyWallPanel",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "DecorativeJunimoDoor": {
+      "Name": "DecorativeJunimoDoor",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "RetroBed": {
+      "Name": "RetroBed",
+      "Type": "bed double",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "RetroDresser": {
+      "Name": "RetroDresser",
+      "Type": "dresser",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "RetroBookcase": {
+      "Name": "RetroBookcase",
+      "Type": "bookcase",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "RetroFireplace": {
+      "Name": "RetroFireplace",
+      "Type": "fireplace",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "RetroCouch": {
+      "Name": "RetroCouch",
+      "Type": "couch",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "RetroCushion": {
+      "Name": "RetroCushion",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "DarkRetroCushion": {
+      "Name": "DarkRetroCushion",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "RetroStool": {
+      "Name": "RetroStool",
+      "Type": "chair",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "RetroFlower": {
+      "Name": "RetroFlower",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "RetroChair": {
+      "Name": "RetroChair",
+      "Type": "chair",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "RetroTable": {
+      "Name": "RetroTable",
+      "Type": "table",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "RetroPlant": {
+      "Name": "RetroPlant",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "RetroEndTable": {
+      "Name": "RetroEndTable",
+      "Type": "table",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "RetroTeaTable": {
+      "Name": "RetroTeaTable",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "RetroCatalogue": {
+      "Name": "RetroCatalogue",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "RetroCabinet": {
+      "Name": "RetroCabinet",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "RetroRadio": {
+      "Name": "RetroRadio",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "RetroBanner": {
+      "Name": "RetroBanner",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "Groovy": {
+      "Name": "Groovy",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "RetroLamp": {
+      "Name": "RetroLamp",
+      "Type": "lamp",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "RetroRug": {
+      "Name": "RetroRug",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "RetroSquareRug": {
+      "Name": "RetroSquareRug",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "RetroMat": {
+      "Name": "RetroMat",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "LargeRetroRug": {
+      "Name": "LargeRetroRug",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 4,
+      "Height": 4
+    },
+    "Abstract": {
+      "Name": "Abstract",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "Starship": {
+      "Name": "Starship",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "Binary": {
+      "Name": "Binary",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "Checkers": {
+      "Name": "Checkers",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "UFO": {
+      "Name": "UFO",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "DecorativeRetroDoor": {
+      "Name": "DecorativeRetroDoor",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "DecorativeDoor1": {
+      "Name": "DecorativeDoor1",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "DecorativeDoor2": {
+      "Name": "DecorativeDoor2",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "DecorativeDoor3": {
+      "Name": "DecorativeDoor3",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "DecorativeDoor4": {
+      "Name": "DecorativeDoor4",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "DecorativeDoor5": {
+      "Name": "DecorativeDoor5",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "DecorativeDoor6": {
+      "Name": "DecorativeDoor6",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "WallClock": {
+      "Name": "WallClock",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "DecorativeHatch": {
+      "Name": "DecorativeHatch",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "DecorativeOakLadder": {
+      "Name": "DecorativeOakLadder",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "DecorativeWalnutLadder": {
+      "Name": "DecorativeWalnutLadder",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "UprightPiano": {
+      "Name": "UprightPiano",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 4,
+      "Height": 4
+    },
+    "CoatStand": {
+      "Name": "CoatStand",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "BirdHouse": {
+      "Name": "BirdHouse",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "DecorativeShovel": {
+      "Name": "DecorativeShovel",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "WallSword": {
+      "Name": "WallSword",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "DecorativeSword": {
+      "Name": "DecorativeSword",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "WineTable": {
+      "Name": "WineTable",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "SpiritsTable": {
+      "Name": "SpiritsTable",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "TallHousePlant": {
+      "Name": "TallHousePlant",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "CornPlant": {
+      "Name": "CornPlant",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "BlueCushion": {
+      "Name": "BlueCushion",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "YellowCushion": {
+      "Name": "YellowCushion",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "GreenCushion": {
+      "Name": "GreenCushion",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "RedCushion": {
+      "Name": "RedCushion",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "BrownCushion": {
+      "Name": "BrownCushion",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "BlackCushion": {
+      "Name": "BlackCushion",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "FoodPetBowl": {
+      "Name": "FoodPetBowl",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "WaterPetBowl": {
+      "Name": "WaterPetBowl",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "OakLampEndTable": {
+      "Name": "OakLampEndTable",
+      "Type": "lamp",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "WalnutLampEndTable": {
+      "Name": "WalnutLampEndTable",
+      "Type": "lamp",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "BirchLampEndTable": {
+      "Name": "BirchLampEndTable",
+      "Type": "lamp",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "MahoganyLampEndTable": {
+      "Name": "MahoganyLampEndTable",
+      "Type": "lamp",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "TriangleWindow": {
+      "Name": "TriangleWindow",
+      "Type": "window",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "Clothesline": {
+      "Name": "Clothesline",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "TrashCatalogue": {
+      "Name": "TrashCatalogue",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "ElegantVase": {
+      "Name": "ElegantVase",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "CatTree": {
+      "Name": "CatTree",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "DarkCatTree": {
+      "Name": "DarkCatTree",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "LightSwitch": {
+      "Name": "LightSwitch",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "Outlet": {
+      "Name": "Outlet",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "Doghouse": {
+      "Name": "Doghouse",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "DarkDoghouse": {
+      "Name": "DarkDoghouse",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "BountifulDiningTable": {
+      "Name": "BountifulDiningTable",
+      "Type": "long table",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "PlasticLawnEndTable": {
+      "Name": "PlasticLawnEndTable",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "PlasticLawnChair": {
+      "Name": "PlasticLawnChair",
+      "Type": "chair",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "BrokenTelevision": {
+      "Name": "BrokenTelevision",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "SixPackRings": {
+      "Name": "SixPackRings",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "GreenBottle": {
+      "Name": "GreenBottle",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "PlasticBag": {
+      "Name": "PlasticBag",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "AluminumCan": {
+      "Name": "AluminumCan",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "BlueBottle": {
+      "Name": "BlueBottle",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "BuriedTire": {
+      "Name": "BuriedTire",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "Tire": {
+      "Name": "Tire",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "Wrapper": {
+      "Name": "Wrapper",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "SpilledBeverage": {
+      "Name": "SpilledBeverage",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "MessyShirt": {
+      "Name": "MessyShirt",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "MessyShorts": {
+      "Name": "MessyShorts",
+      "Type": "rug",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "MoldyCouch": {
+      "Name": "MoldyCouch",
+      "Type": "couch",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "FancyTree1": {
+      "Name": "Fancy House Plant",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "FancyTree2": {
+      "Name": "Fancy House Plant",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "FancyTree3": {
+      "Name": "Fancy House Plant",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "FancyHousePlant3": {
+      "Name": "House Plant",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "FancyHousePlant1": {
+      "Name": "House Plant",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "FancyHousePlant2": {
+      "Name": "House Plant",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "FancyHousePlant4": {
+      "Name": "House Plant",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "FancyHousePlant5": {
+      "Name": "House Plant",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 1,
+      "Height": 1
+    },
+    "PigPainting": {
+      "Name": "Pig Painting",
+      "Type": "painting",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "MidnightBeachBed": {
+      "Name": "Midnight Beach Bed",
+      "Type": "bed",
+      "SpriteIndex": -1,
+      "Width": 2,
+      "Height": 2
+    },
+    "MidnightBeachDoubleBed": {
+      "Name": "Midnight Beach Double Bed",
+      "Type": "bed double",
+      "SpriteIndex": -1,
+      "Width": 3,
+      "Height": 3
+    },
+    "DarkPiano": {
+      "Name": "Dark Piano",
+      "Type": "decor",
+      "SpriteIndex": -1,
+      "Width": 4,
+      "Height": 4
+    }
+  }
+}

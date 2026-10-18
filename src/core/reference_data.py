@@ -1,22 +1,25 @@
 # src/core/reference_data.py
 """
 Core item metadata lookup utility.
-Builds an in-memory index over domain catalogs for fast item detail lookups.
+Builds an in-memory index dynamically over all JSON domain catalogs containing _meta blocks.
 """
 
 import logging
 import time
 import re
+import os
+import json
+from glob import glob
 
-from data.data_loader import TOOLS_CATALOG, get_combined_objects_catalog
+from data.data_loader import TOOLS_CATALOG
 
 logger = logging.getLogger(__name__)
 
-KNOWN_PREFIXES = ("O_", "T_", "BC_", "W_", "H_", "P_", "R_", "F_", "S_")
+KNOWN_PREFIXES = ("O_", "T_", "BC_", "W_", "H_", "P_", "R_", "F_", "S_", "WP_", "FL_")
+DATA_DIR = os.getenv("DATA_DIR", "data")
 
 
 def qualify_item_id(raw_id: str, default_prefix: str = "O_") -> str:
-    """Normalizes raw save IDs or bare numeric strings to catalog keys (e.g. "128" -> "O_128")."""
     if not raw_id:
         return ""
     clean = str(raw_id).strip()
@@ -31,7 +34,6 @@ _OBJECT_LOOKUP_CACHE = None
 
 
 def get_tools_catalog() -> dict:
-    """Returns the static tools catalog loaded via data_loader."""
     return (
         TOOLS_CATALOG
         if isinstance(TOOLS_CATALOG, dict)
@@ -40,90 +42,94 @@ def get_tools_catalog() -> dict:
 
 
 def _get_object_lookup():
-    """Builds an in-memory index mapping string IDs, qualified IDs, and string names to object metadata."""
     global _OBJECT_LOOKUP_CACHE
     if _OBJECT_LOOKUP_CACHE is not None:
         return _OBJECT_LOOKUP_CACHE
 
     start_time = time.perf_counter()
     lookup = {}
-    catalog = get_combined_objects_catalog()
+    loaded_count = 0
 
-    logger.debug(
-        f"Initializing object lookup cache from catalog ({len(catalog)} raw items)"
-    )
+    json_files = glob(os.path.join(DATA_DIR, "*.json"))
 
-    skipped_count = 0
-    for item in catalog:
-        if not isinstance(item, dict):
-            skipped_count += 1
-            continue
+    for file_path in json_files:
+        try:
+            with open(file_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
 
-        item_id = str(item.get("id", "")).strip()
-        names = item.get("names", {})
-        
-        name = (
-            item.get("name")
-            or item.get("Name")
-            or names.get("data-en-US")
-            or names.get("en-US")
-            or "Unknown"
-        )
-        price = item.get("price", item.get("SalePrice", 0))
+            if not isinstance(data, dict) or "_meta" not in data:
+                continue
 
-        clean_name = name.replace(" ", "_").replace("'", "")
+            meta = data["_meta"]
+            prefix = meta.get("prefix", "O")
 
-        if item_id:
-            if item_id.startswith(KNOWN_PREFIXES):
-                primary_icon = f"/cache/img/items/{item_id}.png"
-            else:
-                primary_icon = f"/cache/img/items/O_{item_id}.png"
-        else:
-            primary_icon = f"/cache/img/items/O_{clean_name}.png"
+            items = data.get("items")
+            if items is None:
+                items = {k: v for k, v in data.items() if k != "_meta"}
 
-        info = {
-            "id": item_id,
-            "name": name,
-            "price": price,
-            "icon": primary_icon,
-            "sprite_key": item.get("sprite_key"),
-        }
+            for item_key, item_data in items.items():
+                item_key_str = str(item_key).strip()
+                sprite_target = item_key_str
 
-        if item_id:
-            # Store exact qualified primary ID (e.g., H_17, BC_37, W_64)
-            lookup[item_id] = info
+                if isinstance(item_data, dict):
+                    name = item_data.get("Name") or item_data.get("name") or "Unknown"
+                    price = item_data.get("Price") or item_data.get("price") or 0
+                    
+                    # Map 1.6 string IDs to their numeric sprite images (e.g., MushroomLog -> 283)
+                    # Exclude Tools ("T") because they were extracted using their string names
+                    # Map 1.6 string IDs to their numeric sprite images
+                    sprite_idx = item_data.get("SpriteIndex")
+                    if sprite_idx is not None and not item_key_str.isdigit() and prefix not in ("T", "WP", "FL"):
+                        if isinstance(sprite_idx, int) and sprite_idx >= 0:
+                            sprite_target = str(sprite_idx)
+                else:
+                    name = str(item_data)
+                    price = 0
 
-            # Map explicit parenthesis tags strictly to their prefixed catalog keys
-            for tag, prefix in [
-                ("(O)", "O_"), ("(W)", "W_"), ("(BC)", "BC_"), 
-                ("(T)", "T_"), ("(H)", "H_"), ("(P)", "P_"), 
-                ("(R)", "R_"), ("(F)", "F_"), ("(S)", "S_")
-            ]:
-                if item_id.startswith(prefix):
-                    bare_id = item_id[len(prefix):]
-                    # Store with explicit prefix tag so (H)17 checks H_17 directly
-                    lookup[f"{tag}{bare_id}"] = info
+                # Sanitize colons to match the saved image files
+                sprite_target = sprite_target.replace(":", "_")
+                sprite_key = f"{prefix}_{sprite_target}"
 
-            if not item_id.startswith(KNOWN_PREFIXES):
-                lookup[f"(O){item_id}"] = info
+                
+                info = {
+                    "id": item_key_str,
+                    "name": name,
+                    "price": price,
+                    "prefix": prefix,
+                    "sprite_key": sprite_key,
+                    "icon": f"/cache/img/{prefix}/{sprite_key}.png"
+                }
 
-        if name:
-            lookup[name] = info
-            lookup[name.lower()] = info
+                lookup[f"({prefix}){item_key_str}"] = info
+                lookup[sprite_key] = info
+                
+                if item_key_str not in lookup:
+                    lookup[item_key_str] = info
+
+                if name and name != "Unknown":
+                    lookup[name] = info
+                    lookup[name.lower()] = info
+                    
+                    # Catch Stardew 1.6 string IDs (e.g., "MushroomLog" -> "Mushroom Log")
+                    no_space_name = name.replace(" ", "")
+                    lookup[no_space_name] = info
+                    lookup[no_space_name.lower()] = info
+
+                loaded_count += 1
+        except Exception as e:
+            logger.warning(f"[ReferenceData] Failed to parse catalog {file_path}: {e}")
 
     elapsed_ms = (time.perf_counter() - start_time) * 1000
     _OBJECT_LOOKUP_CACHE = lookup
     logger.debug(
-        f"Built object lookup cache with {len(lookup)} total index keys "
-        f"({skipped_count} invalid items skipped) in {elapsed_ms:.2f}ms"
+        f"Built dynamic object lookup cache with {len(lookup)} routing keys "
+        f"({loaded_count} items indexed) in {elapsed_ms:.2f}ms"
     )
     return lookup
 
 
+
 def get_object_info(harvest_id: str, fallback_name: str = None) -> dict:
-    """
-    Look up item metadata ensuring strict category prefix separation (H_, BC_, W_, etc.).
-    """
     if not harvest_id or str(harvest_id).strip() in ("None", "-1", ""):
         return {
             "name": "Wild / Unknown",
@@ -134,11 +140,9 @@ def get_object_info(harvest_id: str, fallback_name: str = None) -> dict:
     raw_input = str(harvest_id).strip()
     lookup = _get_object_lookup()
 
-    # 1. Direct exact match in lookup (e.g., "(H)17", "(BC)37", "BC_37", "H_17")
     if raw_input in lookup:
         return dict(lookup[raw_input])
 
-    # 2. Convert parenthesis notation directly to catalog prefix format (e.g. "(H)17" -> "H_17")
     tag_mapping = {
         "(O)": "O_",
         "(W)": "W_",
@@ -146,10 +150,13 @@ def get_object_info(harvest_id: str, fallback_name: str = None) -> dict:
         "(T)": "T_",
         "(H)": "H_",
         "(P)": "P_",
-        "(R)": "R_",
+        "(R)": "O_",
         "(F)": "F_",
-        "(S)": "S_"
+        "(S)": "S_",
+        "(WP)": "WP_",
+        "(FL)": "FL_"
     }
+
 
     for tag, catalog_prefix in tag_mapping.items():
         if tag in raw_input:
@@ -161,21 +168,43 @@ def get_object_info(harvest_id: str, fallback_name: str = None) -> dict:
             if prefixed_key in lookup:
                 return dict(lookup[prefixed_key])
 
-    # 3. Clean fallback search
     clean_key = raw_input
     while "(" in clean_key and ")" in clean_key:
         clean_key = re.sub(r'\([^)]*\)', '', clean_key).strip()
 
     if clean_key in lookup:
         return dict(lookup[clean_key])
+        
+    # NEW: Catch case-insensitive 1.6 string IDs as a final fallback
+    if clean_key.lower() in lookup:
+        return dict(lookup[clean_key.lower()])
+        
+    for prefix in KNOWN_PREFIXES:
+        if clean_key.startswith(prefix):
+            bare_id = clean_key[len(prefix):]
+            if bare_id in lookup:
+                return dict(lookup[bare_id])
+
+    fallback_prefix = "O"
+    for tag, cat_prefix in tag_mapping.items():
+        if tag in raw_input:
+            fallback_prefix = cat_prefix.replace("_", "")
+            break
 
     formatted_name = fallback_name if fallback_name else clean_key.replace("_", " ")
-    icon_filename = clean_key if clean_key.startswith(KNOWN_PREFIXES) else f"O_{clean_key}"
+    
+    if clean_key.startswith(KNOWN_PREFIXES):
+        icon_filename = clean_key
+        fallback_prefix = clean_key.split("_")[0]
+    else:
+        icon_filename = f"{fallback_prefix}_{clean_key}"
 
     return {
         "id": clean_key,
         "name": formatted_name,
         "price": 0,
-        "icon": f"/cache/img/items/{icon_filename}.png",
+        "prefix": fallback_prefix,
+        "icon": f"/cache/img/{fallback_prefix}/{icon_filename}.png",
+        "sprite_key": icon_filename,
     }
     

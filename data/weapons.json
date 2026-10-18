@@ -1,337 +1,280 @@
 {
-  "0": {
-    "name": "Rusty Sword",
-    "sprite_index": 0,
-    "sprite_key": "W_0"
-  },
-  "1": {
-    "name": "Silver Saber",
-    "sprite_index": 1,
-    "sprite_key": "W_1"
-  },
-  "2": {
-    "name": "Dark Sword",
-    "sprite_index": 2,
-    "sprite_key": "W_2"
-  },
-  "3": {
-    "name": "Holy Blade",
-    "sprite_index": 3,
-    "sprite_key": "W_3"
-  },
-  "4": {
-    "name": "Galaxy Sword",
-    "sprite_index": 4,
-    "sprite_key": "W_4"
-  },
-  "5": {
-    "name": "Bone Sword",
-    "sprite_index": 5,
-    "sprite_key": "W_5"
-  },
-  "6": {
-    "name": "Iron Edge",
-    "sprite_index": 6,
-    "sprite_key": "W_6"
-  },
-  "7": {
-    "name": "Templar's Blade",
-    "sprite_index": 7,
-    "sprite_key": "W_7"
-  },
-  "8": {
-    "name": "Obsidian Edge",
-    "sprite_index": 8,
-    "sprite_key": "W_8"
-  },
-  "9": {
-    "name": "Lava Katana",
-    "sprite_index": 9,
-    "sprite_key": "W_9"
-  },
-  "10": {
-    "name": "Claymore",
-    "sprite_index": 10,
-    "sprite_key": "W_10"
-  },
-  "11": {
-    "name": "Steel Smallsword",
-    "sprite_index": 11,
-    "sprite_key": "W_11"
-  },
-  "12": {
-    "name": "Wooden Blade",
-    "sprite_index": 12,
-    "sprite_key": "W_12"
-  },
-  "13": {
-    "name": "Insect Head",
-    "sprite_index": 13,
-    "sprite_key": "W_13"
-  },
-  "14": {
-    "name": "Neptune's Glaive",
-    "sprite_index": 14,
-    "sprite_key": "W_14"
-  },
-  "15": {
-    "name": "Forest Sword",
-    "sprite_index": 15,
-    "sprite_key": "W_15"
-  },
-  "16": {
-    "name": "Carving Knife",
-    "sprite_index": 16,
-    "sprite_key": "W_16"
-  },
-  "17": {
-    "name": "Iron Dirk",
-    "sprite_index": 17,
-    "sprite_key": "W_17"
-  },
-  "18": {
-    "name": "Burglar's Shank",
-    "sprite_index": 18,
-    "sprite_key": "W_18"
-  },
-  "19": {
-    "name": "Shadow Dagger",
-    "sprite_index": 19,
-    "sprite_key": "W_19"
-  },
-  "20": {
-    "name": "Elf Blade",
-    "sprite_index": 20,
-    "sprite_key": "W_20"
-  },
-  "21": {
-    "name": "Crystal Dagger",
-    "sprite_index": 21,
-    "sprite_key": "W_21"
-  },
-  "22": {
-    "name": "Wind Spire",
-    "sprite_index": 22,
-    "sprite_key": "W_22"
-  },
-  "23": {
-    "name": "Galaxy Dagger",
-    "sprite_index": 23,
-    "sprite_key": "W_23"
-  },
-  "24": {
-    "name": "Wood Club",
-    "sprite_index": 24,
-    "sprite_key": "W_24"
-  },
-  "25": {
-    "name": "Alex's Bat",
-    "sprite_index": 25,
-    "sprite_key": "W_25"
-  },
-  "26": {
-    "name": "Lead Rod",
-    "sprite_index": 26,
-    "sprite_key": "W_26"
-  },
-  "27": {
-    "name": "Wood Mallet",
-    "sprite_index": 27,
-    "sprite_key": "W_27"
-  },
-  "28": {
-    "name": "The Slammer",
-    "sprite_index": 28,
-    "sprite_key": "W_28"
-  },
-  "29": {
-    "name": "Galaxy Hammer",
-    "sprite_index": 29,
-    "sprite_key": "W_29"
-  },
-  "30": {
-    "name": "Sam's Old Guitar",
-    "sprite_index": 30,
-    "sprite_key": "W_30"
-  },
-  "31": {
-    "name": "Femur",
-    "sprite_index": 31,
-    "sprite_key": "W_31"
-  },
-  "32": {
-    "name": "Slingshot",
-    "sprite_index": 32,
-    "sprite_key": "W_32"
-  },
-  "33": {
-    "name": "Master Slingshot",
-    "sprite_index": 33,
-    "sprite_key": "W_33"
-  },
-  "34": {
-    "name": "Galaxy Slingshot",
-    "sprite_index": 34,
-    "sprite_key": "W_34"
-  },
-  "35": {
-    "name": "Elliott's Pencil",
-    "sprite_index": 35,
-    "sprite_key": "W_35"
-  },
-  "36": {
-    "name": "Maru's Wrench",
-    "sprite_index": 36,
-    "sprite_key": "W_36"
-  },
-  "37": {
-    "name": "Harvey's Mallet",
-    "sprite_index": 37,
-    "sprite_key": "W_37"
-  },
-  "38": {
-    "name": "Penny's Fryer",
-    "sprite_index": 38,
-    "sprite_key": "W_38"
-  },
-  "39": {
-    "name": "Leah's Whittler",
-    "sprite_index": 39,
-    "sprite_key": "W_39"
-  },
-  "40": {
-    "name": "Abby's Planchette",
-    "sprite_index": 40,
-    "sprite_key": "W_40"
-  },
-  "41": {
-    "name": "Seb's Lost Mace",
-    "sprite_index": 41,
-    "sprite_key": "W_41"
-  },
-  "42": {
-    "name": "Haley's Iron",
-    "sprite_index": 42,
-    "sprite_key": "W_42"
-  },
-  "43": {
-    "name": "Pirate's Sword",
-    "sprite_index": 43,
-    "sprite_key": "W_43"
-  },
-  "44": {
-    "name": "Cutlass",
-    "sprite_index": 44,
-    "sprite_key": "W_44"
-  },
-  "45": {
-    "name": "Wicked Kris",
-    "sprite_index": 45,
-    "sprite_key": "W_45"
-  },
-  "46": {
-    "name": "Kudgel",
-    "sprite_index": 46,
-    "sprite_key": "W_46"
-  },
-  "47": {
-    "name": "Scythe",
-    "sprite_index": 47,
-    "sprite_key": "W_47"
-  },
-  "48": {
-    "name": "Yeti Tooth",
-    "sprite_index": 48,
-    "sprite_key": "W_48"
-  },
-  "49": {
-    "name": "Rapier",
-    "sprite_index": 49,
-    "sprite_key": "W_49"
-  },
-  "50": {
-    "name": "Steel Falchion",
-    "sprite_index": 50,
-    "sprite_key": "W_50"
-  },
-  "51": {
-    "name": "Broken Trident",
-    "sprite_index": 51,
-    "sprite_key": "W_51"
-  },
-  "52": {
-    "name": "Tempered Broadsword",
-    "sprite_index": 52,
-    "sprite_key": "W_52"
-  },
-  "53": {
-    "name": "Golden Scythe",
-    "sprite_index": 53,
-    "sprite_key": "W_53"
-  },
-  "54": {
-    "name": "Dwarf Sword",
-    "sprite_index": 54,
-    "sprite_key": "W_54"
-  },
-  "55": {
-    "name": "Dwarf Hammer",
-    "sprite_index": 55,
-    "sprite_key": "W_55"
-  },
-  "56": {
-    "name": "Dwarf Dagger",
-    "sprite_index": 56,
-    "sprite_key": "W_56"
-  },
-  "57": {
-    "name": "Dragontooth Cutlass",
-    "sprite_index": 57,
-    "sprite_key": "W_57"
-  },
-  "58": {
-    "name": "Dragontooth Club",
-    "sprite_index": 58,
-    "sprite_key": "W_58"
-  },
-  "59": {
-    "name": "Dragontooth Shiv",
-    "sprite_index": 59,
-    "sprite_key": "W_59"
-  },
-  "60": {
-    "name": "Ossified Blade",
-    "sprite_index": 60,
-    "sprite_key": "W_60"
-  },
-  "61": {
-    "name": "Iridium Needle",
-    "sprite_index": 61,
-    "sprite_key": "W_61"
-  },
-  "62": {
-    "name": "Infinity Blade",
-    "sprite_index": 62,
-    "sprite_key": "W_62"
-  },
-  "63": {
-    "name": "Infinity Gavel",
-    "sprite_index": 63,
-    "sprite_key": "W_63"
-  },
-  "64": {
-    "name": "Infinity Dagger",
-    "sprite_index": 64,
-    "sprite_key": "W_64"
-  },
-  "65": {
-    "name": "Meowmere",
-    "sprite_index": 65,
-    "sprite_key": "W_65"
-  },
-  "66": {
-    "name": "Iridium Scythe",
-    "sprite_index": 66,
-    "sprite_key": "W_66"
+  "_meta": {
+    "extract_images": true,
+    "processor": "catalog",
+    "prefix": "W",
+    "default_texture": "TileSheets/weapons.xnb",
+    "tile_width": 16,
+    "tile_height": 16
+  },
+  "items": {
+    "0": {
+      "Name": "Rusty Sword",
+      "SpriteIndex": 0
+    },
+    "1": {
+      "Name": "Silver Saber",
+      "SpriteIndex": 1
+    },
+    "2": {
+      "Name": "Dark Sword",
+      "SpriteIndex": 2
+    },
+    "3": {
+      "Name": "Holy Blade",
+      "SpriteIndex": 3
+    },
+    "4": {
+      "Name": "Galaxy Sword",
+      "SpriteIndex": 4
+    },
+    "5": {
+      "Name": "Bone Sword",
+      "SpriteIndex": 5
+    },
+    "6": {
+      "Name": "Iron Edge",
+      "SpriteIndex": 6
+    },
+    "7": {
+      "Name": "Templar's Blade",
+      "SpriteIndex": 7
+    },
+    "8": {
+      "Name": "Obsidian Edge",
+      "SpriteIndex": 8
+    },
+    "9": {
+      "Name": "Lava Katana",
+      "SpriteIndex": 9
+    },
+    "10": {
+      "Name": "Claymore",
+      "SpriteIndex": 10
+    },
+    "11": {
+      "Name": "Steel Smallsword",
+      "SpriteIndex": 11
+    },
+    "12": {
+      "Name": "Wooden Blade",
+      "SpriteIndex": 12
+    },
+    "13": {
+      "Name": "Insect Head",
+      "SpriteIndex": 13
+    },
+    "14": {
+      "Name": "Neptune's Glaive",
+      "SpriteIndex": 14
+    },
+    "15": {
+      "Name": "Forest Sword",
+      "SpriteIndex": 15
+    },
+    "16": {
+      "Name": "Carving Knife",
+      "SpriteIndex": 16
+    },
+    "17": {
+      "Name": "Iron Dirk",
+      "SpriteIndex": 17
+    },
+    "18": {
+      "Name": "Burglar's Shank",
+      "SpriteIndex": 18
+    },
+    "19": {
+      "Name": "Shadow Dagger",
+      "SpriteIndex": 19
+    },
+    "20": {
+      "Name": "Elf Blade",
+      "SpriteIndex": 20
+    },
+    "21": {
+      "Name": "Crystal Dagger",
+      "SpriteIndex": 21
+    },
+    "22": {
+      "Name": "Wind Spire",
+      "SpriteIndex": 22
+    },
+    "23": {
+      "Name": "Galaxy Dagger",
+      "SpriteIndex": 23
+    },
+    "24": {
+      "Name": "Wood Club",
+      "SpriteIndex": 24
+    },
+    "25": {
+      "Name": "Alex's Bat",
+      "SpriteIndex": 25
+    },
+    "26": {
+      "Name": "Lead Rod",
+      "SpriteIndex": 26
+    },
+    "27": {
+      "Name": "Wood Mallet",
+      "SpriteIndex": 27
+    },
+    "28": {
+      "Name": "The Slammer",
+      "SpriteIndex": 28
+    },
+    "29": {
+      "Name": "Galaxy Hammer",
+      "SpriteIndex": 29
+    },
+    "30": {
+      "Name": "Sam's Old Guitar",
+      "SpriteIndex": 30
+    },
+    "31": {
+      "Name": "Femur",
+      "SpriteIndex": 31
+    },
+    "32": {
+      "Name": "Slingshot",
+      "SpriteIndex": 32
+    },
+    "33": {
+      "Name": "Master Slingshot",
+      "SpriteIndex": 33
+    },
+    "34": {
+      "Name": "Galaxy Slingshot",
+      "SpriteIndex": 34
+    },
+    "35": {
+      "Name": "Elliott's Pencil",
+      "SpriteIndex": 35
+    },
+    "36": {
+      "Name": "Maru's Wrench",
+      "SpriteIndex": 36
+    },
+    "37": {
+      "Name": "Harvey's Mallet",
+      "SpriteIndex": 37
+    },
+    "38": {
+      "Name": "Penny's Fryer",
+      "SpriteIndex": 38
+    },
+    "39": {
+      "Name": "Leah's Whittler",
+      "SpriteIndex": 39
+    },
+    "40": {
+      "Name": "Abby's Planchette",
+      "SpriteIndex": 40
+    },
+    "41": {
+      "Name": "Seb's Lost Mace",
+      "SpriteIndex": 41
+    },
+    "42": {
+      "Name": "Haley's Iron",
+      "SpriteIndex": 42
+    },
+    "43": {
+      "Name": "Pirate's Sword",
+      "SpriteIndex": 43
+    },
+    "44": {
+      "Name": "Cutlass",
+      "SpriteIndex": 44
+    },
+    "45": {
+      "Name": "Wicked Kris",
+      "SpriteIndex": 45
+    },
+    "46": {
+      "Name": "Kudgel",
+      "SpriteIndex": 46
+    },
+    "47": {
+      "Name": "Scythe",
+      "SpriteIndex": 47
+    },
+    "48": {
+      "Name": "Yeti Tooth",
+      "SpriteIndex": 48
+    },
+    "49": {
+      "Name": "Rapier",
+      "SpriteIndex": 49
+    },
+    "50": {
+      "Name": "Steel Falchion",
+      "SpriteIndex": 50
+    },
+    "51": {
+      "Name": "Broken Trident",
+      "SpriteIndex": 51
+    },
+    "52": {
+      "Name": "Tempered Broadsword",
+      "SpriteIndex": 52
+    },
+    "53": {
+      "Name": "Golden Scythe",
+      "SpriteIndex": 53
+    },
+    "54": {
+      "Name": "Dwarf Sword",
+      "SpriteIndex": 54
+    },
+    "55": {
+      "Name": "Dwarf Hammer",
+      "SpriteIndex": 55
+    },
+    "56": {
+      "Name": "Dwarf Dagger",
+      "SpriteIndex": 56
+    },
+    "57": {
+      "Name": "Dragontooth Cutlass",
+      "SpriteIndex": 57
+    },
+    "58": {
+      "Name": "Dragontooth Club",
+      "SpriteIndex": 58
+    },
+    "59": {
+      "Name": "Dragontooth Shiv",
+      "SpriteIndex": 59
+    },
+    "60": {
+      "Name": "Ossified Blade",
+      "SpriteIndex": 60
+    },
+    "61": {
+      "Name": "Iridium Needle",
+      "SpriteIndex": 61
+    },
+    "62": {
+      "Name": "Infinity Blade",
+      "SpriteIndex": 62
+    },
+    "63": {
+      "Name": "Infinity Gavel",
+      "SpriteIndex": 63
+    },
+    "64": {
+      "Name": "Infinity Dagger",
+      "SpriteIndex": 64
+    },
+    "65": {
+      "Name": "Meowmere",
+      "SpriteIndex": 65
+    },
+    "66": {
+      "Name": "Iridium Scythe",
+      "SpriteIndex": 66
+    }
   }
 }

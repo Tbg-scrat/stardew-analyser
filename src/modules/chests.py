@@ -57,10 +57,13 @@ def _parse_item_node(item_node):
         default_prefix = "(H)"
     elif item_xsi_type == "Furniture":
         default_prefix = "(F)"
-    elif item_xsi_type in ["Wallpaper", "Flooring"]:
-        default_prefix = "(W)"
+    elif item_xsi_type == "Wallpaper":
+        default_prefix = "(WP)"
+    elif item_xsi_type == "Flooring":
+        default_prefix = "(FL)"
     elif item_xsi_type == "Clothing":
         default_prefix = "(S)"
+
     else:
         raise ValueError(f"Unrecognized item xsi:type '{item_xsi_type}' for item ID: {item_id}")
 
@@ -72,27 +75,29 @@ def _parse_item_node(item_node):
 
     # Extract the prefix strictly for image routing (e.g., "(BC)130" -> "BC", "(O)388" -> "O")
     # If no valid prefix is found, default to "items" for backward compatibility
-    prefix = "items"
+    raw_prefix = "items"
     if qualified_id.startswith("(") and ")" in qualified_id:
-        prefix = qualified_id.split(")")[0].replace("(", "")
+        raw_prefix = qualified_id.split(")")[0].replace("(", "")
 
     # Pass qualified_id into reference_data lookup
     obj_info = get_object_info(qualified_id, fallback_name=xml_name)
     name = obj_info.get("name")
 
-    # Use catalog sprite key if available, otherwise construct from qualified_id
+    # Use catalog sprite key and true prefix if available
     sprite_key = obj_info.get("sprite_key") or (
         qualified_id.replace("(", "")
         .replace(")", "_")
         .replace(":", "_")
         .replace(" ", "_")
     )
+    resolved_prefix = obj_info.get("prefix") or raw_prefix
 
     if not name:
         logger.debug(
             f"Missing item name for ID '{qualified_id}'; defaulting to 'Unknown Item'"
         )
         name = "Unknown Item"
+
 
     try:
         stack = int(item_node.findtext("Stack") or item_node.findtext("stack") or 1)
@@ -119,7 +124,7 @@ def _parse_item_node(item_node):
         "is_empty": False,
         "id": item_id,
         "qualified_id": qualified_id,
-        "prefix": prefix,
+        "prefix": resolved_prefix,
         "sprite_key": sprite_key,
         "name": name,
         "stack": stack,
@@ -127,6 +132,7 @@ def _parse_item_node(item_node):
         "quality_name": quality_map.get(quality, "normal"),
         "category": category,
     }
+
 
 
 def _extract_raw_chests(root):

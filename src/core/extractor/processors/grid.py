@@ -11,6 +11,11 @@ def process_grid(temp_unpacked_dir: str, meta: dict, cache_dir: str) -> int:
     prefix = meta.get("prefix", "IMG")
     tile_w = meta.get("tile_width", 16)
     tile_h = meta.get("tile_height", 16)
+    
+    # NEW: Optional sub-crop dimensions
+    crop_w = meta.get("crop_width", tile_w)
+    crop_h = meta.get("crop_height", tile_h)
+    
     tiles_per_row = meta.get("tiles_per_row", 0)
 
     # Reconstruct the unpacked .png filename from the source .xnb path
@@ -21,7 +26,6 @@ def process_grid(temp_unpacked_dir: str, meta: dict, cache_dir: str) -> int:
         logger.warning(f"[GridProcessor] Required spritesheet not found: {sheet_path}")
         return 0
 
-    # UPDATE: Save directly to /cache/img/%prefix%/
     out_dir = os.path.join(cache_dir, "img", prefix)
     os.makedirs(out_dir, exist_ok=True)
 
@@ -48,6 +52,10 @@ def process_grid(temp_unpacked_dir: str, meta: dict, cache_dir: str) -> int:
             tile = crop_tile(img, tile_id, tile_w, tile_h, tiles_per_row=cols)
             if not tile:
                 continue
+
+            # NEW: Apply the sub-crop if it differs from the grid cell size
+            if crop_w != tile_w or crop_h != tile_h:
+                tile = tile.crop((0, 0, crop_w, crop_h))
 
             # Save the file into the new prefix subfolder
             tile_path = os.path.join(out_dir, f"{prefix}_{tile_id}.png")

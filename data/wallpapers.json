@@ -1,0 +1,590 @@
+{
+  "_meta": {
+    "extract_images": true,
+    "processor": "catalog",
+    "prefix": "WP",
+    "default_texture": "Maps/walls_and_floors.xnb",
+    "tile_width": 16,
+    "tile_height": 48
+  },
+  "items": {
+    "0": {
+      "Name": "Wallpaper 0",
+      "SpriteIndex": 0
+    },
+    "1": {
+      "Name": "Wallpaper 1",
+      "SpriteIndex": 1
+    },
+    "2": {
+      "Name": "Wallpaper 2",
+      "SpriteIndex": 2
+    },
+    "3": {
+      "Name": "Wallpaper 3",
+      "SpriteIndex": 3
+    },
+    "4": {
+      "Name": "Wallpaper 4",
+      "SpriteIndex": 4
+    },
+    "5": {
+      "Name": "Wallpaper 5",
+      "SpriteIndex": 5
+    },
+    "6": {
+      "Name": "Wallpaper 6",
+      "SpriteIndex": 6
+    },
+    "7": {
+      "Name": "Wallpaper 7",
+      "SpriteIndex": 7
+    },
+    "8": {
+      "Name": "Wallpaper 8",
+      "SpriteIndex": 8
+    },
+    "9": {
+      "Name": "Wallpaper 9",
+      "SpriteIndex": 9
+    },
+    "10": {
+      "Name": "Wallpaper 10",
+      "SpriteIndex": 10
+    },
+    "11": {
+      "Name": "Wallpaper 11",
+      "SpriteIndex": 11
+    },
+    "12": {
+      "Name": "Wallpaper 12",
+      "SpriteIndex": 12
+    },
+    "13": {
+      "Name": "Wallpaper 13",
+      "SpriteIndex": 13
+    },
+    "14": {
+      "Name": "Wallpaper 14",
+      "SpriteIndex": 14
+    },
+    "15": {
+      "Name": "Wallpaper 15",
+      "SpriteIndex": 15
+    },
+    "16": {
+      "Name": "Wallpaper 16",
+      "SpriteIndex": 16
+    },
+    "17": {
+      "Name": "Wallpaper 17",
+      "SpriteIndex": 17
+    },
+    "18": {
+      "Name": "Wallpaper 18",
+      "SpriteIndex": 18
+    },
+    "19": {
+      "Name": "Wallpaper 19",
+      "SpriteIndex": 19
+    },
+    "20": {
+      "Name": "Wallpaper 20",
+      "SpriteIndex": 20
+    },
+    "21": {
+      "Name": "Wallpaper 21",
+      "SpriteIndex": 21
+    },
+    "22": {
+      "Name": "Wallpaper 22",
+      "SpriteIndex": 22
+    },
+    "23": {
+      "Name": "Wallpaper 23",
+      "SpriteIndex": 23
+    },
+    "24": {
+      "Name": "Wallpaper 24",
+      "SpriteIndex": 24
+    },
+    "25": {
+      "Name": "Wallpaper 25",
+      "SpriteIndex": 25
+    },
+    "26": {
+      "Name": "Wallpaper 26",
+      "SpriteIndex": 26
+    },
+    "27": {
+      "Name": "Wallpaper 27",
+      "SpriteIndex": 27
+    },
+    "28": {
+      "Name": "Wallpaper 28",
+      "SpriteIndex": 28
+    },
+    "29": {
+      "Name": "Wallpaper 29",
+      "SpriteIndex": 29
+    },
+    "30": {
+      "Name": "Wallpaper 30",
+      "SpriteIndex": 30
+    },
+    "31": {
+      "Name": "Wallpaper 31",
+      "SpriteIndex": 31
+    },
+    "32": {
+      "Name": "Wallpaper 32",
+      "SpriteIndex": 32
+    },
+    "33": {
+      "Name": "Wallpaper 33",
+      "SpriteIndex": 33
+    },
+    "34": {
+      "Name": "Wallpaper 34",
+      "SpriteIndex": 34
+    },
+    "35": {
+      "Name": "Wallpaper 35",
+      "SpriteIndex": 35
+    },
+    "36": {
+      "Name": "Wallpaper 36",
+      "SpriteIndex": 36
+    },
+    "37": {
+      "Name": "Wallpaper 37",
+      "SpriteIndex": 37
+    },
+    "38": {
+      "Name": "Wallpaper 38",
+      "SpriteIndex": 38
+    },
+    "39": {
+      "Name": "Wallpaper 39",
+      "SpriteIndex": 39
+    },
+    "40": {
+      "Name": "Wallpaper 40",
+      "SpriteIndex": 40
+    },
+    "41": {
+      "Name": "Wallpaper 41",
+      "SpriteIndex": 41
+    },
+    "42": {
+      "Name": "Wallpaper 42",
+      "SpriteIndex": 42
+    },
+    "43": {
+      "Name": "Wallpaper 43",
+      "SpriteIndex": 43
+    },
+    "44": {
+      "Name": "Wallpaper 44",
+      "SpriteIndex": 44
+    },
+    "45": {
+      "Name": "Wallpaper 45",
+      "SpriteIndex": 45
+    },
+    "46": {
+      "Name": "Wallpaper 46",
+      "SpriteIndex": 46
+    },
+    "47": {
+      "Name": "Wallpaper 47",
+      "SpriteIndex": 47
+    },
+    "48": {
+      "Name": "Wallpaper 48",
+      "SpriteIndex": 48
+    },
+    "49": {
+      "Name": "Wallpaper 49",
+      "SpriteIndex": 49
+    },
+    "50": {
+      "Name": "Wallpaper 50",
+      "SpriteIndex": 50
+    },
+    "51": {
+      "Name": "Wallpaper 51",
+      "SpriteIndex": 51
+    },
+    "52": {
+      "Name": "Wallpaper 52",
+      "SpriteIndex": 52
+    },
+    "53": {
+      "Name": "Wallpaper 53",
+      "SpriteIndex": 53
+    },
+    "54": {
+      "Name": "Wallpaper 54",
+      "SpriteIndex": 54
+    },
+    "55": {
+      "Name": "Wallpaper 55",
+      "SpriteIndex": 55
+    },
+    "56": {
+      "Name": "Wallpaper 56",
+      "SpriteIndex": 56
+    },
+    "57": {
+      "Name": "Wallpaper 57",
+      "SpriteIndex": 57
+    },
+    "58": {
+      "Name": "Wallpaper 58",
+      "SpriteIndex": 58
+    },
+    "59": {
+      "Name": "Wallpaper 59",
+      "SpriteIndex": 59
+    },
+    "60": {
+      "Name": "Wallpaper 60",
+      "SpriteIndex": 60
+    },
+    "61": {
+      "Name": "Wallpaper 61",
+      "SpriteIndex": 61
+    },
+    "62": {
+      "Name": "Wallpaper 62",
+      "SpriteIndex": 62
+    },
+    "63": {
+      "Name": "Wallpaper 63",
+      "SpriteIndex": 63
+    },
+    "64": {
+      "Name": "Wallpaper 64",
+      "SpriteIndex": 64
+    },
+    "65": {
+      "Name": "Wallpaper 65",
+      "SpriteIndex": 65
+    },
+    "66": {
+      "Name": "Wallpaper 66",
+      "SpriteIndex": 66
+    },
+    "67": {
+      "Name": "Wallpaper 67",
+      "SpriteIndex": 67
+    },
+    "68": {
+      "Name": "Wallpaper 68",
+      "SpriteIndex": 68
+    },
+    "69": {
+      "Name": "Wallpaper 69",
+      "SpriteIndex": 69
+    },
+    "70": {
+      "Name": "Wallpaper 70",
+      "SpriteIndex": 70
+    },
+    "71": {
+      "Name": "Wallpaper 71",
+      "SpriteIndex": 71
+    },
+    "72": {
+      "Name": "Wallpaper 72",
+      "SpriteIndex": 72
+    },
+    "73": {
+      "Name": "Wallpaper 73",
+      "SpriteIndex": 73
+    },
+    "74": {
+      "Name": "Wallpaper 74",
+      "SpriteIndex": 74
+    },
+    "75": {
+      "Name": "Wallpaper 75",
+      "SpriteIndex": 75
+    },
+    "76": {
+      "Name": "Wallpaper 76",
+      "SpriteIndex": 76
+    },
+    "77": {
+      "Name": "Wallpaper 77",
+      "SpriteIndex": 77
+    },
+    "78": {
+      "Name": "Wallpaper 78",
+      "SpriteIndex": 78
+    },
+    "79": {
+      "Name": "Wallpaper 79",
+      "SpriteIndex": 79
+    },
+    "80": {
+      "Name": "Wallpaper 80",
+      "SpriteIndex": 80
+    },
+    "81": {
+      "Name": "Wallpaper 81",
+      "SpriteIndex": 81
+    },
+    "82": {
+      "Name": "Wallpaper 82",
+      "SpriteIndex": 82
+    },
+    "83": {
+      "Name": "Wallpaper 83",
+      "SpriteIndex": 83
+    },
+    "84": {
+      "Name": "Wallpaper 84",
+      "SpriteIndex": 84
+    },
+    "85": {
+      "Name": "Wallpaper 85",
+      "SpriteIndex": 85
+    },
+    "86": {
+      "Name": "Wallpaper 86",
+      "SpriteIndex": 86
+    },
+    "87": {
+      "Name": "Wallpaper 87",
+      "SpriteIndex": 87
+    },
+    "88": {
+      "Name": "Wallpaper 88",
+      "SpriteIndex": 88
+    },
+    "89": {
+      "Name": "Wallpaper 89",
+      "SpriteIndex": 89
+    },
+    "90": {
+      "Name": "Wallpaper 90",
+      "SpriteIndex": 90
+    },
+    "91": {
+      "Name": "Wallpaper 91",
+      "SpriteIndex": 91
+    },
+    "92": {
+      "Name": "Wallpaper 92",
+      "SpriteIndex": 92
+    },
+    "93": {
+      "Name": "Wallpaper 93",
+      "SpriteIndex": 93
+    },
+    "94": {
+      "Name": "Wallpaper 94",
+      "SpriteIndex": 94
+    },
+    "95": {
+      "Name": "Wallpaper 95",
+      "SpriteIndex": 95
+    },
+    "96": {
+      "Name": "Wallpaper 96",
+      "SpriteIndex": 96
+    },
+    "97": {
+      "Name": "Wallpaper 97",
+      "SpriteIndex": 97
+    },
+    "98": {
+      "Name": "Wallpaper 98",
+      "SpriteIndex": 98
+    },
+    "99": {
+      "Name": "Wallpaper 99",
+      "SpriteIndex": 99
+    },
+    "100": {
+      "Name": "Wallpaper 100",
+      "SpriteIndex": 100
+    },
+    "101": {
+      "Name": "Wallpaper 101",
+      "SpriteIndex": 101
+    },
+    "102": {
+      "Name": "Wallpaper 102",
+      "SpriteIndex": 102
+    },
+    "103": {
+      "Name": "Wallpaper 103",
+      "SpriteIndex": 103
+    },
+    "104": {
+      "Name": "Wallpaper 104",
+      "SpriteIndex": 104
+    },
+    "105": {
+      "Name": "Wallpaper 105",
+      "SpriteIndex": 105
+    },
+    "106": {
+      "Name": "Wallpaper 106",
+      "SpriteIndex": 106
+    },
+    "107": {
+      "Name": "Wallpaper 107",
+      "SpriteIndex": 107
+    },
+    "108": {
+      "Name": "Wallpaper 108",
+      "SpriteIndex": 108
+    },
+    "109": {
+      "Name": "Wallpaper 109",
+      "SpriteIndex": 109
+    },
+    "110": {
+      "Name": "Wallpaper 110",
+      "SpriteIndex": 110
+    },
+    "111": {
+      "Name": "Wallpaper 111",
+      "SpriteIndex": 111
+    },
+    "MoreWalls:0": {
+      "Name": "MoreWalls 0",
+      "SpriteIndex": 0,
+      "Texture": "Maps/wallpapers_2"
+    },
+    "MoreWalls:1": {
+      "Name": "MoreWalls 1",
+      "SpriteIndex": 1,
+      "Texture": "Maps/wallpapers_2"
+    },
+    "MoreWalls:2": {
+      "Name": "MoreWalls 2",
+      "SpriteIndex": 2,
+      "Texture": "Maps/wallpapers_2"
+    },
+    "MoreWalls:3": {
+      "Name": "MoreWalls 3",
+      "SpriteIndex": 3,
+      "Texture": "Maps/wallpapers_2"
+    },
+    "MoreWalls:4": {
+      "Name": "MoreWalls 4",
+      "SpriteIndex": 4,
+      "Texture": "Maps/wallpapers_2"
+    },
+    "MoreWalls:5": {
+      "Name": "MoreWalls 5",
+      "SpriteIndex": 5,
+      "Texture": "Maps/wallpapers_2"
+    },
+    "MoreWalls:6": {
+      "Name": "MoreWalls 6",
+      "SpriteIndex": 6,
+      "Texture": "Maps/wallpapers_2"
+    },
+    "MoreWalls:7": {
+      "Name": "MoreWalls 7",
+      "SpriteIndex": 7,
+      "Texture": "Maps/wallpapers_2"
+    },
+    "MoreWalls:8": {
+      "Name": "MoreWalls 8",
+      "SpriteIndex": 8,
+      "Texture": "Maps/wallpapers_2"
+    },
+    "MoreWalls:9": {
+      "Name": "MoreWalls 9",
+      "SpriteIndex": 9,
+      "Texture": "Maps/wallpapers_2"
+    },
+    "MoreWalls:10": {
+      "Name": "MoreWalls 10",
+      "SpriteIndex": 10,
+      "Texture": "Maps/wallpapers_2"
+    },
+    "MoreWalls:11": {
+      "Name": "MoreWalls 11",
+      "SpriteIndex": 11,
+      "Texture": "Maps/wallpapers_2"
+    },
+    "MoreWalls:12": {
+      "Name": "MoreWalls 12",
+      "SpriteIndex": 12,
+      "Texture": "Maps/wallpapers_2"
+    },
+    "MoreWalls:13": {
+      "Name": "MoreWalls 13",
+      "SpriteIndex": 13,
+      "Texture": "Maps/wallpapers_2"
+    },
+    "MoreWalls:14": {
+      "Name": "MoreWalls 14",
+      "SpriteIndex": 14,
+      "Texture": "Maps/wallpapers_2"
+    },
+    "MoreWalls:15": {
+      "Name": "MoreWalls 15",
+      "SpriteIndex": 15,
+      "Texture": "Maps/wallpapers_2"
+    },
+    "MoreWalls:16": {
+      "Name": "MoreWalls 16",
+      "SpriteIndex": 16,
+      "Texture": "Maps/wallpapers_2"
+    },
+    "MoreWalls:17": {
+      "Name": "MoreWalls 17",
+      "SpriteIndex": 17,
+      "Texture": "Maps/wallpapers_2"
+    },
+    "MoreWalls:18": {
+      "Name": "MoreWalls 18",
+      "SpriteIndex": 18,
+      "Texture": "Maps/wallpapers_2"
+    },
+    "MoreWalls:19": {
+      "Name": "MoreWalls 19",
+      "SpriteIndex": 19,
+      "Texture": "Maps/wallpapers_2"
+    },
+    "MoreWalls:20": {
+      "Name": "MoreWalls 20",
+      "SpriteIndex": 20,
+      "Texture": "Maps/wallpapers_2"
+    },
+    "MoreWalls:21": {
+      "Name": "MoreWalls 21",
+      "SpriteIndex": 21,
+      "Texture": "Maps/wallpapers_2"
+    },
+    "MoreWalls:22": {
+      "Name": "MoreWalls 22",
+      "SpriteIndex": 22,
+      "Texture": "Maps/wallpapers_2"
+    },
+    "MoreWalls:23": {
+      "Name": "MoreWalls 23",
+      "SpriteIndex": 23,
+      "Texture": "Maps/wallpapers_2"
+    },
+    "MoreWalls:24": {
+      "Name": "MoreWalls 24",
+      "SpriteIndex": 24,
+      "Texture": "Maps/wallpapers_2"
+    },
+    "MoreWalls:25": {
+      "Name": "MoreWalls 25",
+      "SpriteIndex": 25,
+      "Texture": "Maps/wallpapers_2"
+    }
+  }
+}

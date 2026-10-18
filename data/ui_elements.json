@@ -1,0 +1,13 @@
+{
+  "_meta": {
+    "extract_images": true,
+    "processor": "free_crop",
+    "prefix": "items",
+    "source_xnb": "LooseSprites/Cursors.xnb"
+  },
+  "elements": {
+    "silver_star": [338, 400, 346, 408],
+    "gold_star": [346, 400, 354, 408],
+    "iridium_star": [346, 392, 354, 400]
+  }
+}

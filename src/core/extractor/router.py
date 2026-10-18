@@ -1,3 +1,5 @@
+# src/core/extractor/router.py
+
 import json
 import logging
 import os
@@ -9,6 +11,9 @@ from src.core.logger import setup_logging
 from .cache_validator import compute_source_hash, is_cache_valid, save_cache_marker
 from .image_utils import resolve_case_insensitive_path
 from .processors.grid import process_grid
+from .processors.catalog import process_catalog
+from .processors.free_crop import process_free_crop
+from .processors.furniture import process_furniture  # ADD THIS LINE
 
 setup_logging()
 logger = logging.getLogger(__name__)
@@ -62,18 +67,46 @@ def extract_assets() -> bool:
             if not meta.get("extract_images"):
                 continue
                 
-            src_rel = meta.get("source_xnb")
-            if not src_rel or src_rel in staged_files:
-                continue
+            textures_to_stage = set()
+            
+            # Add the default texture from the _meta block
+            default_tex = meta.get("source_xnb") or meta.get("default_texture")
+            if default_tex:
+                textures_to_stage.add(default_tex)
                 
-            dst_name = os.path.basename(src_rel)
-            src_path = resolve_case_insensitive_path(CONTENT_DIR, src_rel)
-            if src_path:
-                shutil.copy(src_path, os.path.join(temp_packed, dst_name))
-                staged_files.add(src_rel)
-                logger.debug(f"[Router] Staged asset: {src_rel}")
-            else:
-                logger.warning(f"[Router] Required asset missing from content volume: {src_rel}")
+            # Peek inside catalog files to find custom textures (like Objects_2)
+            if meta.get("processor") == "catalog":
+                try:
+                    with open(config["file_path"], "r", encoding="utf-8") as f:
+                        data = json.load(f)
+                        items = data.get("items", {})
+                        if not items:
+                            items = {k: v for k, v in data.items() if k != "_meta"}
+                            
+                        for item in items.values():
+                            if isinstance(item, dict) and item.get("Texture"):
+                                tex_path = item["Texture"]
+                                if not tex_path.lower().endswith(".xnb"):
+                                    tex_path += ".xnb"
+                                textures_to_stage.add(tex_path)
+                except Exception as e:
+                    logger.warning(f"[Router] Failed to peek textures in {config['file_path']}: {e}")
+
+            # Stage all discovered textures
+            for src_rel in textures_to_stage:
+                # Normalize slashes for cross-platform matching
+                src_rel_clean = src_rel.replace("\\", "/")
+                if src_rel_clean in staged_files:
+                    continue
+                    
+                dst_name = os.path.basename(src_rel_clean)
+                src_path = resolve_case_insensitive_path(CONTENT_DIR, src_rel_clean)
+                if src_path:
+                    shutil.copy(src_path, os.path.join(temp_packed, dst_name))
+                    staged_files.add(src_rel_clean)
+                    logger.debug(f"[Router] Staged asset: {src_rel_clean}")
+                else:
+                    logger.warning(f"[Router] Required asset missing from content volume: {src_rel_clean}")
 
         if not staged_files:
             logger.info("[Router] No assets required staging based on domain configs. Exiting.")
@@ -95,7 +128,11 @@ def extract_assets() -> bool:
             if processor_type == "grid":
                 process_grid(temp_unpacked, meta, CACHE_DIR)
             elif processor_type == "catalog":
-                logger.info(f"[Router] Catalog processor placeholder reached for {config['file_path']}")
+                process_catalog(temp_unpacked, config, CACHE_DIR)
+            elif processor_type == "free_crop":
+                process_free_crop(temp_unpacked, config, CACHE_DIR)
+            elif processor_type == "furniture":
+                process_furniture(temp_unpacked, config, CACHE_DIR)  # ADD THIS LINE
             else:
                 logger.warning(f"[Router] Unknown processor type '{processor_type}' in {config['file_path']}")
 
