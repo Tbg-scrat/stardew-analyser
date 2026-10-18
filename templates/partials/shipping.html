@@ -27,10 +27,10 @@
         <button class="filter-btn active" data-filter-key="status" data-filter-val="all" onclick="setCatalogFilter(this)">All</button>
         <button class="filter-btn" data-filter-key="status" data-filter-val="shipped" onclick="setCatalogFilter(this)">Shipped</button>
         <button class="filter-btn" data-filter-key="status" data-filter-val="not_shipped" onclick="setCatalogFilter(this)">Not Shipped</button>
-        <button class="filter-btn" data-filter-key="achievement" data-filter-val="shipped" onclick="setCatalogFilter(this)">🏆 Full Shipment Done</button>
-        <button class="filter-btn" data-filter-key="achievement" data-filter-val="not_shipped" onclick="setCatalogFilter(this)">🏆 Full Shipment Needed</button>
-        <button class="filter-btn" data-filter-key="polyculture" data-filter-val="done" onclick="setCatalogFilter(this)">🌾 Polyculture Done</button>
-        <button class="filter-btn" data-filter-key="polyculture" data-filter-val="needed" onclick="setCatalogFilter(this)">🌾 Polyculture Needed</button>
+        <button class="filter-btn" data-filter-key="achievement" data-filter-val="shipped" onclick="setCatalogFilter(this)">📦 Full Shipment Done</button>
+        <button class="filter-btn" data-filter-key="achievement" data-filter-val="not_shipped" onclick="setCatalogFilter(this)">📦 Full Shipment Needed</button>
+        <button class="filter-btn" data-filter-key="polyculture" data-filter-val="done" onclick="setCatalogFilter(this)">⭐ Polyculture Done</button>
+        <button class="filter-btn" data-filter-key="polyculture" data-filter-val="needed" onclick="setCatalogFilter(this)">⭐ Polyculture Needed</button>
     </div>
     <input type="text" class="search-box" placeholder="Search shipping items..." onkeyup="filterItems(this)">
 </div>
@@ -42,12 +42,7 @@
          data-achievement="{% if item.achievement_required %}{{ 'shipped' if item.status == 'shipped' else 'not_shipped' }}{% else %}none{% endif %}"
          data-polyculture="{% if item.is_polyculture %}{{ 'done' if item.count >= 15 else 'needed' }}{% else %}none{% endif %}">
         <div class="item-sprite-box">
-            {% if item.image %}
-            <img src="{{ item.image }}" class="item-sprite" alt="{{ item.name }}" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
-            <span class="img-missing-badge" style="display:none; color: #ef4444; font-size: 0.65rem; font-weight: bold; border: 1px dashed #ef4444; padding: 2px 4px; border-radius: 4px; line-height: 1;">NO IMG</span>
-            {% else %}
-            <span class="img-missing-badge" style="color: #ef4444; font-size: 0.65rem; font-weight: bold; border: 1px dashed #ef4444; padding: 2px 4px; border-radius: 4px; line-height: 1;">NO PATH</span>
-            {% endif %}
+            <img src="{{ item.image }}" class="item-sprite" alt="{{ item.name }}" onerror="this.onerror=null; this.src='/static/img/placeholder.svg';">
         </div>
         <div class="item-info">
             <div class="item-name">{{ item.name }}</div>
