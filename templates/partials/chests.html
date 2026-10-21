@@ -128,15 +128,14 @@
                                 {% if item.is_empty %}
                                     <div class="item-slot empty-slot"></div>
                                 {% else %}
-                                    <div class="item-slot" 
-                                         data-item-name="{{ item.name | lower }}" 
+                                    <div class="item-slot"
+                                         data-item-name="{{ item.name|lower }}"
                                          data-display-name="{{ item.name }}"
-                                         data-qualified-id="{{ item.qualified_id }}"
+                                         data-qualified-id="{{ item.qualified_id or item.id }}"
                                          data-stack="{{ item.stack }}">
-                                        
-                                        <!-- FIX: Stripped infinite loop logic from onerror -->
-                                        <img src="/cache/img/{{ item.prefix }}/{{ item.sprite_key }}.png" 
-                                             alt="{{ item.name }}" 
+
+                                        <img src="{{ item.icon or item.image or ('/cache/img/' ~ item.prefix ~ '/' ~ item.sprite_key ~ '.png') }}"
+                                             alt="{{ item.name }}"
                                              class="item-sprite"
                                              onerror="this.onerror=null; this.src='/static/img/placeholder.svg';">
 
@@ -176,10 +175,11 @@
                         <div class="material-sprite-box">
                             
                             <!-- FIX: Stripped infinite loop logic from onerror -->
-                            <img src="/cache/img/{{ mat.prefix }}/{{ mat.sprite_key }}.png" 
-                                 alt="{{ mat.name }}" 
+                            <img src="{{ mat.icon or mat.image or ('/cache/img/' ~ mat.prefix ~ '/' ~ mat.sprite_key ~ '.png') }}"
+                                 alt="{{ mat.name }}"
                                  class="item-sprite"
                                  onerror="this.onerror=null; this.src='/static/img/placeholder.svg';">
+
                         </div>
                         <div class="material-info">
                             <div class="material-name" title="{{ mat.name }}">{{ mat.name }}</div>

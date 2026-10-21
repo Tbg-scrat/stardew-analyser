@@ -8,58 +8,61 @@ from src.core.reference_data import get_tools_catalog
 
 logger = logging.getLogger(__name__)
 
+# src/modules/tools.py
+
 DEFAULT_UPGRADEABLE_TOOLS: dict[str, Any] = {
     "Axe": {
         "name": "Axe",
         "tiers": [
-            {"level": 0, "name": "Axe", "icon": "cache/img/tools/Axe.png", "gold_cost": 0, "materials": None, "perks": "Chops trees."},
-            {"level": 1, "name": "Copper Axe", "icon": "cache/img/tools/CopperAxe.png", "gold_cost": 2000, "materials": "5x Copper Bar", "perks": "Chops large stumps."},
-            {"level": 2, "name": "Steel Axe", "icon": "cache/img/tools/SteelAxe.png", "gold_cost": 5000, "materials": "5x Iron Bar", "perks": "Chops large logs."},
-            {"level": 3, "name": "Gold Axe", "icon": "cache/img/tools/GoldAxe.png", "gold_cost": 10000, "materials": "5x Gold Bar", "perks": "Chops trees quickly."},
-            {"level": 4, "name": "Iridium Axe", "icon": "cache/img/tools/IridiumAxe.png", "gold_cost": 25000, "materials": "5x Iridium Bar", "perks": "Maximum chopping efficiency."}
+            {"level": 0, "name": "Axe", "icon": "/cache/img/T/T_Axe.png", "gold_cost": 0, "materials": None, "perks": "Chops trees."},
+            {"level": 1, "name": "Copper Axe", "icon": "/cache/img/T/T_CopperAxe.png", "gold_cost": 2000, "materials": "5x Copper Bar", "perks": "Chops large stumps."},
+            {"level": 2, "name": "Steel Axe", "icon": "/cache/img/T/T_SteelAxe.png", "gold_cost": 5000, "materials": "5x Iron Bar", "perks": "Chops large logs."},
+            {"level": 3, "name": "Gold Axe", "icon": "/cache/img/T/T_GoldAxe.png", "gold_cost": 10000, "materials": "5x Gold Bar", "perks": "Chops trees quickly."},
+            {"level": 4, "name": "Iridium Axe", "icon": "/cache/img/T/T_IridiumAxe.png", "gold_cost": 25000, "materials": "5x Iridium Bar", "perks": "Maximum chopping efficiency."}
         ]
     },
     "Pickaxe": {
         "name": "Pickaxe",
         "tiers": [
-            {"level": 0, "name": "Pickaxe", "icon": "cache/img/tools/Pickaxe.png", "gold_cost": 0, "materials": None, "perks": "Breaks small rocks."},
-            {"level": 1, "name": "Copper Pickaxe", "icon": "cache/img/tools/CopperPickaxe.png", "gold_cost": 2000, "materials": "5x Copper Bar", "perks": "Breaks large rocks in mines."},
-            {"level": 2, "name": "Steel Pickaxe", "icon": "cache/img/tools/SteelPickaxe.png", "gold_cost": 5000, "materials": "5x Iron Bar", "perks": "Breaks boulders."},
-            {"level": 3, "name": "Gold Pickaxe", "icon": "cache/img/tools/GoldPickaxe.png", "gold_cost": 10000, "materials": "5x Gold Bar", "perks": "Breaks most rocks easily."},
-            {"level": 4, "name": "Iridium Pickaxe", "icon": "cache/img/tools/IridiumPickaxe.png", "gold_cost": 25000, "materials": "5x Iridium Bar", "perks": "Breaks any rock in 1-2 hits."}
+            {"level": 0, "name": "Pickaxe", "icon": "/cache/img/T/T_Pickaxe.png", "gold_cost": 0, "materials": None, "perks": "Breaks small rocks."},
+            {"level": 1, "name": "Copper Pickaxe", "icon": "/cache/img/T/T_CopperPickaxe.png", "gold_cost": 2000, "materials": "5x Copper Bar", "perks": "Breaks large rocks in mines."},
+            {"level": 2, "name": "Steel Pickaxe", "icon": "/cache/img/T/T_SteelPickaxe.png", "gold_cost": 5000, "materials": "5x Iron Bar", "perks": "Breaks boulders."},
+            {"level": 3, "name": "Gold Pickaxe", "icon": "/cache/img/T/T_GoldPickaxe.png", "gold_cost": 10000, "materials": "5x Gold Bar", "perks": "Breaks most rocks easily."},
+            {"level": 4, "name": "Iridium Pickaxe", "icon": "/cache/img/T/T_IridiumPickaxe.png", "gold_cost": 25000, "materials": "5x Iridium Bar", "perks": "Breaks any rock in 1-2 hits."}
         ]
     },
     "Hoe": {
         "name": "Hoe",
         "tiers": [
-            {"level": 0, "name": "Hoe", "icon": "cache/img/tools/Hoe.png", "gold_cost": 0, "materials": None, "perks": "Till 1 tile."},
-            {"level": 1, "name": "Copper Hoe", "icon": "cache/img/tools/CopperHoe.png", "gold_cost": 2000, "materials": "5x Copper Bar", "perks": "Till 3 tiles in a line."},
-            {"level": 2, "name": "Steel Hoe", "icon": "cache/img/tools/SteelHoe.png", "gold_cost": 5000, "materials": "5x Iron Bar", "perks": "Till 5 tiles in a line."},
-            {"level": 3, "name": "Gold Hoe", "icon": "cache/img/tools/GoldHoe.png", "gold_cost": 10000, "materials": "5x Gold Bar", "perks": "Till 3x3 area."},
-            {"level": 4, "name": "Iridium Hoe", "icon": "cache/img/tools/IridiumHoe.png", "gold_cost": 25000, "materials": "5x Iridium Bar", "perks": "Till 6x3 area."}
+            {"level": 0, "name": "Hoe", "icon": "/cache/img/T/T_Hoe.png", "gold_cost": 0, "materials": None, "perks": "Till 1 tile."},
+            {"level": 1, "name": "Copper Hoe", "icon": "/cache/img/T/T_CopperHoe.png", "gold_cost": 2000, "materials": "5x Copper Bar", "perks": "Till 3 tiles in a line."},
+            {"level": 2, "name": "Steel Hoe", "icon": "/cache/img/T/T_SteelHoe.png", "gold_cost": 5000, "materials": "5x Iron Bar", "perks": "Till 5 tiles in a line."},
+            {"level": 3, "name": "Gold Hoe", "icon": "/cache/img/T/T_GoldHoe.png", "gold_cost": 10000, "materials": "5x Gold Bar", "perks": "Till 3x3 area."},
+            {"level": 4, "name": "Iridium Hoe", "icon": "/cache/img/T/T_IridiumHoe.png", "gold_cost": 25000, "materials": "5x Iridium Bar", "perks": "Till 6x3 area."}
         ]
     },
     "WateringCan": {
         "name": "Watering Can",
         "tiers": [
-            {"level": 0, "name": "Watering Can", "icon": "cache/img/tools/WateringCan.png", "gold_cost": 0, "materials": None, "perks": "Water 1 tile."},
-            {"level": 1, "name": "Copper Watering Can", "icon": "cache/img/tools/CopperWateringCan.png", "gold_cost": 2000, "materials": "5x Copper Bar", "perks": "Water 3 tiles in a line."},
-            {"level": 2, "name": "Steel Watering Can", "icon": "cache/img/tools/SteelWateringCan.png", "gold_cost": 5000, "materials": "5x Iron Bar", "perks": "Water 5 tiles in a line."},
-            {"level": 3, "name": "Gold Watering Can", "icon": "cache/img/tools/GoldWateringCan.png", "gold_cost": 10000, "materials": "5x Gold Bar", "perks": "Water 3x3 area."},
-            {"level": 4, "name": "Iridium Watering Can", "icon": "cache/img/tools/IridiumWateringCan.png", "gold_cost": 25000, "materials": "5x Iridium Bar", "perks": "Water 6x3 area."}
+            {"level": 0, "name": "Watering Can", "icon": "/cache/img/T/T_WateringCan.png", "gold_cost": 0, "materials": None, "perks": "Water 1 tile."},
+            {"level": 1, "name": "Copper Watering Can", "icon": "/cache/img/T/T_CopperWateringCan.png", "gold_cost": 2000, "materials": "5x Copper Bar", "perks": "Water 3 tiles in a line."},
+            {"level": 2, "name": "Steel Watering Can", "icon": "/cache/img/T/T_SteelWateringCan.png", "gold_cost": 5000, "materials": "5x Iron Bar", "perks": "Water 5 tiles in a line."},
+            {"level": 3, "name": "Gold Watering Can", "icon": "/cache/img/T/T_GoldWateringCan.png", "gold_cost": 10000, "materials": "5x Gold Bar", "perks": "Water 3x3 area."},
+            {"level": 4, "name": "Iridium Watering Can", "icon": "/cache/img/T/T_IridiumWateringCan.png", "gold_cost": 25000, "materials": "5x Iridium Bar", "perks": "Water 6x3 area."}
         ]
     },
     "TrashCan": {
         "name": "Trash Can",
         "tiers": [
-            {"level": 0, "name": "Trash Can", "icon": "cache/img/tools/CopperTrashCan.png", "gold_cost": 0, "materials": None, "perks": "Reclaims 0% item value."},
-            {"level": 1, "name": "Copper Trash Can", "icon": "cache/img/tools/CopperTrashCan.png", "gold_cost": 1000, "materials": "5x Copper Bar", "perks": "Reclaims 15% item value."},
-            {"level": 2, "name": "Steel Trash Can", "icon": "cache/img/tools/SteelTrashCan.png", "gold_cost": 2500, "materials": "5x Iron Bar", "perks": "Reclaims 30% item value."},
-            {"level": 3, "name": "Gold Trash Can", "icon": "cache/img/tools/GoldTrashCan.png", "gold_cost": 5000, "materials": "5x Gold Bar", "perks": "Reclaims 45% item value."},
-            {"level": 4, "name": "Iridium Trash Can", "icon": "cache/img/tools/IridiumTrashCan.png", "gold_cost": 12500, "materials": "5x Iridium Bar", "perks": "Reclaims 60% item value."}
+            {"level": 0, "name": "Trash Can", "icon": "/cache/img/T/T_TrashCan.png", "gold_cost": 0, "materials": None, "perks": "Reclaims 0% item value."},
+            {"level": 1, "name": "Copper Trash Can", "icon": "/cache/img/T/T_CopperTrashCan.png", "gold_cost": 1000, "materials": "5x Copper Bar", "perks": "Reclaims 15% item value."},
+            {"level": 2, "name": "Steel Trash Can", "icon": "/cache/img/T/T_SteelTrashCan.png", "gold_cost": 2500, "materials": "5x Iron Bar", "perks": "Reclaims 30% item value."},
+            {"level": 3, "name": "Gold Trash Can", "icon": "/cache/img/T/T_GoldTrashCan.png", "gold_cost": 5000, "materials": "5x Gold Bar", "perks": "Reclaims 45% item value."},
+            {"level": 4, "name": "Iridium Trash Can", "icon": "/cache/img/T/T_IridiumTrashCan.png", "gold_cost": 12500, "materials": "5x Iridium Bar", "perks": "Reclaims 60% item value."}
         ]
     }
 }
+
 
 
 def _parse_material_requirement(mat_str: str | None) -> tuple[int, str | None]:
@@ -208,7 +211,7 @@ def parse_tools(
                     "available_count": available_count,
                     "has_enough_materials": has_enough_materials,
                     "can_upgrade": can_upgrade,
-                    "icon_url": next_icon_file.lstrip("/") if next_icon_file else None,
+                    "icon_url": f"/{next_icon_file.lstrip('/')}" if next_icon_file else None,
                 }
 
         tools_data.append(
@@ -223,7 +226,7 @@ def parse_tools(
                 "current_tier": {
                     "name": current_tier_data["name"],
                     "perks": current_tier_data.get("perks", ""),
-                    "icon_url": icon_file.lstrip("/") if icon_file else None,
+                    "icon_url": f"/{icon_file.lstrip('/')}" if icon_file else None,
                 },
                 "next_tier": next_tier_data,
             }

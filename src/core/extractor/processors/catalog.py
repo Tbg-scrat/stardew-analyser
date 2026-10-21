@@ -55,7 +55,12 @@ def process_catalog(temp_unpacked_dir: str, config: dict, cache_dir: str) -> int
         if not isinstance(item_data, dict):
             continue
         
-        sprite_index = item_data.get("SpriteIndex")
+        # Prioritize MenuSpriteIndex (UI inventory icon) over SpriteIndex (world animation frame)
+        menu_idx = item_data.get("MenuSpriteIndex", -1)
+        if isinstance(menu_idx, int) and menu_idx >= 0:
+            sprite_index = menu_idx
+        else:
+            sprite_index = item_data.get("SpriteIndex")
         if sprite_index is None or sprite_index < 0:
             continue
 

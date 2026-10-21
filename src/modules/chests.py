@@ -82,6 +82,7 @@ def _parse_item_node(item_node):
 
     sprite_key = obj_info.get("sprite_key")
     resolved_prefix = obj_info.get("prefix") or raw_prefix
+    icon = obj_info.get("icon")
 
     if not name:
         logger.debug(
@@ -116,6 +117,7 @@ def _parse_item_node(item_node):
         "qualified_id": qualified_id,
         "prefix": resolved_prefix,
         "sprite_key": sprite_key,
+        "icon": icon,
         "name": name,
         "stack": stack,
         "quality": quality,
@@ -235,6 +237,7 @@ def parse_chests(root, object_map=None):
             stack = item.get("stack", 1)
             sprite_key = item.get("sprite_key", "")
             prefix = item.get("prefix", "items")
+            icon = item.get("icon", "")
 
             if item_name not in material_totals:
                 material_totals[item_name] = {
@@ -242,6 +245,7 @@ def parse_chests(root, object_map=None):
                     "count": 0,
                     "prefix": prefix,
                     "sprite_key": sprite_key,
+                    "icon": icon,
                 }
 
             material_totals[item_name]["count"] += stack
