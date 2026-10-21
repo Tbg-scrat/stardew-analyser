@@ -16,7 +16,10 @@ def calculate_days_remaining(crop_node) -> dict:
     Calculates remaining days until harvest for a crop based on XML node fields.
     Returns a dict with 'days_to_harvest', 'is_recurring', 'fully_grown', and 'harvest_id'.
     """
-    harvest_id = qualify_item_id(crop_node.findtext("indexOfHarvest")) if crop_node is not None else None
+    raw_harvest_id = crop_node.findtext("indexOfHarvest") if crop_node is not None else None
+    # STRICT DOMAIN SCOPING: Crops always yield standard objects (O)
+    harvest_id = f"(O){raw_harvest_id}" if raw_harvest_id and not raw_harvest_id.startswith("(") else raw_harvest_id
+    
     try:
         current_phase = int(crop_node.findtext("currentPhase", "0"))
         day_of_phase = int(crop_node.findtext("dayOfCurrentPhase", "0"))
@@ -109,11 +112,14 @@ def parse_crops_from_location(
         if crop_node is None:
             continue
 
-        harvest_id = crop_node.findtext("indexOfHarvest")
+        raw_harvest_id = crop_node.findtext("indexOfHarvest")
 
         # Skip unplanted, harvested, or invalid crop slots
-        if not harvest_id or harvest_id in ("None", "-1", ""):
+        if not raw_harvest_id or raw_harvest_id in ("None", "-1", ""):
             continue
+
+        # STRICT DOMAIN SCOPING: Explicitly bind crop harvest ID to object domain (O)
+        harvest_id = f"(O){raw_harvest_id}" if not raw_harvest_id.startswith("(") else raw_harvest_id
 
         lifecycle = calculate_days_remaining(crop_node)
         days_left = lifecycle["days_to_harvest"]
@@ -231,3 +237,4 @@ def parse_all_crops_from_save(root, current_day=1) -> dict:
             "ginger_island": island_data,
         },
     }
+    

@@ -39,6 +39,7 @@ def parse_cooking(player):
         val_node = item.find("value")
 
         if key_node is not None:
+            # Extract pure ID, stripping any existing (O) just in case
             raw_key = "".join(key_node.itertext()).strip().replace("(O)", "")
 
             count = 0
@@ -72,7 +73,6 @@ def get_formatted_cooking(player, catalog=None):
         catalog = COOKING_CATALOG
 
     raw_cooking = parse_cooking(player)
-    cooking_save_map = {qualify_item_id(k): v for k, v in raw_cooking.items()}
 
     cooking_mapped = []
     catalog_items = catalog.items() if isinstance(catalog, dict) else []
@@ -82,12 +82,15 @@ def get_formatted_cooking(player, catalog=None):
         if not isinstance(catalog_item, dict):
             unmapped_count += 1
             continue
-
-        count = cooking_save_map.get(str(item_id), 0)
+        
+        # 1. Lookup count using the pure ID
+        count = raw_cooking.get(str(item_id), 0)
         is_cooked = count > 0
         item_name = catalog_item.get("name", f"Recipe {item_id}")
 
-        obj_info = get_object_info(item_id, fallback_name=item_name)
+        # 2. Add the strict prefix ONLY for the global object metadata lookup
+        qualified_catalog_id = f"(O){item_id}"
+        obj_info = get_object_info(qualified_catalog_id, fallback_name=item_name)
 
         cooking_mapped.append(
             {

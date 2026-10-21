@@ -1,0 +1,74 @@
+{
+  "504": {
+    "name": "Sneakers",
+    "description": "A little flimsy... but fashionable!"
+  },
+  "505": {
+    "name": "Rubber Boots",
+    "description": "Protection from the elements."
+  },
+  "506": {
+    "name": "Leather Boots",
+    "description": "The leather is very supple."
+  },
+  "507": {
+    "name": "Work Boots",
+    "description": "Steel-toed for extra protection."
+  },
+  "508": {
+    "name": "Combat Boots",
+    "description": "Reinforced with iron mesh."
+  },
+  "509": {
+    "name": "Tundra Boots",
+    "description": "The fuzzy lining keeps your ankles so warm."
+  },
+  "510": {
+    "name": "Thermal Boots",
+    "description": "Designed with extreme weather in mind."
+  },
+  "511": {
+    "name": "Dark Boots",
+    "description": "Made from thick black leather."
+  },
+  "512": {
+    "name": "Firewalker Boots",
+    "description": "It's said these can withstand the hottest magma."
+  },
+  "513": {
+    "name": "Genie Shoes",
+    "description": "A curious energy permeates the fabric."
+  },
+  "514": {
+    "name": "Space Boots",
+    "description": "An iridium weave gives them a purple sheen."
+  },
+  "515": {
+    "name": "Cowboy Boots",
+    "description": "It's the height of country fashion."
+  },
+  "804": {
+    "name": "Emily's Magic Boots",
+    "description": "Made with love by Emily. 100% compostable!"
+  },
+  "806": {
+    "name": "Leprechaun Shoes",
+    "description": "The buckle's made of solid gold."
+  },
+  "853": {
+    "name": "Cinderclown Shoes",
+    "description": "These magic shoes belonged to a famous Dwarvish jester."
+  },
+  "854": {
+    "name": "Mermaid Boots",
+    "description": "Mermaid scales gives these boots a protective aura."
+  },
+  "855": {
+    "name": "Dragonscale Boots",
+    "description": "These shimmering boots are extremely tough."
+  },
+  "878": {
+    "name": "Crystal Shoes",
+    "description": "These sparkling shoes will keep your feet very safe."
+  }
+}

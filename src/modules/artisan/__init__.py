@@ -20,13 +20,14 @@ def parse_all_artisan_goods(root, player=None):
     """
     start_time = time.perf_counter()
 
-    # 1. Parse Sub-modules
     casks_data = parse_all_casks_from_save(root, player) or {
-        "total_casks": 0,
-        "empty_casks": 0,
+        "total": 0,
+        "idle": 0,
         "ready_today": 0,
         "ready_tomorrow": 0,
-        "aging_count": 0,
+        "processing": 0,
+        "idle_locations": {},
+        "location_stats": {},
         "batches": [],
     }
     kegs_data = parse_all_kegs_from_save(root) or {
@@ -36,6 +37,7 @@ def parse_all_artisan_goods(root, player=None):
         "ready_tomorrow": 0,
         "processing": 0,
         "idle_locations": {},
+        "location_stats": {},
         "batches": [],
     }
     jars_data = parse_all_jars_from_save(root) or {
@@ -45,6 +47,7 @@ def parse_all_artisan_goods(root, player=None):
         "ready_tomorrow": 0,
         "processing": 0,
         "idle_locations": {},
+        "location_stats": {},
         "batches": [],
     }
     dehydrators_data = parse_all_dehydrators_from_save(root) or {
@@ -54,6 +57,7 @@ def parse_all_artisan_goods(root, player=None):
         "ready_tomorrow": 0,
         "processing": 0,
         "idle_locations": {},
+        "location_stats": {},
         "batches": [],
     }
     bee_houses_data = parse_all_bee_houses_from_save(root) or {
@@ -64,11 +68,11 @@ def parse_all_artisan_goods(root, player=None):
         "ready_tomorrow": 0,
         "processing": 0,
         "idle_locations": {},
+        "location_stats": {},
         "batches": [],
     }
 
-    # 2. Grand Totals Calculation
-    total_casks = casks_data.get("total_casks", 0)
+    total_casks = casks_data.get("total", casks_data.get("total_casks", 0))
     total_kegs = kegs_data.get("total", 0)
     total_jars = jars_data.get("total", 0)
     total_dehydrators = dehydrators_data.get("total", 0)
@@ -95,7 +99,7 @@ def parse_all_artisan_goods(root, player=None):
     )
 
     total_processing = (
-        casks_data.get("aging_count", 0)
+        casks_data.get("processing", casks_data.get("aging_count", 0))
         + kegs_data.get("processing", 0)
         + jars_data.get("processing", 0)
         + dehydrators_data.get("processing", 0)
@@ -103,7 +107,7 @@ def parse_all_artisan_goods(root, player=None):
     )
 
     total_idle = (
-        casks_data.get("empty_casks", 0)
+        casks_data.get("idle", casks_data.get("empty_casks", 0))
         + kegs_data.get("idle", 0)
         + jars_data.get("idle", 0)
         + dehydrators_data.get("idle", 0)
@@ -112,7 +116,6 @@ def parse_all_artisan_goods(root, player=None):
 
     total_hibernating = bee_houses_data.get("hibernating", 0)
 
-    # 3. Global Idle Summary Aggregation
     idle_summary = {}
 
     def _add_idle(location, machine_type, count):
@@ -122,8 +125,8 @@ def parse_all_artisan_goods(root, player=None):
             idle_summary[location] = {}
         idle_summary[location][machine_type] = count
 
-    if casks_data.get("empty_casks", 0) > 0:
-        _add_idle("Cellar", "casks", casks_data["empty_casks"])
+    for loc, count in casks_data.get("idle_locations", {}).items():
+        _add_idle(loc, "casks", count)
 
     for loc, count in kegs_data.get("idle_locations", {}).items():
         _add_idle(loc, "kegs", count)
@@ -167,3 +170,4 @@ def parse_all_artisan_goods(root, player=None):
         "bee_houses": bee_houses_data,
         "idle_summary": idle_summary,
     }
+    

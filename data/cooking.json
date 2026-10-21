@@ -1,314 +1,257 @@
 {
-  "O_194": {
-    "id": "O_194",
+  "194": {
     "name": "Fried Egg"
   },
-  "O_195": {
-    "id": "O_195",
+  "195": {
     "name": "Omelet"
   },
-  "O_196": {
-    "id": "O_196",
+  "196": {
     "name": "Salad"
   },
-  "O_197": {
-    "id": "O_197",
+  "197": {
     "name": "Cheese Cauliflower"
   },
-  "O_198": {
-    "id": "O_198",
+  "198": {
     "name": "Baked Fish"
   },
-  "O_199": {
-    "id": "O_199",
+  "199": {
     "name": "Parsnip Soup"
   },
-  "O_200": {
-    "id": "O_200",
+  "200": {
     "name": "Vegetable Medley"
   },
-  "O_201": {
-    "id": "O_201",
+  "201": {
     "name": "Complete Breakfast"
   },
-  "O_202": {
-    "id": "O_202",
+  "202": {
     "name": "Fried Calamari"
   },
-  "O_203": {
-    "id": "O_203",
+  "203": {
     "name": "Strange Bun"
   },
-  "O_204": {
-    "id": "O_204",
+  "204": {
     "name": "Lucky Lunch"
   },
-  "O_205": {
-    "id": "O_205",
+  "205": {
     "name": "Fried Mushroom"
   },
-  "O_206": {
-    "id": "O_206",
+  "206": {
     "name": "Pizza"
   },
-  "O_207": {
-    "id": "O_207",
+  "207": {
     "name": "Bean Hotpot"
   },
-  "O_208": {
-    "id": "O_208",
+  "208": {
     "name": "Glazed Yams"
   },
-  "O_209": {
-    "id": "O_209",
+  "209": {
     "name": "Carp Surprise"
   },
-  "O_210": {
-    "id": "O_210",
+  "210": {
     "name": "Hashbrowns"
   },
-  "O_211": {
-    "id": "O_211",
+  "211": {
     "name": "Pancakes"
   },
-  "O_212": {
-    "id": "O_212",
+  "212": {
     "name": "Salmon Dinner"
   },
-  "O_213": {
-    "id": "O_213",
+  "213": {
     "name": "Fish Taco"
   },
-  "O_214": {
-    "id": "O_214",
+  "214": {
     "name": "Crispy Bass"
   },
-  "O_215": {
-    "id": "O_215",
+  "215": {
     "name": "Pepper Poppers"
   },
-  "O_216": {
-    "id": "O_216",
+  "216": {
     "name": "Bread"
   },
-  "O_218": {
-    "id": "O_218",
+  "218": {
     "name": "Tom Kha Soup"
   },
-  "O_219": {
-    "id": "O_219",
+  "219": {
     "name": "Trout Soup"
   },
-  "O_220": {
-    "id": "O_220",
+  "220": {
     "name": "Chocolate Cake"
   },
-  "O_221": {
-    "id": "O_221",
+  "221": {
     "name": "Pink Cake"
   },
-  "O_222": {
-    "id": "O_222",
+  "222": {
     "name": "Rhubarb Pie"
   },
-  "O_223": {
-    "id": "O_223",
-    "name": "Cookies"
+  "223": {
+    "name": "Cookie"
   },
-  "O_224": {
-    "id": "O_224",
+  "224": {
     "name": "Spaghetti"
   },
-  "O_225": {
-    "id": "O_225",
+  "225": {
     "name": "Fried Eel"
   },
-  "O_226": {
-    "id": "O_226",
+  "226": {
     "name": "Spicy Eel"
   },
-  "O_227": {
-    "id": "O_227",
+  "227": {
     "name": "Sashimi"
   },
-  "O_228": {
-    "id": "O_228",
+  "228": {
     "name": "Maki Roll"
   },
-  "O_229": {
-    "id": "O_229",
+  "229": {
     "name": "Tortilla"
   },
-  "O_230": {
-    "id": "O_230",
+  "230": {
     "name": "Red Plate"
   },
-  "O_231": {
-    "id": "O_231",
+  "231": {
     "name": "Eggplant Parmesan"
   },
-  "O_232": {
-    "id": "O_232",
+  "232": {
     "name": "Rice Pudding"
   },
-  "O_233": {
-    "id": "O_233",
+  "233": {
     "name": "Ice Cream"
   },
-  "O_234": {
-    "id": "O_234",
+  "234": {
     "name": "Blueberry Tart"
   },
-  "O_235": {
-    "id": "O_235",
+  "235": {
     "name": "Autumn's Bounty"
   },
-  "O_236": {
-    "id": "O_236",
+  "236": {
     "name": "Pumpkin Soup"
   },
-  "O_237": {
-    "id": "O_237",
+  "237": {
     "name": "Super Meal"
   },
-  "O_238": {
-    "id": "O_238",
+  "238": {
     "name": "Cranberry Sauce"
   },
-  "O_239": {
-    "id": "O_239",
+  "239": {
     "name": "Stuffing"
   },
-  "O_240": {
-    "id": "O_240",
+  "240": {
     "name": "Farmer's Lunch"
   },
-  "O_241": {
-    "id": "O_241",
+  "241": {
     "name": "Survival Burger"
   },
-  "O_242": {
-    "id": "O_242",
+  "242": {
     "name": "Dish O' The Sea"
   },
-  "O_243": {
-    "id": "O_243",
+  "243": {
     "name": "Miner's Treat"
   },
-  "O_244": {
-    "id": "O_244",
+  "244": {
     "name": "Roots Platter"
   },
-  "O_253": {
-    "id": "O_253",
+  "253": {
     "name": "Triple Shot Espresso"
   },
-  "O_604": {
-    "id": "O_604",
+  "279": {
+    "name": "Magic Rock Candy"
+  },
+  "456": {
+    "name": "Algae Soup"
+  },
+  "457": {
+    "name": "Pale Broth"
+  },
+  "604": {
     "name": "Plum Pudding"
   },
-  "O_605": {
-    "id": "O_605",
+  "605": {
     "name": "Artichoke Dip"
   },
-  "O_606": {
-    "id": "O_606",
+  "606": {
     "name": "Stir Fry"
   },
-  "O_607": {
-    "id": "O_607",
+  "607": {
     "name": "Roasted Hazelnuts"
   },
-  "O_608": {
-    "id": "O_608",
+  "608": {
     "name": "Pumpkin Pie"
   },
-  "O_609": {
-    "id": "O_609",
+  "609": {
     "name": "Radish Salad"
   },
-  "O_610": {
-    "id": "O_610",
+  "610": {
     "name": "Fruit Salad"
   },
-  "O_611": {
-    "id": "O_611",
+  "611": {
     "name": "Blackberry Cobbler"
   },
-  "O_612": {
-    "id": "O_612",
+  "612": {
     "name": "Cranberry Candy"
   },
-  "O_618": {
-    "id": "O_618",
+  "618": {
     "name": "Bruschetta"
   },
-  "O_648": {
-    "id": "O_648",
+  "648": {
     "name": "Coleslaw"
   },
-  "O_649": {
-    "id": "O_649",
+  "649": {
     "name": "Fiddlehead Risotto"
   },
-  "O_651": {
-    "id": "O_651",
+  "651": {
     "name": "Poppyseed Muffin"
   },
-  "O_727": {
-    "id": "O_727",
+  "727": {
     "name": "Chowder"
   },
-  "O_728": {
-    "id": "O_728",
-    "name": "Fish Stew"
-  },
-  "O_729": {
-    "id": "O_729",
-    "name": "Escargot"
-  },
-  "O_730": {
-    "id": "O_730",
+  "730": {
     "name": "Lobster Bisque"
   },
-  "O_731": {
-    "id": "O_731",
+  "728": {
+    "name": "Fish Stew"
+  },
+  "729": {
+    "name": "Escargot"
+  },
+  "731": {
     "name": "Maple Bar"
   },
-  "O_732": {
-    "id": "O_732",
+  "732": {
     "name": "Crab Cakes"
   },
-  "O_733": {
-    "id": "O_733",
+  "733": {
     "name": "Shrimp Cocktail"
   },
-  "O_903": {
-    "id": "O_903",
+  "772": {
+    "name": "Oil of Garlic"
+  },
+  "773": {
+    "name": "Life Elixir"
+  },
+  "265": {
+    "name": "Seafoam Pudding"
+  },
+  "873": {
+    "name": "Pi\u00f1a Colada"
+  },
+  "903": {
     "name": "Ginger Ale"
   },
-  "O_904": {
-    "id": "O_904",
+  "904": {
     "name": "Banana Pudding"
   },
-  "O_905": {
-    "id": "O_905",
+  "905": {
     "name": "Mango Sticky Rice"
   },
-  "O_906": {
-    "id": "O_906",
+  "906": {
     "name": "Poi"
   },
-  "O_907": {
-    "id": "O_907",
+  "907": {
     "name": "Tropical Curry"
   },
-  "O_921": {
-    "id": "O_921",
+  "921": {
     "name": "Squid Ink Ravioli"
   },
-  "O_Moss_Soup": {
-    "id": "O_Moss_Soup",
+  "MossSoup": {
     "name": "Moss Soup"
   }
 }

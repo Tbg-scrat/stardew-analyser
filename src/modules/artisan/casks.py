@@ -1,47 +1,26 @@
 # src/modules/artisan/casks.py
 
-import json
 import logging
 import time
-from pathlib import Path
+
+from src.modules.artisan.utils import (
+    QUALITY_MAP,
+    get_all_locations,
+    resolve_item_icon,
+)
 
 logger = logging.getLogger(__name__)
-
-# Load artisan color mapping
-ARTISAN_COLORS_FILE = Path("data/artisan_colors.json")
-ARTISAN_COLORS = {}
-if ARTISAN_COLORS_FILE.exists():
-    try:
-        with open(ARTISAN_COLORS_FILE, "r", encoding="utf-8") as f:
-            ARTISAN_COLORS = json.load(f)
-    except Exception as e:
-        logger.warning(f"Could not load artisan colors map: {e}")
-
-QUALITY_MAP = {0: "Normal", 1: "Silver", 2: "Gold", 4: "Iridium"}
-
-
-def resolve_item_icon(item_name):
-    """
-    Returns local sprite filename for color-mapped artisan goods or
-    defaults to local cache item path.
-    """
-    name_lower = item_name.lower().strip()
-
-    if name_lower in ARTISAN_COLORS:
-        return ARTISAN_COLORS[name_lower]
-
-    return f"O_{item_name.replace(' ', '_')}.png"
 
 
 def parse_casks(location_elem):
     """
     Parses active Cask objects inside a Cellar location element.
     """
-    total_casks = 0
-    empty_casks = 0
+    total = 0
+    idle = 0
     ready_today = 0
     ready_tomorrow = 0
-    aging_count = 0
+    processing = 0
 
     parsed_items = []
 
@@ -68,11 +47,10 @@ def parse_casks(location_elem):
         is_big_craftable = obj.findtext("bigCraftable", "").lower() == "true"
         parent_index = obj.findtext("parentSheetIndex", "")
 
-        # Genuine aging Casks have xsi:type="Cask" or (bigCraftable=true AND parentSheetIndex=163)
         if obj_type != "Cask" and not (is_big_craftable and parent_index == "163"):
             continue
 
-        total_casks += 1
+        total += 1
 
         held = obj.find("heldObject")
         is_nil = (
@@ -81,7 +59,7 @@ def parse_casks(location_elem):
         )
 
         if held is None or is_nil:
-            empty_casks += 1
+            idle += 1
             continue
 
         item_name = (
@@ -109,10 +87,11 @@ def parse_casks(location_elem):
             is_ready = True
             days_remaining = 0
         else:
-            aging_count += 1
             is_ready = False
             if days_remaining == 1:
                 ready_tomorrow += 1
+            else:
+                processing += 1
 
         parsed_items.append(
             {
@@ -125,7 +104,7 @@ def parse_casks(location_elem):
             }
         )
 
-    if total_casks == 0:
+    if total == 0:
         logger.debug("No valid Cask objects found inside Cellar")
         return None
 
@@ -153,11 +132,11 @@ def parse_casks(location_elem):
     )
 
     return {
-        "total_casks": total_casks,
-        "empty_casks": empty_casks,
+        "total": total,
+        "idle": idle,
         "ready_today": ready_today,
         "ready_tomorrow": ready_tomorrow,
-        "aging_count": aging_count,
+        "processing": processing,
         "batches": batches,
     }
 
@@ -165,19 +144,20 @@ def parse_casks(location_elem):
 def parse_all_casks_from_save(root, player=None):
     """
     Parses active Cellar casks for the main host player.
-    Secondary template cellars (Cellar2..Cellar8) are disregarded.
+    Standardized schema matching kegs, jars, dehydrators, and bee houses.
     """
     start_time = time.perf_counter()
     aggregated_result = {
-        "total_casks": 0,
-        "empty_casks": 0,
+        "total": 0,
+        "idle": 0,
         "ready_today": 0,
         "ready_tomorrow": 0,
-        "aging_count": 0,
+        "processing": 0,
+        "idle_locations": {},
+        "location_stats": {},
         "batches": [],
     }
 
-    # Verify Host House Upgrade Level (Level 3 = Cellar Upgrade)
     house_level = 0
     if player is not None:
         try:
@@ -200,18 +180,28 @@ def parse_all_casks_from_save(root, player=None):
         loc_type = loc.get("{http://www.w3.org/2001/XMLSchema-instance}type", "")
         loc_name = loc.findtext("name", "")
 
-        # Target primary host cellar only
         if loc_name != "Cellar" or loc_type != "Cellar":
             continue
 
         cask_data = parse_casks(loc)
         if cask_data:
-            aggregated_result["total_casks"] += cask_data["total_casks"]
-            aggregated_result["empty_casks"] += cask_data["empty_casks"]
+            aggregated_result["total"] += cask_data["total"]
+            aggregated_result["idle"] += cask_data["idle"]
             aggregated_result["ready_today"] += cask_data["ready_today"]
             aggregated_result["ready_tomorrow"] += cask_data["ready_tomorrow"]
-            aggregated_result["aging_count"] += cask_data["aging_count"]
+            aggregated_result["processing"] += cask_data["processing"]
             aggregated_result["batches"].extend(cask_data["batches"])
+
+            if cask_data["idle"] > 0:
+                aggregated_result["idle_locations"]["Cellar"] = cask_data["idle"]
+
+            aggregated_result["location_stats"]["Cellar"] = {
+                "total": cask_data["total"],
+                "idle": cask_data["idle"],
+                "ready": cask_data["ready_today"],
+                "ready_tomorrow": cask_data["ready_tomorrow"],
+                "processing": cask_data["processing"],
+            }
 
     final_batch_map = {}
     for b in aggregated_result["batches"]:
@@ -227,8 +217,8 @@ def parse_all_casks_from_save(root, player=None):
 
     elapsed_ms = (time.perf_counter() - start_time) * 1000
     logger.debug(
-        f"Cellar: {aggregated_result['total_casks']} Casks "
-        f"({aggregated_result['aging_count']} aging, {aggregated_result['empty_casks']} empty, "
+        f"Cellar: {aggregated_result['total']} Casks "
+        f"({aggregated_result['processing']} aging, {aggregated_result['idle']} empty, "
         f"{aggregated_result['ready_today']} ready) parsed in {elapsed_ms:.2f}ms"
     )
 

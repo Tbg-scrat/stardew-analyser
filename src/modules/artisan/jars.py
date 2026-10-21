@@ -1,67 +1,21 @@
 # src/modules/artisan/jars.py
 
-import json
 import logging
 import math
 import time
-from pathlib import Path
+
+from src.modules.artisan.utils import (
+    QUALITY_MAP,
+    get_all_locations,
+    resolve_item_icon,
+)
 
 logger = logging.getLogger(__name__)
-
-# Load artisan color mapping
-ARTISAN_COLORS_FILE = Path("data/artisan_colors.json")
-ARTISAN_COLORS = {}
-if ARTISAN_COLORS_FILE.exists():
-    try:
-        with open(ARTISAN_COLORS_FILE, "r", encoding="utf-8") as f:
-            ARTISAN_COLORS = json.load(f)
-    except Exception as e:
-        logger.warning(f"Could not load artisan colors map: {e}")
-
-QUALITY_MAP = {0: "Normal", 1: "Silver", 2: "Gold", 4: "Iridium"}
-
-
-def resolve_item_icon(item_name):
-    """
-    Returns local sprite filename for color-mapped artisan goods or
-    defaults to local cache item path.
-    """
-    name_lower = item_name.lower().strip()
-    if name_lower in ARTISAN_COLORS:
-        return ARTISAN_COLORS[name_lower]
-    return f"O_{item_name.replace(' ', '_')}.png"
-
-
-def _get_all_locations(root):
-    """
-    Recursively scans all GameLocations, including building interiors
-    (Sheds, Barns, Coops, Cellar).
-    """
-    locations_node = root.find("locations")
-    if locations_node is None:
-        return
-
-    def _traverse_location(loc_elem, default_name="Unknown"):
-        loc_name = loc_elem.findtext("name") or default_name
-        yield loc_name, loc_elem
-
-        buildings = loc_elem.find("buildings")
-        if buildings is not None:
-            for b_idx, building in enumerate(buildings.findall("Building")):
-                b_type = building.findtext("buildingType") or "Building"
-                indoors = building.find("indoors")
-                if indoors is not None:
-                    indoor_name = indoors.findtext("name") or f"{b_type} #{b_idx + 1}"
-                    yield from _traverse_location(indoors, indoor_name)
-
-    for loc in locations_node.findall("GameLocation"):
-        yield from _traverse_location(loc)
 
 
 def parse_all_jars_from_save(root):
     """
     Parses all Preserves Jar objects across all locations in the save.
-    Preserves Jar QualifiedItemId: (BC)15 or name=="Preserves Jar" or parentSheetIndex=="15".
     """
     start_time = time.perf_counter()
 
@@ -75,17 +29,17 @@ def parse_all_jars_from_save(root):
     idle_locations = {}
     location_stats = {}
 
-    all_locs = list(_get_all_locations(root))
+    all_locs = list(get_all_locations(root))
     logger.debug(
         f"Scanning {len(all_locs)} location nodes (including building interiors) for Preserves Jars"
     )
 
-    for loc_name, loc_elem in all_locs:
+    for loc_name, loc_elem, _ in all_locs:
         objects_node = loc_elem.find("objects")
         if objects_node is None:
             continue
 
-        loc_total, loc_idle, loc_ready, loc_proc = 0, 0, 0, 0
+        loc_total, loc_idle, loc_ready, loc_ready_tomorrow, loc_proc = 0, 0, 0, 0, 0
 
         for item in objects_node.findall("item"):
             val = item.find("value")
@@ -101,7 +55,6 @@ def parse_all_jars_from_save(root):
             q_id = obj.findtext("QualifiedItemId", "")
             is_big_craftable = obj.findtext("bigCraftable", "").lower() == "true"
 
-            # Preserves Jar Identification: (BC)15 or name == "Preserves Jar"
             is_jar = (
                 obj_name == "Preserves Jar"
                 or q_id in ["(BC)15", "(BC)PreservesJar"]
@@ -159,7 +112,7 @@ def parse_all_jars_from_save(root):
                 loc_ready += 1
             elif days_remaining == 1:
                 ready_tomorrow += 1
-                loc_proc += 1
+                loc_ready_tomorrow += 1
             else:
                 processing += 1
                 loc_proc += 1
@@ -182,12 +135,9 @@ def parse_all_jars_from_save(root):
                 "total": loc_total,
                 "idle": loc_idle,
                 "ready": loc_ready,
+                "ready_tomorrow": loc_ready_tomorrow,
                 "processing": loc_proc,
             }
-            logger.debug(
-                f"{loc_name}: {loc_total} Preserves Jars "
-                f"({loc_proc} processing, {loc_idle} idle, {loc_ready} ready)"
-            )
 
     sorted_batches = sorted(
         list(batch_map.values()), key=lambda b: (b["days_remaining"], b["name"])

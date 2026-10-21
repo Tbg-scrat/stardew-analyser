@@ -52,7 +52,7 @@ def _parse_item_node(item_node):
     elif item_xsi_type == "Ring":
         default_prefix = "(R)"
     elif item_xsi_type == "Boots":
-        default_prefix = "(P)"
+        default_prefix = "(B)"
     elif item_xsi_type == "Hat":
         default_prefix = "(H)"
     elif item_xsi_type == "Furniture":
@@ -63,27 +63,23 @@ def _parse_item_node(item_node):
         default_prefix = "(FL)"
     elif item_xsi_type == "Clothing":
         default_prefix = "(S)"
-
     else:
         raise ValueError(f"Unrecognized item xsi:type '{item_xsi_type}' for item ID: {item_id}")
 
-    # FIX: Restored trust in the "0" item_id. 0 is a valid ID for weapons (Rusty Sword) and objects (Weeds).
     xml_name = item_node.findtext("name")
     identifier = item_id if item_id else (xml_name or "0")
 
     qualified_id = item_node.findtext("QualifiedItemId") or f"{default_prefix}{identifier}"
 
-    # Extract the prefix strictly for image routing (e.g., "(BC)130" -> "BC", "(O)388" -> "O")
-    # If no valid prefix is found, default to "items" for backward compatibility
+    # Extract the prefix strictly for image routing
     raw_prefix = "items"
     if qualified_id.startswith("(") and ")" in qualified_id:
         raw_prefix = qualified_id.split(")")[0].replace("(", "")
 
-    # Pass qualified_id into reference_data lookup
+    # Pass strictly qualified_id into reference_data lookup
     obj_info = get_object_info(qualified_id, fallback_name=xml_name)
     name = obj_info.get("name")
 
-    # FIX: Removed redundant string replacements; trust reference_data to provide the clean sprite_key
     sprite_key = obj_info.get("sprite_key")
     resolved_prefix = obj_info.get("prefix") or raw_prefix
 
@@ -185,9 +181,6 @@ def _extract_raw_chests(root):
                 a = color_node.findtext("A") or "255"
                 if (r, g, b) != ("0", "0", "0"):
                     chest_color = f"rgba({r}, {g}, {b}, {int(a) / 255})"
-                    logger.debug(
-                        f"Custom chest color parsed at {loc_name} ({tile_x},{tile_y}): {chest_color}"
-                    )
 
             chest_items = []
             items_container = obj.find("items")
@@ -216,10 +209,6 @@ def _extract_raw_chests(root):
                 }
             )
 
-    logger.debug(
-        f"Extracted {total_chests} chests containing {total_items} total item units "
-        f"({empty_slots} empty slots) across {len(locations)} locations"
-    )
     return {
         "total_chests": total_chests,
         "total_items": total_items,
@@ -259,12 +248,6 @@ def parse_chests(root, object_map=None):
 
     sorted_materials = sorted(
         material_totals.values(), key=lambda x: x["count"], reverse=True
-    )
-
-    elapsed_ms = (time.perf_counter() - start_time) * 1000
-    logger.debug(
-        f"Aggregated {len(sorted_materials)} unique material types from "
-        f"{raw_chests.get('total_chests', 0)} chests in {elapsed_ms:.2f}ms"
     )
 
     return {

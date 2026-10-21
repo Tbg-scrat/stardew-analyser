@@ -1,70 +1,23 @@
 # src/modules/artisan/bee_houses.py
 
-import json
 import logging
 import math
 import time
-from pathlib import Path
+
+from src.modules.artisan.utils import (
+    QUALITY_MAP,
+    get_all_locations,
+    resolve_item_icon,
+)
 
 logger = logging.getLogger(__name__)
-
-# Load artisan color mapping
-ARTISAN_COLORS_FILE = Path("data/artisan_colors.json")
-ARTISAN_COLORS = {}
-if ARTISAN_COLORS_FILE.exists():
-    try:
-        with open(ARTISAN_COLORS_FILE, "r", encoding="utf-8") as f:
-            ARTISAN_COLORS = json.load(f)
-    except Exception as e:
-        logger.warning(f"Could not load artisan colors map: {e}")
-
-QUALITY_MAP = {0: "Normal", 1: "Silver", 2: "Gold", 4: "Iridium"}
-
-
-def resolve_item_icon(item_name):
-    """
-    Returns local sprite filename for color-mapped artisan goods or
-    defaults to local cache item path.
-    """
-    name_lower = item_name.lower().strip()
-    if name_lower in ARTISAN_COLORS:
-        return ARTISAN_COLORS[name_lower]
-    return f"O_{item_name.replace(' ', '_')}.png"
-
-
-def _get_all_locations(root):
-    """
-    Recursively scans all GameLocations, including building interiors.
-    """
-    locations_node = root.find("locations")
-    if locations_node is None:
-        return
-
-    def _traverse_location(loc_elem, default_name="Unknown", is_indoor=False):
-        loc_name = loc_elem.findtext("name") or default_name
-        is_outdoor = (
-            loc_elem.findtext("isOutdoors", "false").lower() == "true" and not is_indoor
-        )
-        yield loc_name, loc_elem, is_outdoor
-
-        buildings = loc_elem.find("buildings")
-        if buildings is not None:
-            for b_idx, building in enumerate(buildings.findall("Building")):
-                b_type = building.findtext("buildingType") or "Building"
-                indoors = building.find("indoors")
-                if indoors is not None:
-                    indoor_name = indoors.findtext("name") or f"{b_type} #{b_idx + 1}"
-                    yield from _traverse_location(indoors, indoor_name, is_indoor=True)
-
-    for loc in locations_node.findall("GameLocation"):
-        yield from _traverse_location(loc)
 
 
 def parse_all_bee_houses_from_save(root):
     """
     Parses all Bee House objects across all locations in the save.
-    In Winter, outdoor farm Bee Houses enter hibernation.
-    Ginger Island (IslandWest) produces year-round.
+    In Winter, outdoor farm Bee Houses enter hibernation unless holding unharvested honey.
+    Ginger Island (IslandWest, etc.) produces year-round.
     """
     start_time = time.perf_counter()
 
@@ -82,7 +35,7 @@ def parse_all_bee_houses_from_save(root):
     idle_locations = {}
     location_stats = {}
 
-    all_locs = list(_get_all_locations(root))
+    all_locs = list(get_all_locations(root))
     logger.debug(
         f"Scanning {len(all_locs)} location nodes for Bee Houses "
         f"(Season: {current_season.capitalize()}, Winter Hibernation Active: {is_winter})"
@@ -93,7 +46,14 @@ def parse_all_bee_houses_from_save(root):
         if objects_node is None:
             continue
 
-        loc_total, loc_idle, loc_hibernating, loc_ready, loc_proc = 0, 0, 0, 0, 0
+        loc_total, loc_idle, loc_hibernating, loc_ready, loc_ready_tomorrow, loc_proc = (
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+        )
 
         for item in objects_node.findall("item"):
             val = item.find("value")
@@ -127,31 +87,12 @@ def parse_all_bee_houses_from_save(root):
                 or held.get("{http://www.w3.org/2001/XMLSchema-instance}nil") == "true"
             )
 
-            # Winter Hibernation Rule: Outdoor farm Bee Houses pause in Winter unless on Ginger Island
             is_ginger_island = loc_name in [
                 "IslandWest",
                 "IslandNorth",
                 "IslandEast",
                 "IslandSouth",
             ]
-            if is_winter and is_outdoor and not is_ginger_island:
-                hibernating += 1
-                loc_hibernating += 1
-                continue
-
-            if is_nil:
-                idle += 1
-                loc_idle += 1
-                idle_locations[loc_name] = idle_locations.get(loc_name, 0) + 1
-                continue
-
-            item_name = held.findtext("displayName") or held.findtext("name") or "Honey"
-
-            try:
-                quality_raw = int(held.findtext("quality", "0"))
-            except ValueError:
-                quality_raw = 0
-            quality_name = QUALITY_MAP.get(quality_raw, "Normal")
 
             ready_for_harvest = (
                 obj.findtext("readyForHarvest", "false").lower() == "true"
@@ -162,19 +103,37 @@ def parse_all_bee_houses_from_save(root):
             except ValueError:
                 minutes_until_ready = 0
 
-            if ready_for_harvest or minutes_until_ready <= 0:
+            # Preserve unharvested honey produced prior to Winter
+            if not is_nil and (ready_for_harvest or minutes_until_ready <= 0):
                 days_remaining = 0
                 is_ready = True
+            elif is_winter and is_outdoor and not is_ginger_island:
+                hibernating += 1
+                loc_hibernating += 1
+                continue
+            elif is_nil:
+                idle += 1
+                loc_idle += 1
+                idle_locations[loc_name] = idle_locations.get(loc_name, 0) + 1
+                continue
             else:
                 is_ready = False
                 days_remaining = max(1, math.ceil(minutes_until_ready / 1600))
+
+            item_name = held.findtext("displayName") or held.findtext("name") or "Honey"
+
+            try:
+                quality_raw = int(held.findtext("quality", "0"))
+            except ValueError:
+                quality_raw = 0
+            quality_name = QUALITY_MAP.get(quality_raw, "Normal")
 
             if days_remaining == 0:
                 ready_today += 1
                 loc_ready += 1
             elif days_remaining == 1:
                 ready_tomorrow += 1
-                loc_proc += 1
+                loc_ready_tomorrow += 1
             else:
                 processing += 1
                 loc_proc += 1
@@ -198,12 +157,9 @@ def parse_all_bee_houses_from_save(root):
                 "idle": loc_idle,
                 "hibernating": loc_hibernating,
                 "ready": loc_ready,
+                "ready_tomorrow": loc_ready_tomorrow,
                 "processing": loc_proc,
             }
-            logger.debug(
-                f"{loc_name}: {loc_total} Bee Houses "
-                f"({loc_proc} processing, {loc_idle} idle, {loc_hibernating} hibernating, {loc_ready} ready)"
-            )
 
     sorted_batches = sorted(
         list(batch_map.values()), key=lambda b: (b["days_remaining"], b["name"])

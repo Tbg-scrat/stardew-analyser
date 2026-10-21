@@ -1,0 +1,74 @@
+{
+  "0": {
+    "name": "Farmer Pants",
+    "description": ""
+  },
+  "1": {
+    "name": "Shorts",
+    "description": ""
+  },
+  "2": {
+    "name": "Dress",
+    "description": ""
+  },
+  "3": {
+    "name": "Skirt",
+    "description": ""
+  },
+  "4": {
+    "name": "Pleated Skirt",
+    "description": ""
+  },
+  "5": {
+    "name": "Dinosaur Pants",
+    "description": ""
+  },
+  "6": {
+    "name": "Grass Skirt",
+    "description": ""
+  },
+  "7": {
+    "name": "Luau Skirt",
+    "description": ""
+  },
+  "8": {
+    "name": "Genie Pants",
+    "description": ""
+  },
+  "9": {
+    "name": "Tight Pants",
+    "description": ""
+  },
+  "10": {
+    "name": "Baggy Pants",
+    "description": ""
+  },
+  "11": {
+    "name": "Simple Dress",
+    "description": ""
+  },
+  "12": {
+    "name": "Relaxed Fit Pants",
+    "description": ""
+  },
+  "13": {
+    "name": "Relaxed Fit Shorts",
+    "description": ""
+  },
+  "14": {
+    "name": "Polka Dot Shorts",
+    "description": ""
+  },
+  "15": {
+    "name": "Trimmed Lucky Purple Shorts",
+    "description": ""
+  },
+  "998": {
+    "name": "Prismatic Pants",
+    "description": ""
+  },
+  "999": {
+    "name": "Prismatic Genie Pants",
+    "description": ""
+  }
+}
