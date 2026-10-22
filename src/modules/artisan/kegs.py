@@ -90,6 +90,8 @@ def parse_all_kegs_from_save(root):
                 or held.findtext("name")
                 or "Unknown Product"
             )
+            held_qid = held.findtext("QualifiedItemId") or held.findtext("parentSheetIndex", "0")
+
 
             try:
                 quality_raw = int(held.findtext("quality", "0"))
@@ -131,7 +133,7 @@ def parse_all_kegs_from_save(root):
                     "quality_name": quality_name,
                     "days_remaining": days_remaining,
                     "is_ready": is_ready,
-                    "image": resolve_item_icon(item_name),
+                    "image": resolve_item_icon(held_qid, fallback_name=item_name),
                     "count": 0,
                 }
             batch_map[batch_key]["count"] += 1

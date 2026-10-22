@@ -1,13 +1,24 @@
 # src/modules/artisan/utils.py
 
+from src.core.reference_data import get_object_info
+
 QUALITY_MAP = {0: "Normal", 1: "Silver", 2: "Gold", 4: "Iridium"}
 
 
-def resolve_item_icon(item_name):
+def resolve_item_icon(qualified_id, fallback_name=None):
     """
-    Returns standard sprite filename for artisan goods without external color map files.
+    Resolves the absolute image path directly from reference_data.
     """
-    return f"O_{item_name.replace(' ', '_')}.png"
+    if not qualified_id:
+        return "/static/img/placeholder.svg"
+        
+    obj_info = get_object_info(qualified_id, fallback_name=fallback_name)
+    icon_path = obj_info.get("icon")
+    
+    if not icon_path:
+        return "/static/img/placeholder.svg"
+        
+    return icon_path if icon_path.startswith("/") else f"/{icon_path}"
 
 
 def get_all_locations(root):

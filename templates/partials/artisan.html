@@ -290,6 +290,13 @@
             <img src="{{ batch.image }}" 
                  onerror="this.onerror=null; this.src='/static/img/placeholder.svg';" 
                  alt="{{ batch.name }}">
+            {% if batch.quality == 1 %}
+            <img src="/cache/img/items/silver_star.png" class="artisan-star-badge" alt="Silver Quality">
+            {% elif batch.quality == 2 %}
+            <img src="/cache/img/items/gold_star.png" class="artisan-star-badge" alt="Gold Quality">
+            {% elif batch.quality == 4 %}
+            <img src="/cache/img/items/iridium_star.png" class="artisan-star-badge" alt="Iridium Quality">
+            {% endif %}
             <span class="artisan-badge-count">{{ batch.count }}</span>
         </div>
         <div class="artisan-info">
@@ -318,6 +325,13 @@
             <img src="{{ batch.image }}" 
                  onerror="this.onerror=null; this.src='/static/img/placeholder.svg';" 
                  alt="{{ batch.name }}">
+            {% if batch.quality == 1 %}
+            <img src="/cache/img/items/silver_star.png" class="artisan-star-badge" alt="Silver Quality">
+            {% elif batch.quality == 2 %}
+            <img src="/cache/img/items/gold_star.png" class="artisan-star-badge" alt="Gold Quality">
+            {% elif batch.quality == 4 %}
+            <img src="/cache/img/items/iridium_star.png" class="artisan-star-badge" alt="Iridium Quality">
+            {% endif %}
             <span class="artisan-badge-count">{{ batch.count }}</span>
         </div>
         <div class="artisan-info">
@@ -346,6 +360,13 @@
             <img src="{{ batch.image }}" 
                  onerror="this.onerror=null; this.src='/static/img/placeholder.svg';" 
                  alt="{{ batch.name }}">
+            {% if batch.quality == 1 %}
+            <img src="/cache/img/items/silver_star.png" class="artisan-star-badge" alt="Silver Quality">
+            {% elif batch.quality == 2 %}
+            <img src="/cache/img/items/gold_star.png" class="artisan-star-badge" alt="Gold Quality">
+            {% elif batch.quality == 4 %}
+            <img src="/cache/img/items/iridium_star.png" class="artisan-star-badge" alt="Iridium Quality">
+            {% endif %}
             <span class="artisan-badge-count">{{ batch.count }}</span>
         </div>
         <div class="artisan-info">

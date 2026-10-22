@@ -65,6 +65,8 @@ def parse_casks(location_elem):
         item_name = (
             held.findtext("displayName") or held.findtext("name") or "Unknown Product"
         )
+        # Fixed: Pass raw parentSheetIndex or empty string so reference_data can safely use fallback_name
+        held_qid = held.findtext("QualifiedItemId") or held.findtext("parentSheetIndex", "0")
 
         try:
             quality_raw = int(held.findtext("quality", "0"))
@@ -100,7 +102,7 @@ def parse_casks(location_elem):
                 "quality_name": quality_name,
                 "days_remaining": days_remaining,
                 "is_ready": is_ready,
-                "image": resolve_item_icon(item_name),
+                "image": resolve_item_icon(held_qid, fallback_name=item_name),
             }
         )
 

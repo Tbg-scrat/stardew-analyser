@@ -199,14 +199,38 @@ def _get_object_lookup():
 
 def get_object_info(harvest_id: str, fallback_name: str = None) -> dict:
     if not harvest_id or str(harvest_id).strip() in ("None", "-1", ""):
+        if fallback_name:
+            lookup = _get_object_lookup()
+            clean_fallback = str(fallback_name).strip()
+            if clean_fallback in lookup:
+                return dict(lookup[clean_fallback])
+            if clean_fallback.lower() in lookup:
+                return dict(lookup[clean_fallback.lower()])
+                
         return {
             "name": "Wild / Unknown",
             "icon": "/static/img/placeholder.svg",
             "price": 0,
         }
 
-    raw_input = str(harvest_id).strip()
     lookup = _get_object_lookup()
+
+    # If harvest_id is purely numeric (like a color-mask parentSheetIndex e.g. '123') 
+    # but we have a fallback name, prioritize checking the fallback name first to prevent numeric collisions.
+    if str(harvest_id).strip().isdigit() and fallback_name:
+        clean_fallback = str(fallback_name).strip()
+        if clean_fallback in lookup:
+            return dict(lookup[clean_fallback])
+        if clean_fallback.lower() in lookup:
+            return dict(lookup[clean_fallback.lower()])
+        # Prioritize matching from the end of the name (e.g., "Wine" in "Ancient Fruit Wine")
+        for word in reversed(clean_fallback.split()):
+            if word in lookup:
+                return dict(lookup[word])
+            if word.capitalize() in lookup:
+                return dict(lookup[word.capitalize()])
+
+    raw_input = str(harvest_id).strip()
 
     if raw_input in lookup:
         return dict(lookup[raw_input])
@@ -251,6 +275,11 @@ def get_object_info(harvest_id: str, fallback_name: str = None) -> dict:
             bare_id = clean_key[len(prefix):]
             if bare_id in lookup:
                 return dict(lookup[bare_id])
+
+    if fallback_name:
+        clean_fallback = str(fallback_name).strip()
+        if clean_fallback in lookup:
+            return dict(lookup[clean_fallback])
 
     # STRICT ERROR POLICY: Do not silently guess domain prefixes for un-prefixed identifiers.
     logger.error(f"[ReferenceData] Configuration/Source Error: Unqualified or unrecognized item ID '{harvest_id}' received without valid domain prefix.")
