@@ -46,3 +46,7 @@ Desktop.ini
 .coverage.*
 htmlcov/
 .pytest_cache/
+
+# Environment files & Secrets
+.env
+*.env
