@@ -1,4 +1,4 @@
-# tests/test_artisan.py
+# tests/modules/test_artisan.py
 
 import xml.etree.ElementTree as ET
 from src.modules.artisan.casks import parse_all_casks_from_save
@@ -10,7 +10,7 @@ def test_casks_ignored_when_house_upgrade_under_level_3():
     player = ET.fromstring("<player><houseUpgradeLevel>2</houseUpgradeLevel></player>")
 
     result = parse_all_casks_from_save(root, player)
-    assert result["total_casks"] == 0
+    assert result["total"] == 0
 
 
 def test_bee_houses_hibernate_in_winter_outdoors():
@@ -40,3 +40,4 @@ def test_bee_houses_hibernate_in_winter_outdoors():
     assert result["total"] == 1
     assert result["hibernating"] == 1
     assert result["idle"] == 0
+    

@@ -11,10 +11,11 @@ from src.modules.artisan.kegs import parse_all_kegs_from_save
 
 
 def test_resolve_item_icon_mapping_and_fallback():
-    """Verifies item icon resolution for color-mapped goods and standard wiki string fallbacks."""
-    # Unmapped items fallback to local cache filename conventions
-    assert resolve_item_icon("Unmapped Test Item") == "O_Unmapped_Test_Item.png"
-    assert resolve_item_icon("Governor's Reserve") == "O_Governor's_Reserve.png"
+    """Verifies item icon resolution for color-mapped goods and standard item lookups."""
+    # Unmapped/unrecognized items safely fall back to placeholder.svg via strict reference data lookup
+    assert resolve_item_icon("Unmapped Test Item") == "/static/img/placeholder.svg"
+    # Valid numeric ID or prefixed ID resolves properly to cache path
+    assert "/cache/img/" in resolve_item_icon("348")
 
 
 def test_casks_edge_cases_and_parsing():
@@ -22,7 +23,7 @@ def test_casks_edge_cases_and_parsing():
     player_lvl2 = ET.fromstring("<player><houseUpgradeLevel>2</houseUpgradeLevel></player>")
     empty_root = ET.fromstring("<SaveGame></SaveGame>")
     res_no_cellar = parse_all_casks_from_save(empty_root, player_lvl2)
-    assert res_no_cellar["total_casks"] == 0
+    assert res_no_cellar["total"] == 0
 
     no_objects_loc = ET.fromstring("<GameLocation><name>Cellar</name></GameLocation>")
     assert parse_casks(no_objects_loc) is None
@@ -89,11 +90,11 @@ def test_casks_edge_cases_and_parsing():
     root_cellar = ET.fromstring(cellar_xml)
     res_casks = parse_all_casks_from_save(root_cellar, player_lvl3)
 
-    assert res_casks["total_casks"] == 4
-    assert res_casks["empty_casks"] == 1
+    assert res_casks["total"] == 4
+    assert res_casks["idle"] == 1
     assert res_casks["ready_today"] == 1
     assert res_casks["ready_tomorrow"] == 1
-    assert res_casks["aging_count"] == 2
+    assert res_casks["processing"] == 1
     assert len(res_casks["batches"]) == 3
 
 

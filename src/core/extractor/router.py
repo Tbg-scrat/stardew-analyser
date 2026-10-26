@@ -8,13 +8,14 @@ import subprocess
 from glob import glob
 
 from src.core.logger import setup_logging
-from .cache_validator import compute_source_hash, is_cache_valid, save_cache_marker
+from .cache_validator import is_cache_valid, save_cache_manifest
 from .image_utils import resolve_case_insensitive_path
 from .processors.grid import process_grid
 from .processors.catalog import process_catalog
 from .processors.free_crop import process_free_crop
 from .processors.furniture import process_furniture
 from .processors.directory import process_directory  # ADDED for Portraits
+
 
 setup_logging()
 logger = logging.getLogger(__name__)
@@ -23,6 +24,7 @@ XNBCLI_BIN = os.getenv("XNBCLI_BIN", "/app/bin/xnbcli/xnbcli")
 CONTENT_DIR = os.getenv("CONTENT_DIR", "/content")
 CACHE_DIR = os.getenv("CACHE_DIR", "/cache")
 DATA_DIR = os.getenv("DATA_DIR", "data")
+
 
 def get_domain_configs() -> list[dict]:
     """Scans the data directory for JSON files containing extraction _meta blocks."""
@@ -34,13 +36,11 @@ def get_domain_configs() -> list[dict]:
                 data = json.load(f)
                 # Null Metadata Check: Ensure _meta exists and is not null
                 if isinstance(data, dict) and data.get("_meta") is not None:
-                    configs.append({
-                        "file_path": file_path,
-                        "meta": data["_meta"]
-                    })
+                    configs.append({"file_path": file_path, "meta": data["_meta"]})
         except Exception as e:
             logger.warning(f"[Router] Failed to parse JSON config at {file_path}: {e}")
     return configs
+
 
 def extract_assets() -> bool:
     """Main extraction routine driven by JSON domain configurations."""
@@ -61,31 +61,35 @@ def extract_assets() -> bool:
 
     try:
         domain_configs = get_domain_configs()
-        
+
         # 1. Dynamic Staging Phase
         staged_files = set()
         for config in domain_configs:
             meta = config["meta"]
             if not meta.get("extract_images"):
                 continue
-                
+
             textures_to_stage = set()
-            
+
             # Add the default texture from the _meta block
             default_tex = meta.get("source_xnb") or meta.get("default_texture")
             if default_tex:
                 textures_to_stage.add(default_tex)
-                
+
             # Handle entire directories (for directory processors like Portraits)
             source_dir = meta.get("source_dir")
             if source_dir:
                 # Resolve path case-insensitively in case of mismatched OS filesystems
-                full_source_dir = resolve_case_insensitive_path(CONTENT_DIR, source_dir) or os.path.join(CONTENT_DIR, source_dir)
+                full_source_dir = resolve_case_insensitive_path(
+                    CONTENT_DIR, source_dir
+                ) or os.path.join(CONTENT_DIR, source_dir)
                 if os.path.isdir(full_source_dir):
                     for file in os.listdir(full_source_dir):
                         if file.lower().endswith(".xnb"):
-                            textures_to_stage.add(os.path.join(source_dir, file).replace("\\", "/"))
-                
+                            textures_to_stage.add(
+                                os.path.join(source_dir, file).replace("\\", "/")
+                            )
+
             # Peek inside catalog files to find custom textures (like Objects_2)
             if meta.get("processor") == "catalog":
                 try:
@@ -94,7 +98,7 @@ def extract_assets() -> bool:
                         items = data.get("items", {})
                         if not items:
                             items = {k: v for k, v in data.items() if k != "_meta"}
-                            
+
                         for item in items.values():
                             if isinstance(item, dict) and item.get("Texture"):
                                 tex_path = item["Texture"]
@@ -102,7 +106,9 @@ def extract_assets() -> bool:
                                     tex_path += ".xnb"
                                 textures_to_stage.add(tex_path)
                 except Exception as e:
-                    logger.warning(f"[Router] Failed to peek textures in {config['file_path']}: {e}")
+                    logger.warning(
+                        f"[Router] Failed to peek textures in {config['file_path']}: {e}"
+                    )
 
             # Stage all discovered textures
             for src_rel in textures_to_stage:
@@ -110,23 +116,27 @@ def extract_assets() -> bool:
                 src_rel_clean = src_rel.replace("\\", "/")
                 if src_rel_clean in staged_files:
                     continue
-                    
+
                 src_path = resolve_case_insensitive_path(CONTENT_DIR, src_rel_clean)
                 if src_path:
                     # Staging Tree Preservation: Maintain directory structure to prevent file collisions
                     relative_dir = os.path.dirname(src_rel_clean)
                     target_dir = os.path.join(temp_packed, relative_dir)
                     os.makedirs(target_dir, exist_ok=True)
-                    
+
                     target_file = os.path.join(temp_packed, src_rel_clean)
                     shutil.copy(src_path, target_file)
                     staged_files.add(src_rel_clean)
                     logger.debug(f"[Router] Staged asset: {src_rel_clean}")
                 else:
-                    logger.warning(f"[Router] Required asset missing from content volume: {src_rel_clean}")
+                    logger.warning(
+                        f"[Router] Required asset missing from content volume: {src_rel_clean}"
+                    )
 
         if not staged_files:
-            logger.info("[Router] No assets required staging based on domain configs. Exiting.")
+            logger.info(
+                "[Router] No assets required staging based on domain configs. Exiting."
+            )
             return True
 
         # 2. Unpack Phase
@@ -137,6 +147,7 @@ def extract_assets() -> bool:
 
         # 3. Processing Dispatch Phase
         for config in domain_configs:
+            logger.debug(f"[Router] Dispatching config {config['file_path']} to processor '{config['meta'].get('processor')}'")
             meta = config["meta"]
             if not meta.get("extract_images"):
                 continue
@@ -154,12 +165,12 @@ def extract_assets() -> bool:
             elif processor_type == "directory":
                 process_directory(temp_unpacked, config, CACHE_DIR)
             else:
-                logger.warning(f"[Router] Unknown processor type '{processor_type}' in {config['file_path']}")
+                logger.warning(
+                    f"[Router] Unknown processor type '{processor_type}' in {config['file_path']}"
+                )
 
-        # Validate cache completion
-        current_source_hash = compute_source_hash(CONTENT_DIR)
-        save_cache_marker(current_source_hash)
-
+        # FIX: Outdented to run after the entire domain config loop finishes processing
+        save_cache_manifest()
         logger.info("[Router] Dynamic extraction completed successfully.")
         return True
 
@@ -169,6 +180,7 @@ def extract_assets() -> bool:
     finally:
         shutil.rmtree(temp_packed, ignore_errors=True)
         shutil.rmtree(temp_unpacked, ignore_errors=True)
+
 
 if __name__ == "__main__":
     extract_assets()

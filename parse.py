@@ -7,7 +7,7 @@ import time
 from pathlib import Path
 
 from src.core.logger import setup_logging
-from src.core.asset_extractor import is_cache_valid
+from src.core.extractor.cache_validator import is_cache_valid
 
 # Initialize central logging configuration
 setup_logging()

@@ -1,110 +1,72 @@
-import hashlib
+# src/core/extractor/cache_validator.py
+import json
 import logging
 import os
 
 logger = logging.getLogger(__name__)
 
 CACHE_DIR = os.getenv("CACHE_DIR", "/cache")
-CONTENT_DIR = os.getenv("CONTENT_DIR", "/content")
-MARKER_FILE = os.path.join(CACHE_DIR, ".extracted_marker")
-OUTPUT_IMG_DIR = os.path.join(CACHE_DIR, "img", "items")
-
-
-def compute_source_hash(content_path: str = CONTENT_DIR) -> str:
-    """Compute MD5 hash for source content using ContentHashes.json or fallback file metadata."""
-    hash_file = os.path.join(content_path, "ContentHashes.json")
-    if os.path.exists(hash_file):
-        try:
-            with open(hash_file, "rb") as f:
-                return hashlib.md5(f.read()).hexdigest()
-        except Exception as e:
-            logger.warning(f"[AssetExtractor] Failed reading ContentHashes.json: {e}")
-
-    hasher = hashlib.md5()
-    found_files = 0
-    for root, _, files in os.walk(content_path):
-        for file in sorted(files):
-            if file.lower().endswith(".xnb"):
-                full_path = os.path.join(root, file)
-                try:
-                    stat = os.stat(full_path)
-                    hasher.update(f"{file}:{stat.st_size}:{stat.st_mtime}".encode("utf-8"))
-                    found_files += 1
-                except OSError:
-                    continue
-
-    if found_files == 0:
-        logger.debug(f"[AssetExtractor] No .xnb files found at {content_path}")
-        return "unknown"
-
-    return hasher.hexdigest()
-
-
-def compute_target_metadata_hash(target_dir: str = OUTPUT_IMG_DIR) -> str:
-    """Compute fast target hash using directory file names and sizes without opening images."""
-    if not os.path.exists(target_dir):
-        return "missing"
-
-    try:
-        entries = sorted(os.scandir(target_dir), key=lambda e: e.name)
-        if not entries:
-            return "empty"
-
-        hasher = hashlib.md5()
-        for entry in entries:
-            if entry.is_file():
-                stat = entry.stat()
-                hasher.update(f"{entry.name}:{stat.st_size}".encode("utf-8"))
-
-        return hasher.hexdigest()
-    except Exception as e:
-        logger.warning(f"[AssetExtractor] Error hashing cache target metadata: {e}")
-        return "error"
+MANIFEST_FILE = os.path.join(CACHE_DIR, "extraction_manifest.json")
+OUTPUT_IMG_DIR = os.path.join(CACHE_DIR, "img")
 
 
 def is_cache_valid() -> bool:
-    """Verify that both source content hash and target cache metadata hash match the saved marker."""
-    if not os.path.exists(MARKER_FILE):
-        logger.debug("[AssetExtractor] Cache marker file missing.")
+    """Fast check: verifies manifest exists and all listed target files exist on disk."""
+    if not os.path.exists(MANIFEST_FILE):
+        logger.debug("[CacheValidator] Manifest file missing. Cache invalid.")
         return False
 
-    current_source_hash = compute_source_hash(CONTENT_DIR)
-    if current_source_hash == "unknown":
-        return False
-
-    current_target_hash = compute_target_metadata_hash(OUTPUT_IMG_DIR)
-    if current_target_hash in ("missing", "empty", "error"):
-        logger.debug(f"[AssetExtractor] Cache directory invalid state: {current_target_hash}")
+    if not os.path.exists(OUTPUT_IMG_DIR):
+        logger.debug("[CacheValidator] Target image directory missing. Cache invalid.")
         return False
 
     try:
-        with open(MARKER_FILE, "r", encoding="utf-8") as f:
-            marker_data = f.read().strip()
+        with open(MANIFEST_FILE, "r", encoding="utf-8") as f:
+            manifest = json.load(f)
 
-        if ":" not in marker_data:
-            logger.debug("[AssetExtractor] Legacy or invalid marker format found.")
+        expected_files = manifest.get("files", [])
+        if not expected_files:
+            logger.debug("[CacheValidator] Manifest contains no files.")
             return False
 
-        saved_source_hash, saved_target_hash = marker_data.split(":", 1)
+        missing_count = 0
+        for rel_path in expected_files:
+            full_path = os.path.join(CACHE_DIR, rel_path)
+            if not os.path.exists(full_path):
+                missing_count += 1
+                if missing_count > 5:  # Stop early if multiple files are missing
+                    break
 
-        source_valid = current_source_hash == saved_source_hash
-        target_valid = current_target_hash == saved_target_hash
+        if missing_count > 0:
+            logger.debug(f"[CacheValidator] Cache invalid: {missing_count} expected files missing.")
+            return False
 
-        is_valid = source_valid and target_valid
-        logger.debug(
-            f"[AssetExtractor] Cache validity: {is_valid} "
-            f"(Source match: {source_valid}, Target match: {target_valid})"
-        )
-        return is_valid
+        logger.info("[CacheValidator] Cache manifest verified. All target files present.")
+        return True
+
     except Exception as e:
-        logger.warning(f"[AssetExtractor] Failed reading marker file: {e}")
+        logger.warning(f"[CacheValidator] Failed reading manifest: {e}")
         return False
 
 
-def save_cache_marker(source_hash: str) -> None:
-    """Compute final target metadata hash and write <source_hash>:<target_hash> marker."""
-    target_hash = compute_target_metadata_hash(OUTPUT_IMG_DIR)
-    marker_content = f"{source_hash}:{target_hash}"
-    with open(MARKER_FILE, "w", encoding="utf-8") as f:
-        f.write(marker_content)
-    logger.debug(f"[AssetExtractor] Written marker record: {marker_content}")
+def save_cache_manifest() -> None:
+    """Walks /cache/img after extraction and writes a manifest of all generated files."""
+    expected_files = []
+    
+    if os.path.exists(OUTPUT_IMG_DIR):
+        for root, _, files in os.walk(OUTPUT_IMG_DIR):
+            for file in files:
+                full_path = os.path.join(root, file)
+                rel_path = os.path.relpath(full_path, CACHE_DIR)
+                expected_files.append(rel_path.replace("\\", "/"))
+
+    manifest_data = {
+        "files": expected_files,
+        "total_files": len(expected_files)
+    }
+
+    with open(MANIFEST_FILE, "w", encoding="utf-8") as f:
+        json.dump(manifest_data, f)
+        
+    logger.info(f"[CacheValidator] Saved extraction manifest with {len(expected_files)} files.")
+    
