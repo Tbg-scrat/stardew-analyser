@@ -1,5 +1,4 @@
 <!-- templates/partials/next_harvest.html -->
-
 <style>
     .harvest-tracker-card {
         background: var(--bg-card);
@@ -83,128 +82,157 @@
     .harvest-countdown-badge.tomorrow { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
     .harvest-countdown-badge.later { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
 </style>
-
 {% if farm.artisan %}
-<div class="harvest-tracker-card">
-    <div class="harvest-tracker-header">
-        <div class="harvest-tracker-title">
-            <span>⏱️ Next Harvest Tracker</span>
+    <div class="harvest-tracker-card">
+        <div class="harvest-tracker-header">
+            <div class="harvest-tracker-title">
+                <span>⏱️ Next Harvest Tracker</span>
+            </div>
+            {% if farm.artisan.summary.ready_today > 0 %}
+                <div class="harvest-today-badge">✅ {{ farm.artisan.summary.ready_today }} Ready to Collect Today</div>
+            {% else %}
+                <div style="font-size: 0.8rem; color: var(--text-muted);">No collections ready today</div>
+            {% endif %}
         </div>
-        {% if farm.artisan.summary.ready_today > 0 %}
-        <div class="harvest-today-badge">
-            ✅ {{ farm.artisan.summary.ready_today }} Ready to Collect Today
+        <div class="harvest-ticker-grid">
+            <!-- 1. Casks -->
+            {% if farm.artisan.casks and farm.artisan.casks.batches %}
+                {% set next_cask = farm.artisan.casks.batches[0] %}
+                <div class="harvest-ticker-item">
+                    <div style="position: relative; flex-shrink: 0;">
+                        <img class="harvest-ticker-icon"
+                             src="{{ next_cask.image }}"
+                             onerror="this.onerror=null; this.src='/static/img/placeholder.svg';"
+                             alt="Casks">
+                        {% if next_cask.quality == 1 %}
+                            <img src="/cache/img/items/silver_star.png"
+                                 style="position: absolute;
+                                        bottom: -2px;
+                                        left: -2px;
+                                        width: 12px;
+                                        height: 12px;
+                                        object-fit: contain;
+                                        image-rendering: pixelated"
+                                 alt="Silver Quality">
+                        {% elif next_cask.quality == 2 %}
+                            <img src="/cache/img/items/gold_star.png"
+                                 style="position: absolute;
+                                        bottom: -2px;
+                                        left: -2px;
+                                        width: 12px;
+                                        height: 12px;
+                                        object-fit: contain;
+                                        image-rendering: pixelated"
+                                 alt="Gold Quality">
+                        {% elif next_cask.quality == 4 %}
+                            <img src="/cache/img/items/iridium_star.png"
+                                 style="position: absolute;
+                                        bottom: -2px;
+                                        left: -2px;
+                                        width: 12px;
+                                        height: 12px;
+                                        object-fit: contain;
+                                        image-rendering: pixelated"
+                                 alt="Iridium Quality">
+                        {% endif %}
+                    </div>
+                    <div class="harvest-ticker-info">
+                        <div class="harvest-machine-label">🍷 Cellar Casks</div>
+                        <div class="harvest-item-name">{{ next_cask.name }} (x{{ next_cask.count }})</div>
+                        {% if next_cask.is_ready %}
+                            <span class="harvest-countdown-badge ready">Ready Today</span>
+                        {% elif next_cask.days_remaining == 1 %}
+                            <span class="harvest-countdown-badge tomorrow">Tomorrow</span>
+                        {% else %}
+                            <span class="harvest-countdown-badge later">In {{ next_cask.days_remaining }} days</span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+            <!-- 2. Kegs -->
+            {% if farm.artisan.kegs and farm.artisan.kegs.batches %}
+                {% set next_keg = farm.artisan.kegs.batches[0] %}
+                <div class="harvest-ticker-item">
+                    <img class="harvest-ticker-icon"
+                         src="{{ next_keg.image }}"
+                         onerror="this.onerror=null; this.src='/static/img/placeholder.svg';"
+                         alt="Kegs">
+                    <div class="harvest-ticker-info">
+                        <div class="harvest-machine-label">🍺 Kegs</div>
+                        <div class="harvest-item-name">{{ next_keg.name }} (x{{ next_keg.count }})</div>
+                        {% if next_keg.is_ready %}
+                            <span class="harvest-countdown-badge ready">Ready Today</span>
+                        {% elif next_keg.days_remaining == 1 %}
+                            <span class="harvest-countdown-badge tomorrow">Tomorrow</span>
+                        {% else %}
+                            <span class="harvest-countdown-badge later">In {{ next_keg.days_remaining }} days</span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+            <!-- 3. Preserves Jars -->
+            {% if farm.artisan.jars and farm.artisan.jars.batches %}
+                {% set next_jar = farm.artisan.jars.batches[0] %}
+                <div class="harvest-ticker-item">
+                    <img class="harvest-ticker-icon"
+                         src="{{ next_jar.image }}"
+                         onerror="this.onerror=null; this.src='/static/img/placeholder.svg';"
+                         alt="Preserves Jars">
+                    <div class="harvest-ticker-info">
+                        <div class="harvest-machine-label">🫙 Preserves Jars</div>
+                        <div class="harvest-item-name">{{ next_jar.name }} (x{{ next_jar.count }})</div>
+                        {% if next_jar.is_ready %}
+                            <span class="harvest-countdown-badge ready">Ready Today</span>
+                        {% elif next_jar.days_remaining == 1 %}
+                            <span class="harvest-countdown-badge tomorrow">Tomorrow</span>
+                        {% else %}
+                            <span class="harvest-countdown-badge later">In {{ next_jar.days_remaining }} days</span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+            <!-- 4. Dehydrators -->
+            {% if farm.artisan.dehydrators and farm.artisan.dehydrators.batches %}
+                {% set next_deh = farm.artisan.dehydrators.batches[0] %}
+                <div class="harvest-ticker-item">
+                    <img class="harvest-ticker-icon"
+                         src="{{ next_deh.image }}"
+                         onerror="this.onerror=null; this.src='/static/img/placeholder.svg';"
+                         alt="Dehydrators">
+                    <div class="harvest-ticker-info">
+                        <div class="harvest-machine-label">🍄 Dehydrators</div>
+                        <div class="harvest-item-name">{{ next_deh.name }} (x{{ next_deh.count }})</div>
+                        {% if next_deh.is_ready %}
+                            <span class="harvest-countdown-badge ready">Ready Today</span>
+                        {% elif next_deh.days_remaining == 1 %}
+                            <span class="harvest-countdown-badge tomorrow">Tomorrow</span>
+                        {% else %}
+                            <span class="harvest-countdown-badge later">In {{ next_deh.days_remaining }} days</span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+            <!-- 5. Bee Houses -->
+            {% if farm.artisan.bee_houses and farm.artisan.bee_houses.batches %}
+                {% set next_bee = farm.artisan.bee_houses.batches[0] %}
+                <div class="harvest-ticker-item">
+                    <img class="harvest-ticker-icon"
+                         src="{{ next_bee.image }}"
+                         onerror="this.onerror=null; this.src='/static/img/placeholder.svg';"
+                         alt="Bee Houses">
+                    <div class="harvest-ticker-info">
+                        <div class="harvest-machine-label">🐝 Bee Houses</div>
+                        <div class="harvest-item-name">{{ next_bee.name }} (x{{ next_bee.count }})</div>
+                        {% if next_bee.is_ready %}
+                            <span class="harvest-countdown-badge ready">Ready Today</span>
+                        {% elif next_bee.days_remaining == 1 %}
+                            <span class="harvest-countdown-badge tomorrow">Tomorrow</span>
+                        {% else %}
+                            <span class="harvest-countdown-badge later">In {{ next_bee.days_remaining }} days</span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
         </div>
-        {% else %}
-        <div style="font-size: 0.8rem; color: var(--text-muted);">
-            No collections ready today
-        </div>
-        {% endif %}
     </div>
-
-    <div class="harvest-ticker-grid">
-        <!-- 1. Casks -->
-        {% if farm.artisan.casks and farm.artisan.casks.batches %}
-        {% set next_cask = farm.artisan.casks.batches[0] %}
-        <div class="harvest-ticker-item">
-            <div style="position: relative; flex-shrink: 0;">
-                <img class="harvest-ticker-icon" src="{{ next_cask.image }}" onerror="this.onerror=null; this.src='/static/img/placeholder.svg';" alt="Casks">
-                {% if next_cask.quality == 1 %}
-                <img src="/cache/img/items/silver_star.png" style="position: absolute; bottom: -2px; left: -2px; width: 12px; height: 12px; object-fit: contain; image-rendering: pixelated;" alt="Silver Quality">
-                {% elif next_cask.quality == 2 %}
-                <img src="/cache/img/items/gold_star.png" style="position: absolute; bottom: -2px; left: -2px; width: 12px; height: 12px; object-fit: contain; image-rendering: pixelated;" alt="Gold Quality">
-                {% elif next_cask.quality == 4 %}
-                <img src="/cache/img/items/iridium_star.png" style="position: absolute; bottom: -2px; left: -2px; width: 12px; height: 12px; object-fit: contain; image-rendering: pixelated;" alt="Iridium Quality">
-                {% endif %}
-            </div>
-            <div class="harvest-ticker-info">
-                <div class="harvest-machine-label">🍷 Cellar Casks</div>
-                <div class="harvest-item-name">{{ next_cask.name }} (x{{ next_cask.count }})</div>
-                {% if next_cask.is_ready %}
-                    <span class="harvest-countdown-badge ready">Ready Today</span>
-                {% elif next_cask.days_remaining == 1 %}
-                    <span class="harvest-countdown-badge tomorrow">Tomorrow</span>
-                {% else %}
-                    <span class="harvest-countdown-badge later">In {{ next_cask.days_remaining }} days</span>
-                {% endif %}
-            </div>
-        </div>
-        {% endif %}
-
-        <!-- 2. Kegs -->
-        {% if farm.artisan.kegs and farm.artisan.kegs.batches %}
-        {% set next_keg = farm.artisan.kegs.batches[0] %}
-        <div class="harvest-ticker-item">
-            <img class="harvest-ticker-icon" src="{{ next_keg.image }}" onerror="this.onerror=null; this.src='/static/img/placeholder.svg';" alt="Kegs">
-            <div class="harvest-ticker-info">
-                <div class="harvest-machine-label">🍺 Kegs</div>
-                <div class="harvest-item-name">{{ next_keg.name }} (x{{ next_keg.count }})</div>
-                {% if next_keg.is_ready %}
-                    <span class="harvest-countdown-badge ready">Ready Today</span>
-                {% elif next_keg.days_remaining == 1 %}
-                    <span class="harvest-countdown-badge tomorrow">Tomorrow</span>
-                {% else %}
-                    <span class="harvest-countdown-badge later">In {{ next_keg.days_remaining }} days</span>
-                {% endif %}
-            </div>
-        </div>
-        {% endif %}
-
-        <!-- 3. Preserves Jars -->
-        {% if farm.artisan.jars and farm.artisan.jars.batches %}
-        {% set next_jar = farm.artisan.jars.batches[0] %}
-        <div class="harvest-ticker-item">
-            <img class="harvest-ticker-icon" src="{{ next_jar.image }}" onerror="this.onerror=null; this.src='/static/img/placeholder.svg';" alt="Preserves Jars">
-            <div class="harvest-ticker-info">
-                <div class="harvest-machine-label">🫙 Preserves Jars</div>
-                <div class="harvest-item-name">{{ next_jar.name }} (x{{ next_jar.count }})</div>
-                {% if next_jar.is_ready %}
-                    <span class="harvest-countdown-badge ready">Ready Today</span>
-                {% elif next_jar.days_remaining == 1 %}
-                    <span class="harvest-countdown-badge tomorrow">Tomorrow</span>
-                {% else %}
-                    <span class="harvest-countdown-badge later">In {{ next_jar.days_remaining }} days</span>
-                {% endif %}
-            </div>
-        </div>
-        {% endif %}
-
-        <!-- 4. Dehydrators -->
-        {% if farm.artisan.dehydrators and farm.artisan.dehydrators.batches %}
-        {% set next_deh = farm.artisan.dehydrators.batches[0] %}
-        <div class="harvest-ticker-item">
-            <img class="harvest-ticker-icon" src="{{ next_deh.image }}" onerror="this.onerror=null; this.src='/static/img/placeholder.svg';" alt="Dehydrators">
-            <div class="harvest-ticker-info">
-                <div class="harvest-machine-label">🍄 Dehydrators</div>
-                <div class="harvest-item-name">{{ next_deh.name }} (x{{ next_deh.count }})</div>
-                {% if next_deh.is_ready %}
-                    <span class="harvest-countdown-badge ready">Ready Today</span>
-                {% elif next_deh.days_remaining == 1 %}
-                    <span class="harvest-countdown-badge tomorrow">Tomorrow</span>
-                {% else %}
-                    <span class="harvest-countdown-badge later">In {{ next_deh.days_remaining }} days</span>
-                {% endif %}
-            </div>
-        </div>
-        {% endif %}
-
-        <!-- 5. Bee Houses -->
-        {% if farm.artisan.bee_houses and farm.artisan.bee_houses.batches %}
-        {% set next_bee = farm.artisan.bee_houses.batches[0] %}
-        <div class="harvest-ticker-item">
-            <img class="harvest-ticker-icon" src="{{ next_bee.image }}" onerror="this.onerror=null; this.src='/static/img/placeholder.svg';" alt="Bee Houses">
-            <div class="harvest-ticker-info">
-                <div class="harvest-machine-label">🐝 Bee Houses</div>
-                <div class="harvest-item-name">{{ next_bee.name }} (x{{ next_bee.count }})</div>
-                {% if next_bee.is_ready %}
-                    <span class="harvest-countdown-badge ready">Ready Today</span>
-                {% elif next_bee.days_remaining == 1 %}
-                    <span class="harvest-countdown-badge tomorrow">Tomorrow</span>
-                {% else %}
-                    <span class="harvest-countdown-badge later">In {{ next_bee.days_remaining }} days</span>
-                {% endif %}
-            </div>
-        </div>
-        {% endif %}
-    </div>
-</div>
 {% endif %}

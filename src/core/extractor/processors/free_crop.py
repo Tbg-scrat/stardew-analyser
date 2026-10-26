@@ -1,15 +1,17 @@
 import json
 import logging
 import os
+
 from PIL import Image
 
 logger = logging.getLogger(__name__)
+
 
 def process_free_crop(temp_unpacked_dir: str, config: dict, cache_dir: str) -> int:
     """Extracts UI elements using exact pixel bounding boxes."""
     file_path = config["file_path"]
     meta = config["meta"]
-    
+
     prefix = meta.get("prefix", "items")
     source_xnb = meta.get("source_xnb", "")
 
@@ -53,6 +55,7 @@ def process_free_crop(temp_unpacked_dir: str, config: dict, cache_dir: str) -> i
             except Exception as e:
                 logger.warning(f"[FreeCropProcessor] Failed cropping {key}: {e}")
 
-    logger.info(f"[FreeCropProcessor] Extracted {count} elements from {filename} into {prefix}/ subfolder.")
+    logger.info(
+        f"[FreeCropProcessor] Extracted {count} elements from {filename} into {prefix}/ subfolder."
+    )
     return count
-    

@@ -1,7 +1,7 @@
 # tests/conftest.py
 
-import os
 import xml.etree.ElementTree as ET
+
 import pytest
 
 
@@ -68,14 +68,14 @@ def sample_render_data():
         "season": "fall",
         "year": 3,
         "weather": {
-            "today": {"name": "Windy", "icon": "\U0001F343", "css_class": "weather-windy"},
-            "valley": {"name": "Rainy", "icon": "\U0001F327\ufe0f", "css_class": "weather-rainy"},
+            "today": {"name": "Windy", "icon": "\U0001f343", "css_class": "weather-windy"},
+            "valley": {"name": "Rainy", "icon": "\U0001f327\ufe0f", "css_class": "weather-rainy"},
             "island": None,
         },
         "daily_luck": {
             "value": -0.079,
             "label": "Spirits Are Very Displeased",
-            "icon": "\U0001F480",
+            "icon": "\U0001f480",
             "css_class": "luck-worst",
         },
         "festivals": {
@@ -170,8 +170,18 @@ def sample_render_data():
                         }
                     ],
                 },
-                "greenhouse": {"total_crops": 0, "ready_today": 0, "next_harvest_days": None, "items": []},
-                "ginger_island": {"total_crops": 0, "ready_today": 0, "next_harvest_days": None, "items": []},
+                "greenhouse": {
+                    "total_crops": 0,
+                    "ready_today": 0,
+                    "next_harvest_days": None,
+                    "items": [],
+                },
+                "ginger_island": {
+                    "total_crops": 0,
+                    "ready_today": 0,
+                    "next_harvest_days": None,
+                    "items": [],
+                },
             },
         },
         "tools": {
@@ -374,4 +384,3 @@ def sample_render_data():
             ],
         },
     }
-    

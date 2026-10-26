@@ -1,7 +1,7 @@
 <!-- templates/partials/tools.html -->
 {% set tools = farm.tools if farm is defined and farm.tools is defined else (tools if tools is defined else None) %}
 {% if tools and tools.upgradeable %}
-<style>
+    <style>
     .tools-wrapper {
         display: flex;
         flex-direction: column;
@@ -144,89 +144,84 @@
         font-style: italic;
         text-align: center;
     }
-</style>
-
-<div class="tools-wrapper">
-    <div class="tools-grid">
-        {% for tool in tools.upgradeable %}
-        <div class="tool-card">
-            <div>
-                <div class="tool-card-header">
-                    <span class="tool-title">{{ tool.display_name }}</span>
-                    {% if tool.status == 'upgrading' %}
-                        <span class="tool-badge upgrading">
-                            At Clint's ({{ tool.days_left }}d left)
-                        </span>
-                    {% elif tool.status == 'maxed' %}
-                        <span class="tool-badge maxed">
-                            Max Tier
-                        </span>
-                    {% elif tool.next_tier and tool.next_tier.can_upgrade %}
-                        <span class="tool-badge upgrade-ready">
-                            Upgrade Ready
-                        </span>
-                    {% else %}
-                        <span class="tool-badge ready">
-                            Ready
-                        </span>
-                    {% endif %}
-                </div>
-
-                <div class="tool-body">
-                    <div class="tool-icon-box">
-                        {% if tool.current_tier.icon_url %}
-                            <img src="/{{ tool.current_tier.icon_url.lstrip('/') }}" alt="{{ tool.current_tier.name }}" class="tool-icon-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
-                            <span style="display:none; font-size: 0.8rem;">[Tool]</span>
-                        {% else %}
-                            <span style="font-size: 0.8rem;">[Tool]</span>
+    </style>
+    <div class="tools-wrapper">
+        <div class="tools-grid">
+            {% for tool in tools.upgradeable %}
+                <div class="tool-card">
+                    <div>
+                        <div class="tool-card-header">
+                            <span class="tool-title">{{ tool.display_name }}</span>
+                            {% if tool.status == "upgrading" %}
+                                <span class="tool-badge upgrading">At Clint's ({{ tool.days_left }}d left)</span>
+                            {% elif tool.status == "maxed" %}
+                                <span class="tool-badge maxed">Max Tier</span>
+                            {% elif tool.next_tier and tool.next_tier.can_upgrade %}
+                                <span class="tool-badge upgrade-ready">Upgrade Ready</span>
+                            {% else %}
+                                <span class="tool-badge ready">Ready</span>
+                            {% endif %}
+                        </div>
+                        <div class="tool-body">
+                            <div class="tool-icon-box">
+                                {% if tool.current_tier.icon_url %}
+                                    <img src="/{{ tool.current_tier.icon_url.lstrip('/') }}"
+                                         alt="{{ tool.current_tier.name }}"
+                                         class="tool-icon-img"
+                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                                    <span style="display:none; font-size: 0.8rem;">[Tool]</span>
+                                {% else %}
+                                    <span style="font-size: 0.8rem;">[Tool]</span>
+                                {% endif %}
+                            </div>
+                            <div>
+                                <div class="tool-tier-name">{{ tool.current_tier.name }}</div>
+                                <div class="tool-tier-perks">{{ tool.current_tier.perks }}</div>
+                            </div>
+                        </div>
+                        <div class="tool-progress-bar">
+                            {% for lvl in range(0, tool.max_level + 1) %}
+                                <div class="tool-progress-step {% if lvl <= tool.current_level %}active{% endif %}"></div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="tool-footer">
+                        {% if tool.is_max %}
+                            <div class="tool-max-text">Fully upgraded to maximum tier</div>
+                        {% elif tool.next_tier %}
+                            <div class="tool-req-row">
+                                <span class="tool-req-label">Next Upgrade:</span>
+                                <span class="tool-req-cost">
+                                    {{ tool.next_tier.name }} ({{ "{:,}".format(tool.next_tier.gold_cost) }}g)
+                                    {% if tool.next_tier.has_enough_gold %}
+                                        <span style="color: #34d399; font-size: 0.8rem; font-weight: bold;">[OK]</span>
+                                    {% else %}
+                                        <span style="color: #f87171; font-size: 0.8rem; font-weight: bold;">[X]</span>
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <div class="tool-req-row">
+                                <span class="tool-req-label">Required Materials:</span>
+                                <span class="tool-req-val">
+                                    {% if tool.next_tier.material_name %}
+                                        {{ tool.next_tier.materials_text }}
+                                        <span style="font-size: 0.8rem;
+                                                     margin-left: 0.25rem;
+                                                     {% if tool.next_tier.has_enough_materials %}color: #34d399;
+                                                     {% else %}color: #f87171;
+                                                     {% endif %}">
+                                            ({{ tool.next_tier.available_count }} in chests)
+                                            {% if tool.next_tier.has_enough_materials %}[OK]{% else %}[X]{% endif %}
+                                        </span>
+                                    {% else %}
+                                        {{ tool.next_tier.materials_text or 'None' }}
+                                    {% endif %}
+                                </span>
+                            </div>
                         {% endif %}
                     </div>
-                    <div>
-                        <div class="tool-tier-name">{{ tool.current_tier.name }}</div>
-                        <div class="tool-tier-perks">{{ tool.current_tier.perks }}</div>
-                    </div>
                 </div>
-
-                <div class="tool-progress-bar">
-                    {% for lvl in range(0, tool.max_level + 1) %}
-                        <div class="tool-progress-step {% if lvl <= tool.current_level %}active{% endif %}"></div>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <div class="tool-footer">
-                {% if tool.is_max %}
-                    <div class="tool-max-text">Fully upgraded to maximum tier</div>
-                {% elif tool.next_tier %}
-                    <div class="tool-req-row">
-                        <span class="tool-req-label">Next Upgrade:</span>
-                        <span class="tool-req-cost">
-                            {{ tool.next_tier.name }} ({{ "{:,}".format(tool.next_tier.gold_cost) }}g)
-                            {% if tool.next_tier.has_enough_gold %}
-                                <span style="color: #34d399; font-size: 0.8rem; font-weight: bold;">[OK]</span>
-                            {% else %}
-                                <span style="color: #f87171; font-size: 0.8rem; font-weight: bold;">[X]</span>
-                            {% endif %}
-                        </span>
-                    </div>
-                    <div class="tool-req-row">
-                        <span class="tool-req-label">Required Materials:</span>
-                        <span class="tool-req-val">
-                            {% if tool.next_tier.material_name %}
-                                {{ tool.next_tier.materials_text }}
-                                <span style="font-size: 0.8rem; margin-left: 0.25rem; {% if tool.next_tier.has_enough_materials %}color: #34d399;{% else %}color: #f87171;{% endif %}">
-                                    ({{ tool.next_tier.available_count }} in chests)
-                                    {% if tool.next_tier.has_enough_materials %}[OK]{% else %}[X]{% endif %}
-                                </span>
-                            {% else %}
-                                {{ tool.next_tier.materials_text or 'None' }}
-                            {% endif %}
-                        </span>
-                    </div>
-                {% endif %}
-            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
-</div>
 {% endif %}

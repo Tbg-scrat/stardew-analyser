@@ -2,6 +2,7 @@
 # tests/modules/test_weather.py
 
 import xml.etree.ElementTree as ET
+
 from src.modules.weather import parse_weather
 
 

@@ -5,11 +5,11 @@ Builds an in-memory index dynamically over all JSON domain catalogs containing _
 and modular catalogs loaded via data_loader.
 """
 
-import logging
-import time
-import re
-import os
 import json
+import logging
+import os
+import re
+import time
 from glob import glob
 
 from data.data_loader import TOOLS_CATALOG, get_combined_objects_catalog
@@ -25,7 +25,7 @@ def qualify_item_id(raw_id: str, default_prefix: str = "O_") -> str:
         return ""
     clean = str(raw_id).strip()
     while "(" in clean and ")" in clean:
-        clean = re.sub(r'\([^)]*\)', '', clean).strip()
+        clean = re.sub(r"\([^)]*\)", "", clean).strip()
     if clean.startswith(KNOWN_PREFIXES):
         return clean
     return f"{default_prefix}{clean}"
@@ -71,7 +71,7 @@ def _get_object_lookup():
 
             for item_key, item_data in items.items():
                 item_key_str = str(item_key).strip()
-                
+
                 # 1.6 BigCraftables were extracted using SpriteIndex tiles (BC_283.png),
                 # whereas 1.6 Objects use string ID files (O_DriedMushrooms.png).
                 if (
@@ -82,7 +82,9 @@ def _get_object_lookup():
                 ):
                     sprite_target = str(item_data["SpriteIndex"])
                 else:
-                    sprite_target = item_key_str.replace(":", "_").replace("/", "_").replace(" ", "_")
+                    sprite_target = (
+                        item_key_str.replace(":", "_").replace("/", "_").replace(" ", "_")
+                    )
 
                 sprite_key = f"{prefix}_{sprite_target}"
 
@@ -92,14 +94,14 @@ def _get_object_lookup():
                 else:
                     name = str(item_data)
                     price = 0
-                
+
                 info = {
                     "id": item_key_str,
                     "name": name,
                     "price": price,
                     "prefix": prefix,
                     "sprite_key": sprite_key,
-                    "icon": f"/cache/img/{prefix}/{sprite_key}.png"
+                    "icon": f"/cache/img/{prefix}/{sprite_key}.png",
                 }
 
                 # Register strict namespaced and domain-prefixed routing keys
@@ -127,7 +129,7 @@ def _get_object_lookup():
         if not raw_item_id:
             continue
 
-        clean_item_id = re.sub(r'\([^)]*\)', '', raw_item_id).strip()
+        clean_item_id = re.sub(r"\([^)]*\)", "", raw_item_id).strip()
 
         name = item.get("name") or item.get("Name") or "Unknown"
         price = item.get("price") or item.get("Price") or 0
@@ -206,7 +208,7 @@ def get_object_info(harvest_id: str, fallback_name: str = None) -> dict:
                 return dict(lookup[clean_fallback])
             if clean_fallback.lower() in lookup:
                 return dict(lookup[clean_fallback.lower()])
-                
+
         return {
             "name": "Wild / Unknown",
             "icon": "/static/img/placeholder.svg",
@@ -215,7 +217,7 @@ def get_object_info(harvest_id: str, fallback_name: str = None) -> dict:
 
     lookup = _get_object_lookup()
 
-    # If harvest_id is purely numeric (like a color-mask parentSheetIndex e.g. '123') 
+    # If harvest_id is purely numeric (like a color-mask parentSheetIndex e.g. '123')
     # but we have a fallback name, prioritize checking the fallback name first to prevent numeric collisions.
     if str(harvest_id).strip().isdigit() and fallback_name:
         clean_fallback = str(fallback_name).strip()
@@ -247,32 +249,32 @@ def get_object_info(harvest_id: str, fallback_name: str = None) -> dict:
         "(F)": "F_",
         "(S)": "S_",
         "(WP)": "WP_",
-        "(FL)": "FL_"
+        "(FL)": "FL_",
     }
 
     for tag, catalog_prefix in tag_mapping.items():
         if tag in raw_input:
             bare_id = raw_input.replace(tag, "").strip()
             while "(" in bare_id and ")" in bare_id:
-                bare_id = re.sub(r'\([^)]*\)', '', bare_id).strip()
-            
+                bare_id = re.sub(r"\([^)]*\)", "", bare_id).strip()
+
             prefixed_key = f"{catalog_prefix}{bare_id}"
             if prefixed_key in lookup:
                 return dict(lookup[prefixed_key])
 
     clean_key = raw_input
     while "(" in clean_key and ")" in clean_key:
-        clean_key = re.sub(r'\([^)]*\)', '', clean_key).strip()
+        clean_key = re.sub(r"\([^)]*\)", "", clean_key).strip()
 
     if clean_key in lookup:
         return dict(lookup[clean_key])
-        
+
     if clean_key.lower() in lookup:
         return dict(lookup[clean_key.lower()])
-        
+
     for prefix in KNOWN_PREFIXES:
         if clean_key.startswith(prefix):
-            bare_id = clean_key[len(prefix):]
+            bare_id = clean_key[len(prefix) :]
             if bare_id in lookup:
                 return dict(lookup[bare_id])
 
@@ -282,7 +284,9 @@ def get_object_info(harvest_id: str, fallback_name: str = None) -> dict:
             return dict(lookup[clean_fallback])
 
     # STRICT ERROR POLICY: Do not silently guess domain prefixes for un-prefixed identifiers.
-    logger.error(f"[ReferenceData] Configuration/Source Error: Unqualified or unrecognized item ID '{harvest_id}' received without valid domain prefix.")
+    logger.error(
+        f"[ReferenceData] Configuration/Source Error: Unqualified or unrecognized item ID '{harvest_id}' received without valid domain prefix."
+    )
 
     formatted_name = fallback_name if fallback_name else clean_key.replace("_", " ")
     return {
@@ -293,4 +297,3 @@ def get_object_info(harvest_id: str, fallback_name: str = None) -> dict:
         "icon": "/static/img/placeholder.svg",
         "sprite_key": clean_key,
     }
-    

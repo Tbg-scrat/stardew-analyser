@@ -2,6 +2,7 @@
 # tests/modules/test_luck.py
 
 import xml.etree.ElementTree as ET
+
 from src.modules.luck import parse_luck
 
 
@@ -11,7 +12,7 @@ def test_parse_luck_none():
     assert result == {
         "value": 0.0,
         "label": "Neutral",
-        "icon": "\U0001F610",
+        "icon": "\U0001f610",
         "css_class": "luck-neutral",
     }
 
@@ -57,4 +58,3 @@ def test_parse_luck_thresholds():
     worst_res = parse_luck(worst_root)
     assert worst_res["css_class"] == "luck-worst"
     assert worst_res["label"] == "Spirits Are Very Displeased"
-    

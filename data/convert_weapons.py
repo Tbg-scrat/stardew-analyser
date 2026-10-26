@@ -31,9 +31,7 @@ def slim_down_weapons(input_path="Weapons.json", output_path="data/weapons.json"
     with open(out_file, "w", encoding="utf-8") as f:
         json.dump(slimmed_data, f, indent=2, ensure_ascii=False)
 
-    print(
-        f"Erfolgreich {len(slimmed_data)} Waffen nach {output_path} konvertiert!"
-    )
+    print(f"Erfolgreich {len(slimmed_data)} Waffen nach {output_path} konvertiert!")
 
 
 if __name__ == "__main__":

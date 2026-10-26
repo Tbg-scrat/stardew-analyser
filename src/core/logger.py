@@ -1,10 +1,10 @@
 # src/core/logger.py
 
-from datetime import datetime
 import glob
 import logging
 import os
 import sys
+from datetime import datetime
 
 
 class ColoredFormatter(logging.Formatter):
@@ -105,4 +105,3 @@ def setup_logging(process_name: str = "app"):
 
     if file_logging_path:
         root_logger.info(f"File logging active: {file_logging_path}")
-        

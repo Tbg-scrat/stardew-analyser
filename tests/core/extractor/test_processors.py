@@ -1,14 +1,12 @@
 # tests/core/extractor/test_processors.py
 
-import pytest
-from unittest.mock import patch, MagicMock, mock_open
-import os
+from unittest.mock import MagicMock, mock_open, patch
 
 from src.core.extractor.processors.catalog import process_catalog
-from src.core.extractor.processors.grid import process_grid
+from src.core.extractor.processors.directory import process_directory
 from src.core.extractor.processors.free_crop import process_free_crop
 from src.core.extractor.processors.furniture import process_furniture
-from src.core.extractor.processors.directory import process_directory
+from src.core.extractor.processors.grid import process_grid
 
 
 def create_mock_image(width=64, height=64):
@@ -43,8 +41,8 @@ def test_process_catalog_success(mock_img_open, mock_crop_tile, mock_makedirs, m
             "prefix": "O",
             "tile_width": 16,
             "tile_height": 16,
-            "default_texture": "Maps/springobjects.xnb"
-        }
+            "default_texture": "Maps/springobjects.xnb",
+        },
     }
 
     mock_json_data = """
@@ -69,10 +67,10 @@ def test_process_catalog_success(mock_img_open, mock_crop_tile, mock_makedirs, m
 def test_process_catalog_missing_file(mock_exists):
     """Verifies catalog processor aborts safely if the JSON file is missing."""
     config = {"file_path": "missing.json", "meta": {}}
-    
+
     with patch("builtins.open", side_effect=FileNotFoundError):
         count = process_catalog("/tmp_unpacked", config, "/cache")
-        
+
     assert count == 0
 
 
@@ -95,7 +93,7 @@ def test_process_catalog_empty_items(mock_exists):
 def test_process_grid_success(mock_img_open, mock_crop_tile, mock_makedirs, mock_exists):
     """Verifies grid processor dynamically calculates columns and rows and extracts tiles."""
     mock_img_open.return_value = create_mock_image(32, 32)
-    
+
     mock_tile = MagicMock()
     mock_tile.crop.return_value = mock_tile
     mock_crop_tile.return_value = mock_tile
@@ -107,7 +105,7 @@ def test_process_grid_success(mock_img_open, mock_crop_tile, mock_makedirs, mock
             "tile_width": 16,
             "tile_height": 16,
             "crop_width": 14,
-            "crop_height": 14
+            "crop_height": 14,
         }
     }
 
@@ -134,7 +132,7 @@ def test_process_grid_invalid_columns(mock_img_open, mock_makedirs, mock_exists)
     """Verifies grid processor handles zero or negative column calculations safely."""
     mock_img_open.return_value = create_mock_image(0, 32)
     config = {"meta": {"source_xnb": "sheet.xnb", "tile_width": 16}}
-    
+
     count = process_grid("/tmp_unpacked", config, "/cache")
     assert count == 0
 
@@ -150,13 +148,7 @@ def test_process_free_crop_success(mock_img_open, mock_makedirs, mock_exists):
     mock_img = create_mock_image(64, 64)
     mock_img_open.return_value = mock_img
 
-    config = {
-        "file_path": "elements.json",
-        "meta": {
-            "prefix": "CROP",
-            "source_xnb": "ui.xnb"
-        }
-    }
+    config = {"file_path": "elements.json", "meta": {"prefix": "CROP", "source_xnb": "ui.xnb"}}
 
     mock_json_data = '{"elements": {"elem1": [0, 0, 16, 16], "elem2": [16, 16, 32, 32]}}'
 
@@ -188,10 +180,7 @@ def test_process_furniture_success(mock_img_open, mock_makedirs, mock_exists):
 
     config = {
         "file_path": "furniture.json",
-        "meta": {
-            "prefix": "F",
-            "source_xnb": "TileSheets/furniture.xnb"
-        }
+        "meta": {"prefix": "F", "source_xnb": "TileSheets/furniture.xnb"},
     }
 
     mock_json_data = """
@@ -232,11 +221,7 @@ def test_process_directory_success(mock_img_open, mock_makedirs, mock_exists):
 
     config = {
         "file_path": "villagers.json",
-        "meta": {
-            "prefix": "portraits",
-            "source_dir": "Portraits",
-            "crop": [0, 0, 32, 32]
-        }
+        "meta": {"prefix": "portraits", "source_dir": "Portraits", "crop": [0, 0, 32, 32]},
     }
 
     mock_json_data = '{"villagers": {"Abigail": {}, "Sebastian": {}}}'
@@ -254,4 +239,3 @@ def test_process_directory_missing_file(mock_exists):
     config = {"file_path": "villagers.json", "meta": {}}
     count = process_directory("/tmp_unpacked", config, "/cache")
     assert count == 0
-    

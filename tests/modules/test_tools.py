@@ -1,29 +1,78 @@
 # tests/modules/test_tools.py
 
-from unittest.mock import patch
 import xml.etree.ElementTree as ET
-from src.modules.tools import parse_tools
+from unittest.mock import patch
 
+from src.modules.tools import parse_tools
 
 MOCK_TOOLS_CATALOG = {
     "upgradeable_tools": {
         "Axe": {
             "name": "Axe",
             "tiers": [
-                {"level": 0, "name": "Axe", "icon": "/cache/img/items/T_105.png", "gold_cost": 0, "materials": None, "perks": "Chops trees."},
-                {"level": 1, "name": "Copper Axe", "icon": "/cache/img/items/T_111.png", "gold_cost": 2000, "materials": "5x Copper Bar", "perks": "Chops stumps."},
-                {"level": 2, "name": "Steel Axe", "icon": "/cache/img/items/T_117.png", "gold_cost": 5000, "materials": "5x Iron Bar", "perks": "Chops logs."},
-                {"level": 3, "name": "Gold Axe", "icon": "/cache/img/items/T_126.png", "gold_cost": 10000, "materials": "5x Gold Bar", "perks": "Chops faster."},
-                {"level": 4, "name": "Iridium Axe", "icon": "/cache/img/items/T_132.png", "gold_cost": 25000, "materials": "5x Iridium Bar", "perks": "Max efficiency."}
-            ]
+                {
+                    "level": 0,
+                    "name": "Axe",
+                    "icon": "/cache/img/items/T_105.png",
+                    "gold_cost": 0,
+                    "materials": None,
+                    "perks": "Chops trees.",
+                },
+                {
+                    "level": 1,
+                    "name": "Copper Axe",
+                    "icon": "/cache/img/items/T_111.png",
+                    "gold_cost": 2000,
+                    "materials": "5x Copper Bar",
+                    "perks": "Chops stumps.",
+                },
+                {
+                    "level": 2,
+                    "name": "Steel Axe",
+                    "icon": "/cache/img/items/T_117.png",
+                    "gold_cost": 5000,
+                    "materials": "5x Iron Bar",
+                    "perks": "Chops logs.",
+                },
+                {
+                    "level": 3,
+                    "name": "Gold Axe",
+                    "icon": "/cache/img/items/T_126.png",
+                    "gold_cost": 10000,
+                    "materials": "5x Gold Bar",
+                    "perks": "Chops faster.",
+                },
+                {
+                    "level": 4,
+                    "name": "Iridium Axe",
+                    "icon": "/cache/img/items/T_132.png",
+                    "gold_cost": 25000,
+                    "materials": "5x Iridium Bar",
+                    "perks": "Max efficiency.",
+                },
+            ],
         },
         "Pickaxe": {
             "name": "Pickaxe",
             "tiers": [
-                {"level": 0, "name": "Pickaxe", "icon": "pickaxe.png", "gold_cost": 0, "materials": None, "perks": "Breaks small rocks."},
-                {"level": 1, "name": "Copper Pickaxe", "icon": "copper_pickaxe.png", "gold_cost": 2000, "materials": "5x Copper Bar", "perks": "Breaks mine rocks."}
-            ]
-        }
+                {
+                    "level": 0,
+                    "name": "Pickaxe",
+                    "icon": "pickaxe.png",
+                    "gold_cost": 0,
+                    "materials": None,
+                    "perks": "Breaks small rocks.",
+                },
+                {
+                    "level": 1,
+                    "name": "Copper Pickaxe",
+                    "icon": "copper_pickaxe.png",
+                    "gold_cost": 2000,
+                    "materials": "5x Copper Bar",
+                    "perks": "Breaks mine rocks.",
+                },
+            ],
+        },
     }
 }
 
@@ -124,4 +173,3 @@ def test_parse_tools_max_level():
     assert axe["is_max"] is True
     assert axe["status"] == "maxed"
     assert axe["next_tier"] is None
-    

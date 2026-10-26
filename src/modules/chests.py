@@ -20,24 +20,31 @@ def _parse_item_node(item_node):
     ):
         return {"is_empty": True}
 
-    item_id = (
-        item_node.findtext("itemId") or item_node.findtext("parentSheetIndex") or "0"
-    )
+    item_id = item_node.findtext("itemId") or item_node.findtext("parentSheetIndex") or "0"
 
     # Detect item types strictly from XML xsi:type or tags (no ID fallback collisions)
     item_xsi_type = item_node.get("{http://www.w3.org/2001/XMLSchema-instance}type", "")
     is_big_craftable = item_node.findtext("bigCraftable", "").lower() == "true"
-    
-    is_weapon = (
-        "Weapon" in item_xsi_type 
-        or item_xsi_type in ["MeleeWeapon", "Slingshot"]
-    )
-    
+
+    is_weapon = "Weapon" in item_xsi_type or item_xsi_type in ["MeleeWeapon", "Slingshot"]
+
     is_tool = (
         item_node.tag == "Tool"
         or "Tool" in item_xsi_type
         or "Rod" in item_xsi_type
-        or item_xsi_type in ["FishingRod", "Pan", "Shears", "MilkPail", "Wand", "Axe", "Pickaxe", "Hoe", "WateringCan", "GenericTool"]
+        or item_xsi_type
+        in [
+            "FishingRod",
+            "Pan",
+            "Shears",
+            "MilkPail",
+            "Wand",
+            "Axe",
+            "Pickaxe",
+            "Hoe",
+            "WateringCan",
+            "GenericTool",
+        ]
     )
 
     # Explicit namespace prefix mapping based strictly on xsi:type or tags
@@ -85,9 +92,7 @@ def _parse_item_node(item_node):
     icon = obj_info.get("icon")
 
     if not name:
-        logger.debug(
-            f"Missing item name for ID '{qualified_id}'; defaulting to 'Unknown Item'"
-        )
+        logger.debug(f"Missing item name for ID '{qualified_id}'; defaulting to 'Unknown Item'")
         name = "Unknown Item"
 
     try:
@@ -97,9 +102,7 @@ def _parse_item_node(item_node):
         stack = 1
 
     try:
-        quality = int(
-            item_node.findtext("quality") or item_node.findtext("Quality") or 0
-        )
+        quality = int(item_node.findtext("quality") or item_node.findtext("Quality") or 0)
     except ValueError:
         logger.debug(f"Invalid quality value for '{qualified_id}'; defaulting to 0")
         quality = 0
@@ -203,8 +206,7 @@ def _extract_raw_chests(root):
                 {
                     "location": loc_name,
                     "tile_location": {"x": int(float(tile_x)), "y": int(float(tile_y))},
-                    "chest_name": obj_name
-                    or ("Big Chest" if is_big_chest else "Chest"),
+                    "chest_name": obj_name or ("Big Chest" if is_big_chest else "Chest"),
                     "chest_color": chest_color,
                     "is_big_chest": is_big_chest,
                     "chest_items": chest_items,
@@ -250,9 +252,10 @@ def parse_chests(root, object_map=None):
 
             material_totals[item_name]["count"] += stack
 
-    sorted_materials = sorted(
-        material_totals.values(), key=lambda x: x["count"], reverse=True
-    )
+    sorted_materials = sorted(material_totals.values(), key=lambda x: x["count"], reverse=True)
+
+    elapsed_ms = (time.perf_counter() - start_time) * 1000
+    logger.debug(f"Parsed chests in {elapsed_ms:.2f}ms")
 
     return {
         "total_chests": raw_chests.get("total_chests", 0),

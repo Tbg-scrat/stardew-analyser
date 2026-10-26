@@ -2,6 +2,7 @@
 # tests/modules/test_shipping.py
 
 import xml.etree.ElementTree as ET
+
 from src.modules.shipping import (
     get_formatted_shipping,
     parse_shipping,
@@ -83,4 +84,3 @@ def test_get_formatted_shipping_catalog_merge():
     assert cauliflower["count"] == 0
     assert cauliflower["is_unlocked"] is False
     assert cauliflower["status"] == "not_shipped"
-    

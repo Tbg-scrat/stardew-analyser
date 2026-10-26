@@ -1,5 +1,4 @@
 <!-- templates/partials/chests.html -->
-
 <style>
     /* Chests Module Header & Summary */
     .chests-header-summary { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
@@ -90,7 +89,6 @@
     .material-name { font-size: 0.825rem; font-weight: 600; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .material-count-pill { font-size: 0.75rem; font-weight: 700; color: #38bdf8; margin-top: 2px; }
 </style>
-
 <section class="chests-section">
     <div class="chests-header-summary">
         <div>
@@ -102,27 +100,23 @@
         </div>
         <span class="chests-count-badge">Total Chests: {{ farm.chests.total_chests }} | Total Stored Items: {{ farm.chests.total_items }}</span>
     </div>
-
     {% if farm.chests and farm.chests.chests %}
         <!-- SUBTAB 1: Visual Spatial Grids -->
         <div id="chest-tab-grids" class="chest-tab-content active">
             <div class="chest-toolbar">
-                <input type="text" 
-                       class="chest-search-input" 
-                       placeholder="Filter slots by item name (e.g., Coal, Iridium)..." 
+                <input type="text"
+                       class="chest-search-input"
+                       placeholder="Filter slots by item name (e.g., Coal, Iridium)..."
                        oninput="filterChestGrids(this, this.value)">
             </div>
-
             <div class="locations-grid">
                 {% for chest in farm.chests.chests %}
-                    <div class="chest-card" {% if chest.chest_color %}style="border-top: 4px solid {{ chest.chest_color }};"{% endif %}>
+                    <div class="chest-card"
+                         {% if chest.chest_color %}style="border-top: 4px solid {{ chest.chest_color }};"{% endif %}>
                         <div class="chest-header">
-                            <span class="chest-title">
-                                {{ chest.chest_name }}
-                            </span>
+                            <span class="chest-title">{{ chest.chest_name }}</span>
                             <span class="chest-location">{{ chest.location }} ({{ chest.tile_location.x }}, {{ chest.tile_location.y }})</span>
                         </div>
-
                         <div class="in-game-chest-grid">
                             {% for item in chest.chest_items %}
                                 {% if item.is_empty %}
@@ -133,20 +127,23 @@
                                          data-display-name="{{ item.name }}"
                                          data-qualified-id="{{ item.qualified_id or item.id }}"
                                          data-stack="{{ item.stack }}">
-
                                         <img src="{{ item.icon or item.image or ('/cache/img/' ~ item.prefix ~ '/' ~ item.sprite_key ~ '.png') }}"
                                              alt="{{ item.name }}"
                                              class="item-sprite"
                                              onerror="this.onerror=null; this.src='/static/img/placeholder.svg';">
-
                                         {% if item.quality == 1 %}
-                                            <img src="/cache/img/items/silver_star.png" class="quality-badge" alt="Silver Quality">
+                                            <img src="/cache/img/items/silver_star.png"
+                                                 class="quality-badge"
+                                                 alt="Silver Quality">
                                         {% elif item.quality == 2 %}
-                                            <img src="/cache/img/items/gold_star.png" class="quality-badge" alt="Gold Quality">
+                                            <img src="/cache/img/items/gold_star.png"
+                                                 class="quality-badge"
+                                                 alt="Gold Quality">
                                         {% elif item.quality == 4 %}
-                                            <img src="/cache/img/items/iridium_star.png" class="quality-badge" alt="Iridium Quality">
+                                            <img src="/cache/img/items/iridium_star.png"
+                                                 class="quality-badge"
+                                                 alt="Iridium Quality">
                                         {% endif %}
-
                                         {% if item.stack > 1 %}
                                             <span class="slot-stack">{{ item.stack }}</span>
                                         {% endif %}
@@ -158,28 +155,24 @@
                 {% endfor %}
             </div>
         </div>
-
         <!-- SUBTAB 2: Aggregated Material Totals -->
         <div id="chest-tab-totals" class="chest-tab-content">
             <div class="chest-toolbar">
-                <input type="text" 
-                       class="chest-search-input" 
-                       placeholder="Search accumulated materials..." 
+                <input type="text"
+                       class="chest-search-input"
+                       placeholder="Search accumulated materials..."
                        oninput="filterMaterialTotals(this, this.value)">
                 <span class="totals-count-indicator">{{ farm.chests.material_totals | length }} Unique Items</span>
             </div>
-
             <div class="materials-totals-grid">
                 {% for mat in farm.chests.material_totals %}
                     <div class="material-card" data-item-name="{{ mat.name | lower }}">
                         <div class="material-sprite-box">
-                            
                             <!-- FIX: Stripped infinite loop logic from onerror -->
                             <img src="{{ mat.icon or mat.image or ('/cache/img/' ~ mat.prefix ~ '/' ~ mat.sprite_key ~ '.png') }}"
                                  alt="{{ mat.name }}"
                                  class="item-sprite"
                                  onerror="this.onerror=null; this.src='/static/img/placeholder.svg';">
-
                         </div>
                         <div class="material-info">
                             <div class="material-name" title="{{ mat.name }}">{{ mat.name }}</div>
@@ -193,7 +186,6 @@
         <p class="no-chests">No chests found in this save file.</p>
     {% endif %}
 </section>
-
 <script>
     if (typeof activeChestSlotEl === 'undefined') {
         var activeChestSlotEl = null;

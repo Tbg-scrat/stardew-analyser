@@ -1,0 +1,46 @@
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+
+[tool.ruff.lint]
+# Enable Pyflakes (F), pycodestyle (E/W), isort (I), and flake8-bugbear (B)
+select = ["E", "F", "I", "B"]
+ignore = ["E501"]
+
+[tool.ruff.format]
+# Use single quotes or double quotes (Ruff defaults to double, matching Black)
+quote-style = "double"
+
+[tool.djlint]
+indent = 4
+profile = "jinja"
+extend_exclude = "node_modules,.venv,.git"
+# Optional: match your Python line-length preference if you want djLint to wrap attributes or text
+max-line-length = 120
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+addopts = [
+    "--cov=src",
+    "--cov-report=term-missing",
+    "--cov-report=html:htmlcov",
+    "--cov-fail-under=80",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["src"]
+
+[tool.coverage.report]
+# Omit initialization files, static assets, and pure reference lookup data
+omit = [
+    "src/**/__init__.py",
+    "src/core/reference_data.py",
+]
+# Skip defensive or non-executable lines
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == '__main__':",
+    "raise NotImplementedError",
+    "def __repr__",
+]

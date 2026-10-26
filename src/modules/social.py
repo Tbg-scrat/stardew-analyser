@@ -1,4 +1,9 @@
+import logging
+import time
+
+from data.data_loader import VILLAGERS_CATALOG
 from src.core.reference_data import get_object_info
+
 # src/modules/social.py
 """
 Social module for Stardew Valley save file parsing.
@@ -6,10 +11,6 @@ Extracts villager friendships, heart levels, daily interaction statuses, loved g
 and handles sorting by friendship points and marital status.
 """
 
-import logging
-import time
-
-from data.data_loader import VILLAGERS_CATALOG
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +20,7 @@ def get_loved_gifts(villager_name):
     villagers_map = VILLAGERS_CATALOG.get("villagers", {})
     villager_data = villagers_map.get(villager_name, {})
     gifts = villager_data.get("loved_gifts", [])
-    
+
     result = []
     for item in gifts:
         if isinstance(item, dict):
@@ -28,19 +29,22 @@ def get_loved_gifts(villager_name):
         else:
             item_id = ""
             item_name = str(item)
-            
+
         # Nutze den dynamischen Router für den vollständigen Bildpfad
         if item_id:
             obj_info = get_object_info(item_id, fallback_name=item_name)
             icon_path = obj_info["icon"]
         else:
             icon_path = "/static/img/placeholder.svg"
-            
-        result.append({
-            "name": item_name,
-            "icon": icon_path,
-        })
+
+        result.append(
+            {
+                "name": item_name,
+                "icon": icon_path,
+            }
+        )
     return result
+
 
 def parse_social(player):
     """
@@ -63,9 +67,7 @@ def parse_social(player):
         return []
 
     items = friendship_data.findall("item")
-    logger.debug(
-        f"Parsing <friendshipData> node containing {len(items)} raw villager entries"
-    )
+    logger.debug(f"Parsing <friendshipData> node containing {len(items)} raw villager entries")
 
     villagers_meta = VILLAGERS_CATALOG.get("villagers", {})
     ignored_npcs = set(VILLAGERS_CATALOG.get("ignored_npcs", []))
@@ -93,16 +95,10 @@ def parse_social(player):
             gifts_node = value.find("GiftsThisWeek")
             status_node = value.find("Status")
 
-            points = (
-                int(points_node.text)
-                if points_node is not None and points_node.text
-                else 0
-            )
+            points = int(points_node.text) if points_node is not None and points_node.text else 0
             talked = talked_node.text == "true" if talked_node is not None else False
             gifts_this_week = (
-                int(gifts_node.text)
-                if gifts_node is not None and gifts_node.text
-                else 0
+                int(gifts_node.text) if gifts_node is not None and gifts_node.text else 0
             )
             status_raw = status_node.text if status_node is not None else "Normal"
 
@@ -140,9 +136,7 @@ def parse_social(player):
             )
 
     if skipped_internal > 0:
-        logger.debug(
-            f"Skipped {skipped_internal} internal/system NPC friendship records"
-        )
+        logger.debug(f"Skipped {skipped_internal} internal/system NPC friendship records")
 
     # Sort list descending by friendship points (highest points first)
     friendships_list.sort(key=lambda x: x["points"], reverse=True)
@@ -153,4 +147,3 @@ def parse_social(player):
     )
 
     return friendships_list
-    

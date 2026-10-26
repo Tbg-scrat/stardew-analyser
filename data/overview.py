@@ -1,4 +1,5 @@
-import json, sys
+import json
+import sys
 from pathlib import Path
 
 N, MAXLEN = 2, 300  # examples per file, max characters per example

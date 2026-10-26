@@ -69,8 +69,7 @@ def parse_all_dehydrators_from_save(root):
 
             held = obj.find("heldObject")
             is_nil = (
-                held is None
-                or held.get("{http://www.w3.org/2001/XMLSchema-instance}nil") == "true"
+                held is None or held.get("{http://www.w3.org/2001/XMLSchema-instance}nil") == "true"
             )
 
             if is_nil:
@@ -79,11 +78,7 @@ def parse_all_dehydrators_from_save(root):
                 idle_locations[loc_name] = idle_locations.get(loc_name, 0) + 1
                 continue
 
-            item_name = (
-                held.findtext("displayName")
-                or held.findtext("name")
-                or "Unknown Product"
-            )
+            item_name = held.findtext("displayName") or held.findtext("name") or "Unknown Product"
             held_qid = held.findtext("QualifiedItemId") or held.findtext("parentSheetIndex", "0")
 
             try:
@@ -92,9 +87,7 @@ def parse_all_dehydrators_from_save(root):
                 quality_raw = 0
             quality_name = QUALITY_MAP.get(quality_raw, "Normal")
 
-            ready_for_harvest = (
-                obj.findtext("readyForHarvest", "false").lower() == "true"
-            )
+            ready_for_harvest = obj.findtext("readyForHarvest", "false").lower() == "true"
 
             try:
                 minutes_until_ready = int(obj.findtext("minutesUntilReady", "0"))
@@ -159,4 +152,3 @@ def parse_all_dehydrators_from_save(root):
         "location_stats": location_stats,
         "batches": sorted_batches,
     }
-    

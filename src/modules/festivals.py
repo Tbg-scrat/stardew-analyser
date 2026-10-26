@@ -27,9 +27,7 @@ def parse_festivals(root, catalog=None):
         logger.debug("Using default FESTIVALS_CATALOG")
 
     if root is None:
-        logger.warning(
-            "SaveGame root is None. Defaulting to Spring Day 1 festival status."
-        )
+        logger.warning("SaveGame root is None. Defaulting to Spring Day 1 festival status.")
         return {
             "current_day": 1,
             "season": "spring",
@@ -40,11 +38,7 @@ def parse_festivals(root, catalog=None):
     season_node = root.find("currentSeason")
     day_node = root.find("dayOfMonth")
 
-    season = (
-        season_node.text.lower()
-        if season_node is not None and season_node.text
-        else "spring"
-    )
+    season = season_node.text.lower() if season_node is not None and season_node.text else "spring"
     try:
         day = int(day_node.text) if day_node is not None and day_node.text else 1
     except ValueError:

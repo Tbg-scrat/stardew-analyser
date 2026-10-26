@@ -1,34 +1,68 @@
 # tests/test_chests.py
 
 import xml.etree.ElementTree as ET
+
 import pytest
-from src.modules.chests import parse_chests, _parse_item_node
+
+from src.modules.chests import _parse_item_node, parse_chests
 
 
 def test_parse_item_node_nil_or_none():
     """Verifies empty or nil item nodes return is_empty=True."""
     assert _parse_item_node(None)["is_empty"] is True
-    
-    nil_node = ET.fromstring('<Item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>')
+
+    nil_node = ET.fromstring(
+        '<Item xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>'
+    )
     assert _parse_item_node(nil_node)["is_empty"] is True
 
-    not_item = ET.fromstring('<NotAnItem/>')
+    not_item = ET.fromstring("<NotAnItem/>")
     assert _parse_item_node(not_item)["is_empty"] is True
 
 
 def test_parse_item_node_various_types():
     """Verifies item prefix mapping and parsing for tools, weapons, rings, boots, clothing, etc."""
     types_xml = [
-        ('<Item xsi:type="Tool" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itemId>0</itemId></Item>', "(T)"),
-        ('<Item xsi:type="MeleeWeapon" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itemId>4</itemId></Item>', "(W)"),
-        ('<Item xsi:type="Ring" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itemId>516</itemId></Item>', "(R)"),
-        ('<Item xsi:type="Boots" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itemId>504</itemId></Item>', "(B)"),
-        ('<Item xsi:type="Hat" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itemId>1</itemId></Item>', "(H)"),
-        ('<Item xsi:type="Furniture" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itemId>100</itemId></Item>', "(F)"),
-        ('<Item xsi:type="Wallpaper" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itemId>0</itemId></Item>', "(WP)"),
-        ('<Item xsi:type="Flooring" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itemId>0</itemId></Item>', "(FL)"),
-        ('<Item xsi:type="Clothing" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itemId>12</itemId></Item>', "(S)"),
-        ('<Item xsi:type="Object" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itemId>388</itemId><stack>invalid</stack><quality>invalid</quality></Item>', "(O)"),
+        (
+            '<Item xsi:type="Tool" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itemId>0</itemId></Item>',
+            "(T)",
+        ),
+        (
+            '<Item xsi:type="MeleeWeapon" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itemId>4</itemId></Item>',
+            "(W)",
+        ),
+        (
+            '<Item xsi:type="Ring" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itemId>516</itemId></Item>',
+            "(R)",
+        ),
+        (
+            '<Item xsi:type="Boots" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itemId>504</itemId></Item>',
+            "(B)",
+        ),
+        (
+            '<Item xsi:type="Hat" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itemId>1</itemId></Item>',
+            "(H)",
+        ),
+        (
+            '<Item xsi:type="Furniture" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itemId>100</itemId></Item>',
+            "(F)",
+        ),
+        (
+            '<Item xsi:type="Wallpaper" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itemId>0</itemId></Item>',
+            "(WP)",
+        ),
+        (
+            '<Item xsi:type="Flooring" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itemId>0</itemId></Item>',
+            "(FL)",
+        ),
+        (
+            '<Item xsi:type="Clothing" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itemId>12</itemId></Item>',
+            "(S)",
+        ),
+        (
+            '<Item xsi:type="Object" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><itemId>388</itemId><stack>invalid</stack><quality>invalid</quality></Item>',
+            "(O)",
+        ),
     ]
 
     for xml_str, expected_prefix in types_xml:
@@ -103,7 +137,7 @@ def test_chest_capacity_and_material_aggregation():
     result = parse_chests(root)
     assert result["total_chests"] == 2
     assert result["total_items"] == 150
-    
+
     big_chest = next(c for c in result["chests"] if c["is_big_chest"])
     assert len(big_chest["chest_items"]) == 70
     assert big_chest["chest_color"] == "rgba(255, 0, 0, 1.0)"
@@ -112,4 +146,3 @@ def test_chest_capacity_and_material_aggregation():
     wood_material = next(m for m in result["material_totals"] if m["name"] == "Wood")
     assert wood_material["count"] == 150
     assert wood_material["quality_name"] == "gold" if "quality_name" in wood_material else True
-    

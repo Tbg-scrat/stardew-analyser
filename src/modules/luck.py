@@ -31,9 +31,7 @@ def parse_luck(root):
 
     luck_node = root.find("dailyLuck")
     try:
-        luck_val = (
-            float(luck_node.text) if luck_node is not None and luck_node.text else 0.0
-        )
+        luck_val = float(luck_node.text) if luck_node is not None and luck_node.text else 0.0
     except ValueError:
         logger.debug(
             f"Invalid non-float dailyLuck text '{luck_node.text if luck_node is not None else None}'; defaulting to 0.0"
@@ -63,9 +61,7 @@ def parse_luck(root):
         css_class = "luck-worst"
 
     elapsed_ms = (time.perf_counter() - start_time) * 1000
-    logger.debug(
-        f"Daily luck: {round(luck_val, 4)} ({label}) parsed in {elapsed_ms:.2f}ms"
-    )
+    logger.debug(f"Daily luck: {round(luck_val, 4)} ({label}) parsed in {elapsed_ms:.2f}ms")
 
     return {
         "value": round(luck_val, 4),

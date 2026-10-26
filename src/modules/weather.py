@@ -33,9 +33,7 @@ def parse_weather(root):
     start_time = time.perf_counter()
 
     if root is None:
-        logger.warning(
-            "SaveGame root is None. Defaulting weather conditions to Unknown."
-        )
+        logger.warning("SaveGame root is None. Defaulting weather conditions to Unknown.")
         unknown = {
             "id": "Unknown",
             "name": "Unknown",
@@ -65,9 +63,7 @@ def parse_weather(root):
 
     # 2. Tomorrow's Main Valley Weather Forecast
     weather_node = root.find("weatherForTomorrow")
-    weather_id = (
-        weather_node.text if weather_node is not None and weather_node.text else "Sun"
-    )
+    weather_id = weather_node.text if weather_node is not None and weather_node.text else "Sun"
     valley_data = WEATHER_MAP.get(weather_id, WEATHER_MAP["Sun"])
 
     # 3. Ginger Island Weather Forecast (if unlocked)
@@ -77,9 +73,7 @@ def parse_weather(root):
         for item in location_contexts.findall("item"):
             key = item.find("key/string")
             if key is not None and key.text == "Island":
-                weather_for_tomorrow = item.find(
-                    "value/LocationWeather/weatherForTomorrow"
-                )
+                weather_for_tomorrow = item.find("value/LocationWeather/weatherForTomorrow")
                 if weather_for_tomorrow is not None and weather_for_tomorrow.text:
                     island_weather_id = weather_for_tomorrow.text
                 break

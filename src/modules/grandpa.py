@@ -23,9 +23,7 @@ def parse_grandpa_data(
     start_time = time.perf_counter()
 
     if root is None or player is None:
-        logger.warning(
-            "Root or player XML node is None. Returning default Grandpa evaluation."
-        )
+        logger.warning("Root or player XML node is None. Returning default Grandpa evaluation.")
         return _empty_grandpa_summary()
 
     # Default fallbacks for pre-parsed data
@@ -114,9 +112,7 @@ def _evaluate_skills(player):
         pts = item.get("points", 1)
         if completed:
             skills_score += pts
-        skills_items.append(
-            {"label": item.get("label", ""), "points": pts, "completed": completed}
-        )
+        skills_items.append({"label": item.get("label", ""), "points": pts, "completed": completed})
 
     logger.debug(
         f"Grandpa Category 2 (Skills): {skills_score}/2 pts (Total Level: {total_skills}/50)"
@@ -328,9 +324,7 @@ def _extract_pet_friendship(root):
         npcs = location.find("characters")
         if npcs is not None:
             for npc in npcs.findall("NPC"):
-                npc_type = npc.get(
-                    "{http://www.w3.org/2001/XMLSchema-instance}type", ""
-                )
+                npc_type = npc.get("{http://www.w3.org/2001/XMLSchema-instance}type", "")
                 if npc_type in ("Cat", "Dog", "Pet") or npc.tag in (
                     "Cat",
                     "Dog",
@@ -338,9 +332,7 @@ def _extract_pet_friendship(root):
                 ):
                     try:
                         val = int(npc.findtext("friendshipTowardFarmer", "0"))
-                        logger.debug(
-                            f"Found Pet ({npc_type or npc.tag}) friendship: {val}"
-                        )
+                        logger.debug(f"Found Pet ({npc_type or npc.tag}) friendship: {val}")
                         return val
                     except ValueError:
                         return 0
@@ -353,9 +345,7 @@ def _check_keys_status(player):
     Robust key lookup compatible with SDV 1.5 & 1.6+.
     Checks legacy boolean tags, 1.6 <stats> dictionary, mail flags, and events seen.
     """
-    mail_received = {
-        m.text.lower() for m in player.findall(".//mailReceived/string") if m.text
-    }
+    mail_received = {m.text.lower() for m in player.findall(".//mailReceived/string") if m.text}
     events_seen = {e.text for e in player.findall(".//eventsSeen/string") if e.text}
     for e in player.findall(".//eventsSeen/int"):
         if e.text:
@@ -364,17 +354,13 @@ def _check_keys_status(player):
     # 1. Rusty Key Check
     rusty_node = (player.findtext("hasRustyKey") or "").lower() == "true"
     rusty_event = "67" in events_seen
-    rusty_mail = any(
-        k in mail_received for k in ["hasrustykey", "sewerkey", "gunthersewer"]
-    )
+    rusty_mail = any(k in mail_received for k in ["hasrustykey", "sewerkey", "gunthersewer"])
 
     has_rusty_key = rusty_node or rusty_event or rusty_mail
 
     # 2. Skull Key Check
     skull_node = (player.findtext("hasSkullKey") or "").lower() == "true"
-    skull_mail = any(
-        k in mail_received for k in ["hasskullkey", "skullkey", "openedskullcavern"]
-    )
+    skull_mail = any(k in mail_received for k in ["hasskullkey", "skullkey", "openedskullcavern"])
     skull_event = bool({"901802", "120"} & events_seen)
 
     # Mine progression check (supporting SDV 1.6 <stats> dictionary)
@@ -451,9 +437,7 @@ def _check_community_center_progress(root, player):
     ceremony_events = {"191393", "191392", "502261"}
     ceremony_mail = {"ccGrandReopening", "ccCeremony", "jojaCeremony"}
 
-    cc_ceremony = bool(
-        (ceremony_mail & mail_received) or (ceremony_events & events_seen)
-    )
+    cc_ceremony = bool((ceremony_mail & mail_received) or (ceremony_events & events_seen))
 
     if not cc_complete:
         cc_ceremony = False
@@ -469,4 +453,3 @@ def _empty_grandpa_summary():
         "statue_unlocked": False,
         "categories": [],
     }
-    

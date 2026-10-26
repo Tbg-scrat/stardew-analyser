@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import xml.etree.ElementTree as ET
-import pytest
-from src.modules.grandpa import parse_grandpa_data, _calculate_candles
+
+from src.modules.grandpa import _calculate_candles, parse_grandpa_data
 
 
 def _build_mock_xml(
@@ -17,7 +17,7 @@ def _build_mock_xml(
 ):
     mail = mail or []
     root = ET.Element("SaveGame")
-    
+
     # Pet location setup
     loc = ET.SubElement(root, "locations")
     gloc = ET.SubElement(loc, "GameLocation")
@@ -99,4 +99,3 @@ def test_grandpa_none_handling():
     assert res["total_score"] == 0
     assert res["candles"] == 1
     assert res["statue_unlocked"] is False
-    

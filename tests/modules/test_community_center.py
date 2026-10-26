@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import xml.etree.ElementTree as ET
-import pytest
-from src.modules.community_center import parse_community_center_data, BUNDLE_METADATA
+
+from src.modules.community_center import BUNDLE_METADATA, parse_community_center_data
 
 
 def _build_cc_mock_xml(is_joja=False, completed_bundles=None, mail=None):
@@ -30,7 +30,7 @@ def _build_cc_mock_xml(is_joja=False, completed_bundles=None, mail=None):
         item = ET.SubElement(bundles_node, "item")
         key = ET.SubElement(item, "key")
         ET.SubElement(key, "int").text = str(b_id)
-        
+
         val = ET.SubElement(item, "value")
         arr = ET.SubElement(val, "ArrayOfBool")
         ET.SubElement(arr, "boolean").text = "false"
@@ -73,4 +73,3 @@ def test_cc_joja_route():
     assert res["route_label"] == "Joja Co. Warehouse"
     assert res["completed_bundles"] == 2
     assert len(res["projects"]) == 6
-    

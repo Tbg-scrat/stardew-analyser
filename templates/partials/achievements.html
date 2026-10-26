@@ -25,61 +25,78 @@
     .item-action-link { margin-top: 6px; }
     .item-action-link a { color: #4a90e2; font-size: 0.82rem; text-decoration: underline; cursor: pointer; }
 </style>
-
 <div class="radar-controls">
     <div class="filter-group">
-        <button class="filter-btn active" data-filter-key="status" data-filter-val="all" onclick="setCatalogFilter(this)">All</button>
-        <button class="filter-btn" data-filter-key="status" data-filter-val="unlocked" onclick="setCatalogFilter(this)">Unlocked</button>
-        <button class="filter-btn" data-filter-key="status" data-filter-val="locked" onclick="setCatalogFilter(this)">Locked</button>
+        <button class="filter-btn active"
+                data-filter-key="status"
+                data-filter-val="all"
+                onclick="setCatalogFilter(this)">All</button>
+        <button class="filter-btn"
+                data-filter-key="status"
+                data-filter-val="unlocked"
+                onclick="setCatalogFilter(this)">Unlocked</button>
+        <button class="filter-btn"
+                data-filter-key="status"
+                data-filter-val="locked"
+                onclick="setCatalogFilter(this)">Locked</button>
     </div>
-    <input type="text" class="search-box" placeholder="Search achievements..." onkeyup="filterItems(this)">
+    <input type="text"
+           class="search-box"
+           placeholder="Search achievements..."
+           onkeyup="filterItems(this)">
 </div>
 <div class="items-grid">
     {% for item in farm.achievements.list %}
-    <div class="item-card status-{{ 'unlocked' if item.unlocked else 'locked' }}" 
-         data-name="{{ item.name|lower }}" 
-         data-status="{{ 'unlocked' if item.unlocked else 'locked' }}">
-        <div class="item-sprite-box">
-            {% if item.unlocked %}
-            <svg class="achievement-star unlocked" width="28" height="28" viewBox="0 0 24 24" fill="#f59e0b" stroke="#b45309" stroke-width="1.5">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
-            {% else %}
-            <svg class="achievement-star locked" width="28" height="28" viewBox="0 0 24 24" fill="rgba(255, 255, 255, 0.1)" stroke="var(--border-color)" stroke-width="1.5">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
-            {% endif %}
-        </div>
-        <div class="item-info">
-            <div class="item-name">{{ item.name }}</div>
-            <div class="item-meta">{{ item.description }}</div>
-            
-            {% if item.progress_current is defined and item.target is defined and item.target > 1 %}
-            <div class="item-progress">
-                Progress: {{ item.progress_current }} / {{ item.target }}
+        <div class="item-card status-{{ 'unlocked' if item.unlocked else 'locked' }}"
+             data-name="{{ item.name|lower }}"
+             data-status="{{ 'unlocked' if item.unlocked else 'locked' }}">
+            <div class="item-sprite-box">
+                {% if item.unlocked %}
+                    <svg class="achievement-star unlocked"
+                         width="28"
+                         height="28"
+                         viewBox="0 0 24 24"
+                         fill="#f59e0b"
+                         stroke="#b45309"
+                         stroke-width="1.5">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg>
+                {% else %}
+                    <svg class="achievement-star locked"
+                         width="28"
+                         height="28"
+                         viewBox="0 0 24 24"
+                         fill="rgba(255, 255, 255, 0.1)"
+                         stroke="var(--border-color)"
+                         stroke-width="1.5">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg>
+                {% endif %}
             </div>
-            {% endif %}
-            
-            {% if not item.unlocked %}
-                {% if item.tip %}
-                <div class="item-tip">
-                      <i>{{ item.tip }}</i>
-                </div>
+            <div class="item-info">
+                <div class="item-name">{{ item.name }}</div>
+                <div class="item-meta">{{ item.description }}</div>
+                {% if item.progress_current is defined and item.target is defined and item.target > 1 %}
+                    <div class="item-progress">Progress: {{ item.progress_current }} / {{ item.target }}</div>
                 {% endif %}
-                
-                {% if item.link_module %}
-                <div class="item-action-link">
-                    <a href="#" onclick="navigateToModule('{{ farm.farm_id }}', '{{ item.link_module }}', '{{ item.link_filter }}'); return false;">
-                        View missing in {{ item.link_module|capitalize }}  
-                    </a>
-                </div>
+                {% if not item.unlocked %}
+                    {% if item.tip %}
+                        <div class="item-tip">
+                            <i>{{ item.tip }}</i>
+                        </div>
+                    {% endif %}
+                    {% if item.link_module %}
+                        <div class="item-action-link">
+                            <a href="#"
+                               onclick="navigateToModule('{{ farm.farm_id }}', '{{ item.link_module }}', '{{ item.link_filter }}'); return false;">
+                                View missing in {{ item.link_module|capitalize }}
+                            </a>
+                        </div>
+                    {% endif %}
                 {% endif %}
-            {% endif %}
-
-            <span class="status-badge {{ 'unlocked' if item.unlocked else 'locked' }}" style="margin-top: 6px;">
-                {{ 'unlocked' if item.unlocked else 'locked' }}
-            </span>
+                <span class="status-badge {{ 'unlocked' if item.unlocked else 'locked' }}"
+                      style="margin-top: 6px">{{ 'unlocked' if item.unlocked else 'locked' }}</span>
+            </div>
         </div>
-    </div>
     {% endfor %}
 </div>

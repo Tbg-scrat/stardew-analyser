@@ -2,6 +2,7 @@
 # tests/renderer/test_alerts.py
 
 from bs4 import BeautifulSoup
+
 from src.core.renderer import generate_dashboard_html
 
 

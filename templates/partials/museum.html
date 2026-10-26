@@ -21,31 +21,42 @@
     .status-badge.unlocked { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3); }
     .status-badge.locked { background: rgba(100, 116, 139, 0.2); color: var(--text-muted); border: 1px solid var(--border-color); }
 </style>
-
 <div class="radar-controls">
     <div class="filter-group">
-        <button class="filter-btn active" data-filter-key="status" data-filter-val="all" onclick="setCatalogFilter(this)">All</button>
-        <button class="filter-btn" data-filter-key="status" data-filter-val="found" onclick="setCatalogFilter(this)">Donated</button>
-        <button class="filter-btn" data-filter-key="status" data-filter-val="not_found" onclick="setCatalogFilter(this)">Missing</button>
+        <button class="filter-btn active"
+                data-filter-key="status"
+                data-filter-val="all"
+                onclick="setCatalogFilter(this)">All</button>
+        <button class="filter-btn"
+                data-filter-key="status"
+                data-filter-val="found"
+                onclick="setCatalogFilter(this)">Donated</button>
+        <button class="filter-btn"
+                data-filter-key="status"
+                data-filter-val="not_found"
+                onclick="setCatalogFilter(this)">Missing</button>
     </div>
-    <input type="text" class="search-box" placeholder="Search museum pieces..." onkeyup="filterItems(this)">
+    <input type="text"
+           class="search-box"
+           placeholder="Search museum pieces..."
+           onkeyup="filterItems(this)">
 </div>
 <div class="items-grid">
     {% for item in farm.museum_pieces %}
-    <div class="item-card status-{{ item.status }}" 
-         data-name="{{ item.name|lower }}" 
-         data-status="{{ item.status }}">
-        <div class="item-sprite-box">
-            <img src="{{ item.image }}" 
-                 class="item-sprite" 
-                 alt="{{ item.name }}" 
-                 onerror="this.onerror=null; this.src='/static/img/placeholder.svg';">
+        <div class="item-card status-{{ item.status }}"
+             data-name="{{ item.name|lower }}"
+             data-status="{{ item.status }}">
+            <div class="item-sprite-box">
+                <img src="{{ item.image }}"
+                     class="item-sprite"
+                     alt="{{ item.name }}"
+                     onerror="this.onerror=null; this.src='/static/img/placeholder.svg';">
+            </div>
+            <div class="item-info">
+                <div class="item-name">{{ item.name }}</div>
+                <div class="item-meta">Type: <b>{{ item.type }}</b></div>
+                <span class="status-badge {{ 'unlocked' if item.is_unlocked else 'locked' }}">{{ item.status|replace('_', ' ') }}</span>
+            </div>
         </div>
-        <div class="item-info">
-            <div class="item-name">{{ item.name }}</div>
-            <div class="item-meta">Type: <b>{{ item.type }}</b></div>
-            <span class="status-badge {{ 'unlocked' if item.is_unlocked else 'locked' }}">{{ item.status|replace('_', ' ') }}</span>
-        </div>
-    </div>
     {% endfor %}
 </div>

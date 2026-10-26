@@ -2,6 +2,7 @@
 # tests/modules/test_artisan_machines.py
 
 import xml.etree.ElementTree as ET
+
 from src.modules.artisan import parse_all_artisan_goods
 from src.modules.artisan.bee_houses import parse_all_bee_houses_from_save
 from src.modules.artisan.casks import parse_all_casks_from_save, parse_casks, resolve_item_icon
@@ -330,4 +331,3 @@ def test_artisan_aggregator_and_idle_summary():
     assert summary["total_machines"] == 1
     assert summary["idle_machines"] == 1
     assert agg["idle_summary"] == {"Farm": {"kegs": 1}}
-    

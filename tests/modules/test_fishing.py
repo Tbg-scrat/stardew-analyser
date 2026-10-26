@@ -2,6 +2,7 @@
 # tests/modules/test_fishing.py
 
 import xml.etree.ElementTree as ET
+
 from src.modules.fishing import get_formatted_fishing
 
 
@@ -68,4 +69,3 @@ def test_get_formatted_fishing_parsing():
         assert caught_entry["count"] == 5
         assert caught_entry["length"] == 18
         assert caught_entry["is_unlocked"] is True
-        

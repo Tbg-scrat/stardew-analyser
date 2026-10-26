@@ -3,7 +3,7 @@
 import logging
 from collections import defaultdict
 
-from src.core.reference_data import qualify_item_id, get_object_info
+from src.core.reference_data import get_object_info
 
 logger = logging.getLogger("parse")
 
@@ -18,8 +18,12 @@ def calculate_days_remaining(crop_node) -> dict:
     """
     raw_harvest_id = crop_node.findtext("indexOfHarvest") if crop_node is not None else None
     # STRICT DOMAIN SCOPING: Crops always yield standard objects (O)
-    harvest_id = f"(O){raw_harvest_id}" if raw_harvest_id and not raw_harvest_id.startswith("(") else raw_harvest_id
-    
+    harvest_id = (
+        f"(O){raw_harvest_id}"
+        if raw_harvest_id and not raw_harvest_id.startswith("(")
+        else raw_harvest_id
+    )
+
     try:
         current_phase = int(crop_node.findtext("currentPhase", "0"))
         day_of_phase = int(crop_node.findtext("dayOfCurrentPhase", "0"))
@@ -82,9 +86,7 @@ def calculate_days_remaining(crop_node) -> dict:
 parse_crop = calculate_days_remaining
 
 
-def parse_crops_from_location(
-    location_node, current_day=1, is_outdoor_farm=False
-) -> dict:
+def parse_crops_from_location(location_node, current_day=1, is_outdoor_farm=False) -> dict:
     """
     Parses all HoeDirt crops within a given location XML node.
     Groups identical crop types by harvest maturity time.
@@ -119,7 +121,9 @@ def parse_crops_from_location(
             continue
 
         # STRICT DOMAIN SCOPING: Explicitly bind crop harvest ID to object domain (O)
-        harvest_id = f"(O){raw_harvest_id}" if not raw_harvest_id.startswith("(") else raw_harvest_id
+        harvest_id = (
+            f"(O){raw_harvest_id}" if not raw_harvest_id.startswith("(") else raw_harvest_id
+        )
 
         lifecycle = calculate_days_remaining(crop_node)
         days_left = lifecycle["days_to_harvest"]
@@ -135,9 +139,7 @@ def parse_crops_from_location(
         crop_counts[group_key]["count"] += 1
         crop_counts[group_key]["days_to_harvest"] = days_left
         crop_counts[group_key]["is_recurring"] = is_recurring
-        crop_counts[group_key]["will_wither"] = (
-            crop_counts[group_key]["will_wither"] or will_wither
-        )
+        crop_counts[group_key]["will_wither"] = crop_counts[group_key]["will_wither"] or will_wither
 
     items = []
     total_crops = 0
@@ -219,14 +221,10 @@ def parse_all_crops_from_save(root, current_day=1) -> dict:
     )
 
     total_crops = (
-        farm_data["total_crops"]
-        + greenhouse_data["total_crops"]
-        + island_data["total_crops"]
+        farm_data["total_crops"] + greenhouse_data["total_crops"] + island_data["total_crops"]
     )
     ready_today = (
-        farm_data["ready_today"]
-        + greenhouse_data["ready_today"]
-        + island_data["ready_today"]
+        farm_data["ready_today"] + greenhouse_data["ready_today"] + island_data["ready_today"]
     )
 
     return {
@@ -237,4 +235,3 @@ def parse_all_crops_from_save(root, current_day=1) -> dict:
             "ginger_island": island_data,
         },
     }
-    

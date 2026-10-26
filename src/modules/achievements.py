@@ -38,23 +38,17 @@ def parse_achievements(player_node, catalog=None, shipped_items=None):
                 elif node.text:
                     logger.warning(f"Ignored non-integer achievement ID: '{node.text}'")
 
-    logger.debug(
-        f"Extracted {len(unlocked_ids)} valid unlocked achievement IDs from XML"
-    )
+    logger.debug(f"Extracted {len(unlocked_ids)} valid unlocked achievement IDs from XML")
 
     monoculture_count = 0
     if shipped_items:
-        monoculture_items = [
-            item for item in shipped_items if item.get("is_monoculture")
-        ]
+        monoculture_items = [item for item in shipped_items if item.get("is_monoculture")]
         monoculture_count = (
             max([item.get("count", 0) for item in monoculture_items], default=0)
             if monoculture_items
             else 0
         )
-        logger.debug(
-            f"Monoculture calculated max single crop shipped: {monoculture_count}"
-        )
+        logger.debug(f"Monoculture calculated max single crop shipped: {monoculture_count}")
 
     processed_achievements = []
 

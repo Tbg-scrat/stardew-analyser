@@ -1,10 +1,9 @@
-from src.core.reference_data import qualify_item_id, get_object_info
 # src/modules/shipping.py
-
 import logging
 import time
 
 from data.data_loader import SHIPPING_CATALOG
+from src.core.reference_data import get_object_info, qualify_item_id
 from src.core.xml_reader import get_key_value
 
 logger = logging.getLogger(__name__)
@@ -40,9 +39,7 @@ def parse_shipping(player_node):
                 count_int = 0
             shipped_items[str(item_id)] = count_int
 
-    logger.debug(
-        f"Extracted {len(shipped_items)} valid shipped items from basicShipped XML"
-    )
+    logger.debug(f"Extracted {len(shipped_items)} valid shipped items from basicShipped XML")
     return shipped_items
 
 
@@ -72,7 +69,7 @@ def get_formatted_shipping(player_node, catalog=None):
         is_shipped = count > 0
 
         item_name = catalog_item.get("name", f"Item {item_id}")
-        
+
         # Look up the dynamic icon path from our central routing dictionary
         obj_info = get_object_info(item_id, fallback_name=item_name)
 
@@ -91,9 +88,7 @@ def get_formatted_shipping(player_node, catalog=None):
         )
 
     if unmapped_count > 0:
-        logger.debug(
-            f"Skipped {unmapped_count} invalid non-dict entries in shipping catalog"
-        )
+        logger.debug(f"Skipped {unmapped_count} invalid non-dict entries in shipping catalog")
 
     shipped_total = sum(1 for s in shipped_mapped if s["is_unlocked"])
     catalog_total = len(shipped_mapped)
@@ -105,4 +100,3 @@ def get_formatted_shipping(player_node, catalog=None):
     )
 
     return sorted(shipped_mapped, key=lambda x: x["name"])
-    

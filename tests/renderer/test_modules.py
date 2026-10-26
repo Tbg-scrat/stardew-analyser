@@ -2,6 +2,7 @@
 # tests/renderer/test_modules.py
 
 from bs4 import BeautifulSoup
+
 from src.core.renderer import generate_dashboard_html
 
 
@@ -41,7 +42,9 @@ def test_html_grandpa_evaluation_rendering(tmp_path, sample_render_data):
 
     banner = soup.find("div", class_="grandpa-banner")
     assert banner is not None, "Grandpa banner container missing from DOM"
-    assert "statue-unlocked" in banner.get("class", []), "Expected 'statue-unlocked' CSS class on banner"
+    assert "statue-unlocked" in banner.get("class", []), (
+        "Expected 'statue-unlocked' CSS class on banner"
+    )
 
     page_text = soup.get_text()
     assert "Grandpa's Evaluation" in page_text

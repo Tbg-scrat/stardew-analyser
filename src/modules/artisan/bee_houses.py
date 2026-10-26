@@ -83,8 +83,7 @@ def parse_all_bee_houses_from_save(root):
 
             held = obj.find("heldObject")
             is_nil = (
-                held is None
-                or held.get("{http://www.w3.org/2001/XMLSchema-instance}nil") == "true"
+                held is None or held.get("{http://www.w3.org/2001/XMLSchema-instance}nil") == "true"
             )
 
             is_ginger_island = loc_name in [
@@ -94,9 +93,7 @@ def parse_all_bee_houses_from_save(root):
                 "IslandSouth",
             ]
 
-            ready_for_harvest = (
-                obj.findtext("readyForHarvest", "false").lower() == "true"
-            )
+            ready_for_harvest = obj.findtext("readyForHarvest", "false").lower() == "true"
 
             try:
                 minutes_until_ready = int(obj.findtext("minutesUntilReady", "0"))
@@ -183,4 +180,3 @@ def parse_all_bee_houses_from_save(root):
         "location_stats": location_stats,
         "batches": sorted_batches,
     }
-    

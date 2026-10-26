@@ -1,7 +1,8 @@
 # tests/test_crops.py
 
 import xml.etree.ElementTree as ET
-from src.modules.crops import parse_crop, parse_all_crops_from_save
+
+from src.modules.crops import parse_all_crops_from_save, parse_crop
 
 
 def test_parse_crop_ready_today():
@@ -75,4 +76,3 @@ def test_season_wither_warning_on_main_farm():
     farm_items = result["locations"]["farm"]["items"]
     assert len(farm_items) == 1
     assert farm_items[0]["will_wither"] is True
-    

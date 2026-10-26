@@ -1,5 +1,5 @@
-import os
 from PIL import Image
+
 from src.core.extractor.image_utils import crop_tile, resolve_case_insensitive_path
 
 

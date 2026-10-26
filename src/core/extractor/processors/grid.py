@@ -1,9 +1,12 @@
 import logging
 import os
+
 from PIL import Image
+
 from ..image_utils import crop_tile
 
 logger = logging.getLogger(__name__)
+
 
 # Fix: Standardized parameter signature to accept 'config: dict' like other processors
 def process_grid(temp_unpacked_dir: str, config: dict, cache_dir: str) -> int:
@@ -13,11 +16,11 @@ def process_grid(temp_unpacked_dir: str, config: dict, cache_dir: str) -> int:
     prefix = meta.get("prefix", "IMG")
     tile_w = meta.get("tile_width", 16)
     tile_h = meta.get("tile_height", 16)
-    
+
     # NEW: Optional sub-crop dimensions
     crop_w = meta.get("crop_width", tile_w)
     crop_h = meta.get("crop_height", tile_h)
-    
+
     tiles_per_row = meta.get("tiles_per_row", 0)
 
     # Fix: Resolve relative path from config to accommodate nested directories
@@ -38,13 +41,13 @@ def process_grid(temp_unpacked_dir: str, config: dict, cache_dir: str) -> int:
         return 0
 
     sheet_w, sheet_h = img.size
-    
+
     # Calculate grid bounds dynamically if not provided
     cols = tiles_per_row if tiles_per_row > 0 else sheet_w // tile_w
     if cols <= 0:
         logger.error("[GridProcessor] Invalid column count calculation.")
         return 0
-        
+
     rows = sheet_h // tile_h
     count = 0
 
@@ -66,4 +69,3 @@ def process_grid(temp_unpacked_dir: str, config: dict, cache_dir: str) -> int:
 
     logger.info(f"[GridProcessor] Sliced {count} tiles from {filename} into {prefix}/ subfolder.")
     return count
-    

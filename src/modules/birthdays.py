@@ -21,9 +21,7 @@ def get_seasonal_birthdays(season_name):
     for name, meta in villagers_map.items():
         bday_info = meta.get("birthday")
         if bday_info and bday_info.get("season") == season_name.lower():
-            seasonal_list.append(
-                {"day": bday_info.get("day"), "name": name, "icon": "\U0001f382"}
-            )
+            seasonal_list.append({"day": bday_info.get("day"), "name": name, "icon": "\U0001f382"})
 
     return sorted(seasonal_list, key=lambda b: b["day"])
 
@@ -45,11 +43,7 @@ def parse_birthdays(root):
     season_node = root.find("currentSeason")
     day_node = root.find("dayOfMonth")
 
-    season = (
-        season_node.text.lower()
-        if season_node is not None and season_node.text
-        else "spring"
-    )
+    season = season_node.text.lower() if season_node is not None and season_node.text else "spring"
     try:
         day = int(day_node.text) if day_node is not None and day_node.text else 1
     except ValueError:

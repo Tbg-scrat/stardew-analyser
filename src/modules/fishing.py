@@ -1,10 +1,9 @@
-from src.core.reference_data import qualify_item_id, get_object_info
 # src/modules/fishing.py
-
 import logging
 import time
 
 from data.data_loader import FISH_CATALOG
+from src.core.reference_data import get_object_info, qualify_item_id
 from src.core.xml_reader import get_key_value
 
 logger = logging.getLogger(__name__)
@@ -23,9 +22,7 @@ def parse_fishing(player_node):
         return {}
 
     items = fish_node.findall("item")
-    logger.debug(
-        f"Parsing <fishCaught> node containing {len(items)} raw fish item entries"
-    )
+    logger.debug(f"Parsing <fishCaught> node containing {len(items)} raw fish item entries")
 
     for item in items:
         item_id, val_node = get_key_value(item)
@@ -96,7 +93,7 @@ def get_formatted_fishing(player_node, catalog=None):
         stats = fish_save_map.get(str(item_id))
         is_caught = stats is not None
         item_name = catalog_item.get("name", f"Fish {item_id}")
-        
+
         # Look up the dynamic icon path from our central routing dictionary
         obj_info = get_object_info(item_id, fallback_name=item_name)
 
@@ -113,9 +110,7 @@ def get_formatted_fishing(player_node, catalog=None):
         )
 
     if unmapped_count > 0:
-        logger.debug(
-            f"Skipped {unmapped_count} invalid non-dict entries in fish catalog"
-        )
+        logger.debug(f"Skipped {unmapped_count} invalid non-dict entries in fish catalog")
 
     caught_total = sum(1 for f in fish_mapped if f["is_unlocked"])
     catalog_total = len(fish_mapped)
@@ -127,4 +122,3 @@ def get_formatted_fishing(player_node, catalog=None):
     )
 
     return sorted(fish_mapped, key=lambda x: x["name"])
-    

@@ -4,6 +4,7 @@ import subprocess
 import time
 from pathlib import Path
 from threading import Timer
+
 from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
 
@@ -11,7 +12,6 @@ SAVE_DIR = Path(os.getenv("SAVE_DIR", "/saves"))
 
 
 class SaveHandler(FileSystemEventHandler):
-
     def __init__(self, debounce_seconds=2.0):
         self.debounce_seconds = debounce_seconds
         self.timer = None
@@ -25,7 +25,9 @@ class SaveHandler(FileSystemEventHandler):
         self.timer.start()
 
     def _run_rebuild(self, event_type, path):
-        print(f"[WATCHER] Settled save change detected ({event_type}: {path}). Rebuilding index.html...")
+        print(
+            f"[WATCHER] Settled save change detected ({event_type}: {path}). Rebuilding index.html..."
+        )
         subprocess.run(["python3", "parse.py"], check=False)
 
     def on_deleted(self, event):
@@ -59,4 +61,3 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         observer.stop()
     observer.join()
-    

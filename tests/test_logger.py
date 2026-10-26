@@ -1,8 +1,8 @@
 # tests/test_logger.py
 
 import logging
-import os
-from src.core.logger import setup_logging, prune_old_logs
+
+from src.core.logger import prune_old_logs, setup_logging
 
 
 def test_setup_logging_defaults_to_info(monkeypatch):
@@ -36,7 +36,7 @@ def test_setup_logging_with_valid_log_dir(tmp_path, monkeypatch):
     """Verifies file logging is initialized if LOG_DIR exists and is writable."""
     log_dir = tmp_path / "logs"
     log_dir.mkdir()
-    
+
     monkeypatch.setenv("LOG_DIR", str(log_dir))
     setup_logging("test_process")
 
@@ -59,4 +59,3 @@ def test_prune_old_logs(tmp_path):
     prune_old_logs(str(log_dir), max_files=5)
     remaining_files = list(log_dir.glob("*.log"))
     assert len(remaining_files) == 5
-    

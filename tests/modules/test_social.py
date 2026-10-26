@@ -2,6 +2,7 @@
 # tests/modules/test_social.py
 
 import xml.etree.ElementTree as ET
+
 from data.data_loader import VILLAGERS_CATALOG
 from src.modules.social import get_loved_gifts, parse_social
 
@@ -128,4 +129,3 @@ def test_parse_social_filtering_and_sorting():
     assert linus["hearts"] == 0
     assert linus["max_hearts"] == 10
     assert linus["status"] == "Normal"
-    

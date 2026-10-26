@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stardew Valley Save Analyzer</title>
-    <link rel="icon" type="image/png" href="/static/favicon.png">
-    <style>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Stardew Valley Save Analyzer</title>
+        <link rel="icon" type="image/png" href="/static/favicon.png">
+        <style>
         :root {
             --bg-primary: #0b0f19;
             --bg-card: #151e32;
@@ -40,159 +40,184 @@
         .module-pane.active { display: block; }
         
         footer { margin-top: 3rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem; display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <div class="header-title">
-                <span class="logo-icon">🌾</span>
-                <div>
-                    <h1>Stardew Valley Save Analyzer</h1>
-                    <div class="header-subtitle">Multi-Farm Save Monitoring &amp; Collections Tracker</div>
-                </div>
-            </div>
-        </header>
-
-        <!-- Farm Switcher Partial -->
-        {% include 'partials/farm_switcher.html' %}
-
-        {% if farms %}
-        {% for farm in farms %}
-        <div class="farm-pane {% if loop.first %}active{% endif %}" id="farm-pane-{{ farm.farm_id }}">
-            
-            {% include 'partials/overview_cards.html' %}
-
-            {# 1. Immediate Stored Hay Deficit Warning #}
-            {% if farm.hay and farm.hay.has_deficit_warning %}
-            <div class="alert-banner alert-warning" style="background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1.25rem; color: #fca5a5; display: flex; align-items: flex-start; gap: 0.85rem;">
-                <div style="font-size: 1.5rem; line-height: 1;">⚠</div>
-                <div>
-                    <strong style="color: #f87171; font-size: 0.95rem; display: block; margin-bottom: 0.25rem;">Winter Hay Deficit Warning</strong>
-                    <p style="margin: 0; font-size: 0.85rem; color: #fca5a5;">
-                        You currently have <strong>{{ farm.hay.current_hay }}</strong> stored hay for <strong>{{ farm.hay.total_animals }}</strong> animals. You need <strong>{{ farm.hay.deficit_amount }}</strong> more hay to survive the {{ 'remaining' if farm.season == 'winter' else 'next' }} winter!
-                    </p>
-                </div>
-            </div>
-            {% endif %}
-
-            {# 2. Insufficient Silo Capacity Warning #}
-            {% if farm.hay and farm.hay.has_capacity_warning %}
-            <div class="alert-banner alert-capacity" style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35); border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1.25rem; color: #fde047; display: flex; align-items: flex-start; gap: 0.85rem;">
-                <div style="font-size: 1.5rem; line-height: 1;">🏗️</div>
-                <div>
-                    <strong style="color: #fbbf24; font-size: 0.95rem; display: block; margin-bottom: 0.25rem;">Insufficient Silo Storage Capacity</strong>
-                    <p style="margin: 0; font-size: 0.85rem; color: #fde047;">
-                        Your <strong>{{ farm.hay.silos_built }}</strong> Silo(s) hold a max of <strong>{{ farm.hay.max_capacity }}</strong> hay, but your <strong>{{ farm.hay.total_animals }}</strong> animals require <strong>{{ farm.hay.required_winter_hay }}</strong> hay for winter. Build at least <strong>{{ ((farm.hay.capacity_shortfall) / 240) | round(0, 'ceil') | int }}</strong> more Silo(s) or store extra hay in chests!
-                    </p>
-                </div>
-            </div>
-            {% endif %}
-
-            {# 3. Watering Can Rain Opportunity Banner #}
-            {% if farm.watering_can_opportunity and farm.watering_can_opportunity.active %}
-            <div class="alert-banner alert-opportunity" style="background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1.25rem; color: #bae6fd; display: flex; align-items: flex-start; gap: 0.85rem;">
-                <div style="font-size: 1.5rem; line-height: 1;">🌧️</div>
-                <div style="width: 100%;">
-                    <strong style="color: #38bdf8; font-size: 0.95rem; display: block; margin-bottom: 0.25rem;">Perfect Day for Watering Can Upgrade!</strong>
-                    <p style="margin: 0; font-size: 0.85rem; color: #bae6fd;">
-                        Rain is forecast for tomorrow! You have enough gold (<strong>{{ "{:,}".format(farm.watering_can_opportunity.gold_cost) }}g</strong>) and materials (<strong>{{ farm.watering_can_opportunity.materials_text }}</strong>) to drop off your Watering Can at Clint's today for the <strong>{{ farm.watering_can_opportunity.next_tier_name }}</strong> upgrade without missing a harvest day.
-                    </p>
-                    {% if farm.watering_can_opportunity.has_festival_delay %}
-                    <div style="margin-top: 0.5rem; font-size: 0.8rem; color: #fcd34d; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 6px; padding: 0.35rem 0.65rem;">
-                        ⚠️ <strong>Festival Delay:</strong> Clint's shop is closed on your pickup day ({{ farm.watering_can_opportunity.pickup_season }} {{ farm.watering_can_opportunity.pickup_day }}). You won't be able to retrieve your tool until the following day.
-                    </div>
-                    {% endif %}
-                    <div style="margin-top: 0.4rem; font-size: 0.775rem; color: #94a3b8; font-style: italic;">
-                        💡 Note: Rain does not water crops inside the Greenhouse, on Ginger Island, or in Garden Pots.
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <div class="header-title">
+                    <span class="logo-icon">🌾</span>
+                    <div>
+                        <h1>Stardew Valley Save Analyzer</h1>
+                        <div class="header-subtitle">Multi-Farm Save Monitoring &amp; Collections Tracker</div>
                     </div>
                 </div>
-            </div>
+            </header>
+            <!-- Farm Switcher Partial -->
+            {% include "partials/farm_switcher.html" %}
+            {% if farms %}
+                {% for farm in farms %}
+                    <div class="farm-pane {% if loop.first %}active{% endif %}"
+                         id="farm-pane-{{ farm.farm_id }}">
+                        {% include "partials/overview_cards.html" %}
+                        {# 1. Immediate Stored Hay Deficit Warning #}
+                        {% if farm.hay and farm.hay.has_deficit_warning %}
+                            <div class="alert-banner alert-warning"
+                                 style="background: rgba(239, 68, 68, 0.12);
+                                        border: 1px solid rgba(239, 68, 68, 0.35);
+                                        border-radius: 10px;
+                                        padding: 1rem 1.25rem;
+                                        margin-bottom: 1.25rem;
+                                        color: #fca5a5;
+                                        display: flex;
+                                        align-items: flex-start;
+                                        gap: 0.85rem">
+                                <div style="font-size: 1.5rem; line-height: 1;">⚠</div>
+                                <div>
+                                    <strong style="color: #f87171;
+                                                   font-size: 0.95rem;
+                                                   display: block;
+                                                   margin-bottom: 0.25rem">Winter Hay Deficit Warning</strong>
+                                    <p style="margin: 0; font-size: 0.85rem; color: #fca5a5;">
+                                        You currently have <strong>{{ farm.hay.current_hay }}</strong> stored hay for <strong>{{ farm.hay.total_animals }}</strong> animals. You need <strong>{{ farm.hay.deficit_amount }}</strong> more hay to survive the {{ 'remaining' if farm.season == 'winter' else 'next' }} winter!
+                                    </p>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {# 2. Insufficient Silo Capacity Warning #}
+                        {% if farm.hay and farm.hay.has_capacity_warning %}
+                            <div class="alert-banner alert-capacity"
+                                 style="background: rgba(245, 158, 11, 0.12);
+                                        border: 1px solid rgba(245, 158, 11, 0.35);
+                                        border-radius: 10px;
+                                        padding: 1rem 1.25rem;
+                                        margin-bottom: 1.25rem;
+                                        color: #fde047;
+                                        display: flex;
+                                        align-items: flex-start;
+                                        gap: 0.85rem">
+                                <div style="font-size: 1.5rem; line-height: 1;">🏗️</div>
+                                <div>
+                                    <strong style="color: #fbbf24;
+                                                   font-size: 0.95rem;
+                                                   display: block;
+                                                   margin-bottom: 0.25rem">Insufficient Silo Storage Capacity</strong>
+                                    <p style="margin: 0; font-size: 0.85rem; color: #fde047;">
+                                        Your <strong>{{ farm.hay.silos_built }}</strong> Silo(s) hold a max of <strong>{{ farm.hay.max_capacity }}</strong> hay, but your <strong>{{ farm.hay.total_animals }}</strong> animals require <strong>{{ farm.hay.required_winter_hay }}</strong> hay for winter. Build at least <strong>{{ ((farm.hay.capacity_shortfall) / 240) | round(0, 'ceil') | int }}</strong> more Silo(s) or store extra hay in chests!
+                                    </p>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {# 3. Watering Can Rain Opportunity Banner #}
+                        {% if farm.watering_can_opportunity and farm.watering_can_opportunity.active %}
+                            <div class="alert-banner alert-opportunity"
+                                 style="background: rgba(56, 189, 248, 0.12);
+                                        border: 1px solid rgba(56, 189, 248, 0.35);
+                                        border-radius: 10px;
+                                        padding: 1rem 1.25rem;
+                                        margin-bottom: 1.25rem;
+                                        color: #bae6fd;
+                                        display: flex;
+                                        align-items: flex-start;
+                                        gap: 0.85rem">
+                                <div style="font-size: 1.5rem; line-height: 1;">🌧️</div>
+                                <div style="width: 100%;">
+                                    <strong style="color: #38bdf8;
+                                                   font-size: 0.95rem;
+                                                   display: block;
+                                                   margin-bottom: 0.25rem">Perfect Day for Watering Can Upgrade!</strong>
+                                    <p style="margin: 0; font-size: 0.85rem; color: #bae6fd;">
+                                        Rain is forecast for tomorrow! You have enough gold (<strong>{{ "{:,}".format(farm.watering_can_opportunity.gold_cost) }}g</strong>) and materials (<strong>{{ farm.watering_can_opportunity.materials_text }}</strong>) to drop off your Watering Can at Clint's today for the <strong>{{ farm.watering_can_opportunity.next_tier_name }}</strong> upgrade without missing a harvest day.
+                                    </p>
+                                    {% if farm.watering_can_opportunity.has_festival_delay %}
+                                        <div style="margin-top: 0.5rem;
+                                                    font-size: 0.8rem;
+                                                    color: #fcd34d;
+                                                    background: rgba(245, 158, 11, 0.15);
+                                                    border: 1px solid rgba(245, 158, 11, 0.3);
+                                                    border-radius: 6px;
+                                                    padding: 0.35rem 0.65rem">
+                                            ⚠️ <strong>Festival Delay:</strong> Clint's shop is closed on your pickup day ({{ farm.watering_can_opportunity.pickup_season }} {{ farm.watering_can_opportunity.pickup_day }}). You won't be able to retrieve your tool until the following day.
+                                        </div>
+                                    {% endif %}
+                                    <div style="margin-top: 0.4rem;
+                                                font-size: 0.775rem;
+                                                color: #94a3b8;
+                                                font-style: italic">
+                                        💡 Note: Rain does not water crops inside the Greenhouse, on Ginger Island, or in Garden Pots.
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% include "partials/crop_overview.html" %}
+                        {% include "partials/next_harvest.html" %}
+                        <div class="module-nav-bar">
+                            <button class="module-nav-btn active"
+                                    data-module="shipping"
+                                    onclick="switchModule('{{ farm.farm_id }}', 'shipping')">📦 Shipping <span class="module-badge">{{ farm.shipped_items|selectattr("is_unlocked")|list|length }}/{{ farm.shipped_items|length }}</span></button>
+                            <button class="module-nav-btn"
+                                    data-module="fishing"
+                                    onclick="switchModule('{{ farm.farm_id }}', 'fishing')">🎣 Fishing <span class="module-badge">{{ farm.fish_caught|selectattr("is_unlocked")|list|length }}/{{ farm.fish_caught|length }}</span></button>
+                            <button class="module-nav-btn"
+                                    data-module="museum"
+                                    onclick="switchModule('{{ farm.farm_id }}', 'museum')">🏛 Museum <span class="module-badge">{{ farm.museum_pieces|selectattr("is_unlocked")|list|length }}/{{ farm.museum_pieces|length }}</span></button>
+                            <button class="module-nav-btn"
+                                    data-module="cooking"
+                                    onclick="switchModule('{{ farm.farm_id }}', 'cooking')">🍳 Cooking <span class="module-badge">{{ farm.recipes_cooked|selectattr("is_unlocked")|list|length }}/{{ farm.recipes_cooked|length }}</span></button>
+                            <button class="module-nav-btn"
+                                    data-module="achievements"
+                                    onclick="switchModule('{{ farm.farm_id }}', 'achievements')">🏆 Achievements <span class="module-badge">{{ farm.achievements.unlocked_count }}/{{ farm.achievements.total }}</span></button>
+                            <button class="module-nav-btn"
+                                    data-module="social"
+                                    onclick="switchModule('{{ farm.farm_id }}', 'social')">👥 Social <span class="module-badge">{{ farm.friendships|length }}</span></button>
+                            <button class="module-nav-btn"
+                                    data-module="artisan"
+                                    onclick="switchModule('{{ farm.farm_id }}', 'artisan')">🏺 Artisan Goods <span class="module-badge">{{ farm.artisan.summary.ready_today if farm.artisan else 0 }}/{{ farm.artisan.summary.total_machines if farm.artisan else 0 }}</span></button>
+                            <button class="module-nav-btn"
+                                    data-module="crops"
+                                    onclick="switchModule('{{ farm.farm_id }}', 'crops')">🌾 Crops <span class="module-badge">{{ farm.crops.summary.ready_today if farm.crops else 0 }}/{{ farm.crops.summary.total_crops if farm.crops else 0 }}</span></button>
+                            <button class="module-nav-btn"
+                                    data-module="chests"
+                                    onclick="switchModule('{{ farm.farm_id }}', 'chests')">🧰 Chests <span class="module-badge">{{ farm.chests.total_chests if farm.chests else 0 }}</span></button>
+                            <button class="module-nav-btn"
+                                    data-module="tools"
+                                    onclick="switchModule('{{ farm.farm_id }}', 'tools')">🛠️ Tools <span class="module-badge">{{ farm.tools.upgradeable|selectattr("is_max")|list|length if farm.tools else 0 }}/{{ farm.tools.upgradeable|length if farm.tools else 6 }}</span></button>
+                            <button class="module-nav-btn"
+                                    data-module="hay"
+                                    onclick="switchModule('{{ farm.farm_id }}', 'hay')">🌾 Hay &amp; Livestock <span class="module-badge">{{ farm.hay.current_hay if farm.hay else 0 }}/{{ farm.hay.max_capacity if farm.hay else 0 }}</span></button>
+                            <button class="module-nav-btn"
+                                    data-module="grandpa"
+                                    onclick="switchModule('{{ farm.farm_id }}', 'grandpa')">🕯️ Grandpa's Evaluation <span class="module-badge">{{ farm.grandpa.candles if farm.grandpa else 1 }} 🕯️</span></button>
+                            <button class="module-nav-btn"
+                                    data-module="community_center"
+                                    onclick="switchModule('{{ farm.farm_id }}', 'community_center')">🏛️ Community Center <span class="module-badge">{{ farm.community_center.completed_bundles if farm.community_center else 0 }}/{{ farm.community_center.total_bundles if farm.community_center else 30 }}</span></button>
+                        </div>
+                        <div class="module-pane active" id="module-{{ farm.farm_id }}-shipping">{% include "partials/shipping.html" %}</div>
+                        <div class="module-pane" id="module-{{ farm.farm_id }}-fishing">{% include "partials/fishing.html" %}</div>
+                        <div class="module-pane" id="module-{{ farm.farm_id }}-museum">{% include "partials/museum.html" %}</div>
+                        <div class="module-pane" id="module-{{ farm.farm_id }}-cooking">{% include "partials/cooking.html" %}</div>
+                        <div class="module-pane" id="module-{{ farm.farm_id }}-achievements">{% include "partials/achievements.html" %}</div>
+                        <div class="module-pane" id="module-{{ farm.farm_id }}-social">{% include "partials/social.html" %}</div>
+                        <div class="module-pane" id="module-{{ farm.farm_id }}-artisan">{% include "partials/artisan.html" %}</div>
+                        <div class="module-pane" id="module-{{ farm.farm_id }}-crops">{% include "partials/crops.html" %}</div>
+                        <div class="module-pane" id="module-{{ farm.farm_id }}-chests">{% include "partials/chests.html" %}</div>
+                        <div class="module-pane" id="module-{{ farm.farm_id }}-tools">{% include "partials/tools.html" %}</div>
+                        <div class="module-pane" id="module-{{ farm.farm_id }}-hay">{% include "partials/hay.html" %}</div>
+                        <div class="module-pane" id="module-{{ farm.farm_id }}-grandpa">{% include "partials/grandpa.html" %}</div>
+                        <div class="module-pane" id="module-{{ farm.farm_id }}-community_center">
+                            {% include "partials/community_center.html" %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No farms parsed.</p>
             {% endif %}
-
-            {% include 'partials/crop_overview.html' %}
-            {% include 'partials/next_harvest.html' %}
-
-            <div class="module-nav-bar">
-                <button class="module-nav-btn active" data-module="shipping" onclick="switchModule('{{ farm.farm_id }}', 'shipping')">📦 Shipping <span class="module-badge">{{ farm.shipped_items|selectattr('is_unlocked')|list|length }}/{{ farm.shipped_items|length }}</span></button>
-                <button class="module-nav-btn" data-module="fishing" onclick="switchModule('{{ farm.farm_id }}', 'fishing')">🎣 Fishing <span class="module-badge">{{ farm.fish_caught|selectattr('is_unlocked')|list|length }}/{{ farm.fish_caught|length }}</span></button>
-                <button class="module-nav-btn" data-module="museum" onclick="switchModule('{{ farm.farm_id }}', 'museum')">🏛 Museum <span class="module-badge">{{ farm.museum_pieces|selectattr('is_unlocked')|list|length }}/{{ farm.museum_pieces|length }}</span></button>
-                <button class="module-nav-btn" data-module="cooking" onclick="switchModule('{{ farm.farm_id }}', 'cooking')">🍳 Cooking <span class="module-badge">{{ farm.recipes_cooked|selectattr('is_unlocked')|list|length }}/{{ farm.recipes_cooked|length }}</span></button>
-                <button class="module-nav-btn" data-module="achievements" onclick="switchModule('{{ farm.farm_id }}', 'achievements')">🏆 Achievements <span class="module-badge">{{ farm.achievements.unlocked_count }}/{{ farm.achievements.total }}</span></button>
-                <button class="module-nav-btn" data-module="social" onclick="switchModule('{{ farm.farm_id }}', 'social')">👥 Social <span class="module-badge">{{ farm.friendships|length }}</span></button>
-                <button class="module-nav-btn" data-module="artisan" onclick="switchModule('{{ farm.farm_id }}', 'artisan')">🏺 Artisan Goods <span class="module-badge">{{ farm.artisan.summary.ready_today if farm.artisan else 0 }}/{{ farm.artisan.summary.total_machines if farm.artisan else 0 }}</span></button>
-                <button class="module-nav-btn" data-module="crops" onclick="switchModule('{{ farm.farm_id }}', 'crops')">🌾 Crops <span class="module-badge">{{ farm.crops.summary.ready_today if farm.crops else 0 }}/{{ farm.crops.summary.total_crops if farm.crops else 0 }}</span></button>
-                <button class="module-nav-btn" data-module="chests" onclick="switchModule('{{ farm.farm_id }}', 'chests')">🧰 Chests <span class="module-badge">{{ farm.chests.total_chests if farm.chests else 0 }}</span></button>
-                <button class="module-nav-btn" data-module="tools" onclick="switchModule('{{ farm.farm_id }}', 'tools')">🛠️ Tools <span class="module-badge">{{ farm.tools.upgradeable|selectattr('is_max')|list|length if farm.tools else 0 }}/{{ farm.tools.upgradeable|length if farm.tools else 6 }}</span></button>
-                <button class="module-nav-btn" data-module="hay" onclick="switchModule('{{ farm.farm_id }}', 'hay')">🌾 Hay &amp; Livestock <span class="module-badge">{{ farm.hay.current_hay if farm.hay else 0 }}/{{ farm.hay.max_capacity if farm.hay else 0 }}</span></button>
-                <button class="module-nav-btn" data-module="grandpa" onclick="switchModule('{{ farm.farm_id }}', 'grandpa')">🕯️ Grandpa's Evaluation <span class="module-badge">{{ farm.grandpa.candles if farm.grandpa else 1 }} 🕯️</span></button>
-                <button class="module-nav-btn" data-module="community_center" onclick="switchModule('{{ farm.farm_id }}', 'community_center')">🏛️ Community Center <span class="module-badge">{{ farm.community_center.completed_bundles if farm.community_center else 0 }}/{{ farm.community_center.total_bundles if farm.community_center else 30 }}</span></button>
-            </div>
-
-            <div class="module-pane active" id="module-{{ farm.farm_id }}-shipping">
-                {% include 'partials/shipping.html' %}
-            </div>
-
-            <div class="module-pane" id="module-{{ farm.farm_id }}-fishing">
-                {% include 'partials/fishing.html' %}
-            </div>
-
-            <div class="module-pane" id="module-{{ farm.farm_id }}-museum">
-                {% include 'partials/museum.html' %}
-            </div>
-
-            <div class="module-pane" id="module-{{ farm.farm_id }}-cooking">
-                {% include 'partials/cooking.html' %}
-            </div>
-
-            <div class="module-pane" id="module-{{ farm.farm_id }}-achievements">
-                {% include 'partials/achievements.html' %}
-            </div>
-
-            <div class="module-pane" id="module-{{ farm.farm_id }}-social">
-                {% include 'partials/social.html' %}
-            </div>
-
-            <div class="module-pane" id="module-{{ farm.farm_id }}-artisan">
-                {% include 'partials/artisan.html' %}
-            </div>
-
-            <div class="module-pane" id="module-{{ farm.farm_id }}-crops">
-                {% include 'partials/crops.html' %}
-            </div>
-
-            <div class="module-pane" id="module-{{ farm.farm_id }}-chests">
-                {% include 'partials/chests.html' %}
-            </div>
-
-            <div class="module-pane" id="module-{{ farm.farm_id }}-tools">
-                {% include 'partials/tools.html' %}
-            </div>
-
-            <div class="module-pane" id="module-{{ farm.farm_id }}-hay">
-                {% include 'partials/hay.html' %}
-            </div>
-
-            <div class="module-pane" id="module-{{ farm.farm_id }}-grandpa">
-                {% include 'partials/grandpa.html' %}
-            </div>
-
-            <div class="module-pane" id="module-{{ farm.farm_id }}-community_center">
-                {% include 'partials/community_center.html' %}
-            </div>
-
+            <footer>
+                <div>Stardew Valley Save Analyzer</div>
+                <div>Generated automatically from save data</div>
+            </footer>
         </div>
-        {% endfor %}
-        {% else %}
-        <p>No farms parsed.</p>
-        {% endif %}
-        <footer>
-            <div>Stardew Valley Save Analyzer</div>
-            <div>Generated automatically from save data</div>
-        </footer>
-    </div>
-
-    <script>
+        <script>
         const STORAGE_KEY_MODULE_PREFIX = 'stardew_active_module_';
 
         function switchModule(farmId, moduleName, persist = true) {
@@ -284,10 +309,9 @@
                 }
             });
         });
-    </script>
-
-    <!-- Automatic Reload on Save Update -->
-    <script>
+        </script>
+        <!-- Automatic Reload on Save Update -->
+        <script>
         (function() {
             const currentBuildTime = "{{ build_timestamp }}";
             const CHECK_INTERVAL_MS = 3000;
@@ -312,6 +336,6 @@
                 }
             }, CHECK_INTERVAL_MS);
         })();
-    </script>
-</body>
+        </script>
+    </body>
 </html>

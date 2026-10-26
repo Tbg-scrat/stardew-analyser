@@ -21,34 +21,60 @@
     .status-badge.unlocked { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3); }
     .status-badge.locked { background: rgba(100, 116, 139, 0.2); color: var(--text-muted); border: 1px solid var(--border-color); }
 </style>
-
 <div class="radar-controls">
     <div class="filter-group">
-        <button class="filter-btn active" data-filter-key="status" data-filter-val="all" onclick="setCatalogFilter(this)">All</button>
-        <button class="filter-btn" data-filter-key="status" data-filter-val="shipped" onclick="setCatalogFilter(this)">Shipped</button>
-        <button class="filter-btn" data-filter-key="status" data-filter-val="not_shipped" onclick="setCatalogFilter(this)">Not Shipped</button>
-        <button class="filter-btn" data-filter-key="achievement" data-filter-val="shipped" onclick="setCatalogFilter(this)">📦 Full Shipment Done</button>
-        <button class="filter-btn" data-filter-key="achievement" data-filter-val="not_shipped" onclick="setCatalogFilter(this)">📦 Full Shipment Needed</button>
-        <button class="filter-btn" data-filter-key="polyculture" data-filter-val="done" onclick="setCatalogFilter(this)">⭐ Polyculture Done</button>
-        <button class="filter-btn" data-filter-key="polyculture" data-filter-val="needed" onclick="setCatalogFilter(this)">⭐ Polyculture Needed</button>
+        <button class="filter-btn active"
+                data-filter-key="status"
+                data-filter-val="all"
+                onclick="setCatalogFilter(this)">All</button>
+        <button class="filter-btn"
+                data-filter-key="status"
+                data-filter-val="shipped"
+                onclick="setCatalogFilter(this)">Shipped</button>
+        <button class="filter-btn"
+                data-filter-key="status"
+                data-filter-val="not_shipped"
+                onclick="setCatalogFilter(this)">Not Shipped</button>
+        <button class="filter-btn"
+                data-filter-key="achievement"
+                data-filter-val="shipped"
+                onclick="setCatalogFilter(this)">📦 Full Shipment Done</button>
+        <button class="filter-btn"
+                data-filter-key="achievement"
+                data-filter-val="not_shipped"
+                onclick="setCatalogFilter(this)">📦 Full Shipment Needed</button>
+        <button class="filter-btn"
+                data-filter-key="polyculture"
+                data-filter-val="done"
+                onclick="setCatalogFilter(this)">⭐ Polyculture Done</button>
+        <button class="filter-btn"
+                data-filter-key="polyculture"
+                data-filter-val="needed"
+                onclick="setCatalogFilter(this)">⭐ Polyculture Needed</button>
     </div>
-    <input type="text" class="search-box" placeholder="Search shipping items..." onkeyup="filterItems(this)">
+    <input type="text"
+           class="search-box"
+           placeholder="Search shipping items..."
+           onkeyup="filterItems(this)">
 </div>
 <div class="items-grid">
     {% for item in farm.shipped_items %}
-    <div class="item-card status-{{ item.status }}" 
-         data-name="{{ item.name|lower }}" 
-         data-status="{{ item.status }}" 
-         data-achievement="{% if item.achievement_required %}{{ 'shipped' if item.status == 'shipped' else 'not_shipped' }}{% else %}none{% endif %}"
-         data-polyculture="{% if item.is_polyculture %}{{ 'done' if item.count >= 15 else 'needed' }}{% else %}none{% endif %}">
-        <div class="item-sprite-box">
-            <img src="{{ item.image }}" class="item-sprite" alt="{{ item.name }}" onerror="this.onerror=null; this.src='/static/img/placeholder.svg';">
+        <div class="item-card status-{{ item.status }}"
+             data-name="{{ item.name|lower }}"
+             data-status="{{ item.status }}"
+             data-achievement="{% if item.achievement_required %}{{ 'shipped' if item.status == 'shipped' else 'not_shipped' }}{% else %}none{% endif %}"
+             data-polyculture="{% if item.is_polyculture %}{{ 'done' if item.count >= 15 else 'needed' }}{% else %}none{% endif %}">
+            <div class="item-sprite-box">
+                <img src="{{ item.image }}"
+                     class="item-sprite"
+                     alt="{{ item.name }}"
+                     onerror="this.onerror=null; this.src='/static/img/placeholder.svg';">
+            </div>
+            <div class="item-info">
+                <div class="item-name">{{ item.name }}</div>
+                <div class="item-meta">Shipped: <b>{{ item.count }}</b></div>
+                <span class="status-badge {{ 'unlocked' if item.is_unlocked else 'locked' }}">{{ item.status|replace('_', ' ') }}</span>
+            </div>
         </div>
-        <div class="item-info">
-            <div class="item-name">{{ item.name }}</div>
-            <div class="item-meta">Shipped: <b>{{ item.count }}</b></div>
-            <span class="status-badge {{ 'unlocked' if item.is_unlocked else 'locked' }}">{{ item.status|replace('_', ' ') }}</span>
-        </div>
-    </div>
     {% endfor %}
 </div>

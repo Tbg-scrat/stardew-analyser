@@ -181,102 +181,99 @@
         background: rgba(16, 185, 129, 0.15);
     }
 </style>
-
 <div class="cc-container">
     {% if farm.community_center %}
-    <!-- Route Status Banner -->
-    <div class="cc-banner {{ "joja-route" if farm.community_center.route == "joja" else "" }}">
-        <div class="cc-summary-header">
-            <div class="cc-route-title">
-                <span class="cc-route-icon">{{ "&#127970;" if farm.community_center.route == "joja" else "&#127811;" }}</span>
-                <div class="cc-title-text">
-                    <h2>{{ farm.community_center.route_label }}</h2>
-                    <span>{{ "Restoration Progress" if farm.community_center.route == "junimo" else "Development Projects" }}</span>
+        <!-- Route Status Banner -->
+        <div class="cc-banner {{ "joja-route" if farm.community_center.route == "joja" else "" }}">
+            <div class="cc-summary-header">
+                <div class="cc-route-title">
+                    <span class="cc-route-icon">{{ "&#127970;" if farm.community_center.route == "joja" else "&#127811;" }}</span>
+                    <div class="cc-title-text">
+                        <h2>{{ farm.community_center.route_label }}</h2>
+                        <span>{{ "Restoration Progress" if farm.community_center.route == "junimo" else "Development Projects" }}</span>
+                    </div>
                 </div>
-            </div>
-
-            <div class="cc-score-display">
-                <div class="cc-main-count">
-                    {{ farm.community_center.completed_bundles }}
-                    <span class="cc-max-count">/ {{ farm.community_center.total_bundles }} {{ "Projects" if farm.community_center.route == "joja" else "Bundles" }}</span>
+                <div class="cc-score-display">
+                    <div class="cc-main-count">
+                        {{ farm.community_center.completed_bundles }}
+                        <span class="cc-max-count">/ {{ farm.community_center.total_bundles }} {{ "Projects" if farm.community_center.route == "joja" else "Bundles" }}</span>
+                    </div>
+                    {% if farm.community_center.is_complete %}
+                        <span class="status-badge unlocked">✨ Restored</span>
+                    {% else %}
+                        <span class="status-badge pending">🔒 {{ farm.community_center.total_bundles - farm.community_center.completed_bundles }} Remaining</span>
+                    {% endif %}
                 </div>
-                {% if farm.community_center.is_complete %}
-                    <span class="status-badge unlocked">&#10024; Restored</span>
-                {% else %}
-                    <span class="status-badge pending">&#128274; {{ farm.community_center.total_bundles - farm.community_center.completed_bundles }} Remaining</span>
-                {% endif %}
             </div>
         </div>
-    </div>
-
-    {% if farm.community_center.route == "junimo" %}
-        <!-- Junimo Community Center Rooms Grid -->
-        <div class="cc-grid">
-            {% for room in farm.community_center.rooms %}
-                <details class="room-card {{ "completed" if room.is_complete else "" }}" {{ "" if room.is_complete else "open" }}>
+        {% if farm.community_center.route == "junimo" %}
+            <!-- Junimo Community Center Rooms Grid -->
+            <div class="cc-grid">
+                {% for room in farm.community_center.rooms %}
+                    <details class="room-card {{ "completed" if room.is_complete else "" }}"
+                             {{ "" if room.is_complete else "open" }}>
+                        <summary class="room-header">
+                            <div class="room-title-wrapper">
+                                <span class="collapse-icon">▶</span>
+                                <h3>{{ room.name }}</h3>
+                            </div>
+                            {% if room.is_complete %}
+                                <span class="room-status-badge done">✓ Room Complete</span>
+                            {% else %}
+                                <span class="room-status-badge pending">In Progress</span>
+                            {% endif %}
+                        </summary>
+                        <ul class="bundle-list">
+                            {% for bundle in room["bundles"] %}
+                                <li class="bundle-item {{ "completed" if bundle.is_complete else "incomplete" }}">
+                                    <span class="bundle-color-dot bundle-dot-{{ bundle.color }}"></span>
+                                    <span class="bundle-name">{{ bundle.name }}</span>
+                                    <span class="bundle-progress">
+                                        {% if bundle.is_complete %}
+                                            ✓ Complete
+                                        {% elif bundle.filled_slots is not none and bundle.total_slots is not none %}
+                                            {{ bundle.filled_slots }} / {{ bundle.total_slots }}
+                                        {% else %}
+                                            In Progress
+                                        {% endif %}
+                                    </span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </details>
+                {% endfor %}
+            </div>
+        {% else %}
+            <!-- Joja Warehouse Projects List -->
+            <div class="cc-grid">
+                <details class="room-card {{ "completed" if farm.community_center.is_complete else "" }}"
+                         {{ "" if farm.community_center.is_complete else "open" }}>
                     <summary class="room-header">
                         <div class="room-title-wrapper">
-                            <span class="collapse-icon">&#9654;</span>
-                            <h3>{{ room.name }}</h3>
+                            <span class="collapse-icon">▶</span>
+                            <h3>Joja Community Development Form</h3>
                         </div>
-                        {% if room.is_complete %}
-                            <span class="room-status-badge done">&#10003; Room Complete</span>
-                        {% else %}
-                            <span class="room-status-badge pending">In Progress</span>
-                        {% endif %}
+                        <span class="room-status-badge {{ "done" if farm.community_center.is_complete else "pending" }}">
+                            {{ "Fully Funded" if farm.community_center.is_complete else "In Progress" }}
+                        </span>
                     </summary>
-
                     <ul class="bundle-list">
-                        {% for bundle in room["bundles"] %}
-                            <li class="bundle-item {{ "completed" if bundle.is_complete else "incomplete" }}">
-                                <span class="bundle-color-dot bundle-dot-{{ bundle.color }}"></span>
-                                <span class="bundle-name">{{ bundle.name }}</span>
+                        {% for proj in farm.community_center.projects %}
+                            <li class="bundle-item {{ "completed" if proj.is_complete else "incomplete" }}">
+                                <span class="bundle-name">{{ proj.name }}</span>
                                 <span class="bundle-progress">
-                                    {% if bundle.is_complete %}
-                                        &#10003; Complete
-                                    {% elif bundle.filled_slots is not none and bundle.total_slots is not none %}
-                                        {{ bundle.filled_slots }} / {{ bundle.total_slots }}
+                                    {% if proj.is_complete %}
+                                        ✓ Purchased
                                     {% else %}
-                                        In Progress
+                                        {{ proj.cost }}g
                                     {% endif %}
                                 </span>
                             </li>
                         {% endfor %}
                     </ul>
                 </details>
-            {% endfor %}
-        </div>
-    {% else %}
-        <!-- Joja Warehouse Projects List -->
-        <div class="cc-grid">
-            <details class="room-card {{ "completed" if farm.community_center.is_complete else "" }}" {{ "" if farm.community_center.is_complete else "open" }}>
-                <summary class="room-header">
-                    <div class="room-title-wrapper">
-                        <span class="collapse-icon">&#9654;</span>
-                        <h3>Joja Community Development Form</h3>
-                    </div>
-                    <span class="room-status-badge {{ "done" if farm.community_center.is_complete else "pending" }}">
-                        {{ "Fully Funded" if farm.community_center.is_complete else "In Progress" }}
-                    </span>
-                </summary>
-                <ul class="bundle-list">
-                    {% for proj in farm.community_center.projects %}
-                        <li class="bundle-item {{ "completed" if proj.is_complete else "incomplete" }}">
-                            <span class="bundle-name">{{ proj.name }}</span>
-                            <span class="bundle-progress">
-                                {% if proj.is_complete %}
-                                    &#10003; Purchased
-                                {% else %}
-                                    {{ proj.cost }}g
-                                {% endif %}
-                            </span>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </details>
-        </div>
-    {% endif %}
-
+            </div>
+        {% endif %}
     {% else %}
         <p>No Community Center data available.</p>
     {% endif %}

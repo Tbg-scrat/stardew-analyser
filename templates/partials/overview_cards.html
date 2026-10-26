@@ -152,142 +152,140 @@
         }
     }
 </style>
-
 <div class="overview-bands-wrapper">
     <!-- BAND 1: TODAY'S CONDITIONS -->
     <div class="overview-band-container">
-        <div class="overview-band-collapsed" id="today-bar-{{ farm.farm_id }}" onclick="toggleTodayState('{{ farm.farm_id }}', true)">
+        <div class="overview-band-collapsed"
+             id="today-bar-{{ farm.farm_id }}"
+             onclick="toggleTodayState('{{ farm.farm_id }}', true)">
             <div class="overview-fluid-row">
                 <div class="overview-subline">
                     <span>📅 <b>{{ farm.festivals.season }} {{ farm.festivals.day }}</b></span>
-                    <span class="overview-dot-separator">&bull;</span>
+                    <span class="overview-dot-separator">•</span>
                     <span>{{ farm.weather.today.icon }} {{ farm.weather.today.name }}</span>
                 </div>
-
-                <span class="overview-dot-separator desktop-only">&bull;</span>
-
+                <span class="overview-dot-separator desktop-only">•</span>
                 <div class="overview-subline break-on-mobile">
                     <span>{{ farm.daily_luck.icon }} {{ farm.daily_luck.label }}</span>
                 </div>
             </div>
-            <span class="overview-indicator-arrow">&#9660;</span>
+            <span class="overview-indicator-arrow">▼</span>
         </div>
-
         <!-- Expanded Card -->
-        <div class="overview-card-expanded hidden" id="today-details-{{ farm.farm_id }}">
-            <div class="overview-expanded-header" onclick="toggleTodayState('{{ farm.farm_id }}', false)">
+        <div class="overview-card-expanded hidden"
+             id="today-details-{{ farm.farm_id }}">
+            <div class="overview-expanded-header"
+                 onclick="toggleTodayState('{{ farm.farm_id }}', false)">
                 <span class="overview-expanded-title">📅 Today's Conditions</span>
-                <span class="overview-indicator-arrow">&#9650;</span>
+                <span class="overview-indicator-arrow">▲</span>
             </div>
             <div class="stats-subgrid-2">
                 <div class="stat-box">
                     <div class="stat-label">Today's Weather</div>
-                    <div class="stat-value">
-                        {{ farm.weather.today.icon }} {{ farm.weather.today.name }}
-                    </div>
+                    <div class="stat-value">{{ farm.weather.today.icon }} {{ farm.weather.today.name }}</div>
                     <div class="subtext-detail">{{ farm.festivals.season }} {{ farm.festivals.day }}</div>
                 </div>
                 <div class="stat-box">
                     <div class="stat-label">Daily Luck</div>
-                    <div class="stat-value">
-                        {{ farm.daily_luck.icon }} {{ farm.daily_luck.label }}
-                    </div>
+                    <div class="stat-value">{{ farm.daily_luck.icon }} {{ farm.daily_luck.label }}</div>
                     <div class="subtext-detail">Modifier: {{ farm.daily_luck.value }}</div>
                 </div>
             </div>
         </div>
     </div>
-
     <!-- BAND 2: FORECAST & UPCOMING -->
     <div class="overview-band-container">
-        <div class="overview-band-collapsed" id="forecast-bar-{{ farm.farm_id }}" onclick="toggleForecastState('{{ farm.farm_id }}', true)">
+        <div class="overview-band-collapsed"
+             id="forecast-bar-{{ farm.farm_id }}"
+             onclick="toggleForecastState('{{ farm.farm_id }}', true)">
             <div class="overview-fluid-row">
                 <div class="overview-subline break-on-mobile">
                     <span>🌤️ Tomorrow: {{ farm.weather.valley.icon }} {{ farm.weather.valley.name }}</span>
                 </div>
-
                 {% if farm.festivals.next_festival %}
-                <span class="overview-dot-separator desktop-only">&bull;</span>
-                <div class="overview-subline break-on-mobile">
-                    <span>🎉 {{ farm.festivals.next_festival.name }} ({{ farm.festivals.status_text }})</span>
-                </div>
+                    <span class="overview-dot-separator desktop-only">•</span>
+                    <div class="overview-subline break-on-mobile">
+                        <span>🎉 {{ farm.festivals.next_festival.name }} ({{ farm.festivals.status_text }})</span>
+                    </div>
                 {% endif %}
-
                 {% if farm.birthdays.next_birthday %}
-                <span class="overview-dot-separator desktop-only">&bull;</span>
-                <div class="overview-subline break-on-mobile">
-                    <span>🎂 {{ farm.birthdays.next_birthday.name }} ({{ farm.birthdays.status_text }})</span>
-                </div>
+                    <span class="overview-dot-separator desktop-only">•</span>
+                    <div class="overview-subline break-on-mobile">
+                        <span>🎂 {{ farm.birthdays.next_birthday.name }} ({{ farm.birthdays.status_text }})</span>
+                    </div>
                 {% endif %}
-
                 {% if not farm.festivals.next_festival and not farm.birthdays.next_birthday %}
-                <span class="overview-dot-separator desktop-only">&bull;</span>
-                <div class="overview-subline break-on-mobile">
-                    <span>📅 No upcoming events this season</span>
-                </div>
+                    <span class="overview-dot-separator desktop-only">•</span>
+                    <div class="overview-subline break-on-mobile">
+                        <span>📅 No upcoming events this season</span>
+                    </div>
                 {% endif %}
             </div>
-            <span class="overview-indicator-arrow">&#9660;</span>
+            <span class="overview-indicator-arrow">▼</span>
         </div>
-
         <!-- Expanded Card -->
-        <div class="overview-card-expanded hidden" id="forecast-details-{{ farm.farm_id }}">
-            <div class="overview-expanded-header" onclick="toggleForecastState('{{ farm.farm_id }}', false)">
+        <div class="overview-card-expanded hidden"
+             id="forecast-details-{{ farm.farm_id }}">
+            <div class="overview-expanded-header"
+                 onclick="toggleForecastState('{{ farm.farm_id }}', false)">
                 <span class="overview-expanded-title">🌤️ Forecast &amp; Upcoming</span>
-                <span class="overview-indicator-arrow">&#9650;</span>
+                <span class="overview-indicator-arrow">▲</span>
             </div>
             <div class="stats-subgrid-3">
                 <div class="stat-box">
                     <div class="stat-label">Tomorrow</div>
-                    <div class="stat-value">
-                        {{ farm.weather.valley.icon }} {{ farm.weather.valley.name }}
-                    </div>
+                    <div class="stat-value">{{ farm.weather.valley.icon }} {{ farm.weather.valley.name }}</div>
                     {% if farm.weather.island %}
-                    <div class="subtext-detail">
-                        🏝️ Island: {{ farm.weather.island.icon }} {{ farm.weather.island.name }}
-                    </div>
+                        <div class="subtext-detail">🏝️ Island: {{ farm.weather.island.icon }} {{ farm.weather.island.name }}</div>
                     {% endif %}
                 </div>
                 <div class="stat-box">
                     <div class="stat-label">Next Festival</div>
                     {% if farm.festivals.next_festival %}
-                    <div class="stat-value">
-                        {{ farm.festivals.next_festival.icon }} {{ farm.festivals.next_festival.name }}
-                    </div>
-                    <div class="subtext-detail">{{ farm.festivals.status_text }}</div>
+                        <div class="stat-value">{{ farm.festivals.next_festival.icon }} {{ farm.festivals.next_festival.name }}</div>
+                        <div class="subtext-detail">{{ farm.festivals.status_text }}</div>
                     {% else %}
-                    <div class="stat-value" style="font-size: 0.95rem; color: var(--text-muted);">None</div>
-                    <div class="subtext-detail">End of Season</div>
+                        <div class="stat-value"
+                             style="font-size: 0.95rem;
+                                    color: var(--text-muted)">None</div>
+                        <div class="subtext-detail">End of Season</div>
                     {% endif %}
                 </div>
                 <div class="stat-box">
                     <div class="stat-label">Next Birthday</div>
                     {% if farm.birthdays.next_birthday %}
-                    <div class="stat-value">
-                        <img src="/cache/img/portraits/{{ farm.birthdays.next_birthday.name }}.png" class="bday-portrait-mini" alt="{{ farm.birthdays.next_birthday.name }}" onerror="this.onerror=null; this.style.display='none';">
-                        {{ farm.birthdays.next_birthday.name }}
-                    </div>
-                    <div class="subtext-detail">{{ farm.birthdays.status_text }}</div>
-                    {% if farm.birthdays.next_birthday.loved_gifts %}
-                    <div class="bday-gifts-mini">
-                        {% for gift in farm.birthdays.next_birthday.loved_gifts[:3] %}
-                        <span class="bday-gift-pill" title="{{ gift.name }}">
-                            <img src="{{ gift.icon }}" class="bday-gift-icon" alt="{{ gift.name }}" onerror="this.onerror=null; this.style.display='none';">
-                            {{ gift.name }}
-                        </span>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
+                        <div class="stat-value">
+                            <img src="/cache/img/portraits/{{ farm.birthdays.next_birthday.name }}.png"
+                                 class="bday-portrait-mini"
+                                 alt="{{ farm.birthdays.next_birthday.name }}"
+                                 onerror="this.onerror=null; this.style.display='none';">
+                            {{ farm.birthdays.next_birthday.name }}
+                        </div>
+                        <div class="subtext-detail">{{ farm.birthdays.status_text }}</div>
+                        {% if farm.birthdays.next_birthday.loved_gifts %}
+                            <div class="bday-gifts-mini">
+                                {% for gift in farm.birthdays.next_birthday.loved_gifts[:3] %}
+                                    <span class="bday-gift-pill" title="{{ gift.name }}">
+                                        <img src="{{ gift.icon }}"
+                                             class="bday-gift-icon"
+                                             alt="{{ gift.name }}"
+                                             onerror="this.onerror=null; this.style.display='none';">
+                                        {{ gift.name }}
+                                    </span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
                     {% else %}
-                    <div class="stat-value" style="font-size: 0.95rem; color: var(--text-muted);">None</div>
-                    <div class="subtext-detail">End of Season</div>
+                        <div class="stat-value"
+                             style="font-size: 0.95rem;
+                                    color: var(--text-muted)">None</div>
+                        <div class="subtext-detail">End of Season</div>
                     {% endif %}
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <script>
     function toggleTodayState(farmId, expand) {
         const bar = document.getElementById('today-bar-' + farmId);

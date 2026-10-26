@@ -123,43 +123,41 @@
         font-weight: 600;
     }
 </style>
-
 {% if farms %}
-<section class="farm-switcher-section">
-    <div class="farm-switcher-header" onclick="toggleFarmSwitcher()">
-        <div class="active-farm-summary-chip" id="active-farm-summary">
-             <b>{{ farms[0].farm }} Farm</b> 
-            <span class="farmer-meta">({{ farms[0].farmer }})</span> 
-            <span class="gold-meta">G: {{ "{:,}".format(farms[0].money) }} g</span>
+    <section class="farm-switcher-section">
+        <div class="farm-switcher-header" onclick="toggleFarmSwitcher()">
+            <div class="active-farm-summary-chip" id="active-farm-summary">
+                 <b>{{ farms[0].farm }} Farm</b>
+                <span class="farmer-meta">({{ farms[0].farmer }})</span>
+                <span class="gold-meta">G: {{ "{:,}".format(farms[0].money) }} g</span>
+            </div>
+            <button class="switcher-toggle-btn" type="button">
+                <span>Switch Farm ({{ farms|length }})</span>
+                <span id="switcher-arrow-icon"></span>
+            </button>
         </div>
-        <button class="switcher-toggle-btn" type="button">
-            <span>Switch Farm ({{ farms|length }})</span>
-            <span id="switcher-arrow-icon"></span>
-        </button>
-    </div>
-
-    <div class="farm-tabs-collapsible collapsed" id="farm-tabs-grid-collapsible">
-        {% for farm in farms %}
-        <button class="farm-pill-card {% if loop.first %}active{% endif %}"
-                data-farm-id="{{ farm.farm_id }}"
-                data-farm-name="{{ farm.farm }}"
-                data-farmer-name="{{ farm.farmer }}"
-                data-farm-money="{{ "{:,}".format(farm.money) }}"
-                id="tab-btn-{{ farm.farm_id }}"
-                onclick="switchFarm('{{ farm.farm_id }}')">
-            <div class="pill-top-row">
-                <span>{{ farm.farm }} Farm</span>
-                <span class="pill-money">{{ "{:,}".format(farm.money) }}g</span>
-            </div>
-            <div class="pill-bottom-row">
-                <span>Farmer: {{ farm.farmer }}</span>
-            </div>
-        </button>
-        {% endfor %}
-    </div>
-</section>
-
-<script>
+        <div class="farm-tabs-collapsible collapsed"
+             id="farm-tabs-grid-collapsible">
+            {% for farm in farms %}
+                <button class="farm-pill-card {% if loop.first %}active{% endif %}"
+                        data-farm-id="{{ farm.farm_id }}"
+                        data-farm-name="{{ farm.farm }}"
+                        data-farmer-name="{{ farm.farmer }}"
+                        data-farm-money="{{ "{:,}".format(farm.money) }}"
+                        id="tab-btn-{{ farm.farm_id }}"
+                        onclick="switchFarm('{{ farm.farm_id }}')">
+                    <div class="pill-top-row">
+                        <span>{{ farm.farm }} Farm</span>
+                        <span class="pill-money">{{ "{:,}".format(farm.money) }}g</span>
+                    </div>
+                    <div class="pill-bottom-row">
+                        <span>Farmer: {{ farm.farmer }}</span>
+                    </div>
+                </button>
+            {% endfor %}
+        </div>
+    </section>
+    <script>
     function toggleFarmSwitcher() {
         const grid = document.getElementById('farm-tabs-grid-collapsible');
         const icon = document.getElementById('switcher-arrow-icon');
@@ -214,5 +212,5 @@
             switchFarm(savedFarmId);
         }
     });
-</script>
+    </script>
 {% endif %}

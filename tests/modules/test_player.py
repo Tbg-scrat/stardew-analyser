@@ -2,6 +2,7 @@
 # tests/modules/test_player.py
 
 import xml.etree.ElementTree as ET
+
 from src.modules.player import parse_player
 
 
@@ -68,4 +69,3 @@ def test_parse_player_invalid_numeric_values():
 
     assert data.get("money") == 0
     assert data.get("total_earned") == 0
-    

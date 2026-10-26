@@ -1,15 +1,17 @@
 import json
 import logging
 import os
+
 from PIL import Image
 
 logger = logging.getLogger(__name__)
+
 
 def process_furniture(temp_unpacked_dir: str, config: dict, cache_dir: str) -> int:
     """Extracts variable-sized furniture items based on collision dimensions and type."""
     file_path = config["file_path"]
     meta = config["meta"]
-    
+
     prefix = meta.get("prefix", "F")
     source_xnb = meta.get("source_xnb", "TileSheets/furniture.xnb")
 
@@ -43,7 +45,7 @@ def process_furniture(temp_unpacked_dir: str, config: dict, cache_dir: str) -> i
 
     sheet_w, sheet_h = img.size
     # Stardew furniture sheets use a 16px grid base
-    tiles_per_row = sheet_w // 16 
+    tiles_per_row = sheet_w // 16
 
     count = 0
     # Flat types do not get the +16px vertical sprite height extension
@@ -52,11 +54,11 @@ def process_furniture(temp_unpacked_dir: str, config: dict, cache_dir: str) -> i
     for item_key, item_data in items.items():
         if not isinstance(item_data, dict):
             continue
-            
+
         sprite_index = item_data.get("SpriteIndex", -1)
         if sprite_index < 0:
             continue
-            
+
         width_tiles = item_data.get("Width", 1)
         height_tiles = item_data.get("Height", 1)
         f_type = str(item_data.get("Type", "other")).lower()
@@ -64,21 +66,23 @@ def process_furniture(temp_unpacked_dir: str, config: dict, cache_dir: str) -> i
         # Calculate pixel dimensions
         crop_w = width_tiles * 16
         crop_h = height_tiles * 16
-        
+
         # Add the visual overhang for non-flat furniture (chairs, tables, etc.)
         if f_type not in flat_types:
             crop_h += 16
-            
+
         # SpriteIndex points to the top-left 16x16 tile of the item
         start_col = sprite_index % tiles_per_row
         start_row = sprite_index // tiles_per_row
-        
+
         x = start_col * 16
         y = start_row * 16
-        
+
         # Ensure we don't attempt to crop outside the image boundaries
         if x + crop_w > sheet_w or y + crop_h > sheet_h:
-            logger.debug(f"[FurnitureProcessor] Skipping {item_key}: Dimensions exceed sheet bounds.")
+            logger.debug(
+                f"[FurnitureProcessor] Skipping {item_key}: Dimensions exceed sheet bounds."
+            )
             continue
 
         try:
@@ -89,6 +93,7 @@ def process_furniture(temp_unpacked_dir: str, config: dict, cache_dir: str) -> i
         except Exception as e:
             logger.warning(f"[FurnitureProcessor] Failed cropping {item_key}: {e}")
 
-    logger.info(f"[FurnitureProcessor] Extracted {count} items from {filename} into {prefix}/ subfolder.")
+    logger.info(
+        f"[FurnitureProcessor] Extracted {count} items from {filename} into {prefix}/ subfolder."
+    )
     return count
-    

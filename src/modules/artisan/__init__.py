@@ -78,9 +78,7 @@ def parse_all_artisan_goods(root, player=None):
     total_dehydrators = dehydrators_data.get("total", 0)
     total_bee_houses = bee_houses_data.get("total", 0)
 
-    total_machines = (
-        total_casks + total_kegs + total_jars + total_dehydrators + total_bee_houses
-    )
+    total_machines = total_casks + total_kegs + total_jars + total_dehydrators + total_bee_houses
 
     total_ready_today = (
         casks_data.get("ready_today", 0)
@@ -170,4 +168,3 @@ def parse_all_artisan_goods(root, player=None):
         "bee_houses": bee_houses_data,
         "idle_summary": idle_summary,
     }
-    

@@ -4,6 +4,7 @@ import sys
 import tempfile
 import traceback
 from pathlib import Path
+
 import webview
 
 # Configure persistent file logging for desktop executable diagnostics
@@ -57,6 +58,7 @@ def build_app() -> str:
 
     try:
         from parse import run_pipeline
+
         result = run_pipeline(save_dir=save_dir, output_path=output_html)
         logger.info(f"run_pipeline execution completed. Result: {result}")
     except Exception as e:
@@ -88,4 +90,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    

@@ -2,7 +2,9 @@
 # tests/core/test_xml_reader.py
 
 import xml.etree.ElementTree as ET
+
 import pytest
+
 from src.core.xml_reader import get_key_value, get_player_node
 
 
@@ -43,7 +45,9 @@ def test_get_key_value_empty_key_nodes():
     key, _ = get_key_value(item_empty)
     assert key is None
 
-    item_empty_child = ET.fromstring("<item><key><string></string></key><value><int>10</int></value></item>")
+    item_empty_child = ET.fromstring(
+        "<item><key><string></string></key><value><int>10</int></value></item>"
+    )
     key_child, _ = get_key_value(item_empty_child)
     assert key_child is None
 
@@ -61,7 +65,9 @@ def test_get_player_node_valid(tmp_path):
 def test_get_player_node_nested_fallback(tmp_path):
     """Verifies recursive fallback (.//player) when <player> is nested deep inside the tree."""
     save_file = tmp_path / "NestedSave.xml"
-    save_file.write_text("<SaveGame><wrapper><player><name>Alice</name></player></wrapper></SaveGame>")
+    save_file.write_text(
+        "<SaveGame><wrapper><player><name>Alice</name></player></wrapper></SaveGame>"
+    )
 
     root, player = get_player_node(save_file, retries=1)
     assert root.tag == "SaveGame"

@@ -123,4 +123,3 @@ def get_combined_objects_catalog() -> list:
             combined.append(item)
 
     return combined
-    

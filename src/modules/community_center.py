@@ -134,8 +134,7 @@ def _parse_junimo_route(root, player, mail_received):
             for item in raw_bundle_items:
                 key_node = item.find("key/int")
                 booleans = [
-                    b.text.lower() == "true"
-                    for b in item.findall("value/ArrayOfBool/boolean")
+                    b.text.lower() == "true" for b in item.findall("value/ArrayOfBool/boolean")
                 ]
 
                 if key_node is not None and key_node.text:
@@ -156,9 +155,7 @@ def _parse_junimo_route(root, player, mail_received):
         areas_node = cc_node.find("areasComplete")
         if areas_node is not None:
             areas = areas_node.findall("boolean")
-            logger.debug(
-                f"Found <areasComplete> node with {len(areas)} room status flags"
-            )
+            logger.debug(f"Found <areasComplete> node with {len(areas)} room status flags")
             for idx, boolean_node in enumerate(areas):
                 room_completed_flags[idx] = boolean_node.text.lower() == "true"
 
@@ -168,9 +165,9 @@ def _parse_junimo_route(root, player, mail_received):
     )
 
     # Movie theater / Missing Bundle (Room 6) completion flag
-    movie_theater_complete = "ccMovieTheater" in mail_received or bundle_states.get(
-        36, {}
-    ).get("is_complete", False)
+    movie_theater_complete = "ccMovieTheater" in mail_received or bundle_states.get(36, {}).get(
+        "is_complete", False
+    )
 
     logger.debug(
         f"Junimo CC flags -> Main CC Complete: {main_cc_complete}, Movie Theater: {movie_theater_complete}"
@@ -209,9 +206,7 @@ def _parse_junimo_route(root, player, mail_received):
         else:
             # Check if any bundle in this room is active in <bundles>
             room_bundle_ids = ROOM_BUNDLES.get(room_id, [])
-            has_active_bundles_in_room = any(
-                b_id in bundle_states for b_id in room_bundle_ids
-            )
+            has_active_bundles_in_room = any(b_id in bundle_states for b_id in room_bundle_ids)
 
             if has_active_bundles_in_room:
                 # Active room: missing bundle was completed and purged
@@ -277,9 +272,7 @@ def _parse_joja_route(root, player, mail_received):
 
     is_all_complete = completed_count >= len(projects)
 
-    logger.debug(
-        f"Parsed Joja Route: {completed_count}/{len(projects)} projects complete."
-    )
+    logger.debug(f"Parsed Joja Route: {completed_count}/{len(projects)} projects complete.")
 
     return {
         "route": "joja",

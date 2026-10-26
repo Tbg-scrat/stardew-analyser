@@ -6,34 +6,32 @@ import os
 import time
 from pathlib import Path
 
-from src.core.logger import setup_logging
 from src.core.extractor.cache_validator import is_cache_valid
+from src.core.logger import setup_logging
+from src.core.renderer import generate_dashboard_html
+from src.core.xml_reader import get_player_node
+from src.modules.achievements import parse_achievements
+from src.modules.artisan import parse_all_artisan_goods
+from src.modules.birthdays import parse_birthdays
+from src.modules.chests import parse_chests
+from src.modules.community_center import parse_community_center_data
+from src.modules.cooking import get_formatted_cooking
+from src.modules.crops import parse_all_crops_from_save
+from src.modules.festivals import parse_festivals
+from src.modules.fishing import get_formatted_fishing
+from src.modules.grandpa import parse_grandpa_data
+from src.modules.hay import parse_hay_data
+from src.modules.luck import parse_luck
+from src.modules.museum import get_formatted_museum
+from src.modules.player import parse_player
+from src.modules.shipping import get_formatted_shipping
+from src.modules.social import parse_social
+from src.modules.tools import parse_tools
+from src.modules.weather import parse_weather
 
 # Initialize central logging configuration
 setup_logging()
 logger = logging.getLogger(__name__)
-
-from src.core.xml_reader import get_player_node
-from src.core.renderer import generate_dashboard_html
-
-from src.modules.player import parse_player
-from src.modules.shipping import get_formatted_shipping
-from src.modules.fishing import get_formatted_fishing
-from src.modules.museum import get_formatted_museum
-from src.modules.cooking import get_formatted_cooking
-from src.modules.social import parse_social
-from src.modules.weather import parse_weather
-from src.modules.luck import parse_luck
-from src.modules.festivals import parse_festivals
-from src.modules.birthdays import parse_birthdays
-from src.modules.achievements import parse_achievements
-from src.modules.artisan import parse_all_artisan_goods
-from src.modules.chests import parse_chests
-from src.modules.crops import parse_all_crops_from_save
-from src.modules.tools import parse_tools
-from src.modules.hay import parse_hay_data
-from src.modules.grandpa import parse_grandpa_data
-from src.modules.community_center import parse_community_center_data
 
 SAVE_DIR = Path(os.getenv("SAVE_DIR", "/saves"))
 
@@ -71,7 +69,9 @@ def _evaluate_watering_can_rain_opportunity(data):
     tools_info = data.get("tools", {})
     watering_can = tools_info.get("watering_can")
     if not watering_can and "upgradeable" in tools_info:
-        watering_can = next((t for t in tools_info["upgradeable"] if t.get("key") == "WateringCan"), None)
+        watering_can = next(
+            (t for t in tools_info["upgradeable"] if t.get("key") == "WateringCan"), None
+        )
 
     if not watering_can:
         return {"active": False}
@@ -93,8 +93,8 @@ def _evaluate_watering_can_rain_opportunity(data):
             ("spring", 13),  # Egg Festival
             ("spring", 24),  # Flower Dance
             ("summer", 11),  # Luau
-            ("fall", 16),    # Stardew Valley Fair
-            ("winter", 8),   # Festival of Ice
+            ("fall", 16),  # Stardew Valley Fair
+            ("winter", 8),  # Festival of Ice
             ("winter", 25),  # Feast of the Winter Star
         }
 
@@ -156,9 +156,7 @@ def analyze_save(file_path):
     data["recipes_cooked"] = get_formatted_cooking(player)
 
     # Achievements
-    data["achievements"] = parse_achievements(
-        player, shipped_items=data["shipped_items"]
-    )
+    data["achievements"] = parse_achievements(player, shipped_items=data["shipped_items"])
 
     data["friendships"] = parse_social(player)
     data["daily_intel"] = None
@@ -245,14 +243,19 @@ def log_save_summary(save_id, data):
 
     tools_maxed = sum(1 for t in data.get("tools", {}).get("upgradeable", []) if t.get("is_max"))
     tools_total = len(data.get("tools", {}).get("upgradeable", []))
-    upgrading_tools = [t for t in data.get("tools", {}).get("upgradeable", []) if t.get("status") == "upgrading"]
+    upgrading_tools = [
+        t for t in data.get("tools", {}).get("upgradeable", []) if t.get("status") == "upgrading"
+    ]
     ready_tools_count = sum(
-        1 for t in data.get("tools", {}).get("upgradeable", [])
+        1
+        for t in data.get("tools", {}).get("upgradeable", [])
         if (t.get("next_tier") or {}).get("can_upgrade")
     )
     if upgrading_tools:
         upg = upgrading_tools[0]
-        upg_detail = f"{upg.get('display_name', 'Tool')} at Clint's, {upg.get('days_left', 0)}d left"
+        upg_detail = (
+            f"{upg.get('display_name', 'Tool')} at Clint's, {upg.get('days_left', 0)}d left"
+        )
     elif ready_tools_count > 0:
         upg_detail = f"{ready_tools_count} Ready to Upgrade"
     elif tools_maxed == tools_total and tools_total > 0:
@@ -296,8 +299,8 @@ def run_pipeline(save_dir=None, output_path=None):
     parsing all discovered farms and rendering the multi-farm dashboard HTML.
     """
     pipeline_start = time.perf_counter()
-    
-     # Asset Cache Verification Log
+
+    # Asset Cache Verification Log
     cache_status = "VALID" if is_cache_valid() else "INVALID_OR_MISSING"
     logger.info(f"Asset cache verification: {cache_status}")
 
@@ -342,4 +345,3 @@ def run_pipeline(save_dir=None, output_path=None):
 
 if __name__ == "__main__":
     run_pipeline()
-    

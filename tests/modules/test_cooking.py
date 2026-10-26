@@ -2,6 +2,7 @@
 # tests/modules/test_cooking.py
 
 import xml.etree.ElementTree as ET
+
 from src.modules.cooking import (
     get_formatted_cooking,
     parse_cooking,
@@ -63,7 +64,6 @@ def test_get_formatted_cooking_catalog_merge():
         "invalid_key": "not_a_dict_catalog_item",
     }
 
-
     results = get_formatted_cooking(player, catalog=custom_catalog)
 
     assert len(results) == 2
@@ -77,4 +77,3 @@ def test_get_formatted_cooking_catalog_merge():
     assert results[1]["count"] == 0
     assert results[1]["is_unlocked"] is False
     assert results[1]["status"] == "not_cooked"
-    

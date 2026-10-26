@@ -1,7 +1,8 @@
 # tests/test_pipeline.py
 
-from unittest.mock import patch
 import xml.etree.ElementTree as ET
+from unittest.mock import patch
+
 from parse import analyze_save, log_save_summary, run_pipeline
 
 
@@ -83,11 +84,15 @@ def test_log_save_summary_formatting(caplog):
                 {"key": "TrashCan", "is_max": False},
                 {"key": "Pan", "is_max": True},
             ],
-            "scythe": {"current_stage": {"name": "Golden Scythe"}, "is_max": False}
+            "scythe": {"current_stage": {"name": "Golden Scythe"}, "is_max": False},
         },
         "hay": {"current_hay": 350, "max_capacity": 480, "total_animals": 16},
         "grandpa": {"total_score": 14, "max_score": 21, "candles": 4},
-        "community_center": {"completed_bundles": 28, "total_bundles": 30, "route_label": "Community Center (Junimo)"},
+        "community_center": {
+            "completed_bundles": 28,
+            "total_bundles": 30,
+            "route_label": "Community Center (Junimo)",
+        },
     }
 
     with caplog.at_level("INFO"):
@@ -108,4 +113,3 @@ def test_run_pipeline_asset_cache_verification(tmp_path, caplog):
 
         mock_cache_check.assert_called_once()
         assert "Asset cache verification: VALID" in caplog.text
-        

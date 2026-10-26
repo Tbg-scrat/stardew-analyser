@@ -6,8 +6,8 @@
 assets/
 scripts/
 tests/
-pytest.ini
 .pytest_cache/
+pyproject.toml
 
 # Local Save Data (mounted dynamically at runtime via volumes)
 saves/

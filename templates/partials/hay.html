@@ -1,5 +1,4 @@
 <!-- templates/partials/hay.html -->
-
 <style>
     .hay-summary-bar {
         display: grid;
@@ -60,44 +59,42 @@
         background: linear-gradient(90deg, #f87171, #dc2626);
     }
 </style>
-
 {% if farm.hay %}
-<div class="hay-summary-bar">
-    <div class="hay-stat-card">
-        <div class="hay-stat-val {{ 'danger' if farm.hay.has_deficit_warning else 'ok' }}">
-            {{ farm.hay.current_hay }} / {{ farm.hay.max_capacity }}
+    <div class="hay-summary-bar">
+        <div class="hay-stat-card">
+            <div class="hay-stat-val {{ 'danger' if farm.hay.has_deficit_warning else 'ok' }}">
+                {{ farm.hay.current_hay }} / {{ farm.hay.max_capacity }}
+            </div>
+            <div class="hay-stat-label">Silo Hay Stored</div>
         </div>
-        <div class="hay-stat-label">Silo Hay Stored</div>
-    </div>
-    <div class="hay-stat-card">
-        <div class="hay-stat-val">{{ farm.hay.silos_built }}</div>
-        <div class="hay-stat-label">Silos Built</div>
-    </div>
-    <div class="hay-stat-card">
-        <div class="hay-stat-val">{{ farm.hay.total_animals }}</div>
-        <div class="hay-stat-label">Total Livestock</div>
-    </div>
-    <div class="hay-stat-card">
-        <div class="hay-stat-val">{{ farm.hay.required_winter_hay }}</div>
-        <div class="hay-stat-label">Winter Hay Needed</div>
-    </div>
-    <div class="hay-stat-card">
-        <div class="hay-stat-val {{ 'danger' if farm.hay.days_of_feed_left < 28 else 'ok' }}">
-            {{ farm.hay.days_of_feed_left }} days
+        <div class="hay-stat-card">
+            <div class="hay-stat-val">{{ farm.hay.silos_built }}</div>
+            <div class="hay-stat-label">Silos Built</div>
         </div>
-        <div class="hay-stat-label">Days of Feed Left</div>
-    </div>
-</div>
-
-<div class="hay-progress-box">
-    <div class="hay-progress-title">
-        <span>Silo Fill Gauge</span>
-        <span>{% if farm.hay.max_capacity > 0 %}{{ ((farm.hay.current_hay / farm.hay.max_capacity) * 100) | round(1) }}{% else %}0{% endif %}%</span>
-    </div>
-    <div class="hay-bar-bg">
-        <div class="hay-bar-fill {{ 'danger' if farm.hay.has_deficit_warning else '' }}" 
-             style="width: {% if farm.hay.max_capacity > 0 %}{{ [((farm.hay.current_hay / farm.hay.max_capacity) * 100), 100] | min }}{% else %}0{% endif %}%;">
+        <div class="hay-stat-card">
+            <div class="hay-stat-val">{{ farm.hay.total_animals }}</div>
+            <div class="hay-stat-label">Total Livestock</div>
+        </div>
+        <div class="hay-stat-card">
+            <div class="hay-stat-val">{{ farm.hay.required_winter_hay }}</div>
+            <div class="hay-stat-label">Winter Hay Needed</div>
+        </div>
+        <div class="hay-stat-card">
+            <div class="hay-stat-val {{ 'danger' if farm.hay.days_of_feed_left < 28 else 'ok' }}">
+                {{ farm.hay.days_of_feed_left }} days
+            </div>
+            <div class="hay-stat-label">Days of Feed Left</div>
         </div>
     </div>
-</div>
+    <div class="hay-progress-box">
+        <div class="hay-progress-title">
+            <span>Silo Fill Gauge</span>
+            <span>{% if farm.hay.max_capacity > 0 %}{{ ((farm.hay.current_hay / farm.hay.max_capacity) * 100) | round(1) }}{% else %}0{% endif %}%</span>
+        </div>
+        <div class="hay-bar-bg">
+            <div class="hay-bar-fill {{ 'danger' if farm.hay.has_deficit_warning else '' }}"
+                 style="width: {% if farm.hay.max_capacity > 0 %}{{ [((farm.hay.current_hay / farm.hay.max_capacity) * 100), 100] | min }}{% else %}0{% endif %}%">
+            </div>
+        </div>
+    </div>
 {% endif %}

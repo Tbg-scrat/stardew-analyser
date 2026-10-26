@@ -1,10 +1,9 @@
-from src.core.reference_data import qualify_item_id, get_object_info
 # src/modules/museum.py
-
 import logging
 import time
 
 from data.data_loader import MUSEUM_CATALOG
+from src.core.reference_data import get_object_info, qualify_item_id
 
 logger = logging.getLogger(__name__)
 
@@ -32,9 +31,7 @@ def parse_museum(root_node):
         if museum_node is not None:
             museum_found = True
             raw_items = museum_node.findall("item")
-            logger.debug(
-                f"Found <museumPieces> node with {len(raw_items)} raw donation entries"
-            )
+            logger.debug(f"Found <museumPieces> node with {len(raw_items)} raw donation entries")
             for item in raw_items:
                 val_node = item.find("value")
                 if val_node is not None:
@@ -46,9 +43,7 @@ def parse_museum(root_node):
         logger.debug("No <museumPieces> subnode discovered in any GameLocation")
 
     donated_list = list(museum_pieces.keys())
-    logger.debug(
-        f"Extracted {len(donated_list)} unique donated pieces from LibraryMuseum XML"
-    )
+    logger.debug(f"Extracted {len(donated_list)} unique donated pieces from LibraryMuseum XML")
     return donated_list
 
 
@@ -91,9 +86,7 @@ def get_formatted_museum(root_node, catalog=None):
         )
 
     if unmapped_count > 0:
-        logger.debug(
-            f"Skipped {unmapped_count} invalid non-dict entries in museum catalog"
-        )
+        logger.debug(f"Skipped {unmapped_count} invalid non-dict entries in museum catalog")
 
     donated_total = sum(1 for m in museum_mapped if m["is_unlocked"])
     catalog_total = len(museum_mapped)
@@ -105,4 +98,3 @@ def get_formatted_museum(root_node, catalog=None):
     )
 
     return sorted(museum_mapped, key=lambda x: x["name"])
-    

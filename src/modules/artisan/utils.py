@@ -11,13 +11,13 @@ def resolve_item_icon(qualified_id, fallback_name=None):
     """
     if not qualified_id:
         return "/static/img/placeholder.svg"
-        
+
     obj_info = get_object_info(qualified_id, fallback_name=fallback_name)
     icon_path = obj_info.get("icon")
-    
+
     if not icon_path:
         return "/static/img/placeholder.svg"
-        
+
     return icon_path if icon_path.startswith("/") else f"/{icon_path}"
 
 
@@ -32,9 +32,7 @@ def get_all_locations(root):
 
     def _traverse_location(loc_elem, default_name="Unknown", is_indoor=False):
         loc_name = loc_elem.findtext("name") or default_name
-        is_outdoor = (
-            loc_elem.findtext("isOutdoors", "false").lower() == "true" and not is_indoor
-        )
+        is_outdoor = loc_elem.findtext("isOutdoors", "false").lower() == "true" and not is_indoor
         yield loc_name, loc_elem, is_outdoor
 
         buildings = loc_elem.find("buildings")
@@ -48,4 +46,3 @@ def get_all_locations(root):
 
     for loc in locations_node.findall("GameLocation"):
         yield from _traverse_location(loc)
-        

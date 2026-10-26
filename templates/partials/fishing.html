@@ -21,35 +21,62 @@
     .status-badge.unlocked { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3); }
     .status-badge.locked { background: rgba(100, 116, 139, 0.2); color: var(--text-muted); border: 1px solid var(--border-color); }
 </style>
-
 <div class="radar-controls">
     <div class="filter-group">
-        <button class="filter-btn active" data-filter-key="status" data-filter-val="all" onclick="setCatalogFilter(this)">All</button>
-        <button class="filter-btn" data-filter-key="status" data-filter-val="caught" onclick="setCatalogFilter(this)">Caught</button>
-        <button class="filter-btn" data-filter-key="status" data-filter-val="not_caught" onclick="setCatalogFilter(this)">Not Caught</button>
+        <button class="filter-btn active"
+                data-filter-key="status"
+                data-filter-val="all"
+                onclick="setCatalogFilter(this)">All</button>
+        <button class="filter-btn"
+                data-filter-key="status"
+                data-filter-val="caught"
+                onclick="setCatalogFilter(this)">Caught</button>
+        <button class="filter-btn"
+                data-filter-key="status"
+                data-filter-val="not_caught"
+                onclick="setCatalogFilter(this)">Not Caught</button>
     </div>
-    <input type="text" class="search-box" placeholder="Search fish..." onkeyup="filterItems(this)">
+    <input type="text"
+           class="search-box"
+           placeholder="Search fish..."
+           onkeyup="filterItems(this)">
 </div>
 <div class="items-grid">
     {% for item in farm.fish_caught %}
-    <div class="item-card status-{{ item.status }}" 
-         data-name="{{ item.name|lower }}" 
-         data-status="{{ item.status }}">
-        <div class="item-sprite-box">
-            {% if item.image %}
-            <img src="{{ item.image }}" class="item-sprite" alt="{{ item.name }}" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
-            <span class="img-missing-badge" style="display:none; color: #ef4444; font-size: 0.65rem; font-weight: bold; border: 1px dashed #ef4444; padding: 2px 4px; border-radius: 4px; line-height: 1;">NO IMG</span>
-            {% else %}
-            <span class="img-missing-badge" style="color: #ef4444; font-size: 0.65rem; font-weight: bold; border: 1px dashed #ef4444; padding: 2px 4px; border-radius: 4px; line-height: 1;">NO PATH</span>
-            {% endif %}
-         </div>
-
-
-        <div class="item-info">
-            <div class="item-name">{{ item.name }}</div>
-            <div class="item-meta">Caught: <b>{{ item.count }}</b> {% if item.length > 0 %}(Max: {{ item.length }} in){% endif %}</div>
-            <span class="status-badge {{ 'unlocked' if item.is_unlocked else 'locked' }}">{{ item.status|replace('_', ' ') }}</span>
+        <div class="item-card status-{{ item.status }}"
+             data-name="{{ item.name|lower }}"
+             data-status="{{ item.status }}">
+            <div class="item-sprite-box">
+                {% if item.image %}
+                    <img src="{{ item.image }}"
+                         class="item-sprite"
+                         alt="{{ item.name }}"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                    <span class="img-missing-badge"
+                          style="display:none;
+                                 color: #ef4444;
+                                 font-size: 0.65rem;
+                                 font-weight: bold;
+                                 border: 1px dashed #ef4444;
+                                 padding: 2px 4px;
+                                 border-radius: 4px;
+                                 line-height: 1">NO IMG</span>
+                {% else %}
+                    <span class="img-missing-badge"
+                          style="color: #ef4444;
+                                 font-size: 0.65rem;
+                                 font-weight: bold;
+                                 border: 1px dashed #ef4444;
+                                 padding: 2px 4px;
+                                 border-radius: 4px;
+                                 line-height: 1">NO PATH</span>
+                {% endif %}
+            </div>
+            <div class="item-info">
+                <div class="item-name">{{ item.name }}</div>
+                <div class="item-meta">Caught: <b>{{ item.count }}</b> {% if item.length > 0 %}(Max: {{ item.length }} in){% endif %}</div>
+                <span class="status-badge {{ 'unlocked' if item.is_unlocked else 'locked' }}">{{ item.status|replace('_', ' ') }}</span>
+            </div>
         </div>
-    </div>
     {% endfor %}
 </div>

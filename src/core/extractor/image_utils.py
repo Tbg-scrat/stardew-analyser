@@ -1,5 +1,6 @@
 import logging
 import os
+
 from PIL import Image
 
 logger = logging.getLogger(__name__)
@@ -50,7 +51,6 @@ def crop_tile(
         return None
 
     tile = sheet_img.crop(crop_box)
-    
+
     # Retained: Returns None if the cropped tile is fully transparent
     return tile if tile.getbbox() else None
-    

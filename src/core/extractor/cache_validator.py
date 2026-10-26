@@ -52,7 +52,7 @@ def is_cache_valid() -> bool:
 def save_cache_manifest() -> None:
     """Walks /cache/img after extraction and writes a manifest of all generated files."""
     expected_files = []
-    
+
     if os.path.exists(OUTPUT_IMG_DIR):
         for root, _, files in os.walk(OUTPUT_IMG_DIR):
             for file in files:
@@ -60,13 +60,9 @@ def save_cache_manifest() -> None:
                 rel_path = os.path.relpath(full_path, CACHE_DIR)
                 expected_files.append(rel_path.replace("\\", "/"))
 
-    manifest_data = {
-        "files": expected_files,
-        "total_files": len(expected_files)
-    }
+    manifest_data = {"files": expected_files, "total_files": len(expected_files)}
 
     with open(MANIFEST_FILE, "w", encoding="utf-8") as f:
         json.dump(manifest_data, f)
-        
+
     logger.info(f"[CacheValidator] Saved extraction manifest with {len(expected_files)} files.")
-    

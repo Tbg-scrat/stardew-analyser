@@ -2,6 +2,7 @@
 # tests/renderer/test_core.py
 
 from bs4 import BeautifulSoup
+
 from src.core.renderer import generate_dashboard_html
 
 
@@ -41,7 +42,18 @@ def test_html_navigation_and_sections(tmp_path, sample_render_data):
     assert soup.find("body") is not None
 
     all_text = soup.get_text().lower()
-    for section_kw in ["achievements", "shipped", "fish", "artisan", "crops", "chests", "tools", "hay", "grandpa", "community"]:
+    for section_kw in [
+        "achievements",
+        "shipped",
+        "fish",
+        "artisan",
+        "crops",
+        "chests",
+        "tools",
+        "hay",
+        "grandpa",
+        "community",
+    ]:
         assert section_kw in all_text, f"Expected '{section_kw}' content in rendered HTML"
 
 

@@ -5,7 +5,6 @@ import time
 
 from src.modules.artisan.utils import (
     QUALITY_MAP,
-    get_all_locations,
     resolve_item_icon,
 )
 
@@ -30,9 +29,7 @@ def parse_casks(location_elem):
         return None
 
     items = objects_node.findall("item")
-    logger.debug(
-        f"Parsing Cellar <objects> node containing {len(items)} raw item entries"
-    )
+    logger.debug(f"Parsing Cellar <objects> node containing {len(items)} raw item entries")
 
     for item in items:
         val = item.find("value")
@@ -62,9 +59,7 @@ def parse_casks(location_elem):
             idle += 1
             continue
 
-        item_name = (
-            held.findtext("displayName") or held.findtext("name") or "Unknown Product"
-        )
+        item_name = held.findtext("displayName") or held.findtext("name") or "Unknown Product"
         # Fixed: Pass raw parentSheetIndex or empty string so reference_data can safely use fallback_name
         held_qid = held.findtext("QualifiedItemId") or held.findtext("parentSheetIndex", "0")
 
@@ -79,9 +74,7 @@ def parse_casks(location_elem):
             days_to_mature_raw = float(obj.findtext("daysToMature", "0"))
             days_remaining = max(0, int(round(days_to_mature_raw)))
         except ValueError:
-            logger.debug(
-                f"Invalid daysToMature float for '{item_name}'; defaulting to 0"
-            )
+            logger.debug(f"Invalid daysToMature float for '{item_name}'; defaulting to 0")
             days_remaining = 0
 
         if days_remaining == 0 or quality_raw == 4:
@@ -129,9 +122,7 @@ def parse_casks(location_elem):
             }
         batch_map[batch_key]["count"] += 1
 
-    batches = sorted(
-        list(batch_map.values()), key=lambda b: (b["days_remaining"], b["name"])
-    )
+    batches = sorted(list(batch_map.values()), key=lambda b: (b["days_remaining"], b["name"]))
 
     return {
         "total": total,
@@ -225,4 +216,3 @@ def parse_all_casks_from_save(root, player=None):
     )
 
     return aggregated_result
-    

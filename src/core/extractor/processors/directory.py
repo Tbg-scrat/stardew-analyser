@@ -1,9 +1,11 @@
 import json
 import logging
 import os
+
 from PIL import Image
 
 logger = logging.getLogger(__name__)
+
 
 def process_directory(temp_unpacked_dir: str, config: dict, cache_dir: str) -> int:
     """
@@ -11,10 +13,10 @@ def process_directory(temp_unpacked_dir: str, config: dict, cache_dir: str) -> i
     Supports cropping specific regions based on the _meta block.
     """
     meta = config.get("meta", {})
-    
+
     prefix = meta.get("prefix")
-    crop_coords = meta.get("crop") # e.g., [0, 0, 64, 64]
-    
+    crop_coords = meta.get("crop")  # e.g., [0, 0, 64, 64]
+
     if not prefix:
         logger.error("[DirectoryProcessor] Missing 'prefix' in meta.")
         return 0
@@ -24,7 +26,7 @@ def process_directory(temp_unpacked_dir: str, config: dict, cache_dir: str) -> i
 
     count = 0
     file_path = config.get("file_path")
-    
+
     try:
         with open(file_path, "r", encoding="utf-8") as f:
             data = json.load(f)
@@ -33,10 +35,10 @@ def process_directory(temp_unpacked_dir: str, config: dict, cache_dir: str) -> i
         return 0
 
     items = data.get("villagers", {})
-    
+
     if not items:
-         logger.warning(f"[DirectoryProcessor] No items found to extract for prefix {prefix}")
-         return 0
+        logger.warning(f"[DirectoryProcessor] No items found to extract for prefix {prefix}")
+        return 0
 
     # Fix: Resolve the source directory to maintain nested structure parity with router
     source_dir = meta.get("source_dir", "")
@@ -46,7 +48,7 @@ def process_directory(temp_unpacked_dir: str, config: dict, cache_dir: str) -> i
         safe_key = str(item_key).strip()
         source_filename = f"{safe_key}.png"
         source_path = os.path.join(base_source_path, source_filename)
-        
+
         if not os.path.exists(source_path):
             logger.debug(f"[DirectoryProcessor] Source file not found: {source_path}")
             continue
@@ -66,4 +68,3 @@ def process_directory(temp_unpacked_dir: str, config: dict, cache_dir: str) -> i
 
     logger.info(f"[DirectoryProcessor] Extracted {count} images into {prefix}/")
     return count
-    

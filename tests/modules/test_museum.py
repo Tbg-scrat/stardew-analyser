@@ -2,6 +2,7 @@
 # tests/modules/test_museum.py
 
 import xml.etree.ElementTree as ET
+
 from src.modules.museum import (
     get_formatted_museum,
     parse_museum,
@@ -89,4 +90,3 @@ def test_get_formatted_museum_catalog_merge():
     tibia = next(item for item in results if item["id"] == "O_580")
     assert tibia["is_unlocked"] is False
     assert tibia["status"] == "not_found"
-    

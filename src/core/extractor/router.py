@@ -8,14 +8,14 @@ import subprocess
 from glob import glob
 
 from src.core.logger import setup_logging
+
 from .cache_validator import is_cache_valid, save_cache_manifest
 from .image_utils import resolve_case_insensitive_path
-from .processors.grid import process_grid
 from .processors.catalog import process_catalog
+from .processors.directory import process_directory
 from .processors.free_crop import process_free_crop
 from .processors.furniture import process_furniture
-from .processors.directory import process_directory
-
+from .processors.grid import process_grid
 
 setup_logging()
 logger = logging.getLogger(__name__)
@@ -48,7 +48,9 @@ def extract_assets() -> bool:
         return True
 
     if not os.path.exists(CONTENT_DIR):
-        logger.warning(f"[Router] Content directory '{CONTENT_DIR}' not found. Serving placeholders.")
+        logger.warning(
+            f"[Router] Content directory '{CONTENT_DIR}' not found. Serving placeholders."
+        )
         # Graceful fallback: continue without extracting or saving manifest
         return True
 
@@ -83,9 +85,7 @@ def extract_assets() -> bool:
                 if os.path.isdir(full_source_dir):
                     for file in os.listdir(full_source_dir):
                         if file.lower().endswith(".xnb"):
-                            textures_to_stage.add(
-                                os.path.join(source_dir, file).replace("\\", "/")
-                            )
+                            textures_to_stage.add(os.path.join(source_dir, file).replace("\\", "/"))
 
             if meta.get("processor") == "catalog":
                 try:
@@ -127,20 +127,20 @@ def extract_assets() -> bool:
                     )
 
         if not staged_files:
-            logger.info(
-                "[Router] No assets required staging based on domain configs. Exiting."
-            )
+            logger.info("[Router] No assets required staging based on domain configs. Exiting.")
             return True
 
         # 2. Unpack Phase
         cmd = [XNBCLI_BIN, "unpack", temp_packed, temp_unpacked]
         logger.debug(f"[Router] Executing xnbcli: {' '.join(cmd)}")
-        res = subprocess.run(cmd, capture_output=True, text=True, check=True)
-        logger.debug(f"[Router] xnbcli unpacked successfully.")
+        subprocess.run(cmd, capture_output=True, text=True, check=True)
+        logger.debug("[Router] xnbcli unpacked successfully.")
 
         # 3. Processing Dispatch Phase
         for config in domain_configs:
-            logger.debug(f"[Router] Dispatching config {config['file_path']} to processor '{config['meta'].get('processor')}'")
+            logger.debug(
+                f"[Router] Dispatching config {config['file_path']} to processor '{config['meta'].get('processor')}'"
+            )
             meta = config["meta"]
             if not meta.get("extract_images"):
                 continue
@@ -175,4 +175,3 @@ def extract_assets() -> bool:
 
 if __name__ == "__main__":
     extract_assets()
-    

@@ -1,5 +1,4 @@
 <!-- templates/partials/casks.html -->
-
 <style>
     .casks-summary-bar {
         display: flex;
@@ -217,91 +216,104 @@
         font-size: 0.9rem;
     }
 </style>
-
 {% if farm.casks and farm.casks.total_casks > 0 %}
-
-<div class="casks-summary-bar">
-    <div class="cask-stat-pill">
-        🍷 Total Casks: <b>{{ farm.casks.total_casks }}</b>
-    </div>
-    {% if farm.casks.ready_today > 0 %}
-    <div class="cask-stat-pill ready-today">
-        ✨ Ready Today: <b>{{ farm.casks.ready_today }}</b>
-    </div>
-    {% endif %}
-    {% if farm.casks.ready_tomorrow > 0 %}
-    <div class="cask-stat-pill ready-tomorrow">
-        ⏳ Ready Tomorrow: <b>{{ farm.casks.ready_tomorrow }}</b>
-    </div>
-    {% endif %}
-    <div class="cask-stat-pill">
-        🍇 Aging: <b>{{ farm.casks.aging_count }}</b>
-    </div>
-    {% if farm.casks.empty_casks > 0 %}
-    <div class="cask-stat-pill">
-        🪹 Empty Casks: <b>{{ farm.casks.empty_casks }}</b>
-    </div>
-    {% endif %}
-</div>
-
-<div class="radar-controls">
-    <div class="filter-group">
-        <button class="filter-btn active" data-filter-key="status" data-filter-val="all" onclick="setCatalogFilter(this)">All Batches</button>
-        <button class="filter-btn" data-filter-key="status" data-filter-val="ready_today" onclick="setCatalogFilter(this)">✨ Ready Today</button>
-        <button class="filter-btn" data-filter-key="status" data-filter-val="ready_tomorrow" onclick="setCatalogFilter(this)">⏳ Ready Tomorrow</button>
-        <button class="filter-btn" data-filter-key="status" data-filter-val="aging" onclick="setCatalogFilter(this)">🍇 Aging</button>
-    </div>
-    <input type="text" class="search-box" placeholder="Search aging goods..." onkeyup="filterItems(this)">
-</div>
-
-{% if farm.casks.batches %}
-<div class="items-grid">
-    {% for batch in farm.casks.batches %}
-    {% set status_code = 'ready_today' if batch.is_ready else ('ready_tomorrow' if batch.days_remaining == 1 else 'aging') %}
-    <div class="item-card status-{{ status_code }}" 
-         data-name="{{ batch.name|lower }}" 
-         data-status="{{ status_code }}">
-        <div class="item-sprite-box">
-            <img src="/cache/img/items/{{ batch.image if batch.image.endswith('.png') else batch.image + '.png' }}" 
-                 class="item-sprite" 
-                 alt="{{ batch.name }}" 
-                 onerror="this.onerror=null; this.src='/static/img/placeholder.svg';">
-
-            {% if batch.quality == 1 %}
-            <img src="/cache/img/items/silver_star.png" class="cask-star-badge" alt="Silver Quality">
-            {% elif batch.quality == 2 %}
-            <img src="/cache/img/items/gold_star.png" class="cask-star-badge" alt="Gold Quality">
-            {% elif batch.quality == 4 %}
-            <img src="/cache/img/items/iridium_star.png" class="cask-star-badge" alt="Iridium Quality">
-            {% endif %}
+    <div class="casks-summary-bar">
+        <div class="cask-stat-pill">
+            🍷 Total Casks: <b>{{ farm.casks.total_casks }}</b>
         </div>
-        <div class="item-info">
-            <div class="item-name">
-                {{ batch.name }}
-                <span class="batch-count-pill">x{{ batch.count }}</span>
+        {% if farm.casks.ready_today > 0 %}
+            <div class="cask-stat-pill ready-today">
+                ✨ Ready Today: <b>{{ farm.casks.ready_today }}</b>
             </div>
-            <div class="item-meta">
-                Quality: <b>{{ batch.quality_name }}</b>
+        {% endif %}
+        {% if farm.casks.ready_tomorrow > 0 %}
+            <div class="cask-stat-pill ready-tomorrow">
+                ⏳ Ready Tomorrow: <b>{{ farm.casks.ready_tomorrow }}</b>
             </div>
-            {% if batch.is_ready %}
-            <span class="status-badge ready">Ready Today!</span>
-            {% elif batch.days_remaining == 1 %}
-            <span class="status-badge tomorrow">1 Day Left</span>
-            {% else %}
-            <span class="status-badge aging">{{ batch.days_remaining }} Days Left</span>
-            {% endif %}
+        {% endif %}
+        <div class="cask-stat-pill">
+            🍇 Aging: <b>{{ farm.casks.aging_count }}</b>
         </div>
+        {% if farm.casks.empty_casks > 0 %}
+            <div class="cask-stat-pill">
+                🪹 Empty Casks: <b>{{ farm.casks.empty_casks }}</b>
+            </div>
+        {% endif %}
     </div>
-    {% endfor %}
-</div>
+    <div class="radar-controls">
+        <div class="filter-group">
+            <button class="filter-btn active"
+                    data-filter-key="status"
+                    data-filter-val="all"
+                    onclick="setCatalogFilter(this)">All Batches</button>
+            <button class="filter-btn"
+                    data-filter-key="status"
+                    data-filter-val="ready_today"
+                    onclick="setCatalogFilter(this)">✨ Ready Today</button>
+            <button class="filter-btn"
+                    data-filter-key="status"
+                    data-filter-val="ready_tomorrow"
+                    onclick="setCatalogFilter(this)">⏳ Ready Tomorrow</button>
+            <button class="filter-btn"
+                    data-filter-key="status"
+                    data-filter-val="aging"
+                    onclick="setCatalogFilter(this)">🍇 Aging</button>
+        </div>
+        <input type="text"
+               class="search-box"
+               placeholder="Search aging goods..."
+               onkeyup="filterItems(this)">
+    </div>
+    {% if farm.casks.batches %}
+        <div class="items-grid">
+            {% for batch in farm.casks.batches %}
+                {% set status_code = 'ready_today' if batch.is_ready else ('ready_tomorrow' if batch.days_remaining == 1 else 'aging') %}
+                <div class="item-card status-{{ status_code }}"
+                     data-name="{{ batch.name|lower }}"
+                     data-status="{{ status_code }}">
+                    <div class="item-sprite-box">
+                        <img src="/cache/img/items/{{ batch.image if batch.image.endswith('.png') else batch.image + '.png' }}"
+                             class="item-sprite"
+                             alt="{{ batch.name }}"
+                             onerror="this.onerror=null; this.src='/static/img/placeholder.svg';">
+                        {% if batch.quality == 1 %}
+                            <img src="/cache/img/items/silver_star.png"
+                                 class="cask-star-badge"
+                                 alt="Silver Quality">
+                        {% elif batch.quality == 2 %}
+                            <img src="/cache/img/items/gold_star.png"
+                                 class="cask-star-badge"
+                                 alt="Gold Quality">
+                        {% elif batch.quality == 4 %}
+                            <img src="/cache/img/items/iridium_star.png"
+                                 class="cask-star-badge"
+                                 alt="Iridium Quality">
+                        {% endif %}
+                    </div>
+                    <div class="item-info">
+                        <div class="item-name">
+                            {{ batch.name }}
+                            <span class="batch-count-pill">x{{ batch.count }}</span>
+                        </div>
+                        <div class="item-meta">
+                            Quality: <b>{{ batch.quality_name }}</b>
+                        </div>
+                        {% if batch.is_ready %}
+                            <span class="status-badge ready">Ready Today!</span>
+                        {% elif batch.days_remaining == 1 %}
+                            <span class="status-badge tomorrow">1 Day Left</span>
+                        {% else %}
+                            <span class="status-badge aging">{{ batch.days_remaining }} Days Left</span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-casks-notice">🍷 All {{ farm.casks.total_casks }} casks in the cellar are currently empty.</div>
+    {% endif %}
 {% else %}
-<div class="empty-casks-notice">
-    🍷 All {{ farm.casks.total_casks }} casks in the cellar are currently empty.
-</div>
-{% endif %}
-
-{% else %}
-<div class="empty-casks-notice">
-    🏚️ No Cellar upgrade built yet. Upgrade your Farmhouse to Level 3 at Robin's Carpenter Shop to unlock Cask aging.
-</div>
+    <div class="empty-casks-notice">
+        🏚️ No Cellar upgrade built yet. Upgrade your Farmhouse to Level 3 at Robin's Carpenter Shop to unlock Cask aging.
+    </div>
 {% endif %}

@@ -166,67 +166,62 @@
         border-radius: 4px;
     }
 </style>
-
 <div class="grandpa-container">
     {% if farm.grandpa %}
-    <!-- Candle Evaluation Status Banner -->
-    <div class="grandpa-banner {{ 'statue-unlocked' if farm.grandpa.statue_unlocked else '' }}">
-        <div class="grandpa-score-summary">
-            <div class="candle-display">
-                <span class="candle-label">Grandpa's Evaluation</span>
-                <div class="candles">
-                    {% for _ in range(farm.grandpa.candles) %}
-                        <span class="candle-icon">🕯️</span>
-                    {% endfor %}
-                    {% for _ in range(4 - farm.grandpa.candles) %}
-                        <span class="candle-icon candle-dimmed">🕯️</span>
-                    {% endfor %}
+        <!-- Candle Evaluation Status Banner -->
+        <div class="grandpa-banner {{ 'statue-unlocked' if farm.grandpa.statue_unlocked else '' }}">
+            <div class="grandpa-score-summary">
+                <div class="candle-display">
+                    <span class="candle-label">Grandpa's Evaluation</span>
+                    <div class="candles">
+                        {% for _ in range(farm.grandpa.candles) %}
+                            <span class="candle-icon">🕯️</span>
+                        {% endfor %}
+                        {% for _ in range(4 - farm.grandpa.candles) %}
+                            <span class="candle-icon candle-dimmed">🕯️</span>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-            
-            <div class="score-badge-container">
-                {% if farm.grandpa.statue_unlocked %}
-                    <span class="status-badge unlocked">
-                        <img src="/cache/img/BC/BC_160.png" 
-                             class="status-badge-icon" 
-                             alt="Statue of Perfection" 
-                             onerror="this.onerror=null; this.src='/static/img/placeholder.svg';">
-                        Statue of Perfection Unlocked
-                    </span>
-                {% else %}
-                    <span class="status-badge pending">🕯️ Need {{ 12 - farm.grandpa.total_score }} more pts for 4 Candles</span>
-                {% endif %}
-
-                <div class="score-main">{{ farm.grandpa.total_score }} <span class="score-max">/ {{ farm.grandpa.max_score }} Pts</span></div>
+                <div class="score-badge-container">
+                    {% if farm.grandpa.statue_unlocked %}
+                        <span class="status-badge unlocked">
+                            <img src="/cache/img/BC/BC_160.png"
+                                 class="status-badge-icon"
+                                 alt="Statue of Perfection"
+                                 onerror="this.onerror=null; this.src='/static/img/placeholder.svg';">
+                            Statue of Perfection Unlocked
+                        </span>
+                    {% else %}
+                        <span class="status-badge pending">🕯️ Need {{ 12 - farm.grandpa.total_score }} more pts for 4 Candles</span>
+                    {% endif %}
+                    <div class="score-main">{{ farm.grandpa.total_score }} <span class="score-max">/ {{ farm.grandpa.max_score }} Pts</span></div>
+                </div>
             </div>
         </div>
-    </div>
-
-    <!-- Category Breakdown Grid -->
-    <div class="grandpa-grid">
-        {% for category in farm.grandpa.categories %}
-            <div class="category-card">
-                <div class="category-header">
-                    <h3>{{ category.name }}</h3>
-                    <span class="category-score">{{ category.score }} / {{ category.max_score }} Pts</span>
+        <!-- Category Breakdown Grid -->
+        <div class="grandpa-grid">
+            {% for category in farm.grandpa.categories %}
+                <div class="category-card">
+                    <div class="category-header">
+                        <h3>{{ category.name }}</h3>
+                        <span class="category-score">{{ category.score }} / {{ category.max_score }} Pts</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill"
+                             style="width: {{ (category.score / category.max_score * 100)|round }}%"></div>
+                    </div>
+                    <ul class="criteria-list">
+                        {% for item in category['items'] %}
+                            <li class="criteria-item {{ 'completed' if item.completed else 'incomplete' }}">
+                                <span class="status-icon">{{ '✓' if item.completed else '✗' }}</span>
+                                <span class="criteria-label">{{ item.label }}</span>
+                                <span class="pts-badge">+{{ item.points }} pt</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
                 </div>
-
-                <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" style="width: {{ (category.score / category.max_score * 100)|round }}%;"></div>
-                </div>
-
-                <ul class="criteria-list">
-                    {% for item in category['items'] %}
-                        <li class="criteria-item {{ 'completed' if item.completed else 'incomplete' }}">
-                            <span class="status-icon">{{ '✓' if item.completed else '✗' }}</span>
-                            <span class="criteria-label">{{ item.label }}</span>
-                            <span class="pts-badge">+{{ item.points }} pt</span>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endfor %}
-    </div>
+            {% endfor %}
+        </div>
     {% else %}
         <p>No evaluation data available.</p>
     {% endif %}

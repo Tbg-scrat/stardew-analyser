@@ -1,9 +1,7 @@
 # tests/core/extractor/test_cache_validator.py
 
-import pytest
-import os
 import json
-from unittest.mock import patch, mock_open
+from unittest.mock import mock_open, patch
 
 from src.core.extractor.cache_validator import is_cache_valid, save_cache_manifest
 
@@ -35,14 +33,15 @@ def test_is_cache_valid_empty_manifest(mock_exists):
 @patch("src.core.extractor.cache_validator.os.path.exists")
 def test_is_cache_valid_missing_files(mock_exists):
     """Verifies cache is invalid if expected files from the manifest are missing on disk."""
+
     # Manifest and img dir exist, but the physical images do not
     def exists_side_effect(path):
         if path.endswith("extraction_manifest.json") or path.endswith("img"):
             return True
         return False
-        
+
     mock_exists.side_effect = exists_side_effect
-    
+
     manifest_data = '{"files": ["img/missing1.png", "img/missing2.png"]}'
     with patch("builtins.open", mock_open(read_data=manifest_data)):
         assert is_cache_valid() is False
@@ -70,21 +69,20 @@ def test_save_cache_manifest(mock_walk, mock_exists):
     # Simulate finding directories and files during os.walk
     mock_walk.return_value = [
         ("/cache/img/objects", ("folders",), ("O_1.png", "O_2.png")),
-        ("/cache/img/tools", (), ("axe.png",))
+        ("/cache/img/tools", (), ("axe.png",)),
     ]
-    
+
     mock_file = mock_open()
     with patch("builtins.open", mock_file):
         save_cache_manifest()
-        
+
     # Verify file was opened for writing
     mock_file.assert_called_once()
     handle = mock_file()
-    
+
     # Capture what was dumped into the file
     written_data = "".join(call.args[0] for call in handle.write.call_args_list)
     saved_json = json.loads(written_data)
-    
+
     assert "files" in saved_json
     assert saved_json["total_files"] == 3
-    
