@@ -1,56 +1,49 @@
 #!/usr/bin/env python3
-"""Reachability analysis for Python files (stdlib only).
+"""Match everything the router imports against the processors package (stdlib only).
 
-Starting from the given entry points, follow imports transitively and report
-which project files are never reached.
+Starting at the entry point (default: src/core/extractor/router.py) the script
+  1. follows imports to find all files the router can reach,
+  2. collects every import that points into the processors folder
+     (resolving re-exports through __init__.py, aliases and `module.func` access),
+  3. checks that each imported name exists and is actually used,
+  4. walks the call graph INSIDE the processors folder, so a helper only counts as
+     live if a live function (or module-level code) really references it.
 
-Usage (run from the project root, or pass it as the first argument):
+Usage (from the project root):
     python find_unreachable.py
-    python find_unreachable.py --entry src.core.extractor.router --entry watch.py --entry parse.py
-    python find_unreachable.py --chain src/core/asset_extractor.py
+    python find_unreachable.py --entry src/core/extractor/router.py --target src/core/extractor/processors
 
-Entries may be file paths (script mode) or dotted module names (python -m).
-Results are CANDIDATES: verify before deleting anything.
+Results are candidates: verify before deleting.
 """
 import argparse
 import ast
 import os
-import re
 from collections import deque
 from pathlib import Path
 
-DEFAULT_ENTRIES = ["src.core.extractor.router", "watch.py", "parse.py"]
+DEFAULT_ENTRY = "src/core/extractor/router.py"
+DEFAULT_TARGET = "src/core/extractor/processors"
 DEFAULT_EXCLUDE = [
     ".venv", "venv", ".git", "__pycache__", "htmlcov", "saves",
     "node_modules", ".mypy_cache", ".pytest_cache", "scripts",
 ]
-TEXT_SUFFIXES = {".sh", ".yml", ".yaml", ".toml", ".cfg", ".ini", ".conf"}
-TEXT_PREFIXES = ("Dockerfile", "Makefile")
-ALL = "*"  # sentinel: every name a package exports counts as demanded
 DYNAMIC_CALLS = {
     "import_module", "__import__", "iter_modules", "walk_packages",
     "run_module", "run_path", "spec_from_file_location",
 }
 
 
-# ---------------------------------------------------------------- scanning
+# ------------------------------------------------------------ file / module helpers
 def scan(root, exclude):
     names = {e for e in exclude if "/" not in e}
     paths = {e.strip("/") for e in exclude if "/" in e}
-    py, txt = [], []
+    out = []
     for dirpath, dirnames, filenames in os.walk(root):
         rel_dir = Path(dirpath).relative_to(root)
-        dirnames[:] = [
-            d for d in dirnames
-            if d not in names and (rel_dir / d).as_posix() not in paths
-        ]
-        for fn in filenames:
-            rel = (rel_dir / fn).as_posix()
-            if fn.endswith(".py"):
-                py.append(rel)
-            elif Path(fn).suffix in TEXT_SUFFIXES or fn.startswith(TEXT_PREFIXES):
-                txt.append(rel)
-    return sorted(py), sorted(txt)
+        dirnames[:] = [d for d in dirnames
+                       if d not in names and (rel_dir / d).as_posix() not in paths]
+        out += [(rel_dir / f).as_posix() for f in filenames if f.endswith(".py")]
+    return sorted(out)
 
 
 def module_name(rel):
@@ -61,64 +54,53 @@ def module_name(rel):
 
 
 def package_of(rel):
-    """Dotted package a file lives in (used for relative imports)."""
     p = Path(rel)
-    if p.name == "__init__.py":
-        return module_name(rel)
-    return ".".join(p.parent.parts)
+    return module_name(rel) if p.name == "__init__.py" else ".".join(p.parent.parts)
 
 
 def resolve(name, mod2file):
-    """A dotted import also executes every parent package's __init__.py."""
+    """Importing a.b.c also executes the __init__.py of a and a.b."""
     parts = name.split(".")
-    found = set()
-    for i in range(1, len(parts) + 1):
-        f = mod2file.get(".".join(parts[:i]))
-        if f:
-            found.add(f)
-    return found
+    return {mod2file[".".join(parts[:i])] for i in range(1, len(parts) + 1)
+            if ".".join(parts[:i]) in mod2file}
 
 
-# ---------------------------------------------------------------- per-file analysis
-def has_main_guard(tree):
-    for n in tree.body:
-        if (isinstance(n, ast.If) and isinstance(n.test, ast.Compare)
-                and isinstance(n.test.left, ast.Name) and n.test.left.id == "__name__"):
-            return True
-    return False
-
-
-def analyse(rel, tree, mod2file, py_files):
-    """Returns edges, dynamic calls, string refs, demands, init bindings.
-
-    demands:  [(package __init__ file, names | None)] -> what this file takes FROM a package
-    bindings: (only for __init__.py) [(edges, bound names | None)] -> what the init imports
+# ------------------------------------------------------------ imports
+class Imp:
+    """One imported name.
+    kind 'module': `import a.b [as x]`   -> file = module file, local = alias or dotted name
+    kind 'from'  : `from m import n [as x]` -> file = file of m, orig = n, sub = file of m.n (if a module)
+    kind 'star'  : `from m import *`     -> file = file of m
     """
+    def __init__(self, lineno, local, kind, file, orig=None, sub=None):
+        self.lineno, self.local, self.kind = lineno, local, kind
+        self.file, self.orig, self.sub = file, orig, sub
+
+
+def imports_of(rel, tree, mod2file):
     pkg = package_of(rel)
     pkg_parts = pkg.split(".") if pkg else []
-    is_init = Path(rel).name == "__init__.py"
-    edges, dyn, strs, demands, bindings = set(), [], [], [], []
+    imps, edges = [], set()
 
-    def find(cand, sibling):
-        hit = resolve(cand, mod2file)
-        if not hit and sibling and pkg:  # script-mode fallback: `import helper` next to the script
-            hit = resolve(f"{pkg}.{cand}", mod2file)
+    def find(c, sib):
+        hit = resolve(c, mod2file)
+        if not hit and sib and pkg:  # script-mode: `import helper` next to the script
+            hit = resolve(f"{pkg}.{c}", mod2file)
         return hit
 
-    def pkg_init(mod, sibling):
-        f = mod2file.get(mod) or (mod2file.get(f"{pkg}.{mod}") if sibling and pkg else None)
-        return f if f and Path(f).name == "__init__.py" else None
+    def modfile(c, sib):
+        f = mod2file.get(c)
+        if f is None and sib and pkg:
+            f = mod2file.get(f"{pkg}.{c}")
+        return f
 
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
             for a in node.names:
-                hit = find(a.name, True)
-                edges |= hit
-                init = pkg_init(a.name, True)
-                if init:
-                    demands.append((init, None))  # `import pkg` -> any attribute may be used
-                if is_init:
-                    bindings.append((hit, None))
+                edges |= find(a.name, True)
+                f = modfile(a.name, True)
+                if f:
+                    imps.append(Imp(node.lineno, a.asname or a.name, "module", f))
         elif isinstance(node, ast.ImportFrom):
             if node.level:
                 cut = node.level - 1
@@ -128,237 +110,326 @@ def analyse(rel, tree, mod2file, py_files):
                 mod = ".".join(base + ([node.module] if node.module else []))
             else:
                 mod = node.module or ""
-            sibling = node.level == 0
-            mod_hit = find(mod, sibling) if mod else set()
-            edges |= mod_hit
-            init = pkg_init(mod, sibling) if mod else None
+            sib = node.level == 0
+            if mod:
+                edges |= find(mod, sib)
+            mf = modfile(mod, sib) if mod else None
             for a in node.names:
                 if a.name == "*":
-                    if init:
-                        demands.append((init, None))
-                    if is_init:
-                        bindings.append((mod_hit, None))
+                    if mf:
+                        imps.append(Imp(node.lineno, "*", "star", mf))
                     continue
-                hit = find(f"{mod}.{a.name}" if mod else a.name, sibling)
-                edges |= hit
-                if init:
-                    demands.append((init, {a.name}))
-                if is_init:
-                    bindings.append((mod_hit | hit, {a.asname or a.name}))
-        elif isinstance(node, ast.Call):
-            fn = node.func
-            name = fn.attr if isinstance(fn, ast.Attribute) else getattr(fn, "id", None)
-            if name in DYNAMIC_CALLS:
-                dyn.append((node.lineno, name))
-        elif isinstance(node, ast.Constant) and isinstance(node.value, str):
-            s = node.value
-            if len(s) < 200:
-                if s.endswith(".py"):
-                    for f in py_files:
-                        if f == s or f.endswith("/" + s):
-                            strs.append((node.lineno, f))
-                elif "." in s and s in mod2file:
-                    strs.append((node.lineno, mod2file[s]))
-
-    edges.discard(rel)
-    bindings = [(e - {rel}, n) for e, n in bindings]
-    return edges, dyn, strs, demands, bindings
+                sub = f"{mod}.{a.name}" if mod else a.name
+                edges |= find(sub, sib)
+                imps.append(Imp(node.lineno, a.asname or a.name, "from", mf, a.name, modfile(sub, sib)))
+    return imps, edges
 
 
-# ---------------------------------------------------------------- graph walk
-def reach(entries, graph):
-    parent = {e: None for e in entries}
-    queue = deque(entries)
-    while queue:
-        cur = queue.popleft()
-        for nxt in graph.get(cur, ()):
-            if nxt not in parent:
-                parent[nxt] = cur
-                queue.append(nxt)
-    return parent
+# ------------------------------------------------------------ name usage
+def dotted(node):
+    parts = []
+    while isinstance(node, ast.Attribute):
+        parts.append(node.attr)
+        node = node.value
+    if isinstance(node, ast.Name):
+        parts.append(node.id)
+        return ".".join(reversed(parts)), node
+    return None, None
 
 
-def reach_strict(entries, graph, inits, demands):
-    """Like reach(), but an __init__.py only passes on an import when something
-    reached actually takes the bound name from that package (re-export is used)."""
-    parent = {e: None for e in entries}
-    demanded = {}
-    changed = True
-    while changed:
-        changed = False
-        for f in list(parent):
-            if f in inits:
-                dem = demanded.get(f, set())
-                out = set()
-                for edges, names in inits[f]:
-                    if names is None or ALL in dem or (names & dem):
-                        out |= edges
+def scope_uses(nodes):
+    """(all loaded names, names used on their own, dotted attribute chains)"""
+    walked = [n for node in nodes for n in ast.walk(node)]
+    chains, bases = set(), set()
+    for n in walked:
+        if isinstance(n, ast.Attribute):
+            d, base = dotted(n)
+            if d:
+                chains.add(d)
+                bases.add(id(base))
+    names, bare = set(), set()
+    for n in walked:
+        if isinstance(n, ast.Name) and isinstance(n.ctx, ast.Load):
+            names.add(n.id)
+            if id(n) not in bases:
+                bare.add(n.id)
+    return names, bare, chains
+
+
+def is_main_guard(node):
+    return (isinstance(node, ast.If) and isinstance(node.test, ast.Compare)
+            and isinstance(node.test.left, ast.Name) and node.test.left.id == "__name__")
+
+
+class Info:
+    def __init__(self, rel, tree, mod2file):
+        self.rel, self.tree = rel, tree
+        self.is_init = Path(rel).name == "__init__.py"
+        self.imports, self.edges = imports_of(rel, tree, mod2file)
+        self.edges.discard(rel)
+        self.defs, self.def_uses, self.decorated = {}, {}, set()
+        module_nodes = []
+        for node in tree.body:
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                is_cls = isinstance(node, ast.ClassDef)
+                self.defs[node.name] = (node.lineno, "class" if is_cls else "function")
+                self.def_uses[node.name] = scope_uses([node])
+                if node.decorator_list:
+                    self.decorated.add(node.name)
+                module_nodes += node.decorator_list
+                if is_cls:
+                    module_nodes += node.bases + [k.value for k in node.keywords]
+                else:
+                    module_nodes += node.args.defaults + [d for d in node.args.kw_defaults if d]
+            elif isinstance(node, (ast.Import, ast.ImportFrom)) or is_main_guard(node):
+                continue
             else:
-                out = graph.get(f, set())
-            for t in out:
-                if t not in parent:
-                    parent[t] = f
-                    changed = True
-            for init, names in demands.get(f, ()):
-                d = demanded.setdefault(init, set())
-                new = {ALL} if names is None else names
-                if not new <= d:
-                    d |= new
-                    changed = True
-    return parent
+                module_nodes.append(node)
+        self.module_uses = scope_uses(module_nodes)
+        self.whole_uses = scope_uses([tree])
 
 
-def chain(parent, target):
-    out = []
-    while target is not None:
-        out.append(target)
-        target = parent[target]
-    return " -> ".join(reversed(out))
-
-
-def resolve_entry(e, root, mod2file):
-    if e.endswith(".py") or (root / e).is_file():
-        p = Path(e)
-        rel = (p.relative_to(root) if p.is_absolute() else p).as_posix()
-        return {rel}
-    return resolve(e, mod2file)  # `python -m pkg.mod` also runs parent __init__s
-
-
-# ---------------------------------------------------------------- main
+# ------------------------------------------------------------ main
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("root", nargs="?", default=".")
-    ap.add_argument("--entry", action="append", help="file path or dotted module (repeatable)")
-    ap.add_argument("--exclude", action="append", default=[], help="extra dir name or relative path to skip")
-    ap.add_argument("--tests-dir", default="tests", help="folder treated as test roots (default: tests)")
-    ap.add_argument("--chain", action="append", default=[], help="print the import chain for this file")
+    ap.add_argument("--entry", default=DEFAULT_ENTRY)
+    ap.add_argument("--target", default=DEFAULT_TARGET)
+    ap.add_argument("--exclude", action="append", default=[])
     args = ap.parse_args()
 
     root = Path(args.root).resolve()
-    py_files, txt_files = scan(root, DEFAULT_EXCLUDE + args.exclude)
-    try:
+    py_files = scan(root, DEFAULT_EXCLUDE + args.exclude)
+    try:  # never analyse this script itself
         me = Path(__file__).resolve().relative_to(root).as_posix()
         py_files = [f for f in py_files if f != me]
     except ValueError:
         pass
     mod2file = {module_name(f): f for f in py_files}
 
-    trees, errors = {}, []
+    entry = Path(args.entry).as_posix()
+    target_prefix = Path(args.target).as_posix().strip("/") + "/"
+    if entry not in py_files:
+        raise SystemExit(f"Entry point not found: {entry}")
+    target_files = [f for f in py_files if f.startswith(target_prefix)]
+    if not target_files:
+        raise SystemExit(f"No Python files under {target_prefix}")
+    target_set = set(target_files)
+
+    infos, errors = {}, []
     for rel in py_files:
         try:
-            trees[rel] = ast.parse((root / rel).read_text(encoding="utf-8", errors="replace"), filename=rel)
+            tree = ast.parse((root / rel).read_text(encoding="utf-8", errors="replace"), filename=rel)
+            infos[rel] = Info(rel, tree, mod2file)
         except SyntaxError as e:
             errors.append((rel, str(e)))
 
-    graph, dyn_calls, str_refs, has_main = {}, {}, {}, set()
-    demands, inits = {}, {}
-    for rel, tree in trees.items():
-        edges, dyn, strs, dem, binds = analyse(rel, tree, mod2file, py_files)
-        graph[rel] = edges
-        demands[rel] = dem
-        if Path(rel).name == "__init__.py":
-            inits[rel] = binds
-        if dyn:
-            dyn_calls[rel] = dyn
-        for lineno, target in strs:
-            str_refs.setdefault(target, []).append((rel, lineno))
-        if has_main_guard(tree):
-            has_main.add(rel)
+    # 1. everything reachable from the entry point (python -m also runs parent __init__s)
+    seeds = {entry} | resolve(module_name(entry), mod2file)
+    reached, queue = set(seeds), deque(seeds)
+    while queue:
+        cur = queue.popleft()
+        for nxt in infos[cur].edges:
+            if nxt not in reached:
+                reached.add(nxt)
+                queue.append(nxt)
 
-    entries = set()
-    for e in (args.entry or DEFAULT_ENTRIES):
-        found = resolve_entry(e, root, mod2file)
-        found = {f for f in found if f in trees}
-        if not found:
-            print(f"[WARN] entry '{e}' not found, skipping")
-        entries |= found
+    # 2. name binding: follow aliases and re-exports to the file that defines a name
+    def resolve_binding(file, name, seen=None):
+        seen = seen if seen is not None else set()
+        if file is None or (file, name) in seen or file not in infos:
+            return None
+        seen.add((file, name))
+        info = infos[file]
+        if name in info.defs:
+            return ("name", file, name)
+        for imp in info.imports:
+            if imp.local == name and imp.kind == "module":
+                return ("module", imp.file)
+            if imp.local == name and imp.kind == "from":
+                r = resolve_binding(imp.file, imp.orig, seen)
+                if r:
+                    return r
+                if imp.sub:
+                    return ("module", imp.sub)
+        for imp in info.imports:
+            if imp.kind == "star":
+                r = resolve_binding(imp.file, name, seen)
+                if r:
+                    return r
+        return None
 
-    tests_prefix = args.tests_dir.strip("/") + "/"
-    test_files = {f for f in py_files if f.startswith(tests_prefix)}
+    def bind(imp):
+        if imp.kind == "module":
+            return ("module", imp.file)
+        if imp.kind == "from":
+            r = resolve_binding(imp.file, imp.orig)
+            if r:
+                return r
+            if imp.sub:
+                return ("module", imp.sub)
+        return None
 
-    reach_a = reach(entries, graph)
-    strict_a = reach_strict(entries, graph, inits, demands)
-    reach_b = reach(entries | (test_files & set(trees)), graph)
+    # 3. liveness inside the processors package
+    live, why, loaded, work = set(), {}, set(), deque()
 
-    non_test = [f for f in py_files if f not in test_files]
-    unreached_a = [f for f in non_test if f not in reach_a]
-    test_only = [f for f in unreached_a if f in reach_b]
-    dead = [f for f in unreached_a if f not in reach_b]
+    def mark(file, name, reason):
+        if file in target_set and name in infos[file].defs and (file, name) not in live:
+            live.add((file, name))
+            why[(file, name)] = reason
+            work.append((file, name))
 
-    # Mentions of candidate files in non-Python files (Dockerfile, compose, shell, ...)
-    texts = {}
-    for t in txt_files:
-        try:
-            texts[t] = (root / t).read_text(encoding="utf-8", errors="replace")
-        except OSError:
-            pass
+    def mark_all(file, reason):
+        for n in infos[file].defs:
+            mark(file, n, reason)
 
-    def text_hits(rel):
-        pats = [re.escape(rel), re.escape(Path(rel).name)]
-        if Path(rel).name != "__init__.py":
-            pats.append(re.escape(module_name(rel)))
-        rx = re.compile(r"(?<![\w])(?:" + "|".join(pats) + r")(?![\w])")
-        return [t for t, body in texts.items() if rx.search(body)]
+    def load(file, reason):
+        if file in target_set and file not in loaded:
+            loaded.add(file)
+            info = infos[file]
+            if not info.is_init:  # an __init__ merely re-exports; that is not a use
+                apply_uses(info, info.module_uses, f"module-level code of {file}")
+                for n in info.decorated:
+                    mark(file, n, f"decorated, runs at import ({file})")
 
-    def describe(rel):
-        tags = []
-        if rel in has_main:
-            tags.append("[has __main__ guard]")
-        refs = [(s, ln) for s, ln in str_refs.get(rel, []) if s in reach_b]
-        if refs:
-            tags.append("[string ref: " + ", ".join(f"{s}:{ln}" for s, ln in refs[:3]) + "]")
-        th = text_hits(rel)
-        if th:
-            tags.append("[mentioned in: " + ", ".join(th[:3]) + "]")
-        return f"  {rel} {' '.join(tags)}".rstrip()
+    def apply_uses(info, uses, reason, report=None):
+        """Mark what `uses` references. report: list collecting (imp, status, target)."""
+        names, bare, chains = uses
+        for n in names:
+            if n in info.defs:
+                mark(info.rel, n, reason)
+        for imp in info.imports:
+            if imp.kind == "star":
+                continue
+            t = bind(imp)
+            in_target = (t is not None and t[1] in target_set) or (t is None and imp.file in target_set)
+            if not in_target:
+                continue
+            if t is None:
+                if report is not None:
+                    report.append((imp, "NOT FOUND", None))
+                continue
+            load(t[1], reason)
+            used = False
+            if t[0] == "name":
+                if imp.local in names:
+                    used = True
+                    mark(t[1], t[2], reason)
+            else:
+                prefix = imp.local
+                for c in chains:
+                    if c.startswith(prefix + "."):
+                        used = True
+                        r = resolve_binding(t[1], c[len(prefix) + 1:].split(".")[0])
+                        if r and r[0] == "name":
+                            mark(r[1], r[2], reason)
+                if "." not in prefix and prefix in bare:
+                    used = True
+                    mark_all(t[1], reason + " (module used as object)")
+            if report is not None:
+                report.append((imp, "used" if used else "UNUSED IMPORT", t))
 
-    print(f"Project root: {root}")
-    print(f"Entry files : {', '.join(sorted(entries))}")
-    print(f"Python files: {len(py_files)} total, {len(test_files)} under {tests_prefix}")
-    print(f"Reached from entry points: {len([f for f in reach_a if f not in test_files])}/{len(non_test)} non-test files "
-          f"({len([f for f in strict_a if f not in test_files])} when __init__ re-exports must actually be used)\n")
+    external = sorted(f for f in reached if f in infos and f not in target_set
+                      and not infos[f].is_init)
+    rows = []  # (importer, imp, status, target)
+    for f in external:
+        info = infos[f]
+        rep = []
+        apply_uses(info, info.whole_uses, f"{f}", rep)
+        rows += [(f, imp, st, t) for imp, st, t in rep]
+    while work:
+        f, name = work.popleft()
+        load(f, "")
+        apply_uses(infos[f], infos[f].def_uses[name], f"{f}::{name}")
 
-    print(f"== REACHED ONLY BY TESTS ({len(test_only)}) ==")
-    for f in test_only:
-        print(describe(f))
-    print(f"\n== NOT REACHED AT ALL ({len(dead)}) -- dead-code candidates ==")
-    for f in dead:
-        print(describe(f))
+    # who else (unreached files, e.g. tests) uses processor names -> relict detection
+    other = {}
+    for f, info in infos.items():
+        if f in reached or f in target_set:
+            continue
+        rep = []
+        names, bare, chains = info.whole_uses
+        for imp in info.imports:
+            if imp.kind == "star":
+                continue
+            t = bind(imp)
+            if not t or t[1] not in target_set:
+                continue
+            if t[0] == "name" and imp.local in names:
+                other.setdefault((t[1], t[2]), set()).add(f)
+            elif t[0] == "module":
+                for c in chains:
+                    if c.startswith(imp.local + "."):
+                        r = resolve_binding(t[1], c[len(imp.local) + 1:].split(".")[0])
+                        if r and r[0] == "name":
+                            other.setdefault((r[1], r[2]), set()).add(f)
 
-    init_only = [f for f in non_test if f in reach_a and f not in strict_a and f not in inits]
-    print(f"\n== REACHED ONLY VIA __init__ RE-EXPORTS NOBODY USES ({len(init_only)}) ==")
-    print("  (an __init__.py imports them, but nothing reached takes the re-exported names)")
-    for f in init_only:
-        via = []
-        for init, binds in inits.items():
-            if init in reach_a:
-                names = sorted({n for e, ns in binds if f in e and ns for n in ns})
-                if any(f in e for e, _ in binds):
-                    via.append(f"{init} exports {', '.join(names) if names else '(side-effect/star)'}")
-        tests = [t for t in sorted(test_files) if f in graph.get(t, ())]
-        extra = " [via: " + "; ".join(via) + "]" if via else ""
-        extra += f" [tests import it: {len(tests)}]" if tests else ""
-        print(describe(f) + extra)
+    def others(file, name):
+        users = sorted(other.get((file, name), ()))
+        if not users:
+            return ""
+        shown = ", ".join(users[:2]) + (f" +{len(users) - 2}" if len(users) > 2 else "")
+        return f"  [still used by unreached: {shown}]"
 
-    if dyn_calls:
-        print("\n== DYNAMIC IMPORT CALLS (may hide edges the graph cannot see) ==")
-        for f, calls in sorted(dyn_calls.items()):
-            print(f"  {f}: " + ", ".join(f"{n}@{ln}" for ln, n in calls))
+    # ---------------------------------------------------------- report
+    print(f"Entry point : {entry}")
+    print(f"Target      : {target_prefix}  ({len(target_files)} files)")
+    print(f"Reachable   : {len(reached)} files, {len(external)} outside the target that can import from it\n")
+
+    print("== IMPORTS FROM THE TARGET (matched against definitions) ==")
+    if not rows:
+        print("  none found")
+    for f, imp, st, t in rows:
+        what = imp.orig if imp.kind == "from" else imp.local
+        if t and t[0] == "name":
+            dest = f"{t[1]}::{t[2]} (line {infos[t[1]].defs[t[2]][0]})"
+        elif t:
+            dest = f"module {t[1]}"
+        else:
+            dest = f"no definition of '{what}' in {imp.file}"
+        flag = "" if st == "used" else f"  <-- {st}"
+        print(f"  {f}:{imp.lineno}  {what} -> {dest}{flag}")
+
+    print("\n== PER FILE IN THE TARGET ==")
+    for f in target_files:
+        info = infos.get(f)
+        if info is None or info.is_init:
+            continue
+        defs = sorted(info.defs.items(), key=lambda kv: kv[1][0])
+        live_defs = [(n, m) for n, m in defs if (f, n) in live]
+        dead_defs = [(n, m) for n, m in defs if (f, n) not in live]
+        if f not in loaded:
+            status = "NEVER IMPORTED by reachable code"
+        elif not live_defs:
+            status = "IMPORTED, but nothing from it is used"
+        else:
+            status = "IN USE"
+        print(f"\n{f}  [{status}]")
+        for n, (ln, kind) in live_defs:
+            print(f"   live  {kind} {n} (line {ln})  <- {why[(f, n)]}")
+        for n, (ln, kind) in dead_defs:
+            print(f"   DEAD  {kind} {n} (line {ln}){others(f, n)}")
+        if not defs:
+            print("   (no top-level functions or classes)")
+
+    dyn = []
+    for f in sorted(reached):
+        for node in ast.walk(infos[f].tree):
+            if isinstance(node, ast.Call):
+                fn = node.func
+                name = fn.attr if isinstance(fn, ast.Attribute) else getattr(fn, "id", None)
+                if name in DYNAMIC_CALLS:
+                    dyn.append(f"{f}:{node.lineno} {name}")
+    if dyn:
+        print("\n== DYNAMIC IMPORT CALLS in reachable code (may hide uses) ==")
+        for d in dyn:
+            print("  " + d)
     if errors:
         print("\n== FILES THAT FAILED TO PARSE ==")
         for f, msg in errors:
             print(f"  {f}: {msg}")
 
-    for target in args.chain:
-        t = Path(target).as_posix().lstrip("./")
-        print(f"\n== CHAIN for {t} ==")
-        if t in reach_a:
-            print("  " + chain(reach_a, t))
-        elif t in reach_b:
-            print("  (tests only) " + chain(reach_b, t))
-        else:
-            print("  not reachable")
-
 
 if __name__ == "__main__":
     main()
+    
