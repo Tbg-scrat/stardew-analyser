@@ -42,6 +42,16 @@ def prune_old_logs(log_dir: str, max_files: int = 20):
         sys.stderr.write(f"[WARN] Failed to clean up old log files in {log_dir}: {e}\n")
 
 
+def is_module_debug_enabled(module_name: str) -> bool:
+    """Checks if a given module (e.g., 'crops') is present in the DEBUG_MODULES allowlist environment variable."""
+    raw_debug = os.getenv("DEBUG_MODULES", "")
+    if not raw_debug:
+        return False
+    
+    active_debugs = [m.strip().lower() for m in raw_debug.split(",")]
+    return "*" in active_debugs or module_name.lower() in active_debugs
+
+
 def setup_logging(process_name: str = "app"):
     """Configures application-wide logging.
 
@@ -105,3 +115,4 @@ def setup_logging(process_name: str = "app"):
 
     if file_logging_path:
         root_logger.info(f"File logging active: {file_logging_path}")
+        

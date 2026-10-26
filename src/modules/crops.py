@@ -3,6 +3,7 @@
 import logging
 from collections import defaultdict
 
+from src.core.logger import is_module_debug_enabled
 from src.core.reference_data import get_object_info
 
 logger = logging.getLogger("parse")
@@ -39,6 +40,12 @@ def calculate_days_remaining(crop_node) -> dict:
 
         phase_days_nodes = crop_node.findall(".//phaseDays/int")
         phase_days = [int(p.text) for p in phase_days_nodes if p.text is not None]
+
+        if is_module_debug_enabled("crops"):
+            logger.info(
+                f"[DEBUG:crops] Evaluating crop harvest_id={harvest_id}, current_phase={current_phase}, "
+                f"day_of_phase={day_of_phase}, full_grown={full_grown}, phase_days={phase_days}"
+            )
 
         # Case 1: Fully grown regrowing crop (day_of_phase is exact countdown to next harvest)
         if full_grown:
@@ -235,3 +242,4 @@ def parse_all_crops_from_save(root, current_day=1) -> dict:
             "ginger_island": island_data,
         },
     }
+    

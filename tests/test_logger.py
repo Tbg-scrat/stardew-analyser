@@ -2,7 +2,7 @@
 
 import logging
 
-from src.core.logger import prune_old_logs, setup_logging
+from src.core.logger import is_module_debug_enabled, prune_old_logs, setup_logging
 
 
 def test_setup_logging_defaults_to_info(monkeypatch):
@@ -59,3 +59,26 @@ def test_prune_old_logs(tmp_path):
     prune_old_logs(str(log_dir), max_files=5)
     remaining_files = list(log_dir.glob("*.log"))
     assert len(remaining_files) == 5
+
+
+def test_is_module_debug_enabled_empty(monkeypatch):
+    """Ensures module debugging is disabled by default when DEBUG_MODULES is unset."""
+    monkeypatch.delenv("DEBUG_MODULES", raising=False)
+    assert is_module_debug_enabled("crops") is False
+
+
+def test_is_module_debug_enabled_matching(monkeypatch):
+    """Ensures allowlisted modules return True with case-insensitivity and whitespace trimming."""
+    monkeypatch.setenv("DEBUG_MODULES", "chests, CROPS ,  grandpa  ")
+    assert is_module_debug_enabled("crops") is True
+    assert is_module_debug_enabled("CHESTS") is True
+    assert is_module_debug_enabled("grandpa") is True
+    assert is_module_debug_enabled("skills") is False
+
+
+def test_is_module_debug_enabled_wildcard(monkeypatch):
+    """Ensures wildcard '*' enables debugging for all modules."""
+    monkeypatch.setenv("DEBUG_MODULES", "*")
+    assert is_module_debug_enabled("crops") is True
+    assert is_module_debug_enabled("anything_else") is True
+    

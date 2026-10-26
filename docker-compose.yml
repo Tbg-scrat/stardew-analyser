@@ -7,3 +7,9 @@ services:
       - "9999:80"
     volumes:
       - /path/to/your/StardewValley/Saves:/saves:ro
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost/').read()"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
