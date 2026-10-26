@@ -36,6 +36,7 @@ RUN echo 'server { \
     } \
     location /cache/ { \
         alias /cache/; \
+        try_files $uri /static/img/placeholder.svg; \
         add_header Cache-Control "public, max-age=86400"; \
     } \
 }' > /etc/nginx/sites-available/default

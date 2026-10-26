@@ -14,7 +14,7 @@ from .processors.grid import process_grid
 from .processors.catalog import process_catalog
 from .processors.free_crop import process_free_crop
 from .processors.furniture import process_furniture
-from .processors.directory import process_directory  # ADDED for Portraits
+from .processors.directory import process_directory
 
 
 setup_logging()
@@ -34,7 +34,6 @@ def get_domain_configs() -> list[dict]:
         try:
             with open(file_path, "r", encoding="utf-8") as f:
                 data = json.load(f)
-                # Null Metadata Check: Ensure _meta exists and is not null
                 if isinstance(data, dict) and data.get("_meta") is not None:
                     configs.append({"file_path": file_path, "meta": data["_meta"]})
         except Exception as e:
@@ -49,8 +48,9 @@ def extract_assets() -> bool:
         return True
 
     if not os.path.exists(CONTENT_DIR):
-        logger.warning(f"[Router] Content directory '{CONTENT_DIR}' not found.")
-        return False
+        logger.warning(f"[Router] Content directory '{CONTENT_DIR}' not found. Serving placeholders.")
+        # Graceful fallback: continue without extracting or saving manifest
+        return True
 
     logger.info("[Router] Starting dynamic asset extraction...")
     temp_packed = os.path.join(CACHE_DIR, "_tmp_packed")
@@ -71,15 +71,12 @@ def extract_assets() -> bool:
 
             textures_to_stage = set()
 
-            # Add the default texture from the _meta block
             default_tex = meta.get("source_xnb") or meta.get("default_texture")
             if default_tex:
                 textures_to_stage.add(default_tex)
 
-            # Handle entire directories (for directory processors like Portraits)
             source_dir = meta.get("source_dir")
             if source_dir:
-                # Resolve path case-insensitively in case of mismatched OS filesystems
                 full_source_dir = resolve_case_insensitive_path(
                     CONTENT_DIR, source_dir
                 ) or os.path.join(CONTENT_DIR, source_dir)
@@ -90,7 +87,6 @@ def extract_assets() -> bool:
                                 os.path.join(source_dir, file).replace("\\", "/")
                             )
 
-            # Peek inside catalog files to find custom textures (like Objects_2)
             if meta.get("processor") == "catalog":
                 try:
                     with open(config["file_path"], "r", encoding="utf-8") as f:
@@ -110,16 +106,13 @@ def extract_assets() -> bool:
                         f"[Router] Failed to peek textures in {config['file_path']}: {e}"
                     )
 
-            # Stage all discovered textures
             for src_rel in textures_to_stage:
-                # Normalize slashes for cross-platform matching
                 src_rel_clean = src_rel.replace("\\", "/")
                 if src_rel_clean in staged_files:
                     continue
 
                 src_path = resolve_case_insensitive_path(CONTENT_DIR, src_rel_clean)
                 if src_path:
-                    # Staging Tree Preservation: Maintain directory structure to prevent file collisions
                     relative_dir = os.path.dirname(src_rel_clean)
                     target_dir = os.path.join(temp_packed, relative_dir)
                     os.makedirs(target_dir, exist_ok=True)
@@ -154,7 +147,6 @@ def extract_assets() -> bool:
 
             processor_type = meta.get("processor")
             if processor_type == "grid":
-                # Standardized parameter signature
                 process_grid(temp_unpacked, config, CACHE_DIR)
             elif processor_type == "catalog":
                 process_catalog(temp_unpacked, config, CACHE_DIR)
@@ -169,7 +161,6 @@ def extract_assets() -> bool:
                     f"[Router] Unknown processor type '{processor_type}' in {config['file_path']}"
                 )
 
-        # FIX: Outdented to run after the entire domain config loop finishes processing
         save_cache_manifest()
         logger.info("[Router] Dynamic extraction completed successfully.")
         return True
