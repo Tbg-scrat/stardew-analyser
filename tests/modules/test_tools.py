@@ -53,7 +53,7 @@ def test_parse_tools_inventory_levels():
     assert axe["next_tier"]["name"] == "Gold Axe"
     assert axe["next_tier"]["gold_cost"] == 10000
     assert axe["next_tier"]["materials"] == "5x Gold Bar"
-    assert axe["next_tier"]["icon_url"] == "cache/img/items/T_126.png"
+    assert axe["next_tier"]["icon_url"] == "/cache/img/items/T_126.png"
 
 
 def test_parse_tools_upgrading_at_blacksmith():
@@ -124,3 +124,4 @@ def test_parse_tools_max_level():
     assert axe["is_max"] is True
     assert axe["status"] == "maxed"
     assert axe["next_tier"] is None
+    
