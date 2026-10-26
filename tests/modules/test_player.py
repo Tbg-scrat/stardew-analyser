@@ -25,10 +25,6 @@ def test_parse_player_basic_attributes():
         <money>150000</money>
         <totalMoneyEarned>500000</totalMoneyEarned>
         <farmingLevel>10</farmingLevel>
-        <miningLevel>8</miningLevel>
-        <combatLevel>7</combatLevel>
-        <foragingLevel>9</foragingLevel>
-        <fishingLevel>6</fishingLevel>
     </player>
     """
     player = ET.fromstring(xml_data)
@@ -38,4 +34,38 @@ def test_parse_player_basic_attributes():
     assert data.get("farm") == "Sunnyside"
     assert data.get("money") == 150000
     assert data.get("total_earned") == 500000
+
+
+def test_parse_player_stats_fallback_total_earned():
+    """Verifies fallback extraction of totalMoneyEarned via <stats> node."""
+    xml_data = """
+    <player>
+        <name>Farmer Sue</name>
+        <farmName>Meadow</farmName>
+        <money>1000</money>
+        <stats>
+            <totalMoneyEarned>25000</totalMoneyEarned>
+        </stats>
+    </player>
+    """
+    player = ET.fromstring(xml_data)
+    data = parse_player(player)
+
+    assert data.get("total_earned") == 25000
+
+
+def test_parse_player_invalid_numeric_values():
+    """Verifies robust handling of non-integer or malformed money/earned strings."""
+    xml_data = """
+    <player>
+        <name>Invalid Stats</name>
+        <money>not-a-number</money>
+        <totalMoneyEarned>also-not-a-number</totalMoneyEarned>
+    </player>
+    """
+    player = ET.fromstring(xml_data)
+    data = parse_player(player)
+
+    assert data.get("money") == 0
+    assert data.get("total_earned") == 0
     

@@ -34,9 +34,36 @@ def parse_grandpa_data(
     museum_pieces = museum_pieces or []
     friendships = friendships or []
 
-    categories = []
+    categories = [
+        _evaluate_earnings(player),
+        _evaluate_skills(player),
+        _evaluate_collections(shipped_items, fish_caught, museum_pieces),
+        _evaluate_social(player, root, friendships),
+        _evaluate_milestones(player, root),
+    ]
 
-    # 1. Total Farm Earnings (Max 7 points)
+    total_score = sum(cat["score"] for cat in categories)
+    max_possible = GRANDPA_CATALOG.get("max_score", 21)
+    candles = _calculate_candles(total_score)
+    statue_unlocked = candles >= 4
+
+    elapsed_ms = (time.perf_counter() - start_time) * 1000
+    logger.debug(
+        f"Calculated Grandpa Evaluation: {total_score}/{max_possible} points -> {candles} Candles "
+        f"(Parsed in {elapsed_ms:.2f}ms)"
+    )
+
+    return {
+        "total_score": total_score,
+        "max_score": max_possible,
+        "candles": candles,
+        "statue_unlocked": statue_unlocked,
+        "categories": categories,
+    }
+
+
+def _evaluate_earnings(player):
+    """Category 1: Total Farm Earnings (Max 7 points)"""
     try:
         total_earned = int(player.findtext("totalMoneyEarned", "0"))
     except ValueError:
@@ -59,17 +86,17 @@ def parse_grandpa_data(
         f"Grandpa Category 1 (Earnings): {earnings_score}/7 pts (Total Earned: {total_earned:,}g)"
     )
 
-    categories.append(
-        {
-            "id": "earnings",
-            "name": "Farm Earnings",
-            "score": earnings_score,
-            "max_score": len(earnings_thresholds),
-            "items": earnings_items,
-        }
-    )
+    return {
+        "id": "earnings",
+        "name": "Farm Earnings",
+        "score": earnings_score,
+        "max_score": len(earnings_thresholds),
+        "items": earnings_items,
+    }
 
-    # 2. Player Skills (Max 2 points)
+
+def _evaluate_skills(player):
+    """Category 2: Player Skills (Max 2 points)"""
     farming = _safe_int_child(player, "farmingLevel")
     mining = _safe_int_child(player, "miningLevel")
     combat = _safe_int_child(player, "combatLevel")
@@ -95,17 +122,17 @@ def parse_grandpa_data(
         f"Grandpa Category 2 (Skills): {skills_score}/2 pts (Total Level: {total_skills}/50)"
     )
 
-    categories.append(
-        {
-            "id": "skills",
-            "name": "Player Skills",
-            "score": skills_score,
-            "max_score": sum(i.get("points", 1) for i in skills_thresholds),
-            "items": skills_items,
-        }
-    )
+    return {
+        "id": "skills",
+        "name": "Player Skills",
+        "score": skills_score,
+        "max_score": sum(i.get("points", 1) for i in skills_thresholds),
+        "items": skills_items,
+    }
 
-    # 3. Collections (Max 3 points)
+
+def _evaluate_collections(shipped_items, fish_caught, museum_pieces):
+    """Category 3: Collections & Museum (Max 3 points)"""
     shipped_unlocked = len([i for i in shipped_items if i.get("is_unlocked")])
     shipped_total = len(shipped_items)
     full_shipment = shipped_unlocked > 0 and shipped_unlocked >= shipped_total
@@ -143,17 +170,17 @@ def parse_grandpa_data(
         f"(Shipped: {full_shipment}, Fish: {master_angler}, Museum: {complete_museum})"
     )
 
-    categories.append(
-        {
-            "id": "collections",
-            "name": "Museum & Collections",
-            "score": collections_score,
-            "max_score": sum(i.get("points", 1) for i in collections_catalog),
-            "items": collections_items,
-        }
-    )
+    return {
+        "id": "collections",
+        "name": "Museum & Collections",
+        "score": collections_score,
+        "max_score": sum(i.get("points", 1) for i in collections_catalog),
+        "items": collections_items,
+    }
 
-    # 4. Social & Family (Max 4 points)
+
+def _evaluate_social(player, root, friendships):
+    """Category 4: Social & Family (Max 4 points)"""
     house_upgrade_level = _safe_int_child(player, "houseUpgradeLevel")
     spouse_name = (player.findtext("spouse", "") or "").strip()
     is_married_and_upgraded = house_upgrade_level >= 2 and bool(spouse_name)
@@ -221,17 +248,17 @@ def parse_grandpa_data(
         f"(House/Spouse: {is_married_and_upgraded}, 8-Heart Villagers: {villagers_8_plus}, Pet Friendship: {pet_friendship})"
     )
 
-    categories.append(
-        {
-            "id": "social",
-            "name": "Social & Relationships",
-            "score": social_score,
-            "max_score": 4,
-            "items": social_items,
-        }
-    )
+    return {
+        "id": "social",
+        "name": "Social & Relationships",
+        "score": social_score,
+        "max_score": 4,
+        "items": social_items,
+    }
 
-    # 5. Keys & Milestones (Max 5 points)
+
+def _evaluate_milestones(player, root):
+    """Category 5: Keys & Milestones (Max 5 points)"""
     has_rusty_key, has_skull_key = _check_keys_status(player)
     cc_complete, cc_ceremony = _check_community_center_progress(root, player)
 
@@ -260,33 +287,12 @@ def parse_grandpa_data(
         f"(Rusty Key: {has_rusty_key}, Skull Key: {has_skull_key}, CC Complete: {cc_complete}, Ceremony: {cc_ceremony})"
     )
 
-    categories.append(
-        {
-            "id": "milestones",
-            "name": "Keys & Community Center",
-            "score": milestones_score,
-            "max_score": sum(m.get("points", 1) for m in milestones_catalog.values()),
-            "items": milestones_items,
-        }
-    )
-
-    total_score = sum(cat["score"] for cat in categories)
-    max_possible = GRANDPA_CATALOG.get("max_score", 21)
-    candles = _calculate_candles(total_score)
-    statue_unlocked = candles >= 4
-
-    elapsed_ms = (time.perf_counter() - start_time) * 1000
-    logger.debug(
-        f"Calculated Grandpa Evaluation: {total_score}/{max_possible} points -> {candles} Candles "
-        f"(Parsed in {elapsed_ms:.2f}ms)"
-    )
-
     return {
-        "total_score": total_score,
-        "max_score": max_possible,
-        "candles": candles,
-        "statue_unlocked": statue_unlocked,
-        "categories": categories,
+        "id": "milestones",
+        "name": "Keys & Community Center",
+        "score": milestones_score,
+        "max_score": sum(m.get("points", 1) for m in milestones_catalog.values()),
+        "items": milestones_items,
     }
 
 
@@ -431,8 +437,8 @@ def _check_community_center_progress(root, player):
         "jojaPaniere",
         "jojaBoulder",
     }
-    is_joja_member = "JojaMember" in mail_received or "jojaMember" in mail_received
-    joja_complete = is_joja_member and joja_projects.issubset(mail_received)
+    is_jojaMember = "JojaMember" in mail_received or "jojaMember" in mail_received
+    joja_complete = is_jojaMember and joja_projects.issubset(mail_received)
 
     cc_complete = (
         "ccIsComplete" in mail_received
@@ -442,7 +448,6 @@ def _check_community_center_progress(root, player):
     )
 
     # 3. Re-opening ceremony cutscene check
-    # Event 191393/191392 = Community Center Ceremony; Event 502261 = Joja Ceremony
     ceremony_events = {"191393", "191392", "502261"}
     ceremony_mail = {"ccGrandReopening", "ccCeremony", "jojaCeremony"}
 
@@ -450,7 +455,6 @@ def _check_community_center_progress(root, player):
         (ceremony_mail & mail_received) or (ceremony_events & events_seen)
     )
 
-    # Guard clause: Ceremony cannot have occurred if Community Center / Joja isn't completed yet
     if not cc_complete:
         cc_ceremony = False
 
@@ -465,3 +469,4 @@ def _empty_grandpa_summary():
         "statue_unlocked": False,
         "categories": [],
     }
+    
