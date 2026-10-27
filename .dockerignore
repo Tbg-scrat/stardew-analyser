@@ -56,3 +56,12 @@ htmlcov/
 # Environment files & Secrets
 .env
 *.env
+
+# Container exclusions (Installer, Desktop wrapper, Examples, Logs, Cache)
+setup.iss
+app_desktop.py
+examples/
+parse.log
+__pycache__
+*.bak
+*.pyc

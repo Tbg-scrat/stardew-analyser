@@ -5,8 +5,17 @@ services:
     restart: unless-stopped
     ports:
       - "9999:80"
+    environment:
+      - SAVE_DIR=/saves
+      - CONTENT_DIR=/content
+      - CACHE_DIR=/cache
+      #- DEBUG=false              # Enables general Debug logging 
+      #- DEBUG_MODULES=crops      # Enables debug logging on a per-module basis. Comma separated, filename without extension 
+      #- TELEMETRY_ENABLED=true   # Enables telemetry. NO personal information is sent, this is just used to give me a number, how many people actually use this. If you want to help me, uncomment this entry. Much appreciated!!! If you're unsure, check the comments in src/core/telemetry.py
     volumes:
-      - /path/to/your/StardewValley/Saves:/saves:ro
+      - /path/to/saves:/saves:ro         # Location of your savegames (original or copy)
+      - ./cache:/cache                   # working location, will be populated by container 
+      - /path/to/Content:/content:ro     # Location of the "Content" folder of your original game copy
     healthcheck:
       test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost/').read()"]
       interval: 30s
