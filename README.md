@@ -25,7 +25,9 @@ More information can be found in the compose script comments.
 
 And if your playing on console and can't mount the content folder, there is a fallback mechanism, so you can still use the analyser, but without images.
 </details>
+
 ---
+
 ## 🏠 Self-Hosting & Niche Use Cases
 
 This tool is built from the ground up to solve specific challenges encountered in homelab and self-hosted environments:
