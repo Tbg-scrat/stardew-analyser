@@ -13,6 +13,7 @@ CONTEXT.MD
 
 # Developer & Internal Utility Scripts
 /scripts/
+telemetry.csv
 
 # Local Generated Files
 index.html
