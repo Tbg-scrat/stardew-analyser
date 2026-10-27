@@ -11,25 +11,21 @@
 A lightweight, local-first web dashboard designed specifically for self-hosted homelabs and single-host setups. It parses raw Stardew Valley save XML files and renders a dynamic, responsive dashboard for tracking farm progress, collections, and relationships across multiple saves — without relying on external cloud processing.
 
 ---
+## v2.0.0 Update notice - Important ##
 
-## ⚠️ Note on Windows Environments & Version 2.0.0
+<details>
+<summary>
+Click here for details!
+</summary>
 
-Please note that running the application on **Windows environments is currently broken** due to path resolution and runtime volume/extraction differences. Fixes for Windows support are under evaluation and will not be prioritized until **after** the stable release of version `2.0.0`.
+To ensure compliance with copyright policies, it was necessary to remove all Stardew Valley images from the repository.
+But fear not, there is a solution! I integrated an extractor to get all the images into the Stardew Analyser. All you have to do, is mount the Content folder of your legally owned copy of Stardew Valley into the container and at container start all the relevant images are extracted.
 
-## ⚠️ Upgrading to Version 2.0.0 (Breaking Changes)
+More information can be found in the compose script comments.
 
-Version 2.0.0 introduces a major architectural change regarding how game assets (icons, images) are handled. 
-
-### Why is this changing?
-To ensure compliance with copyright and asset distribution policies, future versions no longer bundle copyrighted Stardew Valley assets directly inside the container image. Instead, the application now extracts and caches them dynamically from your local game files at runtime.
-
-### What do you need to do?
-If you are upgrading from `1.x` to `2.0.0`, you **must** update your `docker-compose.yml` to mount an external volume for the runtime cache directory. Specific instructions will follow.
-
-**Want to stay on v1.6.3?** If you prefer not to update your configuration right away, please pin your deployment tag to v1.6.3 instead of using latest.
-
+And if your playing on console and can't mount the content folder, there is a fallback mechanism, so you can still use the analyser, but without images.
+</details>
 ---
-
 ## 🏠 Self-Hosting & Niche Use Cases
 
 This tool is built from the ground up to solve specific challenges encountered in homelab and self-hosted environments:
@@ -84,12 +80,27 @@ The currently recommended way to deploy the analyzer is using Docker Compose.
 services:
   stardew-analyzer:
     image: ghcr.io/tbg-scrat/stardew-analyser:latest
-    container_name: stardew-analyser
+    container_name: stardew-analyzer
     restart: unless-stopped
     ports:
       - "9999:80"
+    environment:
+      - SAVE_DIR=/saves
+      - CONTENT_DIR=/content
+      - CACHE_DIR=/cache
+      #- DEBUG=false              # Enables general Debug logging 
+      #- DEBUG_MODULES=crops      # Enables debug logging on a per-module basis. Comma separated, filename without extension 
+      #- TELEMETRY_ENABLED=true   # Enables telemetry. NO personal information is sent, this is just used to give me a number, how many people actually use this. If you want to help me, uncomment this entry. Much appreciated!!! If you're unsure, check the comments in src/core/telemetry.py
     volumes:
-      - /path/to/your/StardewValley/Saves:/saves:ro
+      - /path/to/saves:/saves:ro         # Location of your savegames (original or copy)
+      - ./cache:/cache                   # working location, will be populated by container 
+      - /path/to/Content:/content:ro     # Location of the "Content" folder of your original game copy
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost/').read()"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
 ```
 
 ```bash
@@ -100,10 +111,16 @@ After spinning up the container you can reach it in your browser under localhost
 
 You can mount the actual save location directly into the container, or copy your savegames into a separate location and mount that instead. 
 
+
+
   > *New to Docker? Check out the [Official Docker Compose Getting Started Guide](https://docs.docker.com/compose/gettingstarted/).*
 > 
 
-### Desktop App (Windows) - Still in Testing - Feedback required
+
+### <del>Desktop App (Windows) - Still in Testing - Feedback required</del>
+
+<details>
+### <summary>Currently not working</summary> ###
 
 Download the latest version from [GitHub Releases](https://github.com/Tbg-scrat/stardew-analyser/releases):
 
@@ -111,7 +128,7 @@ Download the latest version from [GitHub Releases](https://github.com/Tbg-scrat/
 2. **Portable (`StardewAnalyser-Portable.exe`):** Single standalone `.exe`—no installation required.
 
 *The desktop app automatically detects your Stardew Valley save directory under `%APPDATA%\StardewValley\Saves`.*
-
+</details>
 ---
 
 ### Default Save File Locations
@@ -152,6 +169,13 @@ All Stardew Valley assets, item names, character names, graphics, and game data 
 ## 🤖 AI Assistance Disclaimer
 
 This project was developed with the assistance of Generative AI (LLMs) for scaffolding code, writing Jinja2 HTML templates, refining parsing functions, and drafting documentation. All generated code and logic have been tested, reviewed, and tailored for performance and stability within homelab environments.
+
+## 📡 Telemetry information ##
+
+If you explicitly agree via an environment variable (always deactivated by default) the container generates a random ID and sends it together with the docker image version back to me.
+Personal information, like for example hardware info or your IP address is never collected or sent anywhere.
+This just helps me to get some feedback how many people actually use this software. The pull numbers of GHCR are notoriously unreliable...
+If you'd be so kind to activate it, that would be much appreciated! ❤️ 
 
 ## 📜 License
 
