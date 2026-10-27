@@ -11,6 +11,22 @@
 A lightweight, local-first web dashboard designed specifically for self-hosted homelabs and single-host setups. It parses raw Stardew Valley save XML files and renders a dynamic, responsive dashboard for tracking farm progress, collections, and relationships across multiple saves — without relying on external cloud processing.
 
 ---
+## v2.0.0 Update notice - Important ##
+
+<details>
+<summary>
+Click here for details!
+</summary>
+
+To ensure compliance with copyright policies, it was necessary to remove all Stardew Valley images from the repository.
+But fear not, there is a solution! I integrated an extractor to get all the images into the Stardew Analyser. All you have to do, is mount the Content folder of your legally owned copy of Stardew Valley into the container and at container start all the relevant images are extracted.
+
+More information can be found in the compose script comments.
+
+And if your playing on console and can't mount the content folder, there is a fallback mechanism, so you can still use the analyser, but without images.
+</details>
+
+---
 
 ## 🏠 Self-Hosting & Niche Use Cases
 
@@ -66,12 +82,27 @@ The currently recommended way to deploy the analyzer is using Docker Compose.
 services:
   stardew-analyzer:
     image: ghcr.io/tbg-scrat/stardew-analyser:latest
-    container_name: stardew-analyser
+    container_name: stardew-analyzer
     restart: unless-stopped
     ports:
       - "9999:80"
+    environment:
+      - SAVE_DIR=/saves
+      - CONTENT_DIR=/content
+      - CACHE_DIR=/cache
+      #- DEBUG=false              # Enables general Debug logging 
+      #- DEBUG_MODULES=crops      # Enables debug logging on a per-module basis. Comma separated, filename without extension 
+      #- TELEMETRY_ENABLED=true   # Enables telemetry. NO personal information is sent, this is just used to give me a number, how many people actually use this. If you want to help me, uncomment this entry. Much appreciated!!! If you're unsure, check the comments in src/core/telemetry.py
     volumes:
-      - /path/to/your/StardewValley/Saves:/saves:ro
+      - /path/to/saves:/saves:ro         # Location of your savegames (original or copy)
+      - ./cache:/cache                   # working location, will be populated by container 
+      - /path/to/Content:/content:ro     # Location of the "Content" folder of your original game copy
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost/').read()"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
 ```
 
 ```bash
@@ -82,10 +113,16 @@ After spinning up the container you can reach it in your browser under localhost
 
 You can mount the actual save location directly into the container, or copy your savegames into a separate location and mount that instead. 
 
+
+
   > *New to Docker? Check out the [Official Docker Compose Getting Started Guide](https://docs.docker.com/compose/gettingstarted/).*
 > 
 
-### Desktop App (Windows) - Still in Testing - Feedback required
+
+### <del>Desktop App (Windows) - Still in Testing - Feedback required</del>
+
+<details>
+### <summary>Currently not working</summary> ###
 
 Download the latest version from [GitHub Releases](https://github.com/Tbg-scrat/stardew-analyser/releases):
 
@@ -93,7 +130,7 @@ Download the latest version from [GitHub Releases](https://github.com/Tbg-scrat/
 2. **Portable (`StardewAnalyser-Portable.exe`):** Single standalone `.exe`—no installation required.
 
 *The desktop app automatically detects your Stardew Valley save directory under `%APPDATA%\StardewValley\Saves`.*
-
+</details>
 ---
 
 ### Default Save File Locations
@@ -134,6 +171,13 @@ All Stardew Valley assets, item names, character names, graphics, and game data 
 ## 🤖 AI Assistance Disclaimer
 
 This project was developed with the assistance of Generative AI (LLMs) for scaffolding code, writing Jinja2 HTML templates, refining parsing functions, and drafting documentation. All generated code and logic have been tested, reviewed, and tailored for performance and stability within homelab environments.
+
+## 📡 Telemetry information ##
+
+If you explicitly agree via an environment variable (always deactivated by default) the container generates a random ID and sends it together with the docker image version back to me.
+Personal information, like for example hardware info or your IP address is never collected or sent anywhere.
+This just helps me to get some feedback how many people actually use this software. The pull numbers of GHCR are notoriously unreliable...
+If you'd be so kind to activate it, that would be much appreciated! ❤️ 
 
 ## 📜 License
 
