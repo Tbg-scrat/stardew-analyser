@@ -4,11 +4,14 @@ import logging
 import time
 
 from data.data_loader import ACHIEVEMENTS_CATALOG
+from src.core.logger import is_module_debug_enabled
 
 logger = logging.getLogger(__name__)
 
 
 def parse_achievements(player_node, catalog=None, shipped_items=None):
+    if is_module_debug_enabled("achievements"):
+        logger.info("[DEBUG:achievements] Executing achievements module...")
     """
     Parses unlocked achievements from player XML, merges with catalog metadata,
     and calculates progress for special achievements like Monoculture.

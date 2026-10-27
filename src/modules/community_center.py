@@ -3,6 +3,8 @@
 import logging
 import time
 
+from src.core.logger import is_module_debug_enabled
+
 logger = logging.getLogger("community_center")
 
 # Mapping of Community Center Room IDs and Names
@@ -80,6 +82,8 @@ JOJA_PROJECTS = [
 
 
 def parse_community_center_data(root, player):
+    if is_module_debug_enabled("community_center"):
+        logger.info("[DEBUG:community_center] Executing community_center module...")
     """
     Parses Community Center or Joja Warehouse progress from save root and player nodes.
     Returns structured details on bundles, rooms, completion percentages, and routes.

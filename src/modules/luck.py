@@ -7,10 +7,14 @@ Extracts today's daily luck modifier from the save XML root and returns formatte
 import logging
 import time
 
+from src.core.logger import is_module_debug_enabled
+
 logger = logging.getLogger(__name__)
 
 
 def parse_luck(root):
+    if is_module_debug_enabled("luck"):
+        logger.info("[DEBUG:luck] Executing luck module...")
     """
     Parses daily luck value from the save XML root.
     Daily luck ranges from -0.1 to +0.1 (modified by Special Charm to max ~0.125).

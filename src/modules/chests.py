@@ -3,6 +3,7 @@
 import logging
 import time
 
+from src.core.logger import is_module_debug_enabled
 from src.core.reference_data import get_object_info
 
 logger = logging.getLogger(__name__)
@@ -221,6 +222,8 @@ def _extract_raw_chests(root):
 
 
 def parse_chests(root, object_map=None):
+    if is_module_debug_enabled("chests"):
+        logger.info("[DEBUG:chests] Executing chests module...")
     """
     Main entry point for parsing chest data from save XML.
     Uses get_object_info via reference_data for item metadata lookups.

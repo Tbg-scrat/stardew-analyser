@@ -7,6 +7,8 @@ Extracts today's live weather conditions and tomorrow's forecast.
 import logging
 import time
 
+from src.core.logger import is_module_debug_enabled
+
 logger = logging.getLogger(__name__)
 
 WEATHER_MAP = {
@@ -24,6 +26,8 @@ WEATHER_MAP = {
 
 
 def parse_weather(root):
+    if is_module_debug_enabled("weather"):
+        logger.info("[DEBUG:weather] Executing weather module...")
     """
     Parses today's live weather and tomorrow's forecast from the save XML root.
 

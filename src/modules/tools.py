@@ -5,6 +5,7 @@ import re
 import time
 from typing import Any
 
+from src.core.logger import is_module_debug_enabled
 from src.core.reference_data import get_tools_catalog
 
 logger = logging.getLogger(__name__)
@@ -258,6 +259,8 @@ def parse_tools(
     material_totals: list[dict[str, Any]] = None,
 ) -> dict[str, Any]:
     """Parses tool upgrade levels and blacksmith processing status from XML."""
+    if is_module_debug_enabled("tools"):
+        logger.info("[DEBUG:tools] Executing tools module...")
     start_time = time.perf_counter()
 
     if xml_root is None:

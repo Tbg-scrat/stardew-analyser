@@ -8,6 +8,7 @@ import logging
 import time
 
 from data.data_loader import VILLAGERS_CATALOG
+from src.core.logger import is_module_debug_enabled
 from src.modules.social import get_loved_gifts
 
 logger = logging.getLogger(__name__)
@@ -27,6 +28,8 @@ def get_seasonal_birthdays(season_name):
 
 
 def parse_birthdays(root):
+    if is_module_debug_enabled("birthdays"):
+        logger.info("[DEBUG:birthdays] Executing birthdays module...")
     """
     Parses current date, identifies the next upcoming birthday in the season,
     and attaches loved gift details.

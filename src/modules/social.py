@@ -2,6 +2,7 @@ import logging
 import time
 
 from data.data_loader import VILLAGERS_CATALOG
+from src.core.logger import is_module_debug_enabled
 from src.core.reference_data import get_object_info
 
 # src/modules/social.py
@@ -47,6 +48,8 @@ def get_loved_gifts(villager_name):
 
 
 def parse_social(player):
+    if is_module_debug_enabled("social"):
+        logger.info("[DEBUG:social] Executing social module...")
     """
     Parses friendship data from the <player> XML node.
 

@@ -3,12 +3,15 @@ import logging
 import time
 
 from data.data_loader import MUSEUM_CATALOG
+from src.core.logger import is_module_debug_enabled
 from src.core.reference_data import get_object_info, qualify_item_id
 
 logger = logging.getLogger(__name__)
 
 
 def parse_museum(root_node):
+    if is_module_debug_enabled("museum"):
+        logger.info("[DEBUG:museum] Executing museum module...")
     """Extract LibraryMuseum donated pieces."""
     if root_node is None:
         logger.warning("SaveGame root_node is None. Returning empty museum collection.")

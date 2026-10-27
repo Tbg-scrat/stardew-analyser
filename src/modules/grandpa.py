@@ -4,6 +4,7 @@ import logging
 import time
 
 from data.data_loader import GRANDPA_CATALOG
+from src.core.logger import is_module_debug_enabled
 
 logger = logging.getLogger("grandpa")
 
@@ -61,6 +62,8 @@ def parse_grandpa_data(
 
 
 def _evaluate_earnings(player):
+    if is_module_debug_enabled("grandpa"):
+        logger.info("[DEBUG:grandpa] Executing grandpa module...")
     """Category 1: Total Farm Earnings (Max 7 points)"""
     try:
         total_earned = int(player.findtext("totalMoneyEarned", "0"))

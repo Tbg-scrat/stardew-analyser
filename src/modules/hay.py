@@ -5,10 +5,14 @@ import math
 import time
 import xml.etree.ElementTree as ET
 
+from src.core.logger import is_module_debug_enabled
+
 logger = logging.getLogger(__name__)
 
 
 def parse_hay_data(save_root: ET.Element) -> dict:
+    if is_module_debug_enabled("hay"):
+        logger.info("[DEBUG:hay] Executing hay module...")
     """
     Parses stored pieces of hay, silo capacity, and farm animals to calculate
     winter feed requirements and warning flags.

@@ -3,12 +3,15 @@ import logging
 import time
 
 from data.data_loader import COOKING_CATALOG
+from src.core.logger import is_module_debug_enabled
 from src.core.reference_data import get_object_info
 
 logger = logging.getLogger(__name__)
 
 
 def parse_cooking(player):
+    if is_module_debug_enabled("cooking"):
+        logger.info("[DEBUG:cooking] Executing cooking module...")
     """
     Parses <recipesCooked> from the player node or any sub-tree.
 

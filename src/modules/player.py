@@ -3,10 +3,14 @@
 import logging
 import time
 
+from src.core.logger import is_module_debug_enabled
+
 logger = logging.getLogger(__name__)
 
 
 def parse_player(player_node):
+    if is_module_debug_enabled("player"):
+        logger.info("[DEBUG:player] Executing player module...")
     """Extract basic farmer and farm statistics."""
     start_time = time.perf_counter()
 

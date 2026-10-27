@@ -8,11 +8,14 @@ import logging
 import time
 
 from data.data_loader import FESTIVALS_CATALOG
+from src.core.logger import is_module_debug_enabled
 
 logger = logging.getLogger(__name__)
 
 
 def parse_festivals(root, catalog=None):
+    if is_module_debug_enabled("festivals"):
+        logger.info("[DEBUG:festivals] Executing festivals module...")
     """
     Parses current date and identifies the next upcoming festival in the season.
 

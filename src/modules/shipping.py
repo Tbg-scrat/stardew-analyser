@@ -3,6 +3,7 @@ import logging
 import time
 
 from data.data_loader import SHIPPING_CATALOG
+from src.core.logger import is_module_debug_enabled
 from src.core.reference_data import get_object_info, qualify_item_id
 from src.core.xml_reader import get_key_value
 
@@ -10,6 +11,8 @@ logger = logging.getLogger(__name__)
 
 
 def parse_shipping(player_node):
+    if is_module_debug_enabled("shipping"):
+        logger.info("[DEBUG:shipping] Executing shipping module...")
     """Extract basicShipped item counts from the player XML node."""
     if player_node is None:
         logger.warning("Player node is None. Returning empty basicShipped dictionary.")

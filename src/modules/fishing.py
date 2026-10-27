@@ -3,6 +3,7 @@ import logging
 import time
 
 from data.data_loader import FISH_CATALOG
+from src.core.logger import is_module_debug_enabled
 from src.core.reference_data import get_object_info, qualify_item_id
 from src.core.xml_reader import get_key_value
 
@@ -10,6 +11,8 @@ logger = logging.getLogger(__name__)
 
 
 def parse_fishing(player_node):
+    if is_module_debug_enabled("fishing"):
+        logger.info("[DEBUG:fishing] Executing fishing module...")
     """Extract fishCaught records with quantity and max length."""
     if player_node is None:
         logger.warning("Player node is None. Returning empty fishCaught record.")
