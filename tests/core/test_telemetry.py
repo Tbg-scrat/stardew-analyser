@@ -22,7 +22,20 @@ def test_telemetry_disabled_explicitly(mock_urlopen, monkeypatch):
 
 
 @patch("src.core.telemetry.urllib.request.urlopen")
-def test_telemetry_enabled_creates_new_id(mock_urlopen, monkeypatch):
+@patch("src.core.telemetry.is_cache_mounted", return_value=False)
+def test_telemetry_skipped_when_cache_not_mounted(mock_is_mounted, mock_urlopen, monkeypatch):
+    """Verify telemetry halts early when /cache is not a persistent mount."""
+    monkeypatch.setenv("TELEMETRY_ENABLED", "true")
+    
+    ping()
+    
+    mock_is_mounted.assert_called_once_with("/cache")
+    mock_urlopen.assert_not_called()
+
+
+@patch("src.core.telemetry.urllib.request.urlopen")
+@patch("src.core.telemetry.is_cache_mounted", return_value=True)
+def test_telemetry_enabled_creates_new_id(mock_is_mounted, mock_urlopen, monkeypatch):
     """Verify telemetry generates a new random UUID when enabled and no cache file exists."""
     monkeypatch.setenv("TELEMETRY_ENABLED", "true")
     monkeypatch.setenv("APP_VERSION", "2.0.0")
@@ -54,7 +67,8 @@ def test_telemetry_enabled_creates_new_id(mock_urlopen, monkeypatch):
 
 
 @patch("src.core.telemetry.urllib.request.urlopen")
-def test_telemetry_enabled_uses_existing_id(mock_urlopen, monkeypatch):
+@patch("src.core.telemetry.is_cache_mounted", return_value=True)
+def test_telemetry_enabled_uses_existing_id(mock_is_mounted, mock_urlopen, monkeypatch):
     """Verify telemetry reads and reuses an existing instance ID if present."""
     monkeypatch.setenv("TELEMETRY_ENABLED", "true")
     monkeypatch.setenv("APP_VERSION", "2.1.0")
@@ -79,7 +93,8 @@ def test_telemetry_enabled_uses_existing_id(mock_urlopen, monkeypatch):
 
 
 @patch("src.core.telemetry.urllib.request.urlopen")
-def test_telemetry_handles_network_error(mock_urlopen, monkeypatch):
+@patch("src.core.telemetry.is_cache_mounted", return_value=True)
+def test_telemetry_handles_network_error(mock_is_mounted, mock_urlopen, monkeypatch):
     """Verify that network errors (URLError) are caught gracefully without crashing."""
     monkeypatch.setenv("TELEMETRY_ENABLED", "true")
     
