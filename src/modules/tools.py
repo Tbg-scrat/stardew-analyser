@@ -5,10 +5,12 @@ import re
 import time
 from typing import Any
 
-from src.core.logger import is_module_debug_enabled
+from opentelemetry import trace
+
 from src.core.reference_data import get_tools_catalog
 
 logger = logging.getLogger(__name__)
+tracer = trace.get_tracer(__name__)
 
 DEFAULT_UPGRADEABLE_TOOLS: dict[str, Any] = {
     "Axe": {
@@ -259,171 +261,178 @@ def parse_tools(
     material_totals: list[dict[str, Any]] = None,
 ) -> dict[str, Any]:
     """Parses tool upgrade levels and blacksmith processing status from XML."""
-    if is_module_debug_enabled("tools"):
-        logger.info("[DEBUG:tools] Executing tools module...")
-    start_time = time.perf_counter()
+    with tracer.start_as_current_span("parse_module_tools") as span:
+        start_time = time.perf_counter()
 
-    if xml_root is None:
-        logger.warning("xml_root is None. Returning default tools structure.")
-        return {
-            "upgradeable": [],
-            "watering_can": None,
-            "scythe": None,
+        if xml_root is None:
+            logger.warning("xml_root is None. Returning default tools structure.")
+            return {
+                "upgradeable": [],
+                "watering_can": None,
+                "scythe": None,
+            }
+
+        catalog = get_tools_catalog()
+        upgradeable_catalog = catalog.get("upgradeable_tools") or DEFAULT_UPGRADEABLE_TOOLS
+
+        tool_levels = {tool_key: 0 for tool_key in upgradeable_catalog}
+
+        chest_stock = {
+            item["name"]: item["count"]
+            for item in (material_totals or [])
+            if "name" in item and "count" in item
         }
 
-    catalog = get_tools_catalog()
-    upgradeable_catalog = catalog.get("upgradeable_tools") or DEFAULT_UPGRADEABLE_TOOLS
+        player = xml_root.find("player") if hasattr(xml_root, "find") else None
 
-    tool_levels = {tool_key: 0 for tool_key in upgradeable_catalog}
+        days_left = 0
+        upgrading_tool_type = None
 
-    chest_stock = {
-        item["name"]: item["count"]
-        for item in (material_totals or [])
-        if "name" in item and "count" in item
-    }
+        if player is not None:
+            days_elem = player.find("daysLeftForToolUpgrade")
+            if days_elem is not None and days_elem.text:
+                try:
+                    days_left = int(days_elem.text)
+                except ValueError:
+                    days_left = 0
 
-    player = xml_root.find("player") if hasattr(xml_root, "find") else None
+            tool_upgrading_node = player.find("toolBeingUpgraded")
+            if tool_upgrading_node is not None:
+                upgrading_item = tool_upgrading_node.find("Item")
+                if upgrading_item is not None:
+                    item_type = (
+                        upgrading_item.get("{http://www.w3.org/2001/XMLSchema-instance}type") or ""
+                    )
+                    item_name = upgrading_item.findtext("name") or ""
+                    upgrading_tool_type = item_type or item_name
 
-    days_left = 0
-    upgrading_tool_type = None
+            trash_lvl_elem = player.find("trashCanLevel")
+            if trash_lvl_elem is not None and trash_lvl_elem.text:
+                try:
+                    tool_levels["TrashCan"] = int(trash_lvl_elem.text)
+                except (ValueError, KeyError):
+                    pass
 
-    if player is not None:
-        days_elem = player.find("daysLeftForToolUpgrade")
-        if days_elem is not None and days_elem.text:
-            try:
-                days_left = int(days_elem.text)
-            except ValueError:
-                days_left = 0
+        items = xml_root.findall(".//Item") if hasattr(xml_root, "findall") else []
 
-        tool_upgrading_node = player.find("toolBeingUpgraded")
-        if tool_upgrading_node is not None:
-            upgrading_item = tool_upgrading_node.find("Item")
-            if upgrading_item is not None:
-                item_type = (
-                    upgrading_item.get("{http://www.w3.org/2001/XMLSchema-instance}type") or ""
-                )
-                item_name = upgrading_item.findtext("name") or ""
-                upgrading_tool_type = item_type or item_name
+        for item in items:
+            if item.get("{http://www.w3.org/2001/XMLSchema-instance}nil") == "true":
+                continue
 
-        trash_lvl_elem = player.find("trashCanLevel")
-        if trash_lvl_elem is not None and trash_lvl_elem.text:
-            try:
-                tool_levels["TrashCan"] = int(trash_lvl_elem.text)
-            except (ValueError, KeyError):
-                pass
+            item_type = item.get("{http://www.w3.org/2001/XMLSchema-instance}type") or ""
+            item_name = item.findtext("name") or ""
 
-    items = xml_root.findall(".//Item") if hasattr(xml_root, "findall") else []
+            for tool_key, tool_info in upgradeable_catalog.items():
+                is_tool_match = False
+                if item_type == tool_key:
+                    is_tool_match = True
+                elif item_type in ("Tool", "GenericTool", "SpecialItem"):
+                    valid_names = [tool_key, tool_info.get("name", "")] + [
+                        t["name"]
+                        for t in tool_info.get("tiers", [])
+                        if isinstance(t, dict) and "name" in t
+                    ]
+                    if item_name in valid_names:
+                        is_tool_match = True
 
-    for item in items:
-        if item.get("{http://www.w3.org/2001/XMLSchema-instance}nil") == "true":
-            continue
+                if is_tool_match:
+                    level_text = item.findtext("upgradeLevel")
+                    if level_text is not None:
+                        try:
+                            level = int(level_text)
+                            tool_levels[tool_key] = max(tool_levels.get(tool_key, 0), level)
+                        except ValueError:
+                            pass
 
-        item_type = item.get("{http://www.w3.org/2001/XMLSchema-instance}type") or ""
-        item_name = item.findtext("name") or ""
+        tools_data: list[dict[str, Any]] = []
 
         for tool_key, tool_info in upgradeable_catalog.items():
-            is_tool_match = False
-            if item_type == tool_key:
-                is_tool_match = True
-            elif item_type in ("Tool", "GenericTool", "SpecialItem"):
-                valid_names = [tool_key, tool_info.get("name", "")] + [
-                    t["name"]
-                    for t in tool_info.get("tiers", [])
-                    if isinstance(t, dict) and "name" in t
-                ]
-                if item_name in valid_names:
-                    is_tool_match = True
+            tiers = tool_info.get("tiers", []) if isinstance(tool_info, dict) else []
+            if not tiers:
+                continue
 
-            if is_tool_match:
-                level_text = item.findtext("upgradeLevel")
-                if level_text is not None:
-                    try:
-                        level = int(level_text)
-                        tool_levels[tool_key] = max(tool_levels.get(tool_key, 0), level)
-                    except ValueError:
-                        pass
+            current_lvl = tool_levels.get(tool_key, 0)
+            max_lvl = tiers[-1]["level"] if tiers else 0
+            current_lvl = min(current_lvl, max_lvl)
 
-    tools_data: list[dict[str, Any]] = []
+            current_tier_data = next(
+                (t for t in tiers if t["level"] == current_lvl),
+                tiers[0],
+            )
 
-    for tool_key, tool_info in upgradeable_catalog.items():
-        tiers = tool_info.get("tiers", []) if isinstance(tool_info, dict) else []
-        if not tiers:
-            continue
+            is_upgrading = (
+                (days_left > 0)
+                and (upgrading_tool_type is not None)
+                and (tool_key in upgrading_tool_type)
+            )
+            is_max = current_lvl >= max_lvl
 
-        current_lvl = tool_levels.get(tool_key, 0)
-        max_lvl = tiers[-1]["level"] if tiers else 0
-        current_lvl = min(current_lvl, max_lvl)
+            status = "upgrading" if is_upgrading else ("maxed" if is_max else "ready")
+            icon_file = current_tier_data.get("icon", "")
 
-        current_tier_data = next(
-            (t for t in tiers if t["level"] == current_lvl),
-            tiers[0],
-        )
+            next_tier_data = None
+            if not is_max:
+                raw_next = next((t for t in tiers if t["level"] == current_lvl + 1), None)
+                if raw_next:
+                    gold_cost = raw_next.get("gold_cost", 0)
+                    has_enough_gold = player_money >= gold_cost
+                    mat_text = raw_next.get("materials")
+                    req_count, req_mat_name = _parse_material_requirement(mat_text)
 
-        is_upgrading = (
-            (days_left > 0)
-            and (upgrading_tool_type is not None)
-            and (tool_key in upgrading_tool_type)
-        )
-        is_max = current_lvl >= max_lvl
+                    available_count = chest_stock.get(req_mat_name, 0) if req_mat_name else 0
+                    has_enough_materials = available_count >= req_count if req_mat_name else True
+                    can_upgrade = has_enough_gold and has_enough_materials
 
-        status = "upgrading" if is_upgrading else ("maxed" if is_max else "ready")
-        icon_file = current_tier_data.get("icon", "")
+                    next_icon_file = raw_next.get("icon", "")
+                    next_tier_data = {
+                        "level": raw_next["level"],
+                        "name": raw_next["name"],
+                        "gold_cost": gold_cost,
+                        "has_enough_gold": has_enough_gold,
+                        "materials": mat_text,
+                        "materials_text": mat_text,
+                        "material_name": req_mat_name,
+                        "required_count": req_count,
+                        "available_count": available_count,
+                        "has_enough_materials": has_enough_materials,
+                        "can_upgrade": can_upgrade,
+                        "icon_url": f"/{next_icon_file.lstrip('/')}" if next_icon_file else None,
+                    }
 
-        next_tier_data = None
-        if not is_max:
-            raw_next = next((t for t in tiers if t["level"] == current_lvl + 1), None)
-            if raw_next:
-                gold_cost = raw_next.get("gold_cost", 0)
-                has_enough_gold = player_money >= gold_cost
-                mat_text = raw_next.get("materials")
-                req_count, req_mat_name = _parse_material_requirement(mat_text)
-
-                available_count = chest_stock.get(req_mat_name, 0) if req_mat_name else 0
-                has_enough_materials = available_count >= req_count if req_mat_name else True
-                can_upgrade = has_enough_gold and has_enough_materials
-
-                next_icon_file = raw_next.get("icon", "")
-                next_tier_data = {
-                    "level": raw_next["level"],
-                    "name": raw_next["name"],
-                    "gold_cost": gold_cost,
-                    "has_enough_gold": has_enough_gold,
-                    "materials": mat_text,
-                    "materials_text": mat_text,
-                    "material_name": req_mat_name,
-                    "required_count": req_count,
-                    "available_count": available_count,
-                    "has_enough_materials": has_enough_materials,
-                    "can_upgrade": can_upgrade,
-                    "icon_url": f"/{next_icon_file.lstrip('/')}" if next_icon_file else None,
+            tools_data.append(
+                {
+                    "key": tool_key,
+                    "display_name": tool_info.get("name", tool_key)
+                    if isinstance(tool_info, dict)
+                    else tool_key,
+                    "current_level": current_lvl,
+                    "max_level": max_lvl,
+                    "status": status,
+                    "days_left": days_left if is_upgrading else 0,
+                    "is_max": is_max,
+                    "current_tier": {
+                        "name": current_tier_data["name"],
+                        "perks": current_tier_data.get("perks", ""),
+                        "icon_url": f"/{icon_file.lstrip('/')}" if icon_file else None,
+                    },
+                    "next_tier": next_tier_data,
                 }
+            )
 
-        tools_data.append(
-            {
-                "key": tool_key,
-                "display_name": tool_info.get("name", tool_key)
-                if isinstance(tool_info, dict)
-                else tool_key,
-                "current_level": current_lvl,
-                "max_level": max_lvl,
-                "status": status,
-                "days_left": days_left if is_upgrading else 0,
-                "is_max": is_max,
-                "current_tier": {
-                    "name": current_tier_data["name"],
-                    "perks": current_tier_data.get("perks", ""),
-                    "icon_url": f"/{icon_file.lstrip('/')}" if icon_file else None,
-                },
-                "next_tier": next_tier_data,
-            }
+        elapsed_ms = (time.perf_counter() - start_time) * 1000
+        logger.debug(f"Parsed tools in {elapsed_ms:.2f}ms")
+
+        span.set_attribute("tools.count", len(tools_data))
+        span.set_attribute(
+            "tools.upgrading_count", sum(1 for t in tools_data if t["status"] == "upgrading")
+        )
+        span.set_attribute(
+            "tools.maxed_count", sum(1 for t in tools_data if t["status"] == "maxed")
         )
 
-    elapsed_ms = (time.perf_counter() - start_time) * 1000
-    logger.debug(f"Parsed tools in {elapsed_ms:.2f}ms")
-
-    return {
-        "upgradeable": tools_data,
-        "watering_can": next((t for t in tools_data if t["key"] == "WateringCan"), None),
-        "scythe": None,
-    }
-    
+        return {
+            "upgradeable": tools_data,
+            "watering_can": next((t for t in tools_data if t["key"] == "WateringCan"), None),
+            "scythe": None,
+        }
+        

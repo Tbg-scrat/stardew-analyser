@@ -3,10 +3,12 @@
 import logging
 import time
 
-from data.data_loader import GRANDPA_CATALOG
-from src.core.logger import is_module_debug_enabled
+from opentelemetry import trace
 
-logger = logging.getLogger("grandpa")
+from data.data_loader import GRANDPA_CATALOG
+
+logger = logging.getLogger(__name__)
+tracer = trace.get_tracer(__name__)
 
 
 def parse_grandpa_data(
@@ -21,49 +23,53 @@ def parse_grandpa_data(
     Calculates Grandpa's Evaluation score (max 21 points) and candles earned (1-4).
     Accepts pre-parsed catalog items and friendship records to avoid redundant XML parsing.
     """
-    start_time = time.perf_counter()
+    with tracer.start_as_current_span("parse_module_grandpa") as span:
+        start_time = time.perf_counter()
 
-    if root is None or player is None:
-        logger.warning("Root or player XML node is None. Returning default Grandpa evaluation.")
-        return _empty_grandpa_summary()
+        if root is None or player is None:
+            logger.warning("Root or player XML node is None. Returning default Grandpa evaluation.")
+            return _empty_grandpa_summary()
 
-    # Default fallbacks for pre-parsed data
-    shipped_items = shipped_items or []
-    fish_caught = fish_caught or []
-    museum_pieces = museum_pieces or []
-    friendships = friendships or []
+        # Default fallbacks for pre-parsed data
+        shipped_items = shipped_items or []
+        fish_caught = fish_caught or []
+        museum_pieces = museum_pieces or []
+        friendships = friendships or []
 
-    categories = [
-        _evaluate_earnings(player),
-        _evaluate_skills(player),
-        _evaluate_collections(shipped_items, fish_caught, museum_pieces),
-        _evaluate_social(player, root, friendships),
-        _evaluate_milestones(player, root),
-    ]
+        categories = [
+            _evaluate_earnings(player),
+            _evaluate_skills(player),
+            _evaluate_collections(shipped_items, fish_caught, museum_pieces),
+            _evaluate_social(player, root, friendships),
+            _evaluate_milestones(player, root),
+        ]
 
-    total_score = sum(cat["score"] for cat in categories)
-    max_possible = GRANDPA_CATALOG.get("max_score", 21)
-    candles = _calculate_candles(total_score)
-    statue_unlocked = candles >= 4
+        total_score = sum(cat["score"] for cat in categories)
+        max_possible = GRANDPA_CATALOG.get("max_score", 21)
+        candles = _calculate_candles(total_score)
+        statue_unlocked = candles >= 4
 
-    elapsed_ms = (time.perf_counter() - start_time) * 1000
-    logger.debug(
-        f"Calculated Grandpa Evaluation: {total_score}/{max_possible} points -> {candles} Candles "
-        f"(Parsed in {elapsed_ms:.2f}ms)"
-    )
+        elapsed_ms = (time.perf_counter() - start_time) * 1000
+        logger.debug(
+            f"Calculated Grandpa Evaluation: {total_score}/{max_possible} points -> {candles} Candles "
+            f"(Parsed in {elapsed_ms:.2f}ms)"
+        )
 
-    return {
-        "total_score": total_score,
-        "max_score": max_possible,
-        "candles": candles,
-        "statue_unlocked": statue_unlocked,
-        "categories": categories,
-    }
+        span.set_attribute("grandpa.total_score", total_score)
+        span.set_attribute("grandpa.max_score", max_possible)
+        span.set_attribute("grandpa.candles", candles)
+        span.set_attribute("grandpa.statue_unlocked", statue_unlocked)
+
+        return {
+            "total_score": total_score,
+            "max_score": max_possible,
+            "candles": candles,
+            "statue_unlocked": statue_unlocked,
+            "categories": categories,
+        }
 
 
 def _evaluate_earnings(player):
-    if is_module_debug_enabled("grandpa"):
-        logger.info("[DEBUG:grandpa] Executing grandpa module...")
     """Category 1: Total Farm Earnings (Max 7 points)"""
     try:
         total_earned = int(player.findtext("totalMoneyEarned", "0"))
@@ -456,3 +462,4 @@ def _empty_grandpa_summary():
         "statue_unlocked": False,
         "categories": [],
     }
+    

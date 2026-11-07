@@ -3,9 +3,10 @@
 import logging
 import time
 
-from src.core.logger import is_module_debug_enabled
+from opentelemetry import trace
 
-logger = logging.getLogger("community_center")
+logger = logging.getLogger(__name__)
+tracer = trace.get_tracer(__name__)
 
 # Mapping of Community Center Room IDs and Names
 ROOM_NAMES = {
@@ -82,33 +83,38 @@ JOJA_PROJECTS = [
 
 
 def parse_community_center_data(root, player):
-    if is_module_debug_enabled("community_center"):
-        logger.info("[DEBUG:community_center] Executing community_center module...")
     """
     Parses Community Center or Joja Warehouse progress from save root and player nodes.
     Returns structured details on bundles, rooms, completion percentages, and routes.
     """
-    start_time = time.perf_counter()
+    with tracer.start_as_current_span("parse_module_community_center") as span:
+        start_time = time.perf_counter()
 
-    if root is None or player is None:
-        logger.warning("Root or player XML node is None. Returning empty CC summary.")
-        return _empty_cc_summary()
+        if root is None or player is None:
+            logger.warning("Root or player XML node is None. Returning empty CC summary.")
+            return _empty_cc_summary()
 
-    mail_received = {m.text for m in player.findall(".//mailReceived/string") if m.text}
-    is_joja = "JojaMember" in mail_received or "jojaMember" in mail_received
+        mail_received = {m.text for m in player.findall(".//mailReceived/string") if m.text}
+        is_joja = "JojaMember" in mail_received or "jojaMember" in mail_received
 
-    logger.debug(
-        f"Determined progress route: {'Joja Warehouse' if is_joja else 'Junimo Community Center'}"
-    )
+        logger.debug(
+            f"Determined progress route: {'Joja Warehouse' if is_joja else 'Junimo Community Center'}"
+        )
 
-    if is_joja:
-        result = _parse_joja_route(root, player, mail_received)
-    else:
-        result = _parse_junimo_route(root, player, mail_received)
+        if is_joja:
+            result = _parse_joja_route(root, player, mail_received)
+        else:
+            result = _parse_junimo_route(root, player, mail_received)
 
-    elapsed_ms = (time.perf_counter() - start_time) * 1000
-    logger.debug(f"Community Center / Joja parsing completed in {elapsed_ms:.2f}ms")
-    return result
+        elapsed_ms = (time.perf_counter() - start_time) * 1000
+        logger.debug(f"Community Center / Joja parsing completed in {elapsed_ms:.2f}ms")
+
+        span.set_attribute("community_center.route", result.get("route", "unknown"))
+        span.set_attribute("community_center.is_complete", result.get("is_complete", False))
+        span.set_attribute("community_center.completed_bundles", result.get("completed_bundles", 0))
+        span.set_attribute("community_center.total_bundles", result.get("total_bundles", 0))
+
+        return result
 
 
 def _parse_junimo_route(root, player, mail_received):
@@ -300,3 +306,4 @@ def _empty_cc_summary():
         "total_bundles": 31,
         "rooms": [],
     }
+    

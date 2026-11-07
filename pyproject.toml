@@ -19,6 +19,7 @@ extend_exclude = "node_modules,.venv,.git"
 max-line-length = 120
 
 [tool.pytest.ini_options]
+testpaths = ["tests"]
 pythonpath = ["."]
 addopts = [
     "--cov=src",

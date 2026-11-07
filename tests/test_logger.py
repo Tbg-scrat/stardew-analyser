@@ -2,83 +2,89 @@
 
 import logging
 
-from src.core.logger import is_module_debug_enabled, prune_old_logs, setup_logging
+from src.core.logger import (
+    ModuleDebugFilter,
+    is_module_debug_enabled,
+    setup_logging,
+)
 
 
-def test_setup_logging_defaults_to_info(monkeypatch):
-    """Ensures logging defaults to INFO level when DEBUG env var is not set."""
-    monkeypatch.delenv("DEBUG", raising=False)
-    setup_logging()
+def test_module_debug_filter_default_info():
+    filter_obj = ModuleDebugFilter()
+    record = logging.LogRecord(
+        name="src.modules.social",
+        level=logging.DEBUG,
+        pathname="/app/src/modules/social.py",
+        lineno=10,
+        msg="Debug test",
+        args=(),
+        exc_info=None,
+    )
+    # Debug records should be filtered out by default
+    assert not filter_obj.filter(record)
 
-    root_logger = logging.getLogger()
-    assert root_logger.level == logging.INFO
+    # Info records should always pass
+    record.levelno = logging.INFO
+    assert filter_obj.filter(record)
 
 
-def test_setup_logging_enables_debug(monkeypatch):
-    """Ensures setting DEBUG=1 configures root logger to DEBUG level."""
-    monkeypatch.setenv("DEBUG", "1")
-    setup_logging()
+def test_module_debug_filter_specific_module(monkeypatch):
+    monkeypatch.setenv("DEBUG_MODULES", "social")
+    filter_obj = ModuleDebugFilter()
 
+    # Leaf match "social" on "src.modules.social"
+    record_debug = logging.LogRecord(
+        name="src.modules.social",
+        level=logging.DEBUG,
+        pathname="/app/src/modules/social.py",
+        lineno=10,
+        msg="Debug social",
+        args=(),
+        exc_info=None,
+    )
+    assert filter_obj.filter(record_debug)
+
+    # Unmatched module should be filtered out
+    record_other = logging.LogRecord(
+        name="src.modules.crops",
+        level=logging.DEBUG,
+        pathname="/app/src/modules/crops.py",
+        lineno=10,
+        msg="Debug crops",
+        args=(),
+        exc_info=None,
+    )
+    assert not filter_obj.filter(record_other)
+
+
+def test_module_debug_filter_main_script_path_resolution(monkeypatch):
+    monkeypatch.setenv("DEBUG_MODULES", "telemetry")
+    filter_obj = ModuleDebugFilter()
+
+    # Record executed as script (__name__ == "__main__")
+    record_main = logging.LogRecord(
+        name="__main__",
+        level=logging.DEBUG,
+        pathname="/app/src/core/telemetry.py",
+        lineno=15,
+        msg="Script execution debug",
+        args=(),
+        exc_info=None,
+    )
+    # Should inspect record.pathname and resolve "telemetry"
+    assert filter_obj.filter(record_main)
+
+
+def test_setup_logging_initialization():
+    setup_logging("test-service")
     root_logger = logging.getLogger()
     assert root_logger.level == logging.DEBUG
+    assert len(root_logger.handlers) > 0
 
 
-def test_setup_logging_enables_debug_truthy_strings(monkeypatch):
-    """Ensures 'true' or 'yes' also enable DEBUG level."""
-    for truthy_val in ["true", "TRUE", "yes", "1"]:
-        monkeypatch.setenv("DEBUG", truthy_val)
-        setup_logging()
-        root_logger = logging.getLogger()
-        assert root_logger.level == logging.DEBUG
-
-
-def test_setup_logging_with_valid_log_dir(tmp_path, monkeypatch):
-    """Verifies file logging is initialized if LOG_DIR exists and is writable."""
-    log_dir = tmp_path / "logs"
-    log_dir.mkdir()
-
-    monkeypatch.setenv("LOG_DIR", str(log_dir))
-    setup_logging("test_process")
-
-    root_logger = logging.getLogger()
-    # Check that a file handler was added
-    has_file_handler = any(isinstance(h, logging.FileHandler) for h in root_logger.handlers)
-    assert has_file_handler is True
-
-
-def test_prune_old_logs(tmp_path):
-    """Verifies old log files are successfully pruned past the max_files limit."""
-    log_dir = tmp_path / "logs"
-    log_dir.mkdir()
-
-    # Create dummy log files
-    for i in range(25):
-        p = log_dir / f"log_{i}.log"
-        p.write_text("data")
-
-    prune_old_logs(str(log_dir), max_files=5)
-    remaining_files = list(log_dir.glob("*.log"))
-    assert len(remaining_files) == 5
-
-
-def test_is_module_debug_enabled_empty(monkeypatch):
-    """Ensures module debugging is disabled by default when DEBUG_MODULES is unset."""
-    monkeypatch.delenv("DEBUG_MODULES", raising=False)
-    assert is_module_debug_enabled("crops") is False
-
-
-def test_is_module_debug_enabled_matching(monkeypatch):
-    """Ensures allowlisted modules return True with case-insensitivity and whitespace trimming."""
-    monkeypatch.setenv("DEBUG_MODULES", "chests, CROPS ,  grandpa  ")
-    assert is_module_debug_enabled("crops") is True
-    assert is_module_debug_enabled("CHESTS") is True
-    assert is_module_debug_enabled("grandpa") is True
-    assert is_module_debug_enabled("skills") is False
-
-
-def test_is_module_debug_enabled_wildcard(monkeypatch):
-    """Ensures wildcard '*' enables debugging for all modules."""
-    monkeypatch.setenv("DEBUG_MODULES", "*")
-    assert is_module_debug_enabled("crops") is True
-    assert is_module_debug_enabled("anything_else") is True
+def test_is_module_debug_enabled_backwards_compatibility(monkeypatch):
+    monkeypatch.setenv("DEBUG_MODULES", "fishing,shipping")
+    assert is_module_debug_enabled("fishing")
+    assert is_module_debug_enabled("shipping")
+    assert not is_module_debug_enabled("crops")
     

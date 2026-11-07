@@ -3,6 +3,7 @@ FROM python:3.11-slim
 # Expose build argument as environment variable for telemetry tracking
 ARG APP_VERSION=dev
 ENV APP_VERSION=${APP_VERSION}
+ENV OTEL_SERVICE_NAME="stardew-analyser"
 
 # Install system dependencies (nginx + build tools for xnbcli)
 RUN apt-get update && apt-get install -y --no-install-recommends \

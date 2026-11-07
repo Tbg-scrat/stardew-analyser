@@ -1,63 +1,51 @@
 # watch.py
+
+import logging
 import os
-import subprocess
+import sys
 import time
 from pathlib import Path
-from threading import Timer
 
-from watchdog.events import FileSystemEventHandler
-from watchdog.observers import Observer
+from src.core.logger import setup_logging
+
+setup_logging("watcher")
+logger = logging.getLogger(__name__)
 
 SAVE_DIR = Path(os.getenv("SAVE_DIR", "/saves"))
 
 
-class SaveHandler(FileSystemEventHandler):
-    def __init__(self, debounce_seconds=2.0):
-        self.debounce_seconds = debounce_seconds
-        self.timer = None
+def main():
+    logger.info(f"Monitoring {SAVE_DIR.resolve()} for save changes...")
+    logger.info("Running initial parse...")
 
-    def schedule_rebuild(self, event_type, path):
-        # Reset timer on every event to wait for file operations to complete
-        if self.timer is not None:
-            self.timer.cancel()
+    # Execute main parse loop
+    from parse import run_pipeline
 
-        self.timer = Timer(self.debounce_seconds, self._run_rebuild, [event_type, path])
-        self.timer.start()
+    run_pipeline()
 
-    def _run_rebuild(self, event_type, path):
-        print(
-            f"[WATCHER] Settled save change detected ({event_type}: {path}). Rebuilding index.html..."
-        )
-        subprocess.run(["python3", "parse.py"], check=False)
+    last_mtime = 0
+    while True:
+        try:
+            current_mtime = max(
+                [f.stat().st_mtime for f in SAVE_DIR.glob("**/*") if f.is_file()],
+                default=0,
+            )
+            if current_mtime > last_mtime and last_mtime != 0:
+                logger.info("Save directory modified. Triggering re-parse...")
+                run_pipeline()
+                last_mtime = current_mtime
+            elif last_mtime == 0:
+                last_mtime = current_mtime
 
-    def on_deleted(self, event):
-        filename = Path(event.src_path).name
-        if not filename.startswith("."):
-            self.schedule_rebuild("deleted", event.src_path)
-
-    def on_created(self, event):
-        filename = Path(event.src_path).name
-        if not event.is_directory and not filename.startswith("."):
-            self.schedule_rebuild("created", event.src_path)
-
-    def on_modified(self, event):
-        filename = Path(event.src_path).name
-        if not event.is_directory and not filename.startswith("."):
-            self.schedule_rebuild("modified", event.src_path)
+            time.sleep(2)
+        except KeyboardInterrupt:
+            logger.info("Watcher stopped by user.")
+            sys.exit(0)
+        except Exception as e:
+            logger.error(f"Error in watcher loop: {e}", exc_info=True)
+            time.sleep(5)
 
 
 if __name__ == "__main__":
-    print("[WATCHER] Running initial parse...")
-    subprocess.run(["python3", "parse.py"], check=False)
-
-    print(f"[WATCHER] Monitoring {SAVE_DIR.resolve()} for save changes...")
-    observer = Observer()
-    observer.schedule(SaveHandler(debounce_seconds=2.0), path=str(SAVE_DIR), recursive=True)
-    observer.start()
-
-    try:
-        while True:
-            time.sleep(1)
-    except KeyboardInterrupt:
-        observer.stop()
-    observer.join()
+    main()
+    

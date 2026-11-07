@@ -4,7 +4,11 @@ import os
 import time
 import xml.etree.ElementTree as ET
 
+from opentelemetry import trace
+from opentelemetry.trace.status import Status, StatusCode
+
 logger = logging.getLogger(__name__)
+tracer = trace.get_tracer(__name__)
 
 
 def get_player_node(file_path, retries=3, delay=0.5):
@@ -12,66 +16,74 @@ def get_player_node(file_path, retries=3, delay=0.5):
     Parses save XML with retries to gracefully handle temporary file locks
     or mid-write zeroes during sync jobs. Logs detailed DEBUG info on XML structure.
     """
-    start_time = time.perf_counter()
-    file_path_str = str(file_path)
+    with tracer.start_as_current_span("get_player_node") as span:
+        start_time = time.perf_counter()
+        file_path_str = str(file_path)
 
-    # Determine file size for context logging
-    file_size_bytes = 0
-    if os.path.exists(file_path_str):
-        file_size_bytes = os.path.getsize(file_path_str)
+        # Determine file size for context logging
+        file_size_bytes = 0
+        if os.path.exists(file_path_str):
+            file_size_bytes = os.path.getsize(file_path_str)
 
-    logger.debug(
-        f"Attempting XML parse for '{file_path_str}' "
-        f"(Size: {file_size_bytes / (1024 * 1024):.2f} MB, Max retries: {retries})"
-    )
+        span.set_attribute("xml.file_path", file_path_str)
+        span.set_attribute("xml.file_size_bytes", file_size_bytes)
+        span.set_attribute("xml.retries_configured", retries)
 
-    for attempt in range(retries):
-        try:
-            tree = ET.parse(file_path)
-            root = tree.getroot()
+        logger.debug(
+            f"Attempting XML parse for '{file_path_str}' "
+            f"(Size: {file_size_bytes / (1024 * 1024):.2f} MB, Max retries: {retries})"
+        )
 
-            if root is None:
-                logger.warning(
-                    f"Root node is None on attempt {attempt + 1}/{retries} for file '{file_path_str}'"
-                )
-                raise ET.ParseError("XML root element is None")
+        for attempt in range(retries):
+            try:
+                tree = ET.parse(file_path)
+                root = tree.getroot()
 
-            logger.debug(f"XML root element found: <{root.tag}>")
+                if root is None:
+                    logger.warning(
+                        f"Root node is None on attempt {attempt + 1}/{retries} for file '{file_path_str}'"
+                    )
+                    raise ET.ParseError("XML root element is None")
 
-            player = root.find("player")
-            if player is None:
-                # Attempt fallback check for alternative player location (e.g., direct child vs subnode)
-                player = root.find(".//player")
-                if player is not None:
-                    logger.debug("Located <player> via deep recursive lookup (.//player)")
+                logger.debug(f"XML root element found: <{root.tag}>")
 
-            if player is None:
-                logger.warning(
-                    f"Missing <player> node in XML root <{root.tag}> on attempt {attempt + 1}/{retries}"
-                )
-                raise ET.ParseError("Incomplete XML structure: missing <player> node")
+                player = root.find("player")
+                if player is None:
+                    # Attempt fallback check for alternative player location (e.g., direct child vs subnode)
+                    player = root.find(".//player")
+                    if player is not None:
+                        logger.debug("Located <player> via deep recursive lookup (.//player)")
 
-            elapsed_ms = (time.perf_counter() - start_time) * 1000
-            logger.debug(
-                f"Successfully parsed XML root <{root.tag}> and <player> node from '{file_path_str}' "
-                f"in {elapsed_ms:.2f}ms"
-            )
-            return root, player
+                if player is None:
+                    logger.warning(
+                        f"Missing <player> node in XML root <{root.tag}> on attempt {attempt + 1}/{retries}"
+                    )
+                    raise ET.ParseError("Incomplete XML structure: missing <player> node")
 
-        except (ET.ParseError, PermissionError, OSError) as e:
-            if attempt < retries - 1:
-                logger.debug(
-                    f"Attempt {attempt + 1}/{retries} failed for '{file_path_str}' ({type(e).__name__}: {e}). "
-                    f"Retrying in {delay}s..."
-                )
-                time.sleep(delay)
-            else:
                 elapsed_ms = (time.perf_counter() - start_time) * 1000
-                logger.error(
-                    f"Failed to parse XML from '{file_path_str}' after {retries} attempts "
-                    f"({elapsed_ms:.2f}ms elapsed): {e}"
+                logger.debug(
+                    f"Successfully parsed XML root <{root.tag}> and <player> node from '{file_path_str}' "
+                    f"in {elapsed_ms:.2f}ms"
                 )
-                raise
+                span.set_attribute("xml.attempts_taken", attempt + 1)
+                return root, player
+
+            except (ET.ParseError, PermissionError, OSError) as e:
+                if attempt < retries - 1:
+                    logger.debug(
+                        f"Attempt {attempt + 1}/{retries} failed for '{file_path_str}' ({type(e).__name__}: {e}). "
+                        f"Retrying in {delay}s..."
+                    )
+                    time.sleep(delay)
+                else:
+                    elapsed_ms = (time.perf_counter() - start_time) * 1000
+                    logger.error(
+                        f"Failed to parse XML from '{file_path_str}' after {retries} attempts "
+                        f"({elapsed_ms:.2f}ms elapsed): {e}"
+                    )
+                    span.record_exception(e)
+                    span.set_status(Status(StatusCode.ERROR, str(e)))
+                    raise
 
 
 def get_key_value(item_node):
@@ -102,3 +114,4 @@ def get_key_value(item_node):
     raw_key = key_node.text.strip() if key_node.text else None
     logger.debug(f"Extracted raw key text '{raw_key}' from <key>")
     return raw_key, val_node
+    

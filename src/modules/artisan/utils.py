@@ -46,3 +46,4 @@ def get_all_locations(root):
 
     for loc in locations_node.findall("GameLocation"):
         yield from _traverse_location(loc)
+        

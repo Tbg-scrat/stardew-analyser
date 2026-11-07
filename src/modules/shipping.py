@@ -1,18 +1,19 @@
 # src/modules/shipping.py
+
 import logging
 import time
 
+from opentelemetry import trace
+
 from data.data_loader import SHIPPING_CATALOG
-from src.core.logger import is_module_debug_enabled
 from src.core.reference_data import get_object_info, qualify_item_id
 from src.core.xml_reader import get_key_value
 
 logger = logging.getLogger(__name__)
+tracer = trace.get_tracer(__name__)
 
 
 def parse_shipping(player_node):
-    if is_module_debug_enabled("shipping"):
-        logger.info("[DEBUG:shipping] Executing shipping module...")
     """Extract basicShipped item counts from the player XML node."""
     if player_node is None:
         logger.warning("Player node is None. Returning empty basicShipped dictionary.")
@@ -51,55 +52,60 @@ def get_formatted_shipping(player_node, catalog=None):
     Parses shipping save data and merges it against SHIPPING_CATALOG,
     returning a sorted list of shipping item dictionaries ready for the UI.
     """
-    start_time = time.perf_counter()
-    if catalog is None:
-        logger.debug("Using default SHIPPING_CATALOG")
-        catalog = SHIPPING_CATALOG
+    with tracer.start_as_current_span("parse_module_shipping") as span:
+        start_time = time.perf_counter()
+        if catalog is None:
+            logger.debug("Using default SHIPPING_CATALOG")
+            catalog = SHIPPING_CATALOG
 
-    raw_shipped = parse_shipping(player_node)
-    shipped_save_map = {qualify_item_id(k): v for k, v in raw_shipped.items()}
+        raw_shipped = parse_shipping(player_node)
+        shipped_save_map = {qualify_item_id(k): v for k, v in raw_shipped.items()}
 
-    shipped_mapped = []
-    catalog_items = catalog.items() if isinstance(catalog, dict) else []
+        shipped_mapped = []
+        catalog_items = catalog.items() if isinstance(catalog, dict) else []
 
-    unmapped_count = 0
-    for item_id, catalog_item in catalog_items:
-        if not isinstance(catalog_item, dict):
-            unmapped_count += 1
-            continue
+        unmapped_count = 0
+        for item_id, catalog_item in catalog_items:
+            if not isinstance(catalog_item, dict):
+                unmapped_count += 1
+                continue
 
-        count = shipped_save_map.get(str(item_id), 0)
-        is_shipped = count > 0
+            count = shipped_save_map.get(str(item_id), 0)
+            is_shipped = count > 0
 
-        item_name = catalog_item.get("name", f"Item {item_id}")
+            item_name = catalog_item.get("name", f"Item {item_id}")
 
-        # Look up the dynamic icon path from our central routing dictionary
-        obj_info = get_object_info(item_id, fallback_name=item_name)
+            # Look up the dynamic icon path from our central routing dictionary
+            obj_info = get_object_info(item_id, fallback_name=item_name)
 
-        shipped_mapped.append(
-            {
-                "id": item_id,
-                "name": item_name,
-                "count": count,
-                "status": "shipped" if is_shipped else "not_shipped",
-                "is_unlocked": is_shipped,
-                "achievement_required": catalog_item.get("achievement_required", False),
-                "is_polyculture": catalog_item.get("is_polyculture", False),
-                "is_monoculture": catalog_item.get("is_monoculture", False),
-                "image": obj_info["icon"],
-            }
+            shipped_mapped.append(
+                {
+                    "id": item_id,
+                    "name": item_name,
+                    "count": count,
+                    "status": "shipped" if is_shipped else "not_shipped",
+                    "is_unlocked": is_shipped,
+                    "achievement_required": catalog_item.get("achievement_required", False),
+                    "is_polyculture": catalog_item.get("is_polyculture", False),
+                    "is_monoculture": catalog_item.get("is_monoculture", False),
+                    "image": obj_info["icon"],
+                }
+            )
+
+        if unmapped_count > 0:
+            logger.debug(f"Skipped {unmapped_count} invalid non-dict entries in shipping catalog")
+
+        shipped_total = sum(1 for s in shipped_mapped if s["is_unlocked"])
+        catalog_total = len(shipped_mapped)
+        elapsed_ms = (time.perf_counter() - start_time) * 1000
+
+        logger.debug(
+            f"Shipping progress: {shipped_total}/{catalog_total} items shipped "
+            f"(Parsed in {elapsed_ms:.2f}ms)"
         )
 
-    if unmapped_count > 0:
-        logger.debug(f"Skipped {unmapped_count} invalid non-dict entries in shipping catalog")
+        span.set_attribute("shipping.shipped_total", shipped_total)
+        span.set_attribute("shipping.catalog_total", catalog_total)
 
-    shipped_total = sum(1 for s in shipped_mapped if s["is_unlocked"])
-    catalog_total = len(shipped_mapped)
-    elapsed_ms = (time.perf_counter() - start_time) * 1000
-
-    logger.debug(
-        f"Shipping progress: {shipped_total}/{catalog_total} items shipped "
-        f"(Parsed in {elapsed_ms:.2f}ms)"
-    )
-
-    return sorted(shipped_mapped, key=lambda x: x["name"])
+        return sorted(shipped_mapped, key=lambda x: x["name"])
+        

@@ -3,12 +3,15 @@
 import logging
 import time
 
+from opentelemetry import trace
+
 from src.modules.artisan.utils import (
     QUALITY_MAP,
     resolve_item_icon,
 )
 
 logger = logging.getLogger(__name__)
+tracer = trace.get_tracer(__name__)
 
 
 def parse_casks(location_elem):
@@ -60,7 +63,6 @@ def parse_casks(location_elem):
             continue
 
         item_name = held.findtext("displayName") or held.findtext("name") or "Unknown Product"
-        # Fixed: Pass raw parentSheetIndex or empty string so reference_data can safely use fallback_name
         held_qid = held.findtext("QualifiedItemId") or held.findtext("parentSheetIndex", "0")
 
         try:
@@ -139,80 +141,86 @@ def parse_all_casks_from_save(root, player=None):
     Parses active Cellar casks for the main host player.
     Standardized schema matching kegs, jars, dehydrators, and bee houses.
     """
-    start_time = time.perf_counter()
-    aggregated_result = {
-        "total": 0,
-        "idle": 0,
-        "ready_today": 0,
-        "ready_tomorrow": 0,
-        "processing": 0,
-        "idle_locations": {},
-        "location_stats": {},
-        "batches": [],
-    }
+    with tracer.start_as_current_span("parse_submodule_casks") as span:
+        start_time = time.perf_counter()
+        aggregated_result = {
+            "total": 0,
+            "idle": 0,
+            "ready_today": 0,
+            "ready_tomorrow": 0,
+            "processing": 0,
+            "idle_locations": {},
+            "location_stats": {},
+            "batches": [],
+        }
 
-    house_level = 0
-    if player is not None:
-        try:
-            house_level = int(player.findtext("houseUpgradeLevel", "0"))
-        except ValueError:
-            house_level = 0
+        house_level = 0
+        if player is not None:
+            try:
+                house_level = int(player.findtext("houseUpgradeLevel", "0"))
+            except ValueError:
+                house_level = 0
 
-    if house_level < 3:
-        logger.debug(
-            f"Primary player houseUpgradeLevel is {house_level} (< 3). Cellar is not built."
+        if house_level < 3:
+            logger.debug(
+                f"Primary player houseUpgradeLevel is {house_level} (< 3). Cellar is not built."
+            )
+            return aggregated_result
+
+        locations_node = root.find("locations")
+        if locations_node is None:
+            logger.debug("No <locations> node found in save root")
+            return aggregated_result
+
+        for loc in locations_node.findall("GameLocation"):
+            loc_type = loc.get("{http://www.w3.org/2001/XMLSchema-instance}type", "")
+            loc_name = loc.findtext("name", "")
+
+            if loc_name != "Cellar" or loc_type != "Cellar":
+                continue
+
+            cask_data = parse_casks(loc)
+            if cask_data:
+                aggregated_result["total"] += cask_data["total"]
+                aggregated_result["idle"] += cask_data["idle"]
+                aggregated_result["ready_today"] += cask_data["ready_today"]
+                aggregated_result["ready_tomorrow"] += cask_data["ready_tomorrow"]
+                aggregated_result["processing"] += cask_data["processing"]
+                aggregated_result["batches"].extend(cask_data["batches"])
+
+                if cask_data["idle"] > 0:
+                    aggregated_result["idle_locations"]["Cellar"] = cask_data["idle"]
+
+                aggregated_result["location_stats"]["Cellar"] = {
+                    "total": cask_data["total"],
+                    "idle": cask_data["idle"],
+                    "ready": cask_data["ready_today"],
+                    "ready_tomorrow": cask_data["ready_tomorrow"],
+                    "processing": cask_data["processing"],
+                }
+
+        final_batch_map = {}
+        for b in aggregated_result["batches"]:
+            key = (b["name"], b["quality"], b["days_remaining"])
+            if key not in final_batch_map:
+                final_batch_map[key] = dict(b)
+            else:
+                final_batch_map[key]["count"] += b["count"]
+
+        aggregated_result["batches"] = sorted(
+            list(final_batch_map.values()), key=lambda b: (b["days_remaining"], b["name"])
         )
+
+        elapsed_ms = (time.perf_counter() - start_time) * 1000
+        logger.debug(
+            f"Cellar: {aggregated_result['total']} Casks "
+            f"({aggregated_result['processing']} aging, {aggregated_result['idle']} empty, "
+            f"{aggregated_result['ready_today']} ready) parsed in {elapsed_ms:.2f}ms"
+        )
+
+        span.set_attribute("casks.total", aggregated_result["total"])
+        span.set_attribute("casks.idle", aggregated_result["idle"])
+        span.set_attribute("casks.ready_today", aggregated_result["ready_today"])
+
         return aggregated_result
-
-    locations_node = root.find("locations")
-    if locations_node is None:
-        logger.debug("No <locations> node found in save root")
-        return aggregated_result
-
-    for loc in locations_node.findall("GameLocation"):
-        loc_type = loc.get("{http://www.w3.org/2001/XMLSchema-instance}type", "")
-        loc_name = loc.findtext("name", "")
-
-        if loc_name != "Cellar" or loc_type != "Cellar":
-            continue
-
-        cask_data = parse_casks(loc)
-        if cask_data:
-            aggregated_result["total"] += cask_data["total"]
-            aggregated_result["idle"] += cask_data["idle"]
-            aggregated_result["ready_today"] += cask_data["ready_today"]
-            aggregated_result["ready_tomorrow"] += cask_data["ready_tomorrow"]
-            aggregated_result["processing"] += cask_data["processing"]
-            aggregated_result["batches"].extend(cask_data["batches"])
-
-            if cask_data["idle"] > 0:
-                aggregated_result["idle_locations"]["Cellar"] = cask_data["idle"]
-
-            aggregated_result["location_stats"]["Cellar"] = {
-                "total": cask_data["total"],
-                "idle": cask_data["idle"],
-                "ready": cask_data["ready_today"],
-                "ready_tomorrow": cask_data["ready_tomorrow"],
-                "processing": cask_data["processing"],
-            }
-
-    final_batch_map = {}
-    for b in aggregated_result["batches"]:
-        key = (b["name"], b["quality"], b["days_remaining"])
-        if key not in final_batch_map:
-            final_batch_map[key] = dict(b)
-        else:
-            final_batch_map[key]["count"] += b["count"]
-
-    aggregated_result["batches"] = sorted(
-        list(final_batch_map.values()), key=lambda b: (b["days_remaining"], b["name"])
-    )
-
-    elapsed_ms = (time.perf_counter() - start_time) * 1000
-    logger.debug(
-        f"Cellar: {aggregated_result['total']} Casks "
-        f"({aggregated_result['processing']} aging, {aggregated_result['idle']} empty, "
-        f"{aggregated_result['ready_today']} ready) parsed in {elapsed_ms:.2f}ms"
-    )
-
-    return aggregated_result
+        

@@ -1,17 +1,18 @@
 # src/modules/cooking.py
+
 import logging
 import time
 
+from opentelemetry import trace
+
 from data.data_loader import COOKING_CATALOG
-from src.core.logger import is_module_debug_enabled
 from src.core.reference_data import get_object_info
 
 logger = logging.getLogger(__name__)
+tracer = trace.get_tracer(__name__)
 
 
 def parse_cooking(player):
-    if is_module_debug_enabled("cooking"):
-        logger.info("[DEBUG:cooking] Executing cooking module...")
     """
     Parses <recipesCooked> from the player node or any sub-tree.
 
@@ -65,52 +66,57 @@ def get_formatted_cooking(player, catalog=None):
     Parses cooking save data and merges it against COOKING_CATALOG,
     returning a sorted list of cooking recipe dictionaries ready for the UI.
     """
-    start_time = time.perf_counter()
-    if catalog is None:
-        logger.debug("Using default COOKING_CATALOG")
-        catalog = COOKING_CATALOG
+    with tracer.start_as_current_span("parse_module_cooking") as span:
+        start_time = time.perf_counter()
+        if catalog is None:
+            logger.debug("Using default COOKING_CATALOG")
+            catalog = COOKING_CATALOG
 
-    raw_cooking = parse_cooking(player)
+        raw_cooking = parse_cooking(player)
 
-    cooking_mapped = []
-    catalog_items = catalog.items() if isinstance(catalog, dict) else []
+        cooking_mapped = []
+        catalog_items = catalog.items() if isinstance(catalog, dict) else []
 
-    unmapped_count = 0
-    for item_id, catalog_item in catalog_items:
-        if not isinstance(catalog_item, dict):
-            unmapped_count += 1
-            continue
+        unmapped_count = 0
+        for item_id, catalog_item in catalog_items:
+            if not isinstance(catalog_item, dict):
+                unmapped_count += 1
+                continue
 
-        # 1. Lookup count using the pure ID
-        count = raw_cooking.get(str(item_id), 0)
-        is_cooked = count > 0
-        item_name = catalog_item.get("name", f"Recipe {item_id}")
+            # 1. Lookup count using the pure ID
+            count = raw_cooking.get(str(item_id), 0)
+            is_cooked = count > 0
+            item_name = catalog_item.get("name", f"Recipe {item_id}")
 
-        # 2. Add the strict prefix ONLY for the global object metadata lookup
-        qualified_catalog_id = f"(O){item_id}"
-        obj_info = get_object_info(qualified_catalog_id, fallback_name=item_name)
+            # 2. Add the strict prefix ONLY for the global object metadata lookup
+            qualified_catalog_id = f"(O){item_id}"
+            obj_info = get_object_info(qualified_catalog_id, fallback_name=item_name)
 
-        cooking_mapped.append(
-            {
-                "id": item_id,
-                "name": item_name,
-                "count": count,
-                "status": "cooked" if is_cooked else "not_cooked",
-                "is_unlocked": is_cooked,
-                "image": obj_info["icon"],
-            }
+            cooking_mapped.append(
+                {
+                    "id": item_id,
+                    "name": item_name,
+                    "count": count,
+                    "status": "cooked" if is_cooked else "not_cooked",
+                    "is_unlocked": is_cooked,
+                    "image": obj_info["icon"],
+                }
+            )
+
+        if unmapped_count > 0:
+            logger.debug(f"Skipped {unmapped_count} invalid non-dict entries in cooking catalog")
+
+        cooked_total = sum(1 for c in cooking_mapped if c["is_unlocked"])
+        catalog_total = len(cooking_mapped)
+        elapsed_ms = (time.perf_counter() - start_time) * 1000
+
+        logger.debug(
+            f"Cooking progress: {cooked_total}/{catalog_total} recipes cooked "
+            f"(Parsed in {elapsed_ms:.2f}ms)"
         )
 
-    if unmapped_count > 0:
-        logger.debug(f"Skipped {unmapped_count} invalid non-dict entries in cooking catalog")
+        span.set_attribute("cooking.cooked_total", cooked_total)
+        span.set_attribute("cooking.catalog_total", catalog_total)
 
-    cooked_total = sum(1 for c in cooking_mapped if c["is_unlocked"])
-    catalog_total = len(cooking_mapped)
-    elapsed_ms = (time.perf_counter() - start_time) * 1000
-
-    logger.debug(
-        f"Cooking progress: {cooked_total}/{catalog_total} recipes cooked "
-        f"(Parsed in {elapsed_ms:.2f}ms)"
-    )
-
-    return sorted(cooking_mapped, key=lambda x: x["name"])
+        return sorted(cooking_mapped, key=lambda x: x["name"])
+        

@@ -1,118 +1,139 @@
 # src/core/logger.py
 
-import glob
 import logging
 import os
 import sys
-from datetime import datetime
+from pathlib import Path
+
+from opentelemetry._logs import get_logger_provider, set_logger_provider
+from opentelemetry.exporter.otlp.proto.http._log_exporter import OTLPLogExporter
+from opentelemetry.sdk._logs import LoggerProvider, LoggingHandler
+from opentelemetry.sdk._logs.export import BatchLogRecordProcessor
+from opentelemetry.sdk.resources import Resource
 
 
-class ColoredFormatter(logging.Formatter):
-    """Custom logging formatter adding ANSI color codes for Docker terminal log readability."""
+class ModuleDebugFilter(logging.Filter):
+    """
+    Filter that dynamically routes DEBUG log entries to console output based on
+    DEBUG_MODULES and DOCKER_LOG_LEVEL environment variables.
+    """
 
-    COLOR_CODES = {
-        logging.DEBUG: "\033[36m",  # Cyan
-        logging.INFO: "\033[32m",  # Green
-        logging.WARNING: "\033[33m",  # Yellow
-        logging.ERROR: "\033[31m",  # Red
-        logging.CRITICAL: "\033[35m",  # Magenta
-    }
-    RESET_CODE = "\033[0m"
-
-    def format(self, record):
-        color = self.COLOR_CODES.get(record.levelno, self.RESET_CODE)
-        original_levelname = record.levelname
-        record.levelname = f"{color}[{record.levelname}]{self.RESET_CODE}"
-        formatted_message = super().format(record)
-        record.levelname = original_levelname
-        return formatted_message
-
-
-def prune_old_logs(log_dir: str, max_files: int = 20):
-    """Keep only the N most recent log files in the log directory."""
-    try:
-        log_files = sorted(
-            glob.glob(os.path.join(log_dir, "*.log")),
-            key=os.path.getmtime,
-            reverse=True,
+    def __init__(self, debug_modules_str=""):
+        super().__init__()
+        raw = os.getenv("DEBUG_MODULES", debug_modules_str)
+        self.enabled_modules = {m.strip().lower() for m in raw.split(",") if m.strip()}
+        self.global_debug = (
+            os.getenv("DOCKER_LOG_LEVEL", "").upper() == "DEBUG"
+            or "*" in self.enabled_modules
         )
-        for old_file in log_files[max_files:]:
-            os.remove(old_file)
-    except Exception as e:
-        sys.stderr.write(f"[WARN] Failed to clean up old log files in {log_dir}: {e}\n")
+
+    def filter(self, record):
+        # 1. Always allow INFO, WARNING, ERROR, and CRITICAL logs
+        if record.levelno > logging.DEBUG:
+            return True
+
+        # 2. Allow all DEBUG logs if global debug mode is enabled
+        if self.global_debug:
+            return True
+
+        # 3. Resolve true module name (handles files executed directly as __main__)
+        logger_name = record.name
+        if logger_name == "__main__" and record.pathname:
+            logger_name = Path(record.pathname).stem
+
+        logger_name_lower = logger_name.lower()
+        leaf_name = logger_name_lower.split(".")[-1]
+
+        # 4. Match against DEBUG_MODULES (exact, leaf name, or package prefix)
+        for target in self.enabled_modules:
+            if (
+                target == logger_name_lower
+                or target == leaf_name
+                or logger_name_lower.startswith(f"{target}.")
+                or f".{target}." in logger_name_lower
+            ):
+                return True
+
+        return False
+
+
+def setup_logging(service_name="stardew-analyzer", **kwargs):
+    """
+    Initializes global logging with stdout formatting and OTLP gRPC export to Loki.
+    Accepts **kwargs to gracefully handle legacy caller arguments.
+    """
+    docker_level_str = os.getenv("DOCKER_LOG_LEVEL", "INFO").upper()
+    console_level = getattr(logging, docker_level_str, logging.INFO)
+
+    # Force console base level to DEBUG if DEBUG_MODULES is set
+    debug_modules = os.getenv("DEBUG_MODULES", "").strip()
+    if debug_modules:
+        console_level = logging.DEBUG
+
+    root_logger = logging.getLogger()
+    root_logger.setLevel(logging.DEBUG)  # Capture all logs at root level
+
+    # Remove existing handlers to avoid duplicate log outputs across restarts
+    for handler in list(root_logger.handlers):
+        root_logger.removeHandler(handler)
+
+    # --- Console Handler ---
+    console_handler = logging.StreamHandler(sys.stdout)
+    console_handler.setLevel(logging.DEBUG)  # Dynamic filtering handled by ModuleDebugFilter
+    console_formatter = logging.Formatter(
+        "%(asctime)s [%(levelname)s] [%(name)s] %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+    )
+    console_handler.setFormatter(console_formatter)
+    console_handler.addFilter(ModuleDebugFilter())
+    root_logger.addHandler(console_handler)
+
+    # --- OTLP / Loki Handler ---
+    otlp_endpoint = os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT") or os.getenv(
+        "OTEL_EXPORTER_OTLP_LOGS_ENDPOINT"
+    )
+    otlp_active = False
+
+    if otlp_endpoint:
+        try:
+            resource = Resource.create({"service.name": service_name})
+
+            # Prevent 'Overriding of current LoggerProvider' warning on re-initialization
+            current_provider = get_logger_provider()
+            if not isinstance(current_provider, LoggerProvider):
+                logger_provider = LoggerProvider(resource=resource)
+                set_logger_provider(logger_provider)
+            else:
+                logger_provider = current_provider
+
+            # ZERO-ARGUMENT AUTO-CONFIG:
+            # Let the OpenTelemetry SDK natively inspect environment variables
+            # (OTEL_EXPORTER_OTLP_ENDPOINT, OTEL_EXPORTER_OTLP_HEADERS, OTEL_EXPORTER_OTLP_INSECURE, etc.)
+            exporter = OTLPLogExporter()
+            logger_provider.add_log_record_processor(BatchLogRecordProcessor(exporter))
+
+            otlp_handler = LoggingHandler(
+                level=logging.DEBUG, logger_provider=logger_provider
+            )
+            root_logger.addHandler(otlp_handler)
+            otlp_active = True
+        except Exception as e:
+            root_logger.warning(f"Failed to initialize OTLP log exporter: {e}")
+
+    root_logger.info(
+        f"Logging initialized. Console Level: {logging.getLevelName(console_level)}, "
+        f"OTLP Logs: {'ACTIVE' if otlp_active else 'DISABLED'}"
+    )
 
 
 def is_module_debug_enabled(module_name: str) -> bool:
-    """Checks if a given module (e.g., 'crops') is present in the DEBUG_MODULES allowlist environment variable."""
-    raw_debug = os.getenv("DEBUG_MODULES", "")
-    if not raw_debug:
-        return False
-    
-    active_debugs = [m.strip().lower() for m in raw_debug.split(",")]
-    return "*" in active_debugs or module_name.lower() in active_debugs
-
-
-def setup_logging(process_name: str = "app"):
-    """Configures application-wide logging.
-
-    * Terminal (stdout): Uses colored output.
-    * File (/log): Optional. Enabled automatically if '/log' directory exists.
     """
-    debug_env = os.getenv("DEBUG", "").lower().strip()
-    is_debug = debug_env in ("1", "true", "yes")
-
-    log_level = logging.DEBUG if is_debug else logging.INFO
-
-    # 1. Console Handler (Stdout with colors)
-    console_formatter = ColoredFormatter(
-        fmt="%(asctime)s %(levelname)s [%(name)s] %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S",
-    )
-    console_handler = logging.StreamHandler(sys.stdout)
-    console_handler.setFormatter(console_formatter)
-
-    handlers = [console_handler]
-
-    # 2. File Handler (Optional via mount presence)
-    log_dir = os.getenv("LOG_DIR", "/log")
-    file_logging_path = None
-
-    if os.path.isdir(log_dir):
-        if os.access(log_dir, os.W_OK):
-            try:
-                prune_old_logs(log_dir, max_files=20)
-
-                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                log_filename = f"{process_name}_{timestamp}.log"
-                file_logging_path = os.path.join(log_dir, log_filename)
-
-                # Plain-text formatter for file (no ANSI escape codes)
-                file_formatter = logging.Formatter(
-                    fmt="%(asctime)s [%(levelname)s] [%(name)s] %(message)s",
-                    datefmt="%Y-%m-%d %H:%M:%S",
-                )
-
-                file_handler = logging.FileHandler(file_logging_path, encoding="utf-8")
-                file_handler.setFormatter(file_formatter)
-                handlers.append(file_handler)
-
-            except Exception as e:
-                sys.stderr.write(f"[WARN] Could not initialize file logging in {log_dir}: {e}\n")
-        else:
-            sys.stderr.write(f"[WARN] Log directory {log_dir} exists but is not writable.\n")
-
-    # 3. Apply to Root Logger
-    root_logger = logging.getLogger()
-    root_logger.setLevel(log_level)
-    root_logger.handlers.clear()
-
-    for h in handlers:
-        root_logger.addHandler(h)
-
-    # 4. Status Log
-    status_str = "ENABLED (DEBUG)" if is_debug else "DISABLED (INFO)"
-    root_logger.info(f"Logging initialized. Debug mode: {status_str}")
-
-    if file_logging_path:
-        root_logger.info(f"File logging active: {file_logging_path}")
-        
+    Legacy stub maintained for backwards compatibility.
+    Deprecated: Use standard logger.debug() calls directly.
+    """
+    debug_modules = os.getenv("DEBUG_MODULES", "").strip()
+    if not debug_modules:
+        return False
+    enabled = {m.strip().lower() for m in debug_modules.split(",") if m.strip()}
+    return "*" in enabled or module_name.lower() in enabled
+    

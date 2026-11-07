@@ -7,14 +7,13 @@ Extracts today's daily luck modifier from the save XML root and returns formatte
 import logging
 import time
 
-from src.core.logger import is_module_debug_enabled
+from opentelemetry import trace
 
 logger = logging.getLogger(__name__)
+tracer = trace.get_tracer(__name__)
 
 
 def parse_luck(root):
-    if is_module_debug_enabled("luck"):
-        logger.info("[DEBUG:luck] Executing luck module...")
     """
     Parses daily luck value from the save XML root.
     Daily luck ranges from -0.1 to +0.1 (modified by Special Charm to max ~0.125).
@@ -22,54 +21,61 @@ def parse_luck(root):
     :param root: xml.etree.ElementTree Element representing <SaveGame>
     :return: dict containing luck value, qualitative description, emoji icon, and status class
     """
-    start_time = time.perf_counter()
+    with tracer.start_as_current_span("parse_module_luck") as span:
+        start_time = time.perf_counter()
 
-    if root is None:
-        logger.warning("SaveGame root is None. Defaulting daily luck to 0.0 (Neutral).")
+        if root is None:
+            logger.warning("SaveGame root is None. Defaulting daily luck to 0.0 (Neutral).")
+            span.set_attribute("luck.value", 0.0)
+            span.set_attribute("luck.label", "Neutral")
+            return {
+                "value": 0.0,
+                "label": "Neutral",
+                "icon": "\U0001f610",
+                "css_class": "luck-neutral",
+            }
+
+        luck_node = root.find("dailyLuck")
+        try:
+            luck_val = float(luck_node.text) if luck_node is not None and luck_node.text else 0.0
+        except ValueError:
+            logger.debug(
+                f"Invalid non-float dailyLuck text '{luck_node.text if luck_node is not None else None}'; defaulting to 0.0"
+            )
+            luck_val = 0.0
+
+        # Categorize luck thresholds based on Welwick's Oracle TV Channel
+        if luck_val >= 0.07:
+            label = "Stardew Spirits Are Very Happy"
+            icon = "\U0001f31f"  # Star
+            css_class = "luck-best"
+        elif luck_val > 0.02:
+            label = "Spirits Are In Good Humor"
+            icon = "\U0001f604"  # Smile
+            css_class = "luck-good"
+        elif luck_val >= -0.02:
+            label = "Spirits Feel Neutral"
+            icon = "\U0001f610"  # Neutral face
+            css_class = "luck-neutral"
+        elif luck_val > -0.07:
+            label = "Spirits Are Somewhat Annoyed"
+            icon = "\U0001f61f"  # Concerned face
+            css_class = "luck-bad"
+        else:
+            label = "Spirits Are Very Displeased"
+            icon = "\U0001f480"  # Skull
+            css_class = "luck-worst"
+
+        elapsed_ms = (time.perf_counter() - start_time) * 1000
+        logger.debug(f"Daily luck: {round(luck_val, 4)} ({label}) parsed in {elapsed_ms:.2f}ms")
+
+        span.set_attribute("luck.value", round(luck_val, 4))
+        span.set_attribute("luck.label", label)
+
         return {
-            "value": 0.0,
-            "label": "Neutral",
-            "icon": "\U0001f610",
-            "css_class": "luck-neutral",
+            "value": round(luck_val, 4),
+            "label": label,
+            "icon": icon,
+            "css_class": css_class,
         }
-
-    luck_node = root.find("dailyLuck")
-    try:
-        luck_val = float(luck_node.text) if luck_node is not None and luck_node.text else 0.0
-    except ValueError:
-        logger.debug(
-            f"Invalid non-float dailyLuck text '{luck_node.text if luck_node is not None else None}'; defaulting to 0.0"
-        )
-        luck_val = 0.0
-
-    # Categorize luck thresholds based on Welwick's Oracle TV Channel
-    if luck_val >= 0.07:
-        label = "Stardew Spirits Are Very Happy"
-        icon = "\U0001f31f"  # Star
-        css_class = "luck-best"
-    elif luck_val > 0.02:
-        label = "Spirits Are In Good Humor"
-        icon = "\U0001f604"  # Smile
-        css_class = "luck-good"
-    elif luck_val >= -0.02:
-        label = "Spirits Feel Neutral"
-        icon = "\U0001f610"  # Neutral face
-        css_class = "luck-neutral"
-    elif luck_val > -0.07:
-        label = "Spirits Are Somewhat Annoyed"
-        icon = "\U0001f61f"  # Concerned face
-        css_class = "luck-bad"
-    else:
-        label = "Spirits Are Very Displeased"
-        icon = "\U0001f480"  # Skull
-        css_class = "luck-worst"
-
-    elapsed_ms = (time.perf_counter() - start_time) * 1000
-    logger.debug(f"Daily luck: {round(luck_val, 4)} ({label}) parsed in {elapsed_ms:.2f}ms")
-
-    return {
-        "value": round(luck_val, 4),
-        "label": label,
-        "icon": icon,
-        "css_class": css_class,
-    }
+        

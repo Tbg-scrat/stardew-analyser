@@ -17,8 +17,9 @@ from .processors.free_crop import process_free_crop
 from .processors.furniture import process_furniture
 from .processors.grid import process_grid
 
-setup_logging()
+setup_logging("router")
 logger = logging.getLogger(__name__)
+
 
 XNBCLI_BIN = os.getenv("XNBCLI_BIN", "/app/bin/xnbcli/xnbcli")
 CONTENT_DIR = os.getenv("CONTENT_DIR", "/content")

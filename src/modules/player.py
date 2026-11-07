@@ -3,60 +3,66 @@
 import logging
 import time
 
-from src.core.logger import is_module_debug_enabled
+from opentelemetry import trace
 
 logger = logging.getLogger(__name__)
+tracer = trace.get_tracer(__name__)
 
 
 def parse_player(player_node):
-    if is_module_debug_enabled("player"):
-        logger.info("[DEBUG:player] Executing player module...")
     """Extract basic farmer and farm statistics."""
-    start_time = time.perf_counter()
+    with tracer.start_as_current_span("parse_module_player") as span:
+        start_time = time.perf_counter()
 
-    if player_node is None:
-        logger.warning("Player node is None. Defaulting player statistics.")
-        return {
-            "farmer": "Unknown",
-            "farm": "Unknown",
-            "money": 0,
-            "total_earned": 0,
-        }
+        if player_node is None:
+            logger.warning("Player node is None. Defaulting player statistics.")
+            return {
+                "farmer": "Unknown",
+                "farm": "Unknown",
+                "money": 0,
+                "total_earned": 0,
+            }
 
-    name = player_node.findtext("name", "Unknown")
-    farm_name = player_node.findtext("farmName", "Unknown")
-    money = player_node.findtext("money", "0")
+        name = player_node.findtext("name", "Unknown")
+        farm_name = player_node.findtext("farmName", "Unknown")
+        money = player_node.findtext("money", "0")
 
-    total_earned = player_node.findtext("totalMoneyEarned")
-    if not total_earned or total_earned == "0":
-        stats = player_node.find("stats")
-        if stats is not None:
-            total_earned = stats.findtext("totalMoneyEarned", "0")
-            logger.debug("Extracted totalMoneyEarned via <stats> fallback container")
+        total_earned = player_node.findtext("totalMoneyEarned")
+        if not total_earned or total_earned == "0":
+            stats = player_node.find("stats")
+            if stats is not None:
+                total_earned = stats.findtext("totalMoneyEarned", "0")
+                logger.debug("Extracted totalMoneyEarned via <stats> fallback container")
 
-    try:
-        money_int = int(money)
-    except ValueError:
-        logger.debug(f"Invalid non-integer money value '{money}'; defaulting to 0")
-        money_int = 0
+        try:
+            money_int = int(money)
+        except ValueError:
+            logger.debug(f"Invalid non-integer money value '{money}'; defaulting to 0")
+            money_int = 0
 
-    try:
-        earned_int = int(total_earned or 0)
-    except ValueError:
+        try:
+            earned_int = int(total_earned or 0)
+        except ValueError:
+            logger.debug(
+                f"Invalid non-integer totalMoneyEarned value '{total_earned}'; defaulting to 0"
+            )
+            earned_int = 0
+
+        elapsed_ms = (time.perf_counter() - start_time) * 1000
         logger.debug(
-            f"Invalid non-integer totalMoneyEarned value '{total_earned}'; defaulting to 0"
+            f"Parsed farmer details: '{name}' on '{farm_name}' Farm "
+            f"(Current: {money_int}g, Total Earned: {earned_int}g) in {elapsed_ms:.2f}ms"
         )
-        earned_int = 0
 
-    elapsed_ms = (time.perf_counter() - start_time) * 1000
-    logger.debug(
-        f"Parsed farmer details: '{name}' on '{farm_name}' Farm "
-        f"(Current: {money_int}g, Total Earned: {earned_int}g) in {elapsed_ms:.2f}ms"
-    )
+        span.set_attribute("player.name", name)
+        span.set_attribute("player.farm_name", farm_name)
+        span.set_attribute("player.money", money_int)
+        span.set_attribute("player.total_earned", earned_int)
 
-    return {
-        "farmer": name,
-        "farm": farm_name,
-        "money": money_int,
-        "total_earned": earned_int,
-    }
+        return {
+            "farmer": name,
+            "farm": farm_name,
+            "money": money_int,
+            "total_earned": earned_int,
+        }
+        

@@ -6,6 +6,13 @@ import os
 import time
 from pathlib import Path
 
+from opentelemetry import trace
+from opentelemetry._logs import get_logger_provider
+from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
+from opentelemetry.sdk.resources import Resource
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
+
 from src.core.extractor.cache_validator import is_cache_valid
 from src.core.logger import setup_logging
 from src.core.renderer import generate_dashboard_html
@@ -32,6 +39,28 @@ from src.modules.weather import parse_weather
 # Initialize central logging configuration
 setup_logging()
 logger = logging.getLogger(__name__)
+
+def setup_tracing():
+    """Configures the global OpenTelemetry tracer if an endpoint is provided."""
+    endpoint = os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT")
+    if not endpoint:
+        logger.info("OTEL_EXPORTER_OTLP_ENDPOINT not set. Tracing disabled.")
+        return
+        
+    resource = Resource.create({
+        "service.name": os.getenv("OTEL_SERVICE_NAME", "stardew-analyser"),
+        "service.version": os.getenv("APP_VERSION", "dev")
+    })
+    provider = TracerProvider(resource=resource)
+    
+    # OTLPSpanExporter automatically picks up OTEL_EXPORTER_OTLP_ENDPOINT and OTEL_EXPORTER_OTLP_HEADERS
+    exporter = OTLPSpanExporter()
+    processor = BatchSpanProcessor(exporter)
+    provider.add_span_processor(processor)
+    trace.set_tracer_provider(provider)
+
+setup_tracing()
+tracer = trace.get_tracer(__name__)
 
 SAVE_DIR = Path(os.getenv("SAVE_DIR", "/saves"))
 
@@ -119,95 +148,100 @@ def _evaluate_watering_can_rain_opportunity(data):
 
 
 def analyze_save(file_path):
-    # Milestone 1: XML Ingestion
-    t_xml_start = time.perf_counter()
-    root, player = get_player_node(file_path)
-    xml_duration_ms = (time.perf_counter() - t_xml_start) * 1000
-    logger.info(f"XML ingestion completed in {xml_duration_ms:.2f}ms")
+    with tracer.start_as_current_span("analyze_save") as span:
+        span.set_attribute("save.file", str(file_path))
+        
+        # Milestone 1: XML Ingestion
+        with tracer.start_as_current_span("xml_ingestion"):
+            t_xml_start = time.perf_counter()
+            root, player = get_player_node(file_path)
+            xml_duration_ms = (time.perf_counter() - t_xml_start) * 1000
+            logger.info(f"XML ingestion completed in {xml_duration_ms:.2f}ms")
 
-    # Milestone 2: Feature Module Parsing
-    t_modules_start = time.perf_counter()
+        # Milestone 2: Feature Module Parsing
+        with tracer.start_as_current_span("module_parsing"):
+            t_modules_start = time.perf_counter()
 
-    data = parse_player(player)
+            data = parse_player(player)
 
-    # Extract calendar date from root save node
-    try:
-        data["day_of_month"] = int(root.findtext("dayOfMonth", "1"))
-    except ValueError:
-        data["day_of_month"] = 1
+            # Extract calendar date from root save node
+            try:
+                data["day_of_month"] = int(root.findtext("dayOfMonth", "1"))
+            except ValueError:
+                data["day_of_month"] = 1
 
-    data["season"] = root.findtext("currentSeason", "spring")
+            data["season"] = root.findtext("currentSeason", "spring")
 
-    try:
-        data["year"] = int(root.findtext("year", "1"))
-    except ValueError:
-        data["year"] = 1
+            try:
+                data["year"] = int(root.findtext("year", "1"))
+            except ValueError:
+                data["year"] = 1
 
-    # Base overview modules
-    data["weather"] = parse_weather(root)
-    data["daily_luck"] = parse_luck(root)
-    data["festivals"] = parse_festivals(root)
-    data["birthdays"] = parse_birthdays(root)
+            # Base overview modules
+            data["weather"] = parse_weather(root)
+            data["daily_luck"] = parse_luck(root)
+            data["festivals"] = parse_festivals(root)
+            data["birthdays"] = parse_birthdays(root)
 
-    # Catalog-backed feature modules
-    data["shipped_items"] = get_formatted_shipping(player)
-    data["fish_caught"] = get_formatted_fishing(player)
-    data["museum_pieces"] = get_formatted_museum(root)
-    data["recipes_cooked"] = get_formatted_cooking(player)
+            # Catalog-backed feature modules
+            data["shipped_items"] = get_formatted_shipping(player)
+            data["fish_caught"] = get_formatted_fishing(player)
+            data["museum_pieces"] = get_formatted_museum(root)
+            data["recipes_cooked"] = get_formatted_cooking(player)
 
-    # Achievements
-    data["achievements"] = parse_achievements(player, shipped_items=data["shipped_items"])
+            # Achievements
+            data["achievements"] = parse_achievements(player, shipped_items=data["shipped_items"])
 
-    data["friendships"] = parse_social(player)
-    data["daily_intel"] = None
+            data["friendships"] = parse_social(player)
+            data["daily_intel"] = None
 
-    # Artisan Module
-    artisan_data = parse_all_artisan_goods(root, player)
-    data["artisan"] = artisan_data
-    data["casks"] = artisan_data["casks"]
+            # Artisan Module
+            artisan_data = parse_all_artisan_goods(root, player)
+            data["artisan"] = artisan_data
+            data["casks"] = artisan_data["casks"]
 
-    # Chests Module
-    chest_summary = parse_chests(root)
-    data["chests"] = chest_summary
+            # Chests Module
+            chest_summary = parse_chests(root)
+            data["chests"] = chest_summary
 
-    # Crops Module
-    crops_summary = parse_all_crops_from_save(root, current_day=data["day_of_month"])
-    data["crops"] = crops_summary
+            # Crops Module
+            crops_summary = parse_all_crops_from_save(root, current_day=data["day_of_month"])
+            data["crops"] = crops_summary
 
-    # Tools Module (passes player funds and chest material stock)
-    tools_summary = parse_tools(
-        root,
-        player_money=data.get("money", 0),
-        material_totals=chest_summary.get("material_totals", []),
-    )
-    data["tools"] = tools_summary
+            # Tools Module (passes player funds and chest material stock)
+            tools_summary = parse_tools(
+                root,
+                player_money=data.get("money", 0),
+                material_totals=chest_summary.get("material_totals", []),
+            )
+            data["tools"] = tools_summary
 
-    # Evaluate Watering Can Rain Opportunity
-    data["watering_can_opportunity"] = _evaluate_watering_can_rain_opportunity(data)
+            # Evaluate Watering Can Rain Opportunity
+            data["watering_can_opportunity"] = _evaluate_watering_can_rain_opportunity(data)
 
-    # Hay Tracker Module
-    hay_summary = parse_hay_data(root)
-    data["hay"] = hay_summary
+            # Hay Tracker Module
+            hay_summary = parse_hay_data(root)
+            data["hay"] = hay_summary
 
-    # Grandpa's Evaluation Module
-    grandpa_summary = parse_grandpa_data(
-        root,
-        player,
-        shipped_items=data["shipped_items"],
-        fish_caught=data["fish_caught"],
-        museum_pieces=data["museum_pieces"],
-        friendships=data["friendships"],
-    )
-    data["grandpa"] = grandpa_summary
+            # Grandpa's Evaluation Module
+            grandpa_summary = parse_grandpa_data(
+                root,
+                player,
+                shipped_items=data["shipped_items"],
+                fish_caught=data["fish_caught"],
+                museum_pieces=data["museum_pieces"],
+                friendships=data["friendships"],
+            )
+            data["grandpa"] = grandpa_summary
 
-    # Community Center / Joja Module
-    cc_summary = parse_community_center_data(root, player)
-    data["community_center"] = cc_summary
+            # Community Center / Joja Module
+            cc_summary = parse_community_center_data(root, player)
+            data["community_center"] = cc_summary
+            
+            modules_duration_ms = (time.perf_counter() - t_modules_start) * 1000
+            logger.info(f"All 15 feature modules parsed in {modules_duration_ms:.2f}ms")
 
-    modules_duration_ms = (time.perf_counter() - t_modules_start) * 1000
-    logger.info(f"All 15 feature modules parsed in {modules_duration_ms:.2f}ms")
-
-    return data
+        return data
 
 
 def log_save_summary(save_id, data):
@@ -298,50 +332,60 @@ def run_pipeline(save_dir=None, output_path=None):
     Executes the full parsing pipeline for a given save directory (or default SAVE_DIR),
     parsing all discovered farms and rendering the multi-farm dashboard HTML.
     """
-    pipeline_start = time.perf_counter()
+    with tracer.start_as_current_span("run_pipeline"):
+        pipeline_start = time.perf_counter()
 
-    # Asset Cache Verification Log
-    cache_status = "VALID" if is_cache_valid() else "INVALID_OR_MISSING"
-    logger.info(f"Asset cache verification: {cache_status}")
+        # Asset Cache Verification Log
+        cache_status = "VALID" if is_cache_valid() else "INVALID_OR_MISSING"
+        logger.info(f"Asset cache verification: {cache_status}")
 
-    target_dir = Path(save_dir) if save_dir else SAVE_DIR
-    logger.info(f"Scanning directory: {target_dir.resolve()}")
+        target_dir = Path(save_dir) if save_dir else SAVE_DIR
+        logger.info(f"Scanning directory: {target_dir.resolve()}")
 
-    target_dir = Path(save_dir) if save_dir else SAVE_DIR
-    logger.info(f"Scanning directory: {target_dir.resolve()}")
+        saves = find_all_saves(target_dir)
+        logger.info(f"Discovered {len(saves)} save candidate(s).")
 
-    saves = find_all_saves(target_dir)
-    logger.info(f"Discovered {len(saves)} save candidate(s).")
+        all_saves_data = {}
+        for save_id, save_path in saves:
+            try:
+                data = analyze_save(save_path)
+                all_saves_data[save_id] = data
+                log_save_summary(save_id, data)
+            except Exception as e:
+                logger.exception(f"Error processing save '{save_id}': {e}")
 
-    all_saves_data = {}
-    for save_id, save_path in saves:
-        try:
-            data = analyze_save(save_path)
-            all_saves_data[save_id] = data
-            log_save_summary(save_id, data)
-        except Exception as e:
-            logger.exception(f"Error processing save '{save_id}': {e}")
+        if all_saves_data:
+            with tracer.start_as_current_span("render_dashboard"):
+                try:
+                    t_render_start = time.perf_counter()
+                    result = generate_dashboard_html(all_saves_data, output_path=output_path)
+                    render_duration_ms = (time.perf_counter() - t_render_start) * 1000
+                    logger.info(f"Dashboard rendered in {render_duration_ms:.2f}ms")
+                except TypeError:
+                    # Fallback if generate_dashboard_html does not accept output_path kwarg
+                    t_render_start = time.perf_counter()
+                    result = generate_dashboard_html(all_saves_data)
+                    render_duration_ms = (time.perf_counter() - t_render_start) * 1000
+                    logger.info(f"Dashboard rendered in {render_duration_ms:.2f}ms")
 
-    if all_saves_data:
-        try:
-            t_render_start = time.perf_counter()
-            result = generate_dashboard_html(all_saves_data, output_path=output_path)
-            render_duration_ms = (time.perf_counter() - t_render_start) * 1000
-            logger.info(f"Dashboard rendered in {render_duration_ms:.2f}ms")
-        except TypeError:
-            # Fallback if generate_dashboard_html does not accept output_path kwarg
-            t_render_start = time.perf_counter()
-            result = generate_dashboard_html(all_saves_data)
-            render_duration_ms = (time.perf_counter() - t_render_start) * 1000
-            logger.info(f"Dashboard rendered in {render_duration_ms:.2f}ms")
-
-        total_duration_ms = (time.perf_counter() - pipeline_start) * 1000
-        logger.info(f"Pipeline completed in {total_duration_ms:.2f}ms")
-        return result
-    else:
-        logger.warning(f"No valid save games were parsed in {target_dir.resolve()}")
-        return None
+            total_duration_ms = (time.perf_counter() - pipeline_start) * 1000
+            logger.info(f"Pipeline completed in {total_duration_ms:.2f}ms")
+            return result
+        else:
+            logger.warning(f"No valid save games were parsed in {target_dir.resolve()}")
+            return None
 
 
 if __name__ == "__main__":
+    from opentelemetry._logs import get_logger_provider
+
     run_pipeline()
+
+    # Flush trace & log queues with tight timeouts to guarantee clean exit
+    trace_provider = trace.get_tracer_provider()
+    if hasattr(trace_provider, "force_flush"):
+        trace_provider.force_flush(timeout_millis=2000)
+
+    logger_provider = get_logger_provider()
+    if hasattr(logger_provider, "force_flush"):
+        logger_provider.force_flush(timeout_millis=2000)

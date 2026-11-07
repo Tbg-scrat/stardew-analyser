@@ -7,9 +7,10 @@ Extracts today's live weather conditions and tomorrow's forecast.
 import logging
 import time
 
-from src.core.logger import is_module_debug_enabled
+from opentelemetry import trace
 
 logger = logging.getLogger(__name__)
+tracer = trace.get_tracer(__name__)
 
 WEATHER_MAP = {
     "Sun": {"name": "Sunny", "icon": "\u2600\ufe0f", "css_class": "weather-sunny"},
@@ -26,92 +27,97 @@ WEATHER_MAP = {
 
 
 def parse_weather(root):
-    if is_module_debug_enabled("weather"):
-        logger.info("[DEBUG:weather] Executing weather module...")
     """
     Parses today's live weather and tomorrow's forecast from the save XML root.
 
     :param root: xml.etree.ElementTree Element representing <SaveGame>
     :return: dict containing today's weather and tomorrow's valley/island forecasts
     """
-    start_time = time.perf_counter()
+    with tracer.start_as_current_span("parse_module_weather") as span:
+        start_time = time.perf_counter()
 
-    if root is None:
-        logger.warning("SaveGame root is None. Defaulting weather conditions to Unknown.")
-        unknown = {
-            "id": "Unknown",
-            "name": "Unknown",
-            "icon": "\u2753",
-            "css_class": "weather-unknown",
+        if root is None:
+            logger.warning("SaveGame root is None. Defaulting weather conditions to Unknown.")
+            unknown = {
+                "id": "Unknown",
+                "name": "Unknown",
+                "icon": "\u2753",
+                "css_class": "weather-unknown",
+            }
+            return {"today": unknown, "valley": unknown, "island": None}
+
+        # 1. Parse Today's Weather from live state booleans
+        is_raining = root.find("isRaining")
+        is_snowing = root.find("isSnowing")
+        is_lightning = root.find("isLightning")
+        is_debris = root.find("isDebrisWeather")
+
+        if is_lightning is not None and is_lightning.text == "true":
+            today_key = "Storm"
+        elif is_raining is not None and is_raining.text == "true":
+            today_key = "Rain"
+        elif is_snowing is not None and is_snowing.text == "true":
+            today_key = "Snow"
+        elif is_debris is not None and is_debris.text == "true":
+            today_key = "Wind"
+        else:
+            today_key = "Sun"
+
+        today_data = WEATHER_MAP.get(today_key, WEATHER_MAP["Sun"])
+
+        # 2. Tomorrow's Main Valley Weather Forecast
+        weather_node = root.find("weatherForTomorrow")
+        weather_id = weather_node.text if weather_node is not None and weather_node.text else "Sun"
+        valley_data = WEATHER_MAP.get(weather_id, WEATHER_MAP["Sun"])
+
+        # 3. Ginger Island Weather Forecast (if unlocked)
+        island_weather_id = None
+        location_contexts = root.find("locationWeather")
+        if location_contexts is not None:
+            for item in location_contexts.findall("item"):
+                key = item.find("key/string")
+                if key is not None and key.text == "Island":
+                    weather_for_tomorrow = item.find("value/LocationWeather/weatherForTomorrow")
+                    if weather_for_tomorrow is not None and weather_for_tomorrow.text:
+                        island_weather_id = weather_for_tomorrow.text
+                    break
+
+        island_data = None
+        if island_weather_id:
+            mapped_island = WEATHER_MAP.get(island_weather_id, WEATHER_MAP["Sun"])
+            island_data = {
+                "id": island_weather_id,
+                "name": mapped_island["name"],
+                "icon": mapped_island["icon"],
+                "css_class": mapped_island["css_class"],
+            }
+
+        island_str = f" | Tomorrow Island: {island_data['name']}" if island_data else ""
+        elapsed_ms = (time.perf_counter() - start_time) * 1000
+
+        logger.debug(
+            f"Weather parsed in {elapsed_ms:.2f}ms -> Today: {today_data['name']} | "
+            f"Tomorrow Valley: {valley_data['name']}{island_str}"
+        )
+
+        span.set_attribute("weather.today", today_data["name"])
+        span.set_attribute("weather.tomorrow_valley", valley_data["name"])
+        if island_data:
+            span.set_attribute("weather.tomorrow_island", island_data["name"])
+
+        return {
+            "today": {
+                "id": today_key,
+                "name": today_data["name"],
+                "icon": today_data["icon"],
+                "css_class": today_data["css_class"],
+            },
+            "valley": {
+                "id": weather_id,
+                "name": valley_data["name"],
+                "icon": valley_data["icon"],
+                "css_class": valley_data["css_class"],
+            },
+            "island": island_data,
         }
-        return {"today": unknown, "valley": unknown, "island": None}
-
-    # 1. Parse Today's Weather from live state booleans
-    is_raining = root.find("isRaining")
-    is_snowing = root.find("isSnowing")
-    is_lightning = root.find("isLightning")
-    is_debris = root.find("isDebrisWeather")
-
-    if is_lightning is not None and is_lightning.text == "true":
-        today_key = "Storm"
-    elif is_raining is not None and is_raining.text == "true":
-        today_key = "Rain"
-    elif is_snowing is not None and is_snowing.text == "true":
-        today_key = "Snow"
-    elif is_debris is not None and is_debris.text == "true":
-        today_key = "Wind"
-    else:
-        today_key = "Sun"
-
-    today_data = WEATHER_MAP.get(today_key, WEATHER_MAP["Sun"])
-
-    # 2. Tomorrow's Main Valley Weather Forecast
-    weather_node = root.find("weatherForTomorrow")
-    weather_id = weather_node.text if weather_node is not None and weather_node.text else "Sun"
-    valley_data = WEATHER_MAP.get(weather_id, WEATHER_MAP["Sun"])
-
-    # 3. Ginger Island Weather Forecast (if unlocked)
-    island_weather_id = None
-    location_contexts = root.find("locationWeather")
-    if location_contexts is not None:
-        for item in location_contexts.findall("item"):
-            key = item.find("key/string")
-            if key is not None and key.text == "Island":
-                weather_for_tomorrow = item.find("value/LocationWeather/weatherForTomorrow")
-                if weather_for_tomorrow is not None and weather_for_tomorrow.text:
-                    island_weather_id = weather_for_tomorrow.text
-                break
-
-    island_data = None
-    if island_weather_id:
-        mapped_island = WEATHER_MAP.get(island_weather_id, WEATHER_MAP["Sun"])
-        island_data = {
-            "id": island_weather_id,
-            "name": mapped_island["name"],
-            "icon": mapped_island["icon"],
-            "css_class": mapped_island["css_class"],
-        }
-
-    island_str = f" | Tomorrow Island: {island_data['name']}" if island_data else ""
-    elapsed_ms = (time.perf_counter() - start_time) * 1000
-
-    logger.debug(
-        f"Weather parsed in {elapsed_ms:.2f}ms -> Today: {today_data['name']} | "
-        f"Tomorrow Valley: {valley_data['name']}{island_str}"
-    )
-
-    return {
-        "today": {
-            "id": today_key,
-            "name": today_data["name"],
-            "icon": today_data["icon"],
-            "css_class": today_data["css_class"],
-        },
-        "valley": {
-            "id": weather_id,
-            "name": valley_data["name"],
-            "icon": valley_data["icon"],
-            "css_class": valley_data["css_class"],
-        },
-        "island": island_data,
-    }
+        

@@ -3,10 +3,12 @@
 import logging
 import time
 
-from src.core.logger import is_module_debug_enabled
+from opentelemetry import trace
+
 from src.core.reference_data import get_object_info
 
 logger = logging.getLogger(__name__)
+tracer = trace.get_tracer(__name__)
 
 
 def _parse_item_node(item_node):
@@ -222,48 +224,50 @@ def _extract_raw_chests(root):
 
 
 def parse_chests(root, object_map=None):
-    if is_module_debug_enabled("chests"):
-        logger.info("[DEBUG:chests] Executing chests module...")
     """
     Main entry point for parsing chest data from save XML.
     Uses get_object_info via reference_data for item metadata lookups.
     """
-    start_time = time.perf_counter()
+    with tracer.start_as_current_span("parse_module_chests") as span:
+        start_time = time.perf_counter()
 
-    raw_chests = _extract_raw_chests(root)
-    material_totals = {}
+        raw_chests = _extract_raw_chests(root)
+        material_totals = {}
 
-    for chest in raw_chests.get("chests", []):
-        for item in chest.get("chest_items", []):
-            if item.get("is_empty"):
-                continue
+        for chest in raw_chests.get("chests", []):
+            for item in chest.get("chest_items", []):
+                if item.get("is_empty"):
+                    continue
 
-            item_name = item.get("name", "Unknown Item")
-            stack = item.get("stack", 1)
-            sprite_key = item.get("sprite_key", "")
-            prefix = item.get("prefix", "items")
-            icon = item.get("icon", "")
+                item_name = item.get("name", "Unknown Item")
+                stack = item.get("stack", 1)
+                sprite_key = item.get("sprite_key", "")
+                prefix = item.get("prefix", "items")
+                icon = item.get("icon", "")
 
-            if item_name not in material_totals:
-                material_totals[item_name] = {
-                    "name": item_name,
-                    "count": 0,
-                    "prefix": prefix,
-                    "sprite_key": sprite_key,
-                    "icon": icon,
-                }
+                if item_name not in material_totals:
+                    material_totals[item_name] = {
+                        "name": item_name,
+                        "count": 0,
+                        "prefix": prefix,
+                        "sprite_key": sprite_key,
+                        "icon": icon,
+                    }
 
-            material_totals[item_name]["count"] += stack
+                material_totals[item_name]["count"] += stack
 
-    sorted_materials = sorted(material_totals.values(), key=lambda x: x["count"], reverse=True)
+        sorted_materials = sorted(material_totals.values(), key=lambda x: x["count"], reverse=True)
 
-    elapsed_ms = (time.perf_counter() - start_time) * 1000
-    logger.debug(f"Parsed chests in {elapsed_ms:.2f}ms")
+        elapsed_ms = (time.perf_counter() - start_time) * 1000
+        logger.debug(f"Parsed chests in {elapsed_ms:.2f}ms")
 
-    return {
-        "total_chests": raw_chests.get("total_chests", 0),
-        "total_items": raw_chests.get("total_items", 0),
-        "chests": raw_chests.get("chests", []),
-        "material_totals": sorted_materials,
-    }
-    
+        span.set_attribute("chests.total_chests", raw_chests.get("total_chests", 0))
+        span.set_attribute("chests.total_items", raw_chests.get("total_items", 0))
+
+        return {
+            "total_chests": raw_chests.get("total_chests", 0),
+            "total_items": raw_chests.get("total_items", 0),
+            "chests": raw_chests.get("chests", []),
+            "material_totals": sorted_materials,
+        }
+        
