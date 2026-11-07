@@ -72,6 +72,7 @@ def setup_logging(service_name="stardew-analyzer", **kwargs):
 
     root_logger = logging.getLogger()
     root_logger.setLevel(logging.DEBUG)  # Capture all logs at root level
+    logging.getLogger("urllib3").setLevel(logging.WARNING)
 
     # Remove existing handlers to avoid duplicate log outputs across restarts
     for handler in list(root_logger.handlers):
@@ -96,7 +97,9 @@ def setup_logging(service_name="stardew-analyzer", **kwargs):
 
     if otlp_endpoint:
         try:
-            resource = Resource.create({"service.name": service_name})
+            resource = Resource.create(
+    {"service.name": os.getenv("OTEL_SERVICE_NAME", service_name)}
+)
 
             # Prevent 'Overriding of current LoggerProvider' warning on re-initialization
             current_provider = get_logger_provider()
@@ -114,6 +117,10 @@ def setup_logging(service_name="stardew-analyzer", **kwargs):
 
             otlp_handler = LoggingHandler(
                 level=logging.DEBUG, logger_provider=logger_provider
+            )
+            # Prevent exporter feedback loop (urllib3 logs every export POST)
+            otlp_handler.addFilter(
+                lambda r: not r.name.startswith(("opentelemetry", "urllib3", "requests"))
             )
             root_logger.addHandler(otlp_handler)
             otlp_active = True
