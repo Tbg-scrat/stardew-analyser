@@ -356,17 +356,10 @@ def run_pipeline(save_dir=None, output_path=None):
 
         if all_saves_data:
             with tracer.start_as_current_span("render_dashboard"):
-                try:
-                    t_render_start = time.perf_counter()
-                    result = generate_dashboard_html(all_saves_data, output_path=output_path)
-                    render_duration_ms = (time.perf_counter() - t_render_start) * 1000
-                    logger.info(f"Dashboard rendered in {render_duration_ms:.2f}ms")
-                except TypeError:
-                    # Fallback if generate_dashboard_html does not accept output_path kwarg
-                    t_render_start = time.perf_counter()
-                    result = generate_dashboard_html(all_saves_data)
-                    render_duration_ms = (time.perf_counter() - t_render_start) * 1000
-                    logger.info(f"Dashboard rendered in {render_duration_ms:.2f}ms")
+                t_render_start = time.perf_counter()
+                result = generate_dashboard_html(all_saves_data, output_path=output_path)
+                render_duration_ms = (time.perf_counter() - t_render_start) * 1000
+                logger.info(f"Dashboard rendered in {render_duration_ms:.2f}ms")
 
             total_duration_ms = (time.perf_counter() - pipeline_start) * 1000
             logger.info(f"Pipeline completed in {total_duration_ms:.2f}ms")

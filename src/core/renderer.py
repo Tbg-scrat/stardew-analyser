@@ -24,7 +24,12 @@ def get_resource_path(relative_path: str) -> Path:
     return base_path / relative_path
 
 
-def generate_dashboard_html(all_saves_data, output_path=OUTPUT_HTML):
+def generate_dashboard_html(all_saves_data, output_path=None):
+    """
+    Renders Jinja2 HTML dashboard from parsed save data dictionaries.
+    """
+    output_path = Path(output_path) if output_path else OUTPUT_HTML
+
     """
     Renders Jinja2 HTML dashboard from parsed save data dictionaries.
     """
