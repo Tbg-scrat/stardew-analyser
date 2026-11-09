@@ -1,18 +1,19 @@
 # src/modules/fishing.py
+
 import logging
 import time
 
+from opentelemetry import trace
+
 from data.data_loader import FISH_CATALOG
-from src.core.logger import is_module_debug_enabled
 from src.core.reference_data import get_object_info, qualify_item_id
 from src.core.xml_reader import get_key_value
 
 logger = logging.getLogger(__name__)
+tracer = trace.get_tracer(__name__)
 
 
 def parse_fishing(player_node):
-    if is_module_debug_enabled("fishing"):
-        logger.info("[DEBUG:fishing] Executing fishing module...")
     """Extract fishCaught records with quantity and max length."""
     if player_node is None:
         logger.warning("Player node is None. Returning empty fishCaught record.")
@@ -76,52 +77,57 @@ def get_formatted_fishing(player_node, catalog=None):
     Parses fishing save data and merges it against FISH_CATALOG,
     returning a sorted list of fish item dictionaries ready for the UI.
     """
-    start_time = time.perf_counter()
-    if catalog is None:
-        logger.debug("Using default FISH_CATALOG")
-        catalog = FISH_CATALOG
+    with tracer.start_as_current_span("parse_module_fishing") as span:
+        start_time = time.perf_counter()
+        if catalog is None:
+            logger.debug("Using default FISH_CATALOG")
+            catalog = FISH_CATALOG
 
-    raw_fish = parse_fishing(player_node)
-    fish_save_map = {qualify_item_id(k): v for k, v in raw_fish.items()}
+        raw_fish = parse_fishing(player_node)
+        fish_save_map = {qualify_item_id(k): v for k, v in raw_fish.items()}
 
-    fish_mapped = []
-    catalog_items = catalog.items() if isinstance(catalog, dict) else []
+        fish_mapped = []
+        catalog_items = catalog.items() if isinstance(catalog, dict) else []
 
-    unmapped_count = 0
-    for item_id, catalog_item in catalog_items:
-        if not isinstance(catalog_item, dict):
-            unmapped_count += 1
-            continue
+        unmapped_count = 0
+        for item_id, catalog_item in catalog_items:
+            if not isinstance(catalog_item, dict):
+                unmapped_count += 1
+                continue
 
-        stats = fish_save_map.get(str(item_id))
-        is_caught = stats is not None
-        item_name = catalog_item.get("name", f"Fish {item_id}")
+            stats = fish_save_map.get(str(item_id))
+            is_caught = stats is not None
+            item_name = catalog_item.get("name", f"Fish {item_id}")
 
-        # Look up the dynamic icon path from our central routing dictionary
-        obj_info = get_object_info(item_id, fallback_name=item_name)
+            # Look up the dynamic icon path from our central routing dictionary
+            obj_info = get_object_info(item_id, fallback_name=item_name)
 
-        fish_mapped.append(
-            {
-                "id": item_id,
-                "name": item_name,
-                "count": stats["count"] if is_caught else 0,
-                "length": stats["length"] if is_caught else 0,
-                "status": "caught" if is_caught else "not_caught",
-                "is_unlocked": is_caught,
-                "image": obj_info["icon"],
-            }
+            fish_mapped.append(
+                {
+                    "id": item_id,
+                    "name": item_name,
+                    "count": stats["count"] if is_caught else 0,
+                    "length": stats["length"] if is_caught else 0,
+                    "status": "caught" if is_caught else "not_caught",
+                    "is_unlocked": is_caught,
+                    "image": obj_info["icon"],
+                }
+            )
+
+        if unmapped_count > 0:
+            logger.debug(f"Skipped {unmapped_count} invalid non-dict entries in fish catalog")
+
+        caught_total = sum(1 for f in fish_mapped if f["is_unlocked"])
+        catalog_total = len(fish_mapped)
+        elapsed_ms = (time.perf_counter() - start_time) * 1000
+
+        logger.debug(
+            f"Fishing progress: {caught_total}/{catalog_total} fish species caught "
+            f"(Parsed in {elapsed_ms:.2f}ms)"
         )
 
-    if unmapped_count > 0:
-        logger.debug(f"Skipped {unmapped_count} invalid non-dict entries in fish catalog")
+        span.set_attribute("fishing.caught_total", caught_total)
+        span.set_attribute("fishing.catalog_total", catalog_total)
 
-    caught_total = sum(1 for f in fish_mapped if f["is_unlocked"])
-    catalog_total = len(fish_mapped)
-    elapsed_ms = (time.perf_counter() - start_time) * 1000
-
-    logger.debug(
-        f"Fishing progress: {caught_total}/{catalog_total} fish species caught "
-        f"(Parsed in {elapsed_ms:.2f}ms)"
-    )
-
-    return sorted(fish_mapped, key=lambda x: x["name"])
+        return sorted(fish_mapped, key=lambda x: x["name"])
+        

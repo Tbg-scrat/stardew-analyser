@@ -22,15 +22,8 @@ import os
 import urllib.request
 import uuid
 
-from src.core.logger import is_module_debug_enabled
-
 # Initialize the standard logger for this specific module
 logger = logging.getLogger(__name__)
-
-# If the user specifically allowed debug logging for 'telemetry' via the 
-# DEBUG_MODULES environment variable, force this logger to capture DEBUG events.
-if is_module_debug_enabled("telemetry"):
-    logger.setLevel(logging.DEBUG)
 
 # The Cloudflare edge worker domain that receives the anonymous ping
 TELEMETRY_URL = "https://sv-telemetry.ms58.org"
@@ -141,8 +134,7 @@ def ping():
         logger.debug(f"Ping encountered an unexpected error: {e}")
 
 if __name__ == "__main__":
-    # If run standalone for testing, configure basic logging to output results directly
     from src.core.logger import setup_logging
-    setup_logging("telemetry_standalone")
-    ping()
     
+    setup_logging("telemetry")
+    ping()

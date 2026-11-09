@@ -1,17 +1,18 @@
 # src/modules/museum.py
+
 import logging
 import time
 
+from opentelemetry import trace
+
 from data.data_loader import MUSEUM_CATALOG
-from src.core.logger import is_module_debug_enabled
 from src.core.reference_data import get_object_info, qualify_item_id
 
 logger = logging.getLogger(__name__)
+tracer = trace.get_tracer(__name__)
 
 
 def parse_museum(root_node):
-    if is_module_debug_enabled("museum"):
-        logger.info("[DEBUG:museum] Executing museum module...")
     """Extract LibraryMuseum donated pieces."""
     if root_node is None:
         logger.warning("SaveGame root_node is None. Returning empty museum collection.")
@@ -55,49 +56,54 @@ def get_formatted_museum(root_node, catalog=None):
     Parses museum save data and merges it against MUSEUM_CATALOG,
     returning a sorted list of museum piece dictionaries ready for the UI.
     """
-    start_time = time.perf_counter()
-    if catalog is None:
-        logger.debug("Using default MUSEUM_CATALOG")
-        catalog = MUSEUM_CATALOG
+    with tracer.start_as_current_span("parse_module_museum") as span:
+        start_time = time.perf_counter()
+        if catalog is None:
+            logger.debug("Using default MUSEUM_CATALOG")
+            catalog = MUSEUM_CATALOG
 
-    raw_museum = parse_museum(root_node)
-    donated_set = {qualify_item_id(item_id) for item_id in raw_museum}
+        raw_museum = parse_museum(root_node)
+        donated_set = {qualify_item_id(item_id) for item_id in raw_museum}
 
-    museum_mapped = []
-    catalog_items = catalog.items() if isinstance(catalog, dict) else []
+        museum_mapped = []
+        catalog_items = catalog.items() if isinstance(catalog, dict) else []
 
-    unmapped_count = 0
-    for item_id, catalog_item in catalog_items:
-        if not isinstance(catalog_item, dict):
-            unmapped_count += 1
-            continue
+        unmapped_count = 0
+        for item_id, catalog_item in catalog_items:
+            if not isinstance(catalog_item, dict):
+                unmapped_count += 1
+                continue
 
-        is_donated = str(item_id) in donated_set
-        item_name = catalog_item.get("name", f"Artifact/Mineral {item_id}")
+            is_donated = str(item_id) in donated_set
+            item_name = catalog_item.get("name", f"Artifact/Mineral {item_id}")
 
-        obj_info = get_object_info(item_id, fallback_name=item_name)
+            obj_info = get_object_info(item_id, fallback_name=item_name)
 
-        museum_mapped.append(
-            {
-                "id": item_id,
-                "name": item_name,
-                "type": catalog_item.get("type", "Artifact"),
-                "status": "found" if is_donated else "not_found",
-                "is_unlocked": is_donated,
-                "image": obj_info["icon"],
-            }
+            museum_mapped.append(
+                {
+                    "id": item_id,
+                    "name": item_name,
+                    "type": catalog_item.get("type", "Artifact"),
+                    "status": "found" if is_donated else "not_found",
+                    "is_unlocked": is_donated,
+                    "image": obj_info["icon"],
+                }
+            )
+
+        if unmapped_count > 0:
+            logger.debug(f"Skipped {unmapped_count} invalid non-dict entries in museum catalog")
+
+        donated_total = sum(1 for m in museum_mapped if m["is_unlocked"])
+        catalog_total = len(museum_mapped)
+        elapsed_ms = (time.perf_counter() - start_time) * 1000
+
+        logger.debug(
+            f"Museum progress: {donated_total}/{catalog_total} items donated "
+            f"(Parsed in {elapsed_ms:.2f}ms)"
         )
 
-    if unmapped_count > 0:
-        logger.debug(f"Skipped {unmapped_count} invalid non-dict entries in museum catalog")
+        span.set_attribute("museum.donated_total", donated_total)
+        span.set_attribute("museum.catalog_total", catalog_total)
 
-    donated_total = sum(1 for m in museum_mapped if m["is_unlocked"])
-    catalog_total = len(museum_mapped)
-    elapsed_ms = (time.perf_counter() - start_time) * 1000
-
-    logger.debug(
-        f"Museum progress: {donated_total}/{catalog_total} items donated "
-        f"(Parsed in {elapsed_ms:.2f}ms)"
-    )
-
-    return sorted(museum_mapped, key=lambda x: x["name"])
+        return sorted(museum_mapped, key=lambda x: x["name"])
+        
