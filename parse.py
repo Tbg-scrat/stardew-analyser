@@ -15,6 +15,7 @@ from opentelemetry.sdk.trace.export import BatchSpanProcessor
 
 from src.core.extractor.cache_validator import is_cache_valid
 from src.core.logger import setup_logging
+from src.core.metrics import achievements_unlocked, pipeline_duration, saves_parsed
 from src.core.renderer import generate_dashboard_html
 from src.core.xml_reader import get_player_node
 from src.modules.achievements import parse_achievements
@@ -351,7 +352,13 @@ def run_pipeline(save_dir=None, output_path=None):
                 data = analyze_save(save_path)
                 all_saves_data[save_id] = data
                 log_save_summary(save_id, data)
+                saves_parsed.add(1, {"save": save_id, "status": "ok"})
+                achievements_unlocked.set(
+                    data.get("achievements", {}).get("unlocked_count", 0),
+                    {"save": save_id},
+                )
             except Exception as e:
+                saves_parsed.add(1, {"save": save_id, "status": "error"})
                 logger.exception(f"Error processing save '{save_id}': {e}")
 
         if all_saves_data:
@@ -363,6 +370,7 @@ def run_pipeline(save_dir=None, output_path=None):
 
             total_duration_ms = (time.perf_counter() - pipeline_start) * 1000
             logger.info(f"Pipeline completed in {total_duration_ms:.2f}ms")
+            pipeline_duration.record(total_duration_ms)
             return result
         else:
             logger.warning(f"No valid save games were parsed in {target_dir.resolve()}")
@@ -382,3 +390,4 @@ if __name__ == "__main__":
     logger_provider = get_logger_provider()
     if hasattr(logger_provider, "force_flush"):
         logger_provider.force_flush(timeout_millis=2000)
+        
